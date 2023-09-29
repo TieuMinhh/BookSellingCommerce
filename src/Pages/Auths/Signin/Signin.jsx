@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import { Link } from "react-router-dom";
 
 // import toast, { Toaster } from "react-hot-toast";
-import "./SignUp.scss";
+import "./Signin.scss";
 
 // import handleLogin from "../../services/handleLogin";
 // import axios from "../../config/axios";

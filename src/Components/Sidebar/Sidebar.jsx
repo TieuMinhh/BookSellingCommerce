@@ -11,7 +11,7 @@ import { HiCircleStack } from "react-icons/hi2";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { useNavigate } from "react-router-dom";
 
-import Avatar from "../../assets/Images/avatar.png";
+// import Avatar from "../../assets/Images/avatar.png";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -98,7 +98,7 @@ const Sidebar = () => {
                     alt="profile-user"
                     width="100px"
                     height="100px"
-                    src={Avatar}
+                    // src={Avatar}
                     style={{
                       cursor: "pointer",
                       borderRadius: "50%",
