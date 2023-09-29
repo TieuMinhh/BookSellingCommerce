@@ -3,7 +3,7 @@ import { FaTrash, FaPencilAlt, FaPlus } from "react-icons/fa";
 import { Button, Modal, Form } from "react-bootstrap";
 
 import "./Book.scss";
-import SearchProduct from "../../Components/SearchProduct/SearchProduct";
+// import SearchProduct from "../../Components/SearchProduct/SearchProduct";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -172,7 +172,7 @@ export default function Book() {
         Danh sách sản phẩm
       </div>
 
-      <SearchProduct />
+      {/* <SearchProduct /> */}
       <button
         className="btn btn-success add-product-btn"
         onClick={handleShowAdd}

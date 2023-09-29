@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
-import Sidebar from "./Components/SideBar/Sidebar";
+import Sidebar from "./Components/Sidebar/Sidebar";
 import Dashboard from "./Pages/AdminPages/Dashboard/Dashboard";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
-import Category from "./Pages/Category/Category";
-import Product from "./Pages/Product/Product";
-import Revenue from "./Pages/Revenue/Revenue";
-import Customer from "./Pages/Customer/Customer";
-import Order from "./Pages/Order/Order";
-import Login from "./Pages/Login/Login";
-import SignUp from "./Pages/SignUp/SignUp";
-import Setting from "./Pages/Setting/Setting";
-import Promotion from "./Pages/Promotion/Promotion";
+import Category from "./Pages/AdminPages/Category/Category";
+import Book from "./Pages/AdminPages/Book/Book";
+import Revenue from "./Pages/AdminPages/Revenue/Revenue";
+import Customer from "./Pages/AdminPages/Customer/Customer";
+import Order from "./Pages/AdminPages/Order/Order";
+import Promotion from "./Pages/AdminPages/Promotion/Promotion";
+import Login from "./Pages/Auths/Login/Login";
+import SignUp from "./Pages/Auths/Signin/Signin";
 // import RevenueDetail from "./Pages/RevenueDetail/RevenueDetail";
 
 import jwtDecode from "jwt-decode";
-import { AuthContextProvider } from "./context/authContext";
+import { AuthContextProvider } from "./Context/AuthContext";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Styles/Styles.scss";
@@ -60,7 +59,7 @@ function App() {
                     <Routes>
                       <Route path="/" element={<Dashboard />} />
                       <Route path="/category" element={<Category />} />
-                      <Route path="/product" element={<Product />} />
+                      <Route path="/book" element={<Book />} />
                       <Route path="/order" element={<Order />} />
                       <Route path="/revenue" element={<Revenue />} />
                       {/* <Route
@@ -69,7 +68,7 @@ function App() {
                       /> */}
                       <Route path="/customer" element={<Customer />} />
                       <Route path="/promotion" element={<Promotion />} />
-                      <Route path="/setting" element={<Setting />} />
+                      {/* <Route path="/setting" element={<Setting />} /> */}
                       <Route path="/login" element={<Login />} />
                       <Route path="/signup" element={<SignUp />} />
                     </Routes>

@@ -4,14 +4,14 @@ import "./Login.scss";
 // import axiosApiInstance from "../Configs/interceptor";
 // import axios from "../../Configs/axios";
 
-import { setToken } from "../../Services/Token";
+import { setToken } from "../../../Services/Token";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import facebookImage from "../../assets/Images/facebook.png";
-import instagramImage from "../../assets/Images/instagram.png";
-import linkedinImage from "../../assets/Images/linkedin.png";
-import twitterImage from "../../assets/Images/twitter.png";
+// import facebookImage from "../../assets/Images/facebook.png";
+// import instagramImage from "../../assets/Images/instagram.png";
+// import linkedinImage from "../../assets/Images/linkedin.png";
+// import twitterImage from "../../assets/Images/twitter.png";
 import { toast } from "react-toastify";
 
 export default function Login() {
@@ -129,7 +129,7 @@ export default function Login() {
           <div className="social-media">
             <p>Hoặc đăng nhập bằng</p>
             <ul>
-              <li>
+              {/* <li>
                 <img src={facebookImage} alt="facebook" />
               </li>
               <li>
@@ -140,7 +140,7 @@ export default function Login() {
               </li>
               <li>
                 <img src={instagramImage} alt="instagram" />
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

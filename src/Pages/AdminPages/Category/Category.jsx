@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SearchCategory from "../../Components/SearchCategory/SearchCategory";
+// import SearchCategory from "../../Components/SearchCategory/SearchCategory";
 import "./Category.scss";
 import { FaTrash, FaPencilAlt, FaPlus } from "react-icons/fa";
 import { Button, Modal, Form } from "react-bootstrap";
@@ -132,7 +132,7 @@ export default function Category() {
     <div className="category-main-container">
       <div className="title-category">Danh mục sản phẩm</div>
 
-      <SearchCategory className="search-category" />
+      {/* <SearchCategory className="search-category" /> */}
 
       <button
         className="btn btn-success add-category-btn"
