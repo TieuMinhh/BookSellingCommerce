@@ -1,0 +1,120 @@
+.category-main-container {
+  background: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%);
+  // background: linear-gradient(to right, #e0eafc, #cfdef3);
+  // background-color: #e0e4ed;   // Chỗ này đổi màu nền
+  height: 100%;
+
+  .title-category {
+    color: #000000;
+    // font-family: "Nunito", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    padding-top: 28px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .search-category {
+    overflow: visible;
+  }
+
+  .add-category-btn {
+    font-size: 12px;
+    border-radius: 8px;
+    margin-left: 10%;
+    margin-top: 12px;
+    margin-bottom: 8px;
+    background: -webkit-linear-gradient(left, #7579ff, #b224ef);
+
+    &:hover {
+      background: linear-gradient(135deg, #b224ef 0%, #7579ff 100%);
+    }
+  }
+
+  .table-category {
+    #main-category {
+      // background-color: #f0f0f0;
+      background-color: #fff; // Chỗ này đổi màu nền
+
+      // font-family: Arial, Helvetica, sans-serif;
+      // border-collapse: collapse;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: auto;
+
+      tr {
+        // &:nth-child(even) {
+        //   background-color: #f2f2f2;
+        // }
+
+        &:hover {
+          background-color: #ddd;
+        }
+
+        th {
+          // border-color: 1px solid #000;
+
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: center;
+          // background-color: #0d6efd;
+
+          background-color: #f0f0f0;
+          // background-color: #fff; // Chỗ này đổi màu nền
+
+          // background: linear-gradient(to right, #6dd5fa, #ffffff);
+          color: #000;
+          border: 1px solid #fff;
+          font-size: 14px;
+          font-weight: bold;
+        }
+
+        td {
+          // background-color: #f0f0f0;
+          background-color: #fff; // Chỗ này đổi màu nền
+
+          border: 1px solid #ddd;
+          // padding: 4px;
+          color: #000;
+          text-align: center;
+          font-size: 14px;
+          font-weight: 600;
+          opacity: 0.9;
+
+          .avatar-image {
+            width: 35px;
+            height: 35px;
+            border-radius: 20%;
+          }
+
+          .btn-edit {
+            border: none;
+            color: #b1ff00;
+            font-size: 14px;
+            background-color: transparent;
+            width: 15%;
+
+            &:hover {
+              color: #000;
+            }
+          }
+
+          .btn-delete {
+            border: none;
+            color: #ff0000;
+            font-size: 14px;
+            background-color: transparent;
+            width: 15%;
+
+            &:hover {
+              color: #ccc;
+            }
+          }
+        }
+      }
+    }
+  }
+}

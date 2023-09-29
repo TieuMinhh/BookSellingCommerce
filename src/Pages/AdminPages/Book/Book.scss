@@ -1,0 +1,171 @@
+.product-main-container {
+  background: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%);
+  // background: linear-gradient(to right, #e0eafc, #cfdef3);
+  // background-color: #e0e4ed; // Chỗ này đổi màu nền
+
+  .title-product {
+    color: #000000;
+    // font-family: "Nunito", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    padding-top: 28px;
+    margin-bottom: 32px;
+    text-transform: uppercase;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .search-category {
+    overflow: visible;
+  }
+
+  .add-product-btn {
+    font-size: 12px;
+    border-radius: 8px;
+    margin-left: 10%;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    background: -webkit-linear-gradient(left, #7579ff, #b224ef);
+
+    &:hover {
+      background: linear-gradient(135deg, #b224ef 0%, #7579ff 100%);
+    }
+  }
+
+  .table-product {
+    #main-product {
+      background-color: #f0f0f0;
+      // font-family: Arial, Helvetica, sans-serif;
+      // border-collapse: collapse;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: auto;
+
+      tr {
+        // &:nth-child(even) {
+        //   background-color: #f2f2f2;
+        // }
+
+        &:hover {
+          background-color: #ddd;
+        }
+
+        th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: center;
+
+          // background-color: #0d6efd;
+          // background-color: #f0f0f0;
+          // background-color: #fff; // Chỗ này đổi màu nền
+
+          // background: linear-gradient(to right, #6dd5fa, #ffffff);
+          color: #000;
+          border: 1px solid #fff;
+          font-size: 14px;
+          font-weight: bold;
+        }
+
+        td {
+          background-color: #fff;
+          border: 0.5px solid #ddd;
+          // padding: 8px;
+          color: #000;
+          text-align: center;
+          font-size: 14px;
+          font-weight: 600;
+          opacity: 0.9;
+
+          .avatar-image {
+            width: 35px;
+            height: 35px;
+            border-radius: 20%;
+          }
+
+          .btn-edit {
+            border: none;
+            color: #b1ff00;
+            font-size: 14px;
+            background-color: transparent;
+            width: 25%;
+
+            &:hover {
+              color: #000;
+            }
+          }
+
+          .btn-delete {
+            border: none;
+            color: #ff0000;
+            font-size: 14px;
+            background-color: transparent;
+            width: 25%;
+
+            &:hover {
+              color: #ccc;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.modal-content {
+  .modal-header {
+    color: white;
+    background-color: green;
+    // background-color: green;
+    height: 50px;
+
+    button {
+      background-color: green;
+
+      span {
+        font-size: 30px;
+        color: white;
+      }
+    }
+  }
+}
+
+.modal-product-body {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+
+    input,
+    .select-category {
+      border: 1px solid black;
+    }
+  }
+
+  .delete-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+
+    .ban-co-muon-xoa {
+      font-size: 36px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+    }
+
+    input {
+      border: 1px solid black;
+    }
+  }
+}
+
+.d-block {
+  border-radius: 10%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}

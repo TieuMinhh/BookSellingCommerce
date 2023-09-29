@@ -1,0 +1,205 @@
+.order-main-container {
+  background: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%);
+  // background: linear-gradient(to right, #e0eafc, #cfdef3);
+  // background-color: #e0e4ed;  // Chỗ này đổi màu nền
+
+  .title-order {
+    color: #000000;
+    // font-family: "Nunito", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    padding-top: 28px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .table-order {
+    #main-order {
+      // background-color: #f0f0f0;
+      background-color: #fff; // Chỗ này đổi màu nền
+
+      // font-family: Arial, Helvetica, sans-serif;
+      // border-collapse: collapse;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: auto;
+
+      tr {
+        // &:nth-child(even) {
+        //   background-color: #f2f2f2;
+        // }
+
+        &:hover {
+          background-color: #ddd;
+        }
+
+        th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: center;
+          // background-color: #0d6efd;
+          background-color: #f0f0f0;
+          // background: linear-gradient(to right, #6dd5fa, #ffffff);
+          color: #000;
+          border: 1px solid #fff;
+          font-size: 14px;
+          font-weight: bold;
+        }
+
+        td {
+          border: 0.5px solid #ddd;
+          padding: 8px;
+          color: #000;
+          text-align: center;
+          font-size: 14px;
+          font-weight: 600;
+          opacity: 0.9;
+
+          .btn-submit {
+            border: 1px solid #fff;
+            background-color: #00ff00;
+            padding: 3px 6px;
+            margin-right: 15px;
+            border-radius: 8px;
+
+            &:hover {
+              background-color: #006400;
+              color: #fff;
+            }
+          }
+
+          .btn-complete {
+            border: 1px solid #fff;
+            background-color: #1e90ff;
+            padding: 3px 6px;
+            border-radius: 8px;
+
+            &:hover {
+              background-color: #00bfff;
+              color: #fff;
+            }
+          }
+
+          .btn-cancel {
+            border: 1px solid #fff;
+            background-color: #ff0000;
+            padding: 3px 6px;
+            border-radius: 8px;
+
+            &:hover {
+              background-color: #dc143c;
+              color: #fff;
+            }
+          }
+
+          .btn-detail {
+            border: none;
+            background-color: transparent;
+            text-decoration: underline;
+            color: blueviolet;
+          }
+        }
+      }
+    }
+  }
+}
+
+.detail_order {
+  max-height: 408px;
+}
+
+.item_product {
+  clear: both;
+  border-top: 1.5px solid #ddd;
+  padding: 10px 0;
+  display: flex;
+}
+.item_product .item_product_left {
+  width: 20%;
+}
+.item_product .item_product_left img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.item_product .item_product_right {
+  padding-left: 10px;
+  width: 80%;
+}
+.item_product .item_name {
+  color: #000;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.item_product .item_size {
+  color: #000;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-top: 8px;
+}
+.item_product .item_qty {
+  text-align: right;
+}
+.item_product .item_price {
+  color: #37474f !important;
+  text-align: right;
+}
+.shipping_price,
+.total_price {
+  float: left;
+  width: 100%;
+  padding: 10px 0;
+  color: #333;
+  font-weight: 700 !important;
+  border-top: 1.5px solid #ddd;
+}
+
+.ctm {
+  margin-bottom: 10px;
+  font-weight: 700 !important;
+  color: #333;
+}
+
+.pull-right {
+  float: right;
+}
+
+.btn-submit {
+  border: 1px solid #fff;
+  background-color: #00ff00;
+  padding: 3px 6px;
+  margin-right: 15px;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: #006400;
+    color: #fff;
+  }
+}
+
+.btn-complete {
+  border: 1px solid #fff;
+  background-color: #1e90ff;
+  padding: 3px 6px;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: #00bfff;
+    color: #fff;
+  }
+}
+
+.btn-cancel {
+  border: 1px solid #fff;
+  background-color: #ff0000;
+  padding: 3px 6px;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: #dc143c;
+    color: #fff;
+  }
+}
