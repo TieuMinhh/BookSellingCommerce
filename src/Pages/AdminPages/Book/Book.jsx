@@ -171,7 +171,6 @@ export default function Book() {
       <div className="d-flex justify-content-center title-product">
         Danh sách sản phẩm
       </div>
-
       {/* <SearchProduct /> */}
       <button
         className="btn btn-success add-product-btn"
