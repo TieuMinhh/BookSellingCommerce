@@ -1,0 +1,82 @@
+.row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-left: -4px;
+  margin-right: -4px;
+}
+.col {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.grid {
+  width: 100%;
+  display: block;
+  padding: 0;
+}
+
+.grid.wide {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.content {
+  display: flex;
+}
+
+.content .sidebar_content {
+  padding: 10px;
+  margin-top: -10px;
+  flex: 0.25;
+}
+
+.content .sidebar_content h1 {
+  margin: 20px 0;
+}
+
+.content .sidebar_content .brand-filter .brand-search {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  height: 38px;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid #ecebeb;
+}
+
+.content .sidebar_content .brand-filter .brand-search input {
+  height: 37px;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+}
+
+.content .sidebar_content .brand-filter .brand-search i {
+  color: white;
+  background-color: #2feb3c;
+  height: 100%;
+  width: 40px;
+  font-size: 1.2rem;
+  text-align: center;
+  line-height: 37px;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.content .sidebar_content .price-filter {
+  margin-bottom: 30px;
+}
+
+.content .sidebar_content .price-filter input {
+  width: 100%;
+  color: #000;
+  background-color: #2feb3c;
+  margin-bottom: 20px;
+}
