@@ -1,0 +1,83 @@
+.account-main-container {
+  background: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%);
+  // background: linear-gradient(to right, #e0eafc, #cfdef3);
+  // background-color: #e0e4ed;  // Chỗ này đổi màu nền
+
+  .title-account {
+    color: #000000;
+    // font-family: "Nunito", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    padding-top: 28px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .table-user-account {
+    #customers-account {
+      background-color: #f0f0f0;
+
+      // font-family: Arial, Helvetica, sans-serif;
+      // border-collapse: collapse;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: auto;
+
+      tr {
+        // &:nth-child(even) {
+        //   background-color: #f2f2f2;
+        // }
+
+        &:hover {
+          background-color: #ddd;
+        }
+
+        th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: center;
+
+          // background-color: #0d6efd;
+          background-color: #f0f0f0;
+
+          // background: linear-gradient(to right, #6dd5fa, #ffffff);
+          color: #000;
+          border: 1px solid #fff;
+          font-size: 14px;
+          font-weight: bold;
+        }
+
+        td {
+          background-color: #fff; // Chỗ này đổi màu nền
+          border: 0.5px solid #ddd;
+          // padding: 4px;
+          color: #000;
+          text-align: center;
+          font-size: 14px;
+          font-weight: 600;
+          opacity: 0.9;
+
+          .avatar-image {
+            width: 35px;
+            height: 35px;
+            border-radius: 20%;
+          }
+
+          .lock-btn {
+            font-size: 12px;
+            padding: 2px 5px;
+
+            i {
+              font-size: 13px;
+              position: relative;
+              bottom: 2px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
