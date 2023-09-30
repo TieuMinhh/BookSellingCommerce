@@ -67,7 +67,7 @@ export default function Header() {
         </div>
       </div>
 
-      <div class="header-menu">
+      {/* <div class="header-menu">
         <div class="header-menu-nav row grid wide">
           <div class="header-menu-nav-list">
             <div class="header-menu-nav-list-item">
@@ -97,7 +97,7 @@ export default function Header() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* <div class="header-bottom grid wide">
         <span>Trang chủ</span>
