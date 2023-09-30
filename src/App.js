@@ -13,7 +13,6 @@ import Order from "./Pages/AdminPages/Order/Order";
 import Promotion from "./Pages/AdminPages/Promotion/Promotion";
 import Login from "./Pages/Auths/Login/Login";
 import SignUp from "./Pages/Auths/Signin/Signin";
-// import RevenueDetail from "./Pages/RevenueDetail/RevenueDetail";
 
 import jwtDecode from "jwt-decode";
 import { AuthContextProvider } from "./Context/AuthContext";
@@ -22,6 +21,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Styles/Styles.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import Footer from "./Components/Footer/Footer";
+import Header from "./Components/Header/Header";
+
+import HomePage from "./Pages/HomePage/Home";
+import Cart from "./Pages/CustomerPages/Cart/Cart";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -29,9 +33,11 @@ function App() {
 
   // let role = localStorage.getItem("accessToken");
 
-  let role = localStorage.getItem("accessToken")
-    ? jwtDecode(localStorage.getItem("accessToken")).role_id
-    : 0;
+  // let role = localStorage.getItem("accessToken")
+  //   ? jwtDecode(localStorage.getItem("accessToken")).role_id
+  //   : 0;
+
+  let role = 0;
 
   // console.log(role);
 
@@ -62,10 +68,6 @@ function App() {
                       <Route path="/book" element={<Book />} />
                       <Route path="/order" element={<Order />} />
                       <Route path="/revenue" element={<Revenue />} />
-                      {/* <Route
-                        path="/revenue-detail"
-                        element={<RevenueDetail />}
-                      /> */}
                       <Route path="/customer" element={<Customer />} />
                       <Route path="/promotion" element={<Promotion />} />
                       {/* <Route path="/setting" element={<Setting />} /> */}
@@ -75,11 +77,32 @@ function App() {
                   </main>
                 </>
               ) : (
-                <Routes>
-                  <Route path="/login" element={<Login />} />
-                </Routes>
+                <div className="user-layout">
+                  {/* <Routes>
+                    <Route path="/login" element={<Login />} />
+                  </Routes> */}
+                  <Header />
+                  <Routes>
+                    <Route path="/" exact element={<HomePage />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route path="/cart" element={<Cart />} />
+                    {/* <Route path="/hero" element={<Hero />} />
+                <Route path="/hero/detail" element={<HeroDetail />} />
+                <Route path="/academy" element={<Hero />}>
+                  <Route path="introduce" element={<Introduce />} />
+
+                </Route>
+                <Route path="/skin" element={<Skin />} />
+                <Route path="/skin/detail" element={<SkinDetail />} />
+                <Route path="/profile" element={<Profile />} /> */}
+                  </Routes>
+                  <Footer />
+                </div>
               )}
             </BrowserRouter>
+            {/* <Footer /> */}
+
             <ToastContainer />
           </div>
         </ThemeProvider>
