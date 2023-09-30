@@ -26,6 +26,7 @@ import Header from "./Components/Header/Header";
 
 import HomePage from "./Pages/HomePage/Home";
 import Cart from "./Pages/CustomerPages/Cart/Cart";
+import BookDetail from "./Pages/CustomerPages/BookDetail/BookDetail";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -87,6 +88,7 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/cart" element={<Cart />} />
+                    <Route path="/book-detail" element={<BookDetail />} />
                     {/* <Route path="/hero" element={<Hero />} />
                 <Route path="/hero/detail" element={<HeroDetail />} />
                 <Route path="/academy" element={<Hero />}>
