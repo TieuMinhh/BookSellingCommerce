@@ -120,8 +120,8 @@ a {
     -ms-flex-align: center;
     align-items: center;
     width: 560px;
-    height: 40px;
     border-radius: 8px;
+    padding: 2px 0;
     background-color: #fff;
     right: 20px;
     font-size: 1rem;
@@ -140,20 +140,22 @@ a {
     border: none;
     padding: 16px;
     border-radius: 8px;
+    outline: none;
 }
 
 .mid-header .container-header .container-header-2 .header-search i {
     line-height: 35px;
     border-radius: 3px;
     margin: 3px;
-    width: 40px;
+    padding: 0 16px;
     text-align: center;
     background-color: #ed722f;
+    margin-right: 8px;
 }
 
 .mid-header .container-header .container-header-2 .header-search i:hover {
     cursor: pointer;
-    background-color: #1bdd14;
+    opacity: 0.8;
 }
 
 .mid-header .container-header .container-header-3 {
@@ -173,33 +175,59 @@ a {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    margin-top: 4px;
+    margin: 4px 18px;
     color: #000;
+    position: relative;
+}
+
+.mid-header .container-header .container-header-3 .header-list .cover-img-vietnam {
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.mid-header .container-header .container-header-3 .header-list .cover-img-vietnam:hover {
+    cursor: pointer;
+}
+
+.mid-header .container-header .container-header-3 .header-list img {
+    width: 38px;
+    margin-right: 4px;
+}
+
+.mid-header .container-header .container-header-3 .header-list:hover {
+    opacity: 0.8;
 }
 
 .mid-header .container-header .container-header-3 .header-list b {
-    font-size: 1rem;
-    display: inline;
-    color: #646464;
-}
-
-.mid-header .container-header .container-header-3 .header-list b:hover {
-    color: #ed722f;
-    cursor: pointer;
+    font-size: 0.8rem;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    right: 6px;
+    background-color: #c92127;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    line-height: 18px;
+    text-align: center;
 }
 
 .mid-header .container-header .container-header-3 .header-list p {
     font-size: 1rem;
     margin-top: 2px;
+    position: absolute;
+    bottom: -16px;
 }
 
 .mid-header .container-header .container-header-3 .header-list i {
     padding: 10px;
-    border: 2px solid #000;
-    border-radius: 50%;
     margin: 0 10px;
     cursor: pointer;
     margin-bottom: 16px;
+    font-size: 1.2rem;
 }
 
 .header-menu {
