@@ -1,6 +1,7 @@
 import React from 'react';
 import './Header.scss';
 import LogoPage from '../../Assets/img/fahasa-logo.png';
+import VietNamFlag from '../../Assets/img/vietnam.png';
 import { Link, NavLink } from 'react-router-dom';
 
 export default function Header() {
@@ -45,20 +46,34 @@ export default function Header() {
                         </div>
                     </div>
                     <div class="container-header-3 col">
-                        <div class="header-list">
-                            <i class="fa-solid fa-phone"></i>
-                            <div class="header-discription">
-                                <b>(028) 1234 4321 (10 line)</b>
-                                <p>DĐ: 0966 932 267</p>
+                        <Link to="/cart">
+                            <div class="header-list">
+                                <b>12</b>
+                                <i class="fa-regular fa-bell"></i>
+                                <p>Thông báo</p>
                             </div>
-                        </div>
-                        <div class="header-list">
-                            <i href="" class="fa-solid fa-cart-shopping"></i>
-                            <div class="header-discription">
-                                <Link to="/cart">
-                                    <b>(0) Sản phẩm</b>
-                                </Link>
+                        </Link>
+
+                        <Link to="/cart">
+                            <div class="header-list">
+                                <b>99</b>
+                                <i href="" class="fa-solid fa-cart-shopping"></i>
                                 <p>Giỏ hàng</p>
+                            </div>
+                        </Link>
+
+                        <Link to="/cart">
+                            <div class="header-list">
+                                <b>10</b>
+                                <i class="fa-regular fa-user"></i>
+                                <p>Tài khoản</p>
+                            </div>
+                        </Link>
+
+                        <div class="header-list">
+                            <div class="cover-img-vietnam">
+                                <img src={VietNamFlag} alt="vietnam" />
+                                <span class="fa-solid fa-angle-down"></span>
                             </div>
                         </div>
                     </div>
