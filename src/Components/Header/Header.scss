@@ -30,19 +30,11 @@ a {
 }
 
 .topbar {
-
     margin: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.546);
     line-height: 24px;
-    background: #009900;
+    background: #ee4d2d;
     width: 100vw;
-
-  margin: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.546);
-  line-height: 24px;
-  background: #ed722f;
-  width: 100vw;
-
 }
 
 .topbar i {
@@ -56,7 +48,6 @@ a {
 }
 
 .topbar a:hover {
-    color: #ee5902;
     text-decoration: underline;
 }
 
@@ -102,15 +93,9 @@ a {
 }
 
 .mid-header {
-
     height: 82px;
-    background-color: #009900;
+    background-color: #fff;
     width: 100vw;
-
-  height: 82px;
-  background-color: #ed722f;
-  width: 100vw;
-
 }
 
 .mid-header .container-header {
@@ -134,24 +119,27 @@ a {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    width: 100%;
+    width: 560px;
     height: 40px;
-    border-radius: 3px;
+    border-radius: 8px;
     background-color: #fff;
     right: 20px;
     font-size: 1rem;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    border: 1px solid #ccc;
 }
 
 .mid-header .container-header .container-header-2 .header-search input {
     -webkit-box-flex: 1;
     -ms-flex: 1;
     flex: 1;
+    width: 100%;
     height: 38px;
     border: none;
     padding: 16px;
+    border-radius: 8px;
 }
 
 .mid-header .container-header .container-header-2 .header-search i {
@@ -186,12 +174,13 @@ a {
     -ms-flex-align: center;
     align-items: center;
     margin-top: 4px;
+    color: #000;
 }
 
 .mid-header .container-header .container-header-3 .header-list b {
-    font-size: 0.9rem;
+    font-size: 1rem;
     display: inline;
-    color: white;
+    color: #646464;
 }
 
 .mid-header .container-header .container-header-3 .header-list b:hover {
@@ -201,15 +190,13 @@ a {
 
 .mid-header .container-header .container-header-3 .header-list p {
     font-size: 1rem;
-    color: white;
     margin-top: 2px;
 }
 
 .mid-header .container-header .container-header-3 .header-list i {
     padding: 10px;
-    border: 2px solid white;
+    border: 2px solid #000;
     border-radius: 50%;
-    color: white;
     margin: 0 10px;
     cursor: pointer;
     margin-bottom: 16px;
