@@ -1,6 +1,6 @@
 import React from 'react';
 import './Header.scss';
-import LogoPage from '../../Assets/img/logo.png';
+import LogoPage from '../../Assets/img/fahasa-logo.png';
 import { Link, NavLink } from 'react-router-dom';
 
 export default function Header() {
@@ -65,7 +65,6 @@ export default function Header() {
                 </div>
             </div>
 
-
             <div class="header-menu">
                 <div class="header-menu-nav row grid wide">
                     <div class="header-menu-nav-list">
@@ -97,12 +96,11 @@ export default function Header() {
                     </div>
                 </div>
             </div>
-
-          </div>
         </div>
-      </div>
+        // </div>
+        // </div>
 
-      {/* <div class="header-menu">
+        /* <div class="header-menu">
         <div class="header-menu-nav row grid wide">
           <div class="header-menu-nav-list">
             <div class="header-menu-nav-list-item">
@@ -132,20 +130,20 @@ export default function Header() {
             </div>
           </div>
         </div>
-      </div> */}
+      </div> */
 
-            {/* <div class="header-bottom grid wide">
+        /* <div class="header-bottom grid wide">
         <span>Trang chủ</span>
         <i class="fa-solid fa-angle-right"></i>
         <span>Premier League</span>
-      </div> */}
+      </div> */
 
-            {/* <!-- <div class="football-area">
+        /* <!-- <div class="football-area">
             <img id="football-img" onclick="changeImg()" class="header-img-center grid wide row col c-12" src="./assets/img/MU.jpg" alt="" >
                      
-        </div> --> */}
+        </div> --> */
 
-            {/* <div id="image-slider">
+        /* <div id="image-slider">
         <div class="slider-img">
           <div class="slides-img">
 
@@ -189,9 +187,8 @@ export default function Header() {
           <i class="img-narrow-right fa-solid fa-circle-arrow-right"></i>
           
         </div>
-      </div> */}
+      </div> */
 
-            {/* <!-- <img class="header-img-center grid wide row col c-12" src="./assets/img/rael2024.jpg" alt="" > --> */}
-        </div>
+        /* <!-- <img class="header-img-center grid wide row col c-12" src="./assets/img/rael2024.jpg" alt="" > --> */
     );
 }
