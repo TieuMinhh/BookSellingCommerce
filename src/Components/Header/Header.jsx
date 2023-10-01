@@ -1,116 +1,114 @@
-import React from "react";
-import "./Header.scss";
-import LogoPage from "../../Assets/img/logo.png";
-import { Link, NavLink } from "react-router-dom";
+import React from 'react';
+import './Header.scss';
+import LogoPage from '../../Assets/img/logo.png';
+import { Link, NavLink } from 'react-router-dom';
 
 export default function Header() {
-  return (
-    <div class="header">
-      <div class="topbar row">
-        <div class="topbar-left col">
-          <p> Mở cửa: 7h30 đến 21h30, T7 và Chủ nhật 8h đến 22h</p>
-        </div>
-        <div class="topbar-right col">
-          <div class="topbar-right-list">
-            <div class="topbar-right-list-item">
-              <i class="fa-solid fa-user"></i>
-              <Link to="/login">Đăng nhập</Link>
+    return (
+        <div class="header">
+            <div class="topbar row">
+                <div class="topbar-left col">
+                    <p> Mở cửa: 7h30 đến 21h30, T7 và Chủ nhật 8h đến 22h</p>
+                </div>
+                <div class="topbar-right col">
+                    <div class="topbar-right-list">
+                        <div class="topbar-right-list-item">
+                            <i class="fa-solid fa-user"></i>
+                            <Link to="/login">Đăng nhập</Link>
+                        </div>
+                        <div class="topbar-right-list-item">
+                            <i class="fa-solid fa-star"></i>
+                            <a href="https://www.thegioididong.com/mua-online-gia-re#game">Khuyến mãi hot</a>
+                        </div>
+                        <div class="topbar-right-list-item">
+                            <i class="fa-solid fa-location-pin"></i>
+                            <a href="https://www.thegioididong.com/sieu-thi-the-gioi-di-dong/ho-chi-minh">
+                                {' '}
+                                Hệ thống cửa hàng
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="topbar-right-list-item">
-              <i class="fa-solid fa-star"></i>
-              <a href="https://www.thegioididong.com/mua-online-gia-re#game">
-                Khuyến mãi hot
-              </a>
+
+            <div class="mid-header">
+                <div class="container-header row grid wide">
+                    <div class="container-header-1 col">
+                        <Link to="/">
+                            <img src={LogoPage} alt="" style={{ width: '200px' }}></img>
+                        </Link>
+                    </div>
+                    <div class="container-header-2 col">
+                        <div class="header-search">
+                            <input type="text" placeholder="Nhập để tìm kiếm ..."></input>
+                            <i class="icon fa fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="container-header-3 col">
+                        <div class="header-list">
+                            <i class="fa-solid fa-phone"></i>
+                            <div class="header-discription">
+                                <b>(028) 1234 4321 (10 line)</b>
+                                <p>DĐ: 0966 932 267</p>
+                            </div>
+                        </div>
+                        <div class="header-list">
+                            <i href="" class="fa-solid fa-cart-shopping"></i>
+                            <div class="header-discription">
+                                <Link to="/cart">
+                                    <b>(0) Sản phẩm</b>
+                                </Link>
+                                <p>Giỏ hàng</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="topbar-right-list-item">
-              <i class="fa-solid fa-location-pin"></i>
-              <a href="https://www.thegioididong.com/sieu-thi-the-gioi-di-dong/ho-chi-minh">
-                {" "}
-                Hệ thống cửa hàng
-              </a>
+
+            <div class="header-menu">
+                <div class="header-menu-nav row grid wide">
+                    <div class="header-menu-nav-list">
+                        <div class="header-menu-nav-list-item">
+                            <NavLink to="/" class="header-menu-nav-item">
+                                <p>TRANG CHỦ</p>
+                            </NavLink>
+
+                            <NavLink to="#" class="header-menu-nav-item">
+                                <p>Danh mục sách</p>
+                            </NavLink>
+
+                            <NavLink to="/book-pages" class="header-menu-nav-item">
+                                <p>Sách đang kinh doanh</p>
+                            </NavLink>
+
+                            <a href="!#" class="header-menu-nav-item">
+                                <p>GIAO HÀNG tận nơi</p>
+                            </a>
+
+                            <NavLink to="/order-history" class="header-menu-nav-item">
+                                <p>LỊCH SỬ ĐẶT HÀNG</p>
+                            </NavLink>
+
+                            <NavLink to="/profile" class="header-menu-nav-item">
+                                <p>Thông tin cá nhân</p>
+                            </NavLink>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="mid-header">
-        <div class="container-header row grid wide">
-          <div class="container-header-1 col">
-            <Link to="/">
-              <img src={LogoPage} alt="" style={{ width: "200px" }}></img>
-            </Link>
-          </div>
-          <div class="container-header-2 col">
-            <div class="header-search">
-              <input type="text" placeholder="    Nhập để tìm kiếm ..."></input>
-              <i class="icon fa fa-search"></i>
-            </div>
-          </div>
-          <div class="container-header-3 col">
-            <div class="header-list">
-              <i class="fa-solid fa-phone"></i>
-              <div class="header-discription">
-                <b>(028) 1234 4321 (10 line)</b>
-                <p>DĐ: 0966 932 267</p>
-              </div>
-            </div>
-            <div class="header-list">
-              <i href="" class="fa-solid fa-cart-shopping"></i>
-              <div class="header-discription">
-                <Link to="/cart">
-                  <b>(0) Sản phẩm</b>
-                </Link>
-                <p>Giỏ hàng</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="header-menu">
-        <div class="header-menu-nav row grid wide">
-          <div class="header-menu-nav-list">
-            <div class="header-menu-nav-list-item">
-              <NavLink to="/" class="header-menu-nav-item">
-                <p>TRANG CHỦ</p>
-              </NavLink>
-
-              <NavLink to="#" class="header-menu-nav-item">
-                <p>Danh mục sách</p>
-              </NavLink>
-
-              <NavLink to="/book-pages" class="header-menu-nav-item">
-                <p>Sách đang kinh doanh</p>
-              </NavLink>
-
-              <a href="!#" class="header-menu-nav-item">
-                <p>GIAO HÀNG tận nơi</p>
-              </a>
-
-              <NavLink to="/order-history" class="header-menu-nav-item">
-                <p>LỊCH SỬ ĐẶT HÀNG</p>
-              </NavLink>
-
-              <NavLink to="/profile" class="header-menu-nav-item">
-                <p>Thông tin cá nhân</p>
-              </NavLink>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* <div class="header-bottom grid wide">
+            {/* <div class="header-bottom grid wide">
         <span>Trang chủ</span>
         <i class="fa-solid fa-angle-right"></i>
         <span>Premier League</span>
       </div> */}
 
-      {/* <!-- <div class="football-area">
+            {/* <!-- <div class="football-area">
             <img id="football-img" onclick="changeImg()" class="header-img-center grid wide row col c-12" src="./assets/img/MU.jpg" alt="" >
                      
         </div> --> */}
 
-      {/* <div id="image-slider">
+            {/* <div id="image-slider">
         <div class="slider-img">
           <div class="slides-img">
 
@@ -156,7 +154,7 @@ export default function Header() {
         </div>
       </div> */}
 
-      {/* <!-- <img class="header-img-center grid wide row col c-12" src="./assets/img/rael2024.jpg" alt="" > --> */}
-    </div>
-  );
+            {/* <!-- <img class="header-img-center grid wide row col c-12" src="./assets/img/rael2024.jpg" alt="" > --> */}
+        </div>
+    );
 }
