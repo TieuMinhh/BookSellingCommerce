@@ -30,11 +30,19 @@ a {
 }
 
 .topbar {
+
     margin: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.546);
     line-height: 24px;
     background: #009900;
     width: 100vw;
+
+  margin: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.546);
+  line-height: 24px;
+  background: #ed722f;
+  width: 100vw;
+
 }
 
 .topbar i {
@@ -94,9 +102,15 @@ a {
 }
 
 .mid-header {
+
     height: 82px;
     background-color: #009900;
     width: 100vw;
+
+  height: 82px;
+  background-color: #ed722f;
+  width: 100vw;
+
 }
 
 .mid-header .container-header {

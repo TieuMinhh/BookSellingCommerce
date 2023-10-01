@@ -65,6 +65,7 @@ export default function Header() {
                 </div>
             </div>
 
+
             <div class="header-menu">
                 <div class="header-menu-nav row grid wide">
                     <div class="header-menu-nav-list">
@@ -96,6 +97,42 @@ export default function Header() {
                     </div>
                 </div>
             </div>
+
+          </div>
+        </div>
+      </div>
+
+      {/* <div class="header-menu">
+        <div class="header-menu-nav row grid wide">
+          <div class="header-menu-nav-list">
+            <div class="header-menu-nav-list-item">
+              <NavLink to="/" class="header-menu-nav-item">
+                <p>TRANG CHỦ</p>
+              </NavLink>
+
+              <NavLink to="#" class="header-menu-nav-item">
+                <p>Danh mục sách</p>
+              </NavLink>
+
+              <NavLink to="/book-pages" class="header-menu-nav-item">
+                <p>Sách đang kinh doanh</p>
+              </NavLink>
+
+              <a href="!#" class="header-menu-nav-item">
+                <p>GIAO HÀNG tận nơi</p>
+              </a>
+
+              <NavLink to="/order-history" class="header-menu-nav-item">
+                <p>LỊCH SỬ ĐẶT HÀNG</p>
+              </NavLink>
+
+              <NavLink to="/profile" class="header-menu-nav-item">
+                <p>Thông tin cá nhân</p>
+              </NavLink>
+            </div>
+          </div>
+        </div>
+      </div> */}
 
             {/* <div class="header-bottom grid wide">
         <span>Trang chủ</span>
