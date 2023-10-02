@@ -11,7 +11,6 @@ export default function Home() {
         <div class="content row grid wide">
             <div class="container_content">
                 <div class="header-container">
-                    <h1 class="header-container-categories">Book</h1>
                     <div class="header-container-icon">
                         <i class="fa-solid fa-bars"></i>
                         <i class="fa-solid fa-table-list"></i>

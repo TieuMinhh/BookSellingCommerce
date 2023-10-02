@@ -98,6 +98,10 @@ a {
     width: 100vw;
 }
 
+.hr {
+    border-bottom: 4px solid #ee4d2d;
+}
+
 .mid-header .container-header {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -180,6 +184,39 @@ a {
     position: relative;
 }
 
+.mid-header .container-header .container-header-3 .header-list:hover .menu-header {
+    display: block;
+    z-index: 1;
+}
+
+.mid-header .container-header .container-header-3 .header-list .menu-header {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 6px;
+    top: 100%;
+    right: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: none;
+}
+
+.mid-header .container-header .container-header-3 .header-list .menu-header .wrapper-content-menu {
+    padding: 12px;
+}
+
+.mid-header .container-header .container-header-3 .header-list .menu-header button {
+    display: block;
+    margin: 6px 0;
+    border-radius: 8px;
+    padding: 6px 0px;
+    font-size: 1rem;
+    min-width: 220px;
+    font-weight: 700;
+}
+
+.mid-header .container-header .container-header-3 .header-list .menu-header button:hover {
+    letter-spacing: 0.2px;
+}
+
 .mid-header .container-header .container-header-3 .header-list .cover-img-vietnam {
     border: 1px solid #ddd;
     padding: 8px;
@@ -195,10 +232,6 @@ a {
 .mid-header .container-header .container-header-3 .header-list img {
     width: 38px;
     margin-right: 4px;
-}
-
-.mid-header .container-header .container-header-3 .header-list:hover {
-    opacity: 0.8;
 }
 
 .mid-header .container-header .container-header-3 .header-list b {
@@ -222,7 +255,7 @@ a {
     bottom: -16px;
 }
 
-.mid-header .container-header .container-header-3 .header-list i {
+.mid-header .container-header .container-header-3 .header-list > i {
     padding: 10px;
     margin: 0 10px;
     cursor: pointer;
