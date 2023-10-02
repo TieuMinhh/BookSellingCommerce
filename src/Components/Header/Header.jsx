@@ -1,8 +1,9 @@
 import React from 'react';
 import './Header.scss';
-import LogoPage from '../../Assets/img/fahasa-logo.png';
+import LogoPage from '../../Assets/img/FahaShopBe.png';
 import VietNamFlag from '../../Assets/img/vietnam.png';
 import { Link, NavLink } from 'react-router-dom';
+import PLatinum from '../../Assets/svg/platinum.svg';
 
 export default function Header() {
     return (
@@ -65,7 +66,69 @@ export default function Header() {
                         <Link to="/cart">
                             <div class="header-list">
                                 <div class="menu-header">
-                                    <div className="wrapper-content-menu">
+                                    {/*Start: Menu đã login */}
+                                    <div className="wrapper-menu-logged">
+                                        <li>
+                                            <Link to="/profile">
+                                                <img src={PLatinum} alt="" />
+                                                <div style={{ display: 'inline-block' }}>
+                                                    <span className="user-name">
+                                                        Ming Xiao<br></br>
+                                                    </span>
+                                                    <span className="desp-name">Thành viên của fahasa</span>
+                                                </div>
+                                                <div className="coutinue-icon">
+                                                    <i
+                                                        style={{
+                                                            position: 'absolute',
+                                                            color: '#000',
+                                                            lineHeight: '48px',
+                                                            right: '18px',
+                                                        }}
+                                                        class="fa-solid fa-chevron-left fa-rotate-180"
+                                                    ></i>
+                                                </div>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/login">
+                                                <span className="user-name">
+                                                    <i class="fa-regular fa-clipboard"></i> Đơn hàng của tôi
+                                                </span>{' '}
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/login">
+                                                <span className="user-name">
+                                                    <i class="fa-regular fa-heart"></i> Sản phẩm yêu thích
+                                                </span>{' '}
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/login">
+                                                <span className="user-name">
+                                                    <i class="fa-solid fa-ticket"></i> Wallet Voucher
+                                                </span>{' '}
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/login">
+                                                <span className="user-name">
+                                                    <i class="fa-solid fa-f"></i> Tài khoản F-point
+                                                </span>{' '}
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/login">
+                                                <span className="user-name">
+                                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Thoát tài khoản
+                                                </span>{' '}
+                                            </Link>
+                                        </li>
+                                    </div>
+                                    {/*End: Menu đã login */}
+                                    {/*Start: Menu chưa login */}
+                                    {/* <div className="wrapper-content-menu">
                                         <Link to="/login">
                                             <button
                                                 style={{
@@ -102,7 +165,8 @@ export default function Header() {
                                                 <i class="fa-brands fa-facebook-f"></i> Đăng nhập bằng facebook
                                             </button>
                                         </Link>
-                                    </div>
+                                    </div> */}
+                                    {/*End: Menu chưa login */}
                                 </div>
                                 <b>10</b>
                                 <i class="fa-regular fa-user"></i>

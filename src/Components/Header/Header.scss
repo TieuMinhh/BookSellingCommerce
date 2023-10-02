@@ -186,7 +186,7 @@ a {
 
 .mid-header .container-header .container-header-3 .header-list:hover .menu-header {
     display: block;
-    z-index: 1;
+    z-index: 999;
 }
 
 .mid-header .container-header .container-header-3 .header-list .menu-header {
@@ -201,6 +201,35 @@ a {
 
 .mid-header .container-header .container-header-3 .header-list .menu-header .wrapper-content-menu {
     padding: 12px;
+}
+
+.mid-header .container-header .container-header-3 .header-list .menu-header .wrapper-menu-logged {
+    min-width: 300px;
+    li {
+        position: relative;
+        font-size: 1rem;
+        list-style-type: none;
+        padding: 12px;
+        border-bottom: 1px solid #ccc;
+        display: flex;
+        align-items: center;
+
+        &:hover {
+            background-color: #eee;
+        }
+        a {
+            display: flex;
+        }
+
+        span {
+            color: #000;
+            i {
+                text-align: center;
+                font-size: 1.2rem;
+                width: 30px;
+            }
+        }
+    }
 }
 
 .mid-header .container-header .container-header-3 .header-list .menu-header button {
