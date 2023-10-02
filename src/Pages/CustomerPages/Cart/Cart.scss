@@ -198,22 +198,25 @@ h3 {
     display: flex;
 }
 
-.quantity p {
-    position: relative;
-    top: 10px;
-    font-size: 16px;
-    font-weight: 600;
+.quantity {
+    p {
+        position: relative;
+        top: 10px;
+        font-size: 16px;
+        font-weight: 600;
+    }
 }
 
-.quantity input {
-    width: 30px;
-    height: 30px;
-    font-size: 16px;
-    //   font-weight: 500;
-    margin-top: 8px;
-    margin-left: 8px;
+.quantity {
+    input {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        //   font-weight: 500;
+        margin-top: 8px;
+        margin-left: 8px;
+    }
 }
-
 .product-remove {
     position: absolute;
     bottom: 4px;
@@ -237,10 +240,12 @@ h3 {
     color: #fff;
 }
 
-.product-quantity > input {
-    width: 40px;
-    padding: 5px;
-    text-align: center;
+.product-quantity {
+    input {
+        width: 40px;
+        padding: 5px;
+        text-align: center;
+    }
 }
 
 .fa {
@@ -272,18 +277,20 @@ h3 {
     margin-right: 8px;
 }
 
-.order a {
-    display: block;
-    text-align: center;
-    height: 40px;
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    font-weight: 600;
-    line-height: 40px;
-    border-radius: 5px;
-    background: -webkit-linear-gradient(left, #7579ff, #b224ef);
-    color: #fff;
-    text-decoration: none;
+.order {
+    a {
+        display: block;
+        text-align: center;
+        height: 40px;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        line-height: 40px;
+        border-radius: 5px;
+        background: -webkit-linear-gradient(left, #7579ff, #b224ef);
+        color: #fff;
+        text-decoration: none;
+    }
 }
 
 .cart-total a:hover {
@@ -323,13 +330,15 @@ h3 {
     display: flex;
 }
 
-.payment-container form {
-    z-index: 2;
-    padding: 20px;
-    width: 700px;
-    background: #fff;
-    box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%);
-    animation: fadeIn ease 0.5s;
+.payment-container {
+    form {
+        z-index: 2;
+        padding: 20px;
+        width: 700px;
+        background: #fff;
+        box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%);
+        animation: fadeIn ease 0.5s;
+    }
 }
 
 @keyframes fadeIn {
@@ -344,71 +353,163 @@ h3 {
     }
 }
 
-.payment-container form .row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
+.payment-container {
+    form {
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+    }
 }
 
-.payment-container form .row .col {
-    flex: 1 1 250px;
+.payment-container {
+    form {
+        .row {
+            .col {
+                flex: 1 1 250px;
+            }
+        }
+    }
 }
 
-.payment-container form .row .col .title {
-    font-size: 20px;
-    color: #333;
-    padding-bottom: 5px;
-    text-transform: uppercase;
+.payment-container {
+    form {
+        .row {
+            .col {
+                .title {
+                    font-size: 20px;
+                    color: #333;
+                    padding-bottom: 5px;
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
 }
 
-.payment-container form .row .col .inputBox {
-    margin: 16px 0;
+.payment-container {
+    form {
+        .row {
+            .col {
+                .inputBox {
+                    margin: 16px 0;
+                }
+            }
+        }
+    }
 }
 
-.payment-container form .row .col .inputBox span {
-    margin-bottom: 10px;
-    display: block;
+.payment-container {
+    form {
+        .row {
+            .col {
+                .inputBox {
+                    span {
+                        margin-bottom: 10px;
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
 }
 
-.payment-container form .row .col .inputBox input {
-    width: 100%;
-    border: 1px solid #ccc;
-    padding: 10px 15px;
-    font-size: 15px;
-    text-transform: none;
+.payment-container {
+    form {
+        .row {
+            .col {
+                .inputBox {
+                    input {
+                        width: 100%;
+                        border: 1px solid #ccc;
+                        padding: 10px 15px;
+                        font-size: 15px;
+                        text-transform: none;
+                    }
+                }
+            }
+        }
+    }
 }
 
-.payment-container form .row .col .inputBox input:focus {
-    border: 1px solid #000;
+.payment-container {
+    form {
+        .row {
+            .col {
+                .inputBox {
+                    input:focus {
+                        border: 1px solid #000;
+                    }
+                }
+            }
+        }
+    }
 }
 
-.payment-container form .row .col .flex {
-    display: flex;
-    gap: 15px;
+.payment-container {
+    form {
+        .row {
+            .col {
+                .flex {
+                    display: flex;
+                    gap: 15px;
+                }
+            }
+        }
+    }
 }
 
-.payment-container form .row .col .flex .inputBox {
-    margin-top: 5px;
+.payment-container {
+    form {
+        .row {
+            .col {
+                .flex {
+                    .inputBox {
+                        margin-top: 5px;
+                    }
+                }
+            }
+        }
+    }
 }
 
-.payment-container form .row .col .inputBox img {
-    height: 32px;
-    margin-top: 5px;
-    filter: drop-shadow(0 0 1px #000);
+.payment-container {
+    form {
+        .row {
+            .col {
+                .inputBox {
+                    img {
+                        height: 32px;
+                        margin-top: 5px;
+                        filter: drop-shadow(0 0 1px #000);
+                    }
+                }
+            }
+        }
+    }
 }
 
-.payment-container form .submit-btn {
-    width: 49%;
-    padding: 12px;
-    font-size: 17px;
-    border-radius: 6px;
-    background: #4eab0c;
-    color: #fff;
-    margin-top: 5px;
-    cursor: pointer;
-    border: none;
+.payment-container {
+    form {
+        .submit-btn {
+            width: 49%;
+            padding: 12px;
+            font-size: 17px;
+            border-radius: 6px;
+            background: #4eab0c;
+            color: #fff;
+            margin-top: 5px;
+            cursor: pointer;
+            border: none;
+        }
+    }
 }
 
-.payment-container form .submit-btn:hover {
-    background: -webkit-linear-gradient(left, #b224ef, #7579ff);
+.payment-container {
+    form {
+        .submit-btn:hover {
+            background: -webkit-linear-gradient(left, #b224ef, #7579ff);
+        }
+    }
 }
