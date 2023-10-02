@@ -64,6 +64,46 @@ export default function Header() {
 
                         <Link to="/cart">
                             <div class="header-list">
+                                <div class="menu-header">
+                                    <div className="wrapper-content-menu">
+                                        <Link to="/login">
+                                            <button
+                                                style={{
+                                                    backgroundColor: '#C92127',
+                                                    color: '#fff',
+                                                    borderColor: 'transparent',
+                                                }}
+                                                className="btn-login"
+                                            >
+                                                Đăng nhập
+                                            </button>
+                                        </Link>
+                                        <Link to="/signup">
+                                            <button
+                                                style={{
+                                                    borderColor: '#C92127',
+                                                    color: '#C92127',
+                                                    backgroundColor: '#fff',
+                                                }}
+                                                className="btn-login"
+                                            >
+                                                Đăng ký
+                                            </button>
+                                        </Link>
+                                        <Link to="/login-fb">
+                                            <button
+                                                style={{
+                                                    backgroundColor: '#1478FC',
+                                                    color: '#fff',
+                                                    borderColor: 'transparent',
+                                                }}
+                                                className="btn-login"
+                                            >
+                                                <i class="fa-brands fa-facebook-f"></i> Đăng nhập bằng facebook
+                                            </button>
+                                        </Link>
+                                    </div>
+                                </div>
                                 <b>10</b>
                                 <i class="fa-regular fa-user"></i>
                                 <p>Tài khoản</p>
@@ -79,38 +119,7 @@ export default function Header() {
                     </div>
                 </div>
             </div>
-
-            <div class="header-menu">
-                <div class="header-menu-nav row grid wide">
-                    <div class="header-menu-nav-list">
-                        <div class="header-menu-nav-list-item">
-                            <NavLink to="/" class="header-menu-nav-item">
-                                <p>TRANG CHỦ</p>
-                            </NavLink>
-
-                            <NavLink to="#" class="header-menu-nav-item">
-                                <p>Danh mục sách</p>
-                            </NavLink>
-
-                            <NavLink to="/book-pages" class="header-menu-nav-item">
-                                <p>Sách đang kinh doanh</p>
-                            </NavLink>
-
-                            <a href="!#" class="header-menu-nav-item">
-                                <p>GIAO HÀNG tận nơi</p>
-                            </a>
-
-                            <NavLink to="/order-history" class="header-menu-nav-item">
-                                <p>LỊCH SỬ ĐẶT HÀNG</p>
-                            </NavLink>
-
-                            <NavLink to="/profile" class="header-menu-nav-item">
-                                <p>Thông tin cá nhân</p>
-                            </NavLink>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <hr class="hr" />
         </div>
         // </div>
         // </div>

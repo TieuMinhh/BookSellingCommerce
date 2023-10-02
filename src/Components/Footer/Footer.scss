@@ -54,10 +54,12 @@ a {
     display: block;
     cursor: pointer;
     opacity: 0.6;
+    transition: transform 0.2s, color 0.2s;
 }
 .footer-item-link:hover {
     opacity: 1;
-    color: #1bdd14;
+    color: #fff;
+    transform: scale(1.1); /* Tăng tỷ lệ 110% khi hover */
 }
 .special-item {
     text-decoration: none;
@@ -84,7 +86,7 @@ a {
 }
 .footer-about-me-list a {
     text-decoration: none;
-    color: #000000;
+    color: #fff;
     margin: 4px;
     display: inline-block;
     transform: scale(1);
@@ -96,6 +98,7 @@ a {
 
 .footer-power p {
     font-size: 1.6rem;
+    color: #fff;
 }
 .footer-power > p > a {
     text-decoration: none;
@@ -109,7 +112,11 @@ a {
 }
 
 .footer-pay .footer-pay-img {
-    width: 220px;
+    margin-right: 20px;
+}
+
+.footer-pay .footer-pay-img img {
+    width: 100%;
 }
 
 .footer-ship {
@@ -118,8 +125,8 @@ a {
     right: 12px;
 }
 
-.footer-ship .footer-ship-img {
-    width: 220px;
+.footer-ship img {
+    margin-right: 20px;
 }
 
 .footer-download {

@@ -17,42 +17,52 @@ h3 {
     margin-bottom: 48px;
 }
 
-.container .cart-title > h2 {
-    font-size: 20px;
-    color: #000;
-    display: inline;
+.container .cart-title {
+    h2 {
+        font-size: 20px;
+        color: #000;
+        display: inline;
+    }
 }
 
 .container .cart-title {
     display: flex;
 }
 
-.container .cart-title > span {
-    color: #000;
-    margin-left: 4px;
+.container .cart-title {
+    span {
+        color: #000;
+        margin-left: 4px;
+    }
 }
 
-.container > h1 {
-    padding: 20px 0;
+.container {
+    h1 {
+        padding: 20px 0;
+    }
 }
 
 .cart {
     display: flex;
 }
 
-.cart .product-header {
-    color: #000;
-    font-size: 1rem;
-    display: flex;
-    border: 1px solid silver;
-    margin-bottom: 20px;
-    background-color: #eee;
-    padding: 8px 16px;
+.cart {
+    .product-header {
+        color: #000;
+        font-size: 1rem;
+        display: flex;
+        border: 1px solid silver;
+        margin-bottom: 20px;
+        background-color: #eee;
+        padding: 8px 16px;
+    }
 }
 
-.cart .product-header input {
-    margin-right: 20px;
-    width: 20px;
+.cart .product-header {
+    input {
+        margin-right: 20px;
+        width: 20px;
+    }
 }
 
 .cart .product-header input:hover {
@@ -81,18 +91,24 @@ h3 {
     transform: scale(1);
 }
 
-.cart .product > input {
-    width: 26px;
-    margin-left: 16px;
+.cart .product {
+    input {
+        width: 26px;
+        margin-left: 16px;
+    }
 }
 
 .cart .product > input:hover {
     cursor: pointer;
 }
 
-.product > a > img {
-    height: 100%;
-    object-fit: cover;
+.product {
+    a {
+        img {
+            height: 100%;
+            object-fit: cover;
+        }
+    }
 }
 
 .product > img:hover {
@@ -105,9 +121,11 @@ h3 {
     position: relative;
 }
 
-.cart .product-info .quantity > input {
-    width: 60px;
-    text-align: center;
+.cart .product-info .quantity {
+    input {
+        width: 60px;
+        text-align: center;
+    }
 }
 
 .product-name {
@@ -135,13 +153,15 @@ h3 {
     margin: 4px 0;
 }
 
-.main-price span {
-    position: relative;
-    top: -10px;
-    font-size: 20px;
-    color: #8e8a8a;
-    text-decoration: line-through;
-    margin-left: auto;
+.main-price {
+    span {
+        position: relative;
+        top: -10px;
+        font-size: 20px;
+        color: #8e8a8a;
+        text-decoration: line-through;
+        margin-left: auto;
+    }
 }
 
 .size {
@@ -151,9 +171,11 @@ h3 {
     cursor: pointer;
 }
 
-.size p {
-    font-size: 16px;
-    font-weight: 600;
+.size {
+    p {
+        font-size: 16px;
+        font-weight: 600;
+    }
 }
 
 .size-product {
