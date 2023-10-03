@@ -3,6 +3,7 @@ import "./Cart.scss";
 
 import BookImg from "../../../Assets/img/book.png";
 import BookImg2 from "../../../Assets/img/book2.jpg";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
   return (
@@ -144,7 +145,7 @@ export default function Cart() {
           </p>
           <div id="order" className="order">
             <i className="fa-solid fa-shopping-cart fa-shopping"></i>
-            <a href="#">Đặt hàng</a>
+            <Link to="/pay">Đặt hàng</Link>
           </div>
         </div>
       </div>

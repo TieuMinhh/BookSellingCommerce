@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import "./BookDetail.scss";
 import Img from "../../../Assets/img/kgd.jpg";
+import { Link } from "react-router-dom";
 
 export default function BookDetail() {
   const [number, setNumber] = useState(1); //number of item
@@ -86,10 +87,12 @@ export default function BookDetail() {
               </Button>
             </div>
             <div class="buy-btn">
-              <Button id="order-btn" variant="danger">
-                <i class="fa-solid order-btn-box"></i>
-                Mua ngay
-              </Button>
+              <Link to="/pay">
+                <Button id="order-btn" variant="danger">
+                  <i class="fa-solid order-btn-box"></i>
+                  Mua ngay
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

@@ -267,17 +267,7 @@
 .product-related-item sup {
   color: #4eab0c;
 }
-.info-describe{
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  width: 1200px;
-  height: 480px;
-  margin:auto;
-  // margin-bottom: 30px;
 
-}
 h4{
   color: #000;
   font-weight: 600;
@@ -304,6 +294,13 @@ h4{
 }
 
 .info-describe {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  width: 1200px;
+  height: 480px;
+  margin:auto;
   .info-info {
     display: flex;
     flex-direction: row;
