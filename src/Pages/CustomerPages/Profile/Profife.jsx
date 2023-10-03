@@ -28,7 +28,7 @@ export default function Profile() {
                 </div>
                 <div className="sidebar-item-info">
                     <div className="wrapper-info-profile">
-                        <h2>BẢNG ĐIỀU KHIỂN CỦA KHÁCH HÀNG</h2>
+                        <h5>BẢNG ĐIỀU KHIỂN CỦA KHÁCH HÀNG</h5>
                         <div className="wrapper-detail-info">
                             <div className="detail-info-profile">
                                 <p className="user-name-profile ">
@@ -37,7 +37,7 @@ export default function Profile() {
                                 <p className="user-email-profile ">
                                     Email: <strong>minbao1412@gmail.com</strong>
                                 </p>
-                                <p className="user-level-profile    ">
+                                <p className="user-level-profile ">
                                     Cấp độ thành viên: <strong>Thân Thiết</strong>
                                 </p>
                                 <h6>Thông tin tài khoản</h6>

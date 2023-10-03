@@ -1,6 +1,17 @@
+import { useState } from 'react';
 import './ChangeInfo.scss';
 
 export default function ChangeInfo() {
+    const [isUpdatePass, setIsUpdatePass] = useState(false);
+
+    const handleInputPassword = (e) => {
+        if (e.target.checked) {
+            setIsUpdatePass(true);
+        } else {
+            setIsUpdatePass(false);
+        }
+    };
+
     return (
         <div className="wrapper-profile ">
             <div className="container-profile ">
@@ -27,38 +38,125 @@ export default function ChangeInfo() {
                     </div>
                 </div>
                 <div className="sidebar-item-info">
-                    <div className="wrapper-info-profile">
-                        <h2>BẢNG ĐIỀU KHIỂN CỦA KHÁCH HÀNG</h2>
-                        <div className="wrapper-detail-info">
-                            <div className="detail-info-profile">
-                                <p className="user-name-profile ">
-                                    Họ và tên: <strong>Ming Xiao</strong>
-                                </p>
-                                <p className="user-email-profile ">
-                                    Email: <strong>minbao1412@gmail.com</strong>
-                                </p>
-                                <p className="user-level-profile    ">
-                                    Cấp độ thành viên: <strong>Thân Thiết</strong>
-                                </p>
-                                <h6>Thông tin tài khoản</h6>
+                    <div className="wrapper-change-profile">
+                        <h5>THÔNG TIN TÀI KHOẢN</h5>
+                        <div className="wrapper-change-info">
+                            <div className="cover-input">
+                                <label htmlFor="">Họ</label>
 
-                                <p>
-                                    Số đơn hàng thành công năm 2023 <span>9</span>
-                                </p>
-                                <p>
-                                    Số tiền đã thanh toán năm 2023 <span>9</span>
-                                </p>
+                                <input className="form-control-input" type="text" name="" id="" placeholder="Họ..." />
                             </div>
-                        </div>
 
-                        <div className="user-detail-address">
-                            <h5>SỔ ĐỊA CHỈ</h5>
-                            <h6>ĐỊA CHỈ GIAO HÀNG MẶC ĐỊNH</h6>
-                            <p>97 Man Thiện, Thành phố Thủ Đức</p>
+                            <div className="cover-input">
+                                <label htmlFor="">Tên</label>
+                                <input type="text" name="" id="" className="form-control-input" placeholder="Tên..." />
+                            </div>
 
-                            <a href="edit-address" style={{ color: '#c92127' }}>
-                                Sửa đỉa chỉ
-                            </a>
+                            <div className="cover-input">
+                                <label htmlFor="">Số điện thoại</label>
+                                <input
+                                    type="number"
+                                    name=""
+                                    id=""
+                                    className="form-control-input"
+                                    placeholder="SĐT..."
+                                />
+                            </div>
+
+                            <div className="cover-input">
+                                <label htmlFor="">Email</label>
+                                <input
+                                    type="email"
+                                    name=""
+                                    id=""
+                                    className="form-control-input"
+                                    placeholder="Email..."
+                                />
+                            </div>
+
+                            <div className="cover-input">
+                                <label htmlFor="">Birthday</label>
+                                <div className="cover-input-birthday">
+                                    <input
+                                        style={{ textAlign: 'center' }}
+                                        type="text"
+                                        name=""
+                                        id=""
+                                        className="form-control-input"
+                                        readOnly
+                                        value="28"
+                                    />
+                                    <input
+                                        style={{ textAlign: 'center' }}
+                                        type="text"
+                                        name=""
+                                        id=""
+                                        className="form-control-input"
+                                        readOnly
+                                        value="09"
+                                    />
+                                    <input
+                                        style={{ textAlign: 'center' }}
+                                        type="text"
+                                        name=""
+                                        id=""
+                                        className="form-control-input"
+                                        readOnly
+                                        value="2001"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="cover-input">
+                                <label htmlFor="">Đổi mật khẩu</label>
+                                <input
+                                    type="checkbox"
+                                    name=""
+                                    id=""
+                                    className="form-control-checkbox"
+                                    onChange={handleInputPassword}
+                                />
+                            </div>
+
+                            {isUpdatePass && (
+                                <>
+                                    {' '}
+                                    <div className="cover-input">
+                                        <label htmlFor="">Mật khẩu hiện tại</label>
+                                        <input
+                                            type="email"
+                                            name=""
+                                            id=""
+                                            className="form-control-input"
+                                            placeholder="Mật khẩu hiện tại..."
+                                        />
+                                    </div>
+                                    <div className="cover-input">
+                                        <label htmlFor="">Mật khẩu mới</label>
+                                        <input
+                                            type="email"
+                                            name=""
+                                            id=""
+                                            className="form-control-input"
+                                            placeholder="Mật khẩu mới..."
+                                        />
+                                    </div>
+                                    <div className="cover-input">
+                                        <label htmlFor="">Nhập lại mật khẩu mới</label>
+                                        <input
+                                            type="email"
+                                            name=""
+                                            id=""
+                                            className="form-control-input"
+                                            placeholder="Nhập lại mật khẩu mới..."
+                                        />
+                                    </div>
+                                </>
+                            )}
+
+                            <div className="cover-btn">
+                                <button className="update-btn">Lưu thay đổi</button>
+                            </div>
                         </div>
                     </div>
                 </div>

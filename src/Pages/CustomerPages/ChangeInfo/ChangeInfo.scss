@@ -49,12 +49,71 @@
     flex: 3;
 }
 
-.wrapper-info-profile {
+.wrapper-change-profile {
+    h5 {
+        color: #000;
+        font-weight: bold;
+    }
 }
 
-.wrapper-detail-info {
-    background-color: #fff6e3;
+.wrapper-change-info {
     padding: 16px;
+
+    .cover-btn {
+        text-align: center;
+        font-size: 1.2rem;
+
+        .update-btn {
+            color: #fff;
+            border: none;
+            padding: 8px 60px;
+            font-weight: 600;
+            border-radius: 10px;
+            background-color: #c92127;
+        }
+    }
+
+    .cover-input {
+        display: flex;
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+
+        .form-control-checkbox {
+            width: 20px;
+        }
+
+        .form-control-input {
+            flex: 0.93;
+            outline: none;
+            padding: 4px 14px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            font-weight: bold;
+        }
+
+        .cover-input-birthday {
+            flex: 1;
+            .form-control-input {
+                flex: 0.9;
+                outline: none;
+                padding: 4px 14px;
+                margin-right: 4px;
+                border-radius: 3px;
+                border: 1px solid #ccc;
+                font-weight: bold;
+            }
+        }
+
+        .form-control-input::placeholder {
+            color: #ccc;
+            font-weight: 600;
+        }
+
+        label {
+            color: #000;
+            min-width: 180px;
+        }
+    }
 }
 
 .detail-info-profile {
