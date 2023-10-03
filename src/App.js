@@ -14,6 +14,10 @@ import Promotion from './Pages/AdminPages/Promotion/Promotion';
 import Login from './Pages/Auths/Login/Login';
 import SignUp from './Pages/Auths/Signin/Signin';
 import Profile from './Pages/CustomerPages/Profile/Profife';
+import ChangeInfo from './Pages/CustomerPages/ChangeInfo/ChangeInfo';
+import ChangeAddress from './Pages/CustomerPages/ChangeAddress/ChangeAddress';
+import OrderHistory from './Pages/CustomerPages/OrderHistory/OrderHistory';
+import MyVoucher from './Pages/CustomerPages/MyVoucher/MyVoucher';
 
 import jwtDecode from 'jwt-decode';
 import { AuthContextProvider } from './Context/AuthContext';
@@ -91,6 +95,10 @@ function App() {
                                         <Route path="/cart" element={<Cart />} />
                                         <Route path="/book-detail" element={<BookDetail />} />
                                         <Route path="/profile" element={<Profile />} />
+                                        <Route path="/change-info" element={<ChangeInfo />} />
+                                        <Route path="/change-address" element={<ChangeAddress />} />
+                                        <Route path="/order-history" element={<OrderHistory />} />
+                                        <Route path="/my-voucher" element={<MyVoucher />} />
 
                                         {/* <Route path="/hero" element={<Hero />} />
                 <Route path="/hero/detail" element={<HeroDetail />} />

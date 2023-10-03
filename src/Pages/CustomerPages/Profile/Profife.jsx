@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import './Profile.scss';
 
 export default function Profile() {
@@ -22,7 +21,7 @@ export default function Profile() {
                                 <a href="order-history">Đơn hàng của tôi</a>
                             </li>
                             <li>
-                                <a href="">Ví voucher</a>
+                                <a href="my-voucher">Ví voucher</a>
                             </li>
                         </ul>
                     </div>
