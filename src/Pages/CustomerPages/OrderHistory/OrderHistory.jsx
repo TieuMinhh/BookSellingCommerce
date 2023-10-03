@@ -1,4 +1,4 @@
-import './OrderHistory';
+import './OrderHistory.scss';
 
 export default function OrderHistory() {
     return (
@@ -15,7 +15,7 @@ export default function OrderHistory() {
                                 <a href="change-info">Thông tin tài khoản</a>
                             </li>
                             <li>
-                                <a href="change-address">Số địa chỉ</a>
+                                <a href="change-address">Sổ địa chỉ</a>
                             </li>
                             <li>
                                 <a href="order-history">Đơn hàng của tôi</a>
@@ -26,39 +26,61 @@ export default function OrderHistory() {
                         </ul>
                     </div>
                 </div>
-                <div className="sidebar-item-info">
-                    <div className="wrapper-info-profile">
-                        <h2>BẢNG ĐIỀU KHIỂN CỦA KHÁCH HÀNG</h2>
-                        <div className="wrapper-detail-info">
-                            <div className="detail-info-profile">
-                                <p className="user-name-profile ">
-                                    Họ và tên: <strong>Ming Xiao</strong>
-                                </p>
-                                <p className="user-email-profile ">
-                                    Email: <strong>minbao1412@gmail.com</strong>
-                                </p>
-                                <p className="user-level-profile    ">
-                                    Cấp độ thành viên: <strong>Thân Thiết</strong>
-                                </p>
-                                <h6>Thông tin tài khoản</h6>
-
-                                <p>
-                                    Số đơn hàng thành công năm 2023 <span>9</span>
-                                </p>
-                                <p>
-                                    Số tiền đã thanh toán năm 2023 <span>9</span>
-                                </p>
+                <div className="sidebar-cart-info">
+                    <div className="wrapper-header-myorder">
+                        <h5>ĐƠN HÀNG CỦA TÔI</h5>
+                        <div className="lists-status-cart">
+                            <div className="status-item" style={{ borderLeft: '2px solid #ccc' }}>
+                                <p className="count-of-status">99</p>
+                                <p className="name-status">Tất cả</p>
+                            </div>
+                            <div className="status-item">
+                                <p className="count-of-status">37</p>
+                                <p className="name-status">Chờ xác nhận</p>
+                            </div>
+                            <div className="status-item">
+                                <p className="count-of-status">12</p>
+                                <p className="name-status">Đang giao</p>
+                            </div>
+                            <div className="status-item">
+                                <p className="count-of-status">10</p>
+                                <p className="name-status">Hoàn tất</p>
+                            </div>
+                            <div className="status-item" style={{ borderRight: '2px solid #ccc' }}>
+                                <p className="count-of-status">40</p>
+                                <p className="name-status">Bị hủy</p>
                             </div>
                         </div>
+                    </div>
 
-                        <div className="user-detail-address">
-                            <h5>SỔ ĐỊA CHỈ</h5>
-                            <h6>ĐỊA CHỈ GIAO HÀNG MẶC ĐỊNH</h6>
-                            <p>97 Man Thiện, Thành phố Thủ Đức</p>
+                    <div className="wrapper-info-myorder">
+                        <div className="more-info-myorder">
+                            <div className="title-more-info">
+                                <p>Mã đơn hàng</p>
+                                <p>Ngày mua</p>
+                                <p>Người nhận</p>
+                                <p>Tổng tiền</p>
+                                <p>Trạng thái</p>
+                                <p></p>
+                            </div>
 
-                            <a href="edit-address" style={{ color: '#c92127' }}>
-                                Sửa đỉa chỉ
-                            </a>
+                            <div className="detail-title">
+                                <p>103312781</p>
+                                <p>03/10/2023</p>
+                                <p>Ming Xiao</p>
+                                <p>85.000 đ</p>
+                                <p>Bị hủy</p>
+                                <button className="detail-btn">Xem chi tiết</button>
+                            </div>
+
+                            <div className="detail-title">
+                                <p>103312781</p>
+                                <p>03/10/2023</p>
+                                <p>Ming Xiao</p>
+                                <p>85.000 đ</p>
+                                <p>Bị hủy</p>
+                                <button className="detail-btn">Xem chi tiết</button>
+                            </div>
                         </div>
                     </div>
                 </div>

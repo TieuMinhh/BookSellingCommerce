@@ -90,7 +90,7 @@ export default function Header() {
                                                 </div>
                                             </li>
                                         </Link>
-                                        <Link to="/login">
+                                        <Link to="/order-history">
                                             <li>
                                                 <span className="user-name">
                                                     <i class="fa-regular fa-clipboard"></i> Đơn hàng của tôi

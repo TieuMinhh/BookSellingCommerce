@@ -14,7 +14,6 @@
 .sidebar-profile {
     flex: 1;
     background-color: #fff;
-
     margin-right: 10px;
 }
 
@@ -43,13 +42,88 @@
     }
 }
 
-.sidebar-item-info {
-    padding: 16px;
+.sidebar-voucher {
     background-color: #fff;
     flex: 3;
+
+    p {
+        font-size: 1rem;
+        cursor: pointer;
+        color: #c92127;
+        margin-bottom: 4px;
+        font-weight: bold;
+    }
+
+    // .line-under {
+    //     height: 1.4px;
+    //     background-color: #c92127;
+    //     max-width: 110px;
+    //     margin-bottom: 2px;
+    // }
 }
 
-.wrapper-info-profile {
+.wrapper-header-voucher {
+    padding: 16px 16px 0;
+    border-bottom: 4px solid #ccc;
+
+    h5 {
+        font-weight: bold;
+        letter-spacing: 0;
+        color: #000;
+    }
+}
+
+.wrapper-content-voucher {
+    padding: 16px;
+
+    .container-content-voucher {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        .header-content-voucher {
+            padding-bottom: 10px;
+
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+    }
+
+    h6 {
+        letter-spacing: 0;
+        color: #2f80ed;
+        margin-bottom: 0;
+        display: inline;
+        margin-left: 8px;
+    }
+
+    .detail-content-voucher {
+        margin: 20px 0;
+        padding: 0 8px;
+        position: relative;
+        border: 1px solid #2f80ed;
+
+        border-radius: 8px;
+        .title-voucher {
+            color: #000;
+            margin-top: 10px;
+        }
+
+        .voucher-time {
+            color: #7a7e7f;
+            font-weight: 100;
+        }
+
+        .detail-voucher {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #2f80ed;
+            font-weight: 500;
+            text-decoration: underline;
+        }
+    }
 }
 
 .wrapper-detail-info {
@@ -67,15 +141,6 @@
         color: #000;
         border-bottom: 1px solid #ccc;
     }
-}
-
-.user-name-profile {
-}
-
-.user-email-profile {
-}
-
-.user-level-profile {
 }
 
 .user-detail-address {

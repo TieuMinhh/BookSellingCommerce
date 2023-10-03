@@ -1,4 +1,5 @@
 import './MyVoucher.scss';
+import CuponIcon from '../../../Assets/svg/ico_coupon.svg';
 
 export default function MyVoucher() {
     return (
@@ -15,7 +16,7 @@ export default function MyVoucher() {
                                 <a href="change-info">Thông tin tài khoản</a>
                             </li>
                             <li>
-                                <a href="change-address">Số địa chỉ</a>
+                                <a href="change-address">Sổ địa chỉ</a>
                             </li>
                             <li>
                                 <a href="order-history">Đơn hàng của tôi</a>
@@ -26,39 +27,29 @@ export default function MyVoucher() {
                         </ul>
                     </div>
                 </div>
-                <div className="sidebar-item-info">
-                    <div className="wrapper-info-profile">
-                        <h2>BẢNG ĐIỀU KHIỂN CỦA KHÁCH HÀNG</h2>
-                        <div className="wrapper-detail-info">
-                            <div className="detail-info-profile">
-                                <p className="user-name-profile ">
-                                    Họ và tên: <strong>Ming Xiao</strong>
-                                </p>
-                                <p className="user-email-profile ">
-                                    Email: <strong>minbao1412@gmail.com</strong>
-                                </p>
-                                <p className="user-level-profile    ">
-                                    Cấp độ thành viên: <strong>Thân Thiết</strong>
-                                </p>
-                                <h6>Thông tin tài khoản</h6>
-
-                                <p>
-                                    Số đơn hàng thành công năm 2023 <span>9</span>
-                                </p>
-                                <p>
-                                    Số tiền đã thanh toán năm 2023 <span>9</span>
-                                </p>
+                <div className="sidebar-voucher">
+                    <div className="wrapper-header-voucher">
+                        <h5>VÍ VOUCHER</h5>
+                        <p>Voucher của tôi</p>
+                        <div className="line-under"></div>
+                    </div>
+                    <div className="wrapper-content-voucher">
+                        <div className="container-content-voucher">
+                            <div className="header-content-voucher">
+                                <img src={CuponIcon} alt="" />
+                                <h6>KHUYẾN MÃI</h6>
                             </div>
-                        </div>
+                            <div className="detail-content-voucher">
+                                <p className="title-voucher">MÃ GIẢM 30K - ĐƠN HÀNG TỪ 270K</p>
+                                <p className="voucher-time">ÁP DỤNG TỪ THỨ 2 ĐẾN THỨ 4 HÀNG TUẦN</p>
+                                <p className="detail-voucher">Chi tiết</p>
+                            </div>
 
-                        <div className="user-detail-address">
-                            <h5>SỔ ĐỊA CHỈ</h5>
-                            <h6>ĐỊA CHỈ GIAO HÀNG MẶC ĐỊNH</h6>
-                            <p>97 Man Thiện, Thành phố Thủ Đức</p>
-
-                            <a href="edit-address" style={{ color: '#c92127' }}>
-                                Sửa đỉa chỉ
-                            </a>
+                            <div className="detail-content-voucher">
+                                <p className="title-voucher">MÃ GIẢM 30K - ĐƠN HÀNG TỪ 270K</p>
+                                <p className="voucher-time">ÁP DỤNG TỪ THỨ 2 ĐẾN THỨ 4 HÀNG TUẦN</p>
+                                <p className="detail-voucher">Chi tiết</p>
+                            </div>
                         </div>
                     </div>
                 </div>

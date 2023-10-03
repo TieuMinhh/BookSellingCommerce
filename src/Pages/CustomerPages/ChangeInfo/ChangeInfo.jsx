@@ -26,7 +26,7 @@ export default function ChangeInfo() {
                                 <a href="change-info">Thông tin tài khoản</a>
                             </li>
                             <li>
-                                <a href="change-address">Số địa chỉ</a>
+                                <a href="change-address">Sổ địa chỉ</a>
                             </li>
                             <li>
                                 <a href="order-history">Đơn hàng của tôi</a>

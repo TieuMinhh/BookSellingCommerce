@@ -1,3 +1,4 @@
+// Start common css
 .wrapper-profile {
     background-color: #f0f0f0;
 }
@@ -14,7 +15,6 @@
 .sidebar-profile {
     flex: 1;
     background-color: #fff;
-
     margin-right: 10px;
 }
 
@@ -43,50 +43,101 @@
     }
 }
 
-.sidebar-item-info {
-    padding: 16px;
+.sidebar-cart-info {
     background-color: #fff;
     flex: 3;
-}
 
-.wrapper-info-profile {
-}
-
-.wrapper-detail-info {
-    background-color: #fff6e3;
-    padding: 16px;
-}
-
-.detail-info-profile {
-    p {
-        font-size: 1rem;
-    }
-
-    h6 {
-        padding-bottom: 10px;
-        color: #000;
-        border-bottom: 1px solid #ccc;
-    }
-}
-
-.user-name-profile {
-}
-
-.user-email-profile {
-}
-
-.user-level-profile {
-}
-
-.user-detail-address {
     h5 {
-        color: #c92127;
-        padding: 10px 0;
-        border-bottom: 1px solid #ccc;
+        color: #000;
+        font-weight: bold;
+        padding: 16px 0 0 16px;
+    }
+}
+// End common css
+
+.wrapper-header-myorder {
+    border-bottom: 8px solid #f0f0f0;
+}
+
+.wrapper-info-myorder {
+    padding: 32px 28px;
+}
+
+.lists-status-cart {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0 28px;
+
+    .status-item {
+        cursor: pointer;
+        margin-bottom: 4px;
+        border-right: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        width: 20%;
+
+        .count-of-status {
+            margin: 0;
+        }
+
+        .name-status {
+            margin: 0;
+        }
+    }
+}
+
+.status-item {
+    text-align: center;
+}
+
+.count-of-status {
+}
+
+.name-status {
+}
+
+.line-cart {
+    height: 4px;
+    background-color: #ccc;
+}
+
+.more-info-myorder {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.title-more-info {
+    display: table-row;
+    border-bottom: 1px solid #ccc;
+    p {
+        display: table-cell;
+        padding: 14px 0;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #616161;
+    }
+}
+
+.detail-title {
+    display: table-row;
+    border-bottom: 1px solid #ccc;
+
+    .detail-btn {
+        border: none;
+        color: #f7941e;
+        background-color: transparent;
+        font-size: 0.9rem;
     }
 
-    h6 {
-        padding-top: 10px;
-        color: #000;
+    p {
+        display: table-cell;
+        padding: 14px 0;
+        font-size: 1rem;
+        color: #616161;
     }
+}
+
+.detail-btn {
 }
