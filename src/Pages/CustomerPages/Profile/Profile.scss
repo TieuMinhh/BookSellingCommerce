@@ -50,6 +50,12 @@
 }
 
 .wrapper-info-profile {
+    h5 {
+        color: #000;
+        letter-spacing: 2px;
+        padding-bottom: 10px;
+        font-size: 1.4rem;
+    }
 }
 
 .wrapper-detail-info {
@@ -60,9 +66,14 @@
 .detail-info-profile {
     p {
         font-size: 1rem;
+
+        span {
+            float: right;
+        }
     }
 
     h6 {
+        padding-top: 10px;
         padding-bottom: 10px;
         color: #000;
         border-bottom: 1px solid #ccc;
@@ -81,7 +92,7 @@
 .user-detail-address {
     h5 {
         color: #c92127;
-        padding: 10px 0;
+        padding: 20px 0 8px;
         border-bottom: 1px solid #ccc;
     }
 

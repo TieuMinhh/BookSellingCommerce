@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import './Profile.scss';
 
 export default function Profile() {
@@ -22,14 +21,14 @@ export default function Profile() {
                                 <a href="order-history">Đơn hàng của tôi</a>
                             </li>
                             <li>
-                                <a href="">Ví voucher</a>
+                                <a href="my-voucher">Ví voucher</a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div className="sidebar-item-info">
                     <div className="wrapper-info-profile">
-                        <h2>BẢNG ĐIỀU KHIỂN CỦA KHÁCH HÀNG</h2>
+                        <h5>BẢNG ĐIỀU KHIỂN CỦA KHÁCH HÀNG</h5>
                         <div className="wrapper-detail-info">
                             <div className="detail-info-profile">
                                 <p className="user-name-profile ">
@@ -38,7 +37,7 @@ export default function Profile() {
                                 <p className="user-email-profile ">
                                     Email: <strong>minbao1412@gmail.com</strong>
                                 </p>
-                                <p className="user-level-profile    ">
+                                <p className="user-level-profile ">
                                     Cấp độ thành viên: <strong>Thân Thiết</strong>
                                 </p>
                                 <h6>Thông tin tài khoản</h6>
