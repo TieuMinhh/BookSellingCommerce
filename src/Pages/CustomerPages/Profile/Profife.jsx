@@ -15,7 +15,7 @@ export default function Profile() {
                                 <a href="change-info">Thông tin tài khoản</a>
                             </li>
                             <li>
-                                <a href="change-address">Số địa chỉ</a>
+                                <a href="change-address">Sổ địa chỉ</a>
                             </li>
                             <li>
                                 <a href="order-history">Đơn hàng của tôi</a>
@@ -56,7 +56,7 @@ export default function Profile() {
                             <h6>ĐỊA CHỈ GIAO HÀNG MẶC ĐỊNH</h6>
                             <p>97 Man Thiện, Thành phố Thủ Đức</p>
 
-                            <a href="edit-address" style={{ color: '#c92127' }}>
+                            <a href="edit-address" style={{ color: '#c92127', fontSize: '.9rem' }}>
                                 Sửa đỉa chỉ
                             </a>
                         </div>

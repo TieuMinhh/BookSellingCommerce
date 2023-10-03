@@ -1,0 +1,7 @@
+<svg id="ico_coupon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <path id="Path_523" data-name="Path 523" d="M0,0H24V24H0Z" fill="none"/>
+  <line id="Line_169" data-name="Line 169" y2="2" transform="translate(15 5)" fill="none" stroke="#2f80ed" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+  <line id="Line_170" data-name="Line 170" y2="2" transform="translate(15 11)" fill="none" stroke="#2f80ed" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+  <line id="Line_171" data-name="Line 171" y2="2" transform="translate(15 17)" fill="none" stroke="#2f80ed" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+  <path id="Path_524" data-name="Path 524" d="M5,5H19a2,2,0,0,1,2,2v3a2,2,0,0,0,0,4v3a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V14a2,2,0,0,0,0-4V7A2,2,0,0,1,5,5" fill="none" stroke="#2f80ed" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+</svg>
