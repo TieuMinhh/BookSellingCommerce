@@ -142,7 +142,6 @@ h3 {
 }
 
 .main-price {
-    margin-bottom: -28px;
 }
 
 .main-price .price {
@@ -151,16 +150,15 @@ h3 {
     line-height: 1.4;
     font-weight: 900;
     margin: 4px 0;
+    display: inline;
 }
 
 .main-price {
     span {
-        position: relative;
-        top: -10px;
         font-size: 20px;
         color: #8e8a8a;
         text-decoration: line-through;
-        margin-left: auto;
+        margin-left: 16px;
     }
 }
 

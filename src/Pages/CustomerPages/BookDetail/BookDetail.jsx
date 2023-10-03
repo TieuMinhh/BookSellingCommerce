@@ -44,7 +44,7 @@ export default function BookDetail() {
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
                     </div>
-                    <div class="main-price">
+                    <div class="main-price-bookdetail">
                         <div class="price">110.000đ</div>
                         <span>150.000đ</span>
                     </div>
