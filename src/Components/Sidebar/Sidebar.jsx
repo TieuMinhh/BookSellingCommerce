@@ -11,6 +11,8 @@ import { HiCircleStack } from "react-icons/hi2";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { useNavigate } from "react-router-dom";
 
+import jwtDecode from "jwt-decode";
+
 // import Avatar from "../../assets/Images/avatar.png";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -41,6 +43,13 @@ const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Trang chủ");
   const navigate = useNavigate();
+  // var [role, setRole] = useState(
+  //   jwtDecode(localStorage.getItem("accessToken")).role_id
+  // );
+
+  // const role = jwtDecode(
+  //   localStorage.getItem("accessToken")
+  // ).role_id;
 
   return (
     <div>
@@ -145,8 +154,8 @@ const Sidebar = () => {
                 setSelected={setSelected}
               />
               <Item
-                title="Sản phẩm"
-                to="/product"
+                title="Sách Bán"
+                to="/book"
                 icon={<HiCube />}
                 selected={selected}
                 setSelected={setSelected}
@@ -197,7 +206,8 @@ const Sidebar = () => {
               <div
                 onClick={() => {
                   localStorage.removeItem("accessToken");
-                  navigate("/login");
+                  navigate("/");
+                  // setRole = 0;
                 }}
               >
                 <Item

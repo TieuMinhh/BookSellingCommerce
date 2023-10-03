@@ -1,21 +1,38 @@
-import React from "react";
-import "./Header.scss";
-import LogoPage from "../../Assets/img/logo.png";
-import { Link, NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import styles from "./Header.scss";
+import LogoPage from "../../Assets/img/FahaShopBe.png";
+import { Link } from "react-router-dom";
+import MyLoginModal from "../../Pages/Auths/Auths/Auths";
+import VietNamFlag from "../../Assets/img/vietnam.png";
+import PLatinum from "../../Assets/svg/platinum.svg";
+
+// import classNames from "classnames/bind";
+
+// const cx = classNames.bind(styles);
 
 export default function Header() {
+  const [show, setShow] = useState(false);
+  const handleShow = (e) => {
+    setShow(true);
+  };
+  const handleClose = () => setShow(false);
+
+  const handleLoginSuccess = () => {
+    // Gọi hàm này sau khi đăng nhập thành công để đóng modal.
+    handleClose();
+  };
+
   return (
     <div class="header">
       <div class="topbar row">
         <div class="topbar-left col">
-          <p> Mở cửa: 7h30 đến 21h30, T7 và Chủ nhật 8h đến 22h</p>
+          <p className="open">
+            {" "}
+            Mở cửa: 7h30 đến 21h30, T7 và Chủ nhật 8h đến 22h
+          </p>
         </div>
         <div class="topbar-right col">
           <div class="topbar-right-list">
-            <div class="topbar-right-list-item">
-              <i class="fa-solid fa-user"></i>
-              <Link to="/login">Đăng nhập</Link>
-            </div>
             <div class="topbar-right-list-item">
               <i class="fa-solid fa-star"></i>
               <a href="https://www.thegioididong.com/mua-online-gia-re#game">
@@ -42,121 +59,245 @@ export default function Header() {
           </div>
           <div class="container-header-2 col">
             <div class="header-search">
-              <input type="text" placeholder="    Nhập để tìm kiếm ..."></input>
+              <input type="text" placeholder="Nhập để tìm kiếm ..."></input>
               <i class="icon fa fa-search"></i>
             </div>
           </div>
+
           <div class="container-header-3 col">
-            <div class="header-list">
-              <i class="fa-solid fa-phone"></i>
-              <div class="header-discription">
-                <b>(028) 1234 4321 (10 line)</b>
-                <p>DĐ: 0966 932 267</p>
+            <Link to="/cart" className="first">
+              <div class="header-list">
+                <b>12</b>
+                <i class="fa-regular fa-bell"></i>
+                <p>Notificas</p>
               </div>
-            </div>
-            <div class="header-list">
-              <i href="" class="fa-solid fa-cart-shopping"></i>
-              <div class="header-discription">
-                <Link to="/cart">
-                  <b>(0) Sản phẩm</b>
-                </Link>
+            </Link>
+
+            <Link to="/cart" className="first">
+              <div class="header-list">
+                <b>99</b>
+                <i class="fa-solid fa-cart-shopping"></i>
                 <p>Giỏ hàng</p>
               </div>
+            </Link>
+
+            <Link to="/profile" className="second">
+              <div class="header-list">
+                <div class="menu-header">
+                  {!localStorage.getItem("accessToken") ? (
+                    <div className="wrapper-content-menu">
+                      <button
+                        onClick={handleShow}
+                        style={{
+                          backgroundColor: "#C92127",
+                          color: "#fff",
+                          borderColor: "transparent",
+                        }}
+                        className="btn-login"
+                      >
+                        Đăng nhập
+                      </button>
+
+                      <button
+                        onClick={handleShow}
+                        style={{
+                          borderColor: "#C92127",
+                          color: "#C92127",
+                          backgroundColor: "#fff",
+                        }}
+                        className="btn-login"
+                      >
+                        Đăng ký
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="wrapper-menu-logged">
+                      <li>
+                        <Link to="/profile">
+                          <img src={PLatinum} alt="" />
+                          <div style={{ display: "inline-block" }}>
+                            <span className="user-name">
+                              Ming Xiao<br></br>
+                            </span>
+                            <span className="desp-name">
+                              Thành viên của fahasa
+                            </span>
+                          </div>
+                          <div className="coutinue-icon">
+                            <i
+                              style={{
+                                position: "absolute",
+                                color: "#000",
+                                lineHeight: "48px",
+                                right: "18px",
+                              }}
+                              class="fa-solid fa-chevron-left fa-rotate-180"
+                            ></i>
+                          </div>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/login">
+                          <span className="user-name">
+                            <i class="fa-regular fa-clipboard"></i> Đơn hàng của
+                            tôi
+                          </span>{" "}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/login">
+                          <span className="user-name">
+                            <i class="fa-regular fa-heart"></i> Sản phẩm yêu
+                            thích
+                          </span>{" "}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/login">
+                          <span className="user-name">
+                            <i class="fa-solid fa-ticket"></i> Wallet Voucher
+                          </span>{" "}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/login">
+                          <span className="user-name">
+                            <i class="fa-solid fa-f"></i> Tài khoản F-point
+                          </span>{" "}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/"
+                          onClick={() => {
+                            localStorage.removeItem("accessToken");
+                            // localStorage.removeItem("refreshToken");
+                          }}
+                        >
+                          <span className="user-name">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>{" "}
+                            Thoát tài khoản
+                          </span>{" "}
+                        </Link>
+                      </li>
+                    </div>
+                  )}
+                  {/*Start: Menu chưa login */}
+                  {/* <div className="wrapper-content-menu">
+                    <button
+                      onClick={handleShow}
+                      style={{
+                        backgroundColor: "#C92127",
+                        color: "#fff",
+                        borderColor: "transparent",
+                      }}
+                      className="btn-login"
+                    >
+                      Đăng nhập
+                    </button>
+
+                    <button
+                      onClick={handleShow}
+                      style={{
+                        borderColor: "#C92127",
+                        color: "#C92127",
+                        backgroundColor: "#fff",
+                      }}
+                      className="btn-login"
+                    >
+                      Đăng ký
+                    </button>
+                  </div> */}
+                  {/*End: Menu chưa login */}
+
+                  {/*Start: Menu đã login */}
+                  {/* <div className="wrapper-menu-logged">
+                    <li>
+                      <Link to="/profile">
+                        <img src={PLatinum} alt="" />
+                        <div style={{ display: "inline-block" }}>
+                          <span className="user-name">
+                            Ming Xiao<br></br>
+                          </span>
+                          <span className="desp-name">
+                            Thành viên của fahasa
+                          </span>
+                        </div>
+                        <div className="coutinue-icon">
+                          <i
+                            style={{
+                              position: "absolute",
+                              color: "#000",
+                              lineHeight: "48px",
+                              right: "18px",
+                            }}
+                            class="fa-solid fa-chevron-left fa-rotate-180"
+                          ></i>
+                        </div>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/login">
+                        <span className="user-name">
+                          <i class="fa-regular fa-clipboard"></i> Đơn hàng của
+                          tôi
+                        </span>{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/login">
+                        <span className="user-name">
+                          <i class="fa-regular fa-heart"></i> Sản phẩm yêu thích
+                        </span>{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/login">
+                        <span className="user-name">
+                          <i class="fa-solid fa-ticket"></i> Wallet Voucher
+                        </span>{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/login">
+                        <span className="user-name">
+                          <i class="fa-solid fa-f"></i> Tài khoản F-point
+                        </span>{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/login">
+                        <span className="user-name">
+                          <i class="fa-solid fa-arrow-right-from-bracket"></i>{" "}
+                          Thoát tài khoản
+                        </span>{" "}
+                      </Link>
+                    </li>
+                  </div> */}
+                  {/*End: Menu đã login */}
+                </div>
+                <b>10</b>
+                <i class="fa-regular fa-user"></i>
+                <p>Account</p>
+              </div>
+            </Link>
+
+            <div class="header-list">
+              <div class="cover-img-vietnam">
+                <img src={VietNamFlag} alt="vietnam" />
+                <span class="fa-solid fa-angle-down"></span>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <hr class="hr" />
 
-      <div class="header-menu">
-        <div class="header-menu-nav row grid wide">
-          <div class="header-menu-nav-list">
-            <div class="header-menu-nav-list-item">
-              <NavLink to="/" class="header-menu-nav-item">
-                <p>TRANG CHỦ</p>
-              </NavLink>
-
-              <NavLink to="#" class="header-menu-nav-item">
-                <p>Danh mục sách</p>
-              </NavLink>
-
-              <NavLink to="/book-pages" class="header-menu-nav-item">
-                <p>Sách đang kinh doanh</p>
-              </NavLink>
-
-              <a href="!#" class="header-menu-nav-item">
-                <p>GIAO HÀNG tận nơi</p>
-              </a>
-
-              <NavLink to="/order-history" class="header-menu-nav-item">
-                <p>LỊCH SỬ ĐẶT HÀNG</p>
-              </NavLink>
-
-              <NavLink to="/profile" class="header-menu-nav-item">
-                <p>Thông tin cá nhân</p>
-              </NavLink>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* <div class="header-bottom grid wide">
-        <span>Trang chủ</span>
-        <i class="fa-solid fa-angle-right"></i>
-        <span>Premier League</span>
-      </div> */}
-
-      {/* <!-- <div class="football-area">
-            <img id="football-img" onclick="changeImg()" class="header-img-center grid wide row col c-12" src="./assets/img/MU.jpg" alt="" >
-                     
-        </div> --> */}
-
-      {/* <div id="image-slider">
-        <div class="slider-img">
-          <div class="slides-img">
-
-            <input type="radio" name="radio-btn" id="radio1"></input>
-            <input type="radio" name="radio-btn" id="radio2"></input>
-            <input type="radio" name="radio-btn" id="radio3"></input>
-            <input type="radio" name="radio-btn" id="radio4"></input>
-            <input type="radio" name="radio-btn" id="radio5"></input>
-            <input type="radio" name="radio-btn" id="radio6"></input>
-
-            <div class="slide-image first">
-              <img src="/assets/img/MU2.jpg" alt=""></img>{" "}
-            </div>
-            <div class="slide-image">
-              <img src="/assets/img/chelsea-2023.jpg" alt=""></img>
-            </div>
-            <div class="slide-image">
-              <img src="/assets/img/real2024.jpg" alt=""></img>
-            </div>
-            <div class="slide-image">
-              <img src="/assets/img/brazil.jpg" alt=""></img>{" "}
-            </div>
-            <div class="slide-image">
-              <img src="/assets/img/france1.jpg" alt=""></img>{" "}
-            </div>
-            <div class="slide-image">
-              <img src="/assets/img/portugal.jpg" alt=""></img>
-            </div>
-
-            <div class="navigation-img-auto">
-              <div class="auto-btn1 manual-btn"></div>
-              <div class="auto-btn2 manual-btn"></div>
-              <div class="auto-btn3 manual-btn"></div>
-              <div class="auto-btn4 manual-btn"></div>
-              <div class="auto-btn5 manual-btn"></div>
-              <div class="auto-btn6 manual-btn"></div>
-            </div>
-
-          </div>
-          <i class="img-narrow-left fa-solid fa-circle-arrow-left"></i>
-          <i class="img-narrow-right fa-solid fa-circle-arrow-right"></i>
-          
-        </div>
-      </div> */}
-
-      {/* <!-- <img class="header-img-center grid wide row col c-12" src="./assets/img/rael2024.jpg" alt="" > --> */}
+      <MyLoginModal
+        show={show}
+        handleClose={handleClose}
+        handleLoginSuccess={handleLoginSuccess}
+      />
     </div>
   );
 }

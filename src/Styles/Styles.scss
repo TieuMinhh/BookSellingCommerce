@@ -4,11 +4,22 @@
   background-color: green;
 }
 
-.color-title {
-  color: #fff;
-  font-size: 20px;
+.background-header-white {
+  background-color: #fff;
 }
 
+.color-title {
+  font-size: 16px;
+}
+.color-red {
+  color: red;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  float: right;
+}
 .text-size-fit {
   font-size: 16px;
 }
@@ -16,6 +27,21 @@
   font-size: 20px;
 }
 
+.text-13 {
+  font-size: 13px;
+}
+
 .user-layout {
   background-color: #fff !important;
+}
+
+.modal-modal {
+  max-width: 400px;
+}
+
+.modal-header {
+  color: #000;
+  background-color: #fff;
+  font-size: 14px;
+  height: 50px;
 }

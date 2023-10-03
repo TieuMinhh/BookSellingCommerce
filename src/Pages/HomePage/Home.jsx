@@ -1,13 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./Home.scss";
+
 import AoMU from "../../Assets/img/aoMU.jpg";
+import toan from "../../Assets/img/toan.png";
+import tienganh12 from "../../Assets/img/tienganh12.jpg";
+import Filter from "../../Components/FilterBook/Filter";
+import { Link } from "react-router-dom";
 
 export default function Home() {
+  const [change, setChange] = useState(false);
+  const [list, setList] = useState([]);
+
+  async function getListProduct() {
+    // const result = await axiosApiInstance.get(
+    //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
+    // );
+    const result = await axios.get(
+      `http://localhost:8081/api/v1/admin/product?id=ALL`
+    );
+    setList(result?.data.listProduct);
+    // console.log(result.data);
+  }
+  useEffect(() => {
+    getListProduct();
+  }, [change]);
+
   return (
     <div class="content row grid wide">
       <div class="container_content">
         <div class="header-container">
-          <h1 class="header-container-categories">Premier League</h1>
+          {/* <h1 class="header-container-categories">Premier League</h1> */}
           <div class="header-container-icon">
             <i class="fa-solid fa-bars"></i>
             <i class="fa-solid fa-table-list"></i>
@@ -26,257 +49,45 @@ export default function Home() {
           </div>
         </div>
 
-        <div class="main-content">
-          <div class="main-list row">
-            <div class="main-list-item col l-3 m-4 c-12 mb-16">
-              <a href="/components/product/product.html">
-                <img src={AoMU} alt=""></img>
-                <div class="main-discription mt-8 mb-8">
-                  <p>Quần áo bóng đá câu lạc bộ Manchester United (Home)</p>
-                </div>
-                <div class="main-price">
-                  <p>110.000đ</p>
-                  <span>150.000đ</span>
-                </div>
-                <div class="main-rate">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
-                </div>
-              </a>
-            </div>
+        <div class="wrapper-content">
+          <Filter />
 
-            <div class="main-list-item col l-3 m-4 c-12 mb-16">
-              <a href="/components/product/product.html">
-                <img src={AoMU} alt=""></img>
-
-                <div class="main-discription mt-8 mb-8">
-                  <p>Quần áo bóng đá câu lạc bộ Manchester United (Away)</p>
-                </div>
-                <div class="main-price">
-                  <p>110.000đ</p>
-                  <span>150.000đ</span>
-                </div>
-                <div class="main-rate">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
-                </div>
-              </a>
-            </div>
-
-            <div class="main-list-item col l-3 m-4 c-12 mb-16">
-              <a href="/components/product/product.html">
-                <img src={AoMU} alt=""></img>
-
-                <div class="main-discription mt-8 mb-8">
-                  <p>Quần áo bóng đá câu lạc bộ Manchester United (Third)</p>
-                </div>
-                <div class="main-price">
-                  <p>110.000đ</p>
-                  <span>150.000đ</span>
-                </div>
-                <div class="main-rate">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
-                </div>
-              </a>
-            </div>
-
-            <div class="main-list-item col l-3 m-4 c-12 mb-16">
-              <a href="/components/product/product.html">
-                <img src={AoMU} alt=""></img>
-
-                <div class="main-discription mt-8 mb-8">
-                  <p>Quần áo bóng đá câu lạc bộ Manchester United (Tay dài)</p>
-                </div>
-                <div class="main-price">
-                  <p>130.000đ</p>
-                  <span>160.000đ</span>
-                </div>
-                <div class="main-rate">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
-                </div>
-              </a>
-            </div>
-
-            <div class="main-list-item col l-3 m-4 c-12 mb-16">
-              <a href="/components/product/product.html">
-                <img src={AoMU} alt=""></img>
-
-                <div class="main-discription mt-8 mb-8">
-                  <p>Quần áo bóng đá câu lạc bộ Manchester City (Home)</p>
-                </div>
-                <div class="main-price">
-                  <p>110.000đ</p>
-                  <span>150.000đ</span>
-                </div>
-                <div class="main-rate">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
-                </div>
-              </a>
-            </div>
-
-            <div class="main-list-item col l-3 m-4 c-12 mb-16">
-              <a href="/components/product/product.html">
-                <img src={AoMU} alt=""></img>
-
-                <div class="main-discription mt-8 mb-8">
-                  <p>Quần áo bóng đá câu lạc bộ Manchester City (Away)</p>
-                </div>
-                <div class="main-price">
-                  <p>110.000đ</p>
-                  <span>150.000đ</span>
-                </div>
-                <div class="main-rate">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
-                </div>
-              </a>
-            </div>
-
-            <div class="main-list-item col l-3 m-4 c-12 mb-16">
-              <a href="/components/product/product.html">
-                <img src={AoMU} alt=""></img>
-
-                <div class="main-discription mt-8 mb-8">
-                  <p>Quần áo bóng đá câu lạc bộ Manchester City (Third)</p>
-                </div>
-                <div class="main-price">
-                  <p>110.000đ</p>
-                  <span>150.000đ</span>
-                </div>
-                <div class="main-rate">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
-                </div>
-              </a>
-            </div>
-
-            <div class="main-list-item col l-3 m-4 c-12 mb-16">
-              <a href="/components/product/product.html">
-                <img src={AoMU} alt=""></img>
-
-                <div class="main-discription mt-8 mb-8">
-                  <p>Quần áo bóng đá câu lạc bộ Manchester City (Tay dài)</p>
-                </div>
-                <div class="main-price">
-                  <p>130.000đ</p>
-                  <span>170.000đ</span>
-                </div>
-                <div class="main-rate">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
-                </div>
-              </a>
-            </div>
-
-            <div class="main-list-item col l-3 m-4 c-12 mb-16">
-              <a href="/components/product/product.html">
-                <img src={AoMU} alt=""></img>
-
-                <div class="main-discription mt-8 mb-8">
-                  <p>Quần áo bóng đá câu lạc bộ Chelsea (Home)</p>
-                </div>
-                <div class="main-price">
-                  <p>110.000đ</p>
-                  <span>150.000đ</span>
-                </div>
-                <div class="main-rate">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
-                </div>
-              </a>
-            </div>
-
-            <div class="main-list-item col l-3 m-4 c-12 mb-16">
-              <a href="/components/product/product.html">
-                <img src={AoMU} alt=""></img>
-
-                <div class="main-discription mt-8 mb-8">
-                  <p>Quần áo bóng đá câu lạc bộ Chelsea (Away)</p>
-                </div>
-                <div class="main-price">
-                  <p>110.000đ</p>
-                  <span>150.000đ</span>
-                </div>
-                <div class="main-rate">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
-                </div>
-              </a>
-            </div>
-
-            <div class="main-list-item col l-3 m-4 c-12 mb-16">
-              <a href="/components/product/product.html">
-                <img src={AoMU} alt=""></img>
-
-                <div class="main-discription mt-8 mb-8">
-                  <p>Quần áo bóng đá câu lạc bộ Chelsea (Third)</p>
-                </div>
-                <div class="main-price">
-                  <p>110.000đ</p>
-                  <span>150.000đ</span>
-                </div>
-                <div class="main-rate">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
-                </div>
-              </a>
-            </div>
-
-            <div class="main-list-item col l-3 m-4 c-12 mb-16">
-              <a href="/components/product/product.html">
-                <img src={AoMU} alt=""></img>
-
-                <div class="main-discription mt-8 mb-8">
-                  <p>Quần áo bóng đá câu lạc bộ Chelsea (Tay dài)</p>
-                </div>
-                <div class="main-price">
-                  <p>130.000đ</p>
-                  <span>170.000đ</span>
-                </div>
-                <div class="main-rate">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
-                </div>
-              </a>
+          <div class="main-content">
+            <div class="main-list row">
+              {list &&
+                list.map((item, index) => {
+                  return (
+                    <div class="main-list-item">
+                      <Link to={`/book/detail?id=${item.id_product}`}>
+                        <div class="main-discription mt-8 mb-8">
+                          {/* <img
+                            src={`http://localhost:8081/image/${item.images}`}
+                            alt=""
+                            className="avatar-image"
+                          /> */}
+                          <img src={toan} alt=""></img>
+                          <p class="item-desp">{item.name_product}</p>
+                        </div>
+                        <div class="main-price">
+                          <p>
+                            {item.price.toLocaleString("vi", {
+                              style: "currency",
+                              currency: "VND",
+                            })}{" "}
+                          </p>
+                          <span>500.000đ</span>
+                        </div>
+                        <div class="main-rate">
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-regular fa-star"></i>
+                        </div>
+                      </Link>
+                    </div>
+                  );
+                })}
             </div>
           </div>
         </div>
@@ -297,7 +108,7 @@ export default function Home() {
           <div class="container-page">
             <p>13</p>
           </div>
-          <div class="end-page">
+          <div class="container-page">
             <p>Trang cuối</p>
           </div>
         </div>

@@ -27,6 +27,8 @@ import Header from "./Components/Header/Header";
 import HomePage from "./Pages/HomePage/Home";
 import Cart from "./Pages/CustomerPages/Cart/Cart";
 import BookDetail from "./Pages/CustomerPages/BookDetail/BookDetail";
+import Profile from "./Pages/CustomerPages/Profile/Profife";
+import OrderPay from "./Pages/CustomerPages/OrderPay/OrderPay";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -34,11 +36,11 @@ function App() {
 
   // let role = localStorage.getItem("accessToken");
 
-  // let role = localStorage.getItem("accessToken")
-  //   ? jwtDecode(localStorage.getItem("accessToken")).role_id
-  //   : 0;
+  let role = localStorage.getItem("accessToken")
+    ? jwtDecode(localStorage.getItem("accessToken")).role_id
+    : 0;
 
-  let role = 0;
+  // let role = 0;
 
   // console.log(role);
 
@@ -88,7 +90,10 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/cart" element={<Cart />} />
-                    <Route path="/book-detail" element={<BookDetail />} />
+                    <Route path="/book/detail" element={<BookDetail />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/order-pay" element={<OrderPay />} />
+
                     {/* <Route path="/hero" element={<Hero />} />
                 <Route path="/hero/detail" element={<HeroDetail />} />
                 <Route path="/academy" element={<Hero />}>

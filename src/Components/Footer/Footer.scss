@@ -30,18 +30,20 @@ a {
   margin: 0 auto;
 }
 .footer {
+  background-color: #fff;
   border-top: 4px solid #d0011c;
   padding-top: 60px;
 }
 .footer__heading {
   font-size: 1rem;
-  color: var(--text-color);
+
   margin-bottom: 30px;
 }
 .footer-list {
   list-style: none;
   position: relative;
   left: 2px;
+  margin-left: -32px;
 }
 .footer-item-link {
   text-decoration: none;
@@ -50,11 +52,12 @@ a {
   margin: 16px 0;
   display: block;
   cursor: pointer;
+
+  &:hover {
+    color: #1bdd14;
+  }
 }
-.footer-item-link:hover {
-  color: #1bdd14;
-}
-.special-item {
+.footer-item-link .special-item {
   text-decoration: none;
   font-size: 0.9rem;
   color: #757575;
@@ -66,7 +69,7 @@ a {
   left: 24px;
 }
 .footer-about-me {
-  padding: 40px 0;
+  // padding: 40px 0;
   text-align: center;
 }
 
@@ -75,7 +78,7 @@ a {
   font-size: 30px;
   text-align: center;
   margin-top: 20px;
-  margin-bottom: 30px;
+  // margin-bottom: 30px;
 }
 .footer-about-me-list a {
   text-decoration: none;
@@ -84,9 +87,10 @@ a {
   display: inline-block;
   transform: scale(1);
   transition-duration: 0.4s;
-}
-.footer-about-me-list a:hover {
-  transform: scale(1.2);
+
+  &:hover {
+    transform: scale(1.2);
+  }
 }
 
 .footer-power p {
@@ -94,17 +98,19 @@ a {
 }
 .footer-power > p > a {
   text-decoration: none;
-  color: var(--primary-color);
 }
 
 .footer-pay {
   position: relative;
-  bottom: 20px;
-  right: 12px;
+  bottom: 16px;
+  // right: 12px;
+  // margin-right: 4px;
 }
 
 .footer-pay .footer-pay-img {
   width: 220px;
+  margin-right: 24px;
+  margin-bottom: 16px;
 }
 
 .footer-ship {

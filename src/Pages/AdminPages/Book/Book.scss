@@ -112,24 +112,6 @@
   }
 }
 
-.modal-content {
-  .modal-header {
-    color: white;
-    background-color: green;
-    // background-color: green;
-    height: 50px;
-
-    button {
-      background-color: green;
-
-      span {
-        font-size: 30px;
-        color: white;
-      }
-    }
-  }
-}
-
 .modal-product-body {
   display: flex;
   gap: 30px;

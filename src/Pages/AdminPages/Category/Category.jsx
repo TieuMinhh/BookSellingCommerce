@@ -122,6 +122,7 @@ export default function Category() {
     setSelectedImage(null);
     setShowDel(false);
     if (result.status === 200) toast.success(result.data.message);
+    if (result.status === 201) toast.error(result.data.message);
   };
 
   useEffect(() => {

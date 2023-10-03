@@ -2,12 +2,22 @@ a {
   text-decoration: none;
 }
 
-.content .container_content {
-  flex: 0.75;
+.content {
+  background-color: #fff;
+  height: auto;
+}
+
+.content .main-content {
+  flex: 0.8;
+}
+
+.content .main-list {
+  width: 100%;
+  display: flex;
 }
 
 .content .container_content .header-container {
-  padding: 10px 0;
+  padding: 16px 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -39,22 +49,32 @@ a {
   border-radius: 3px;
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
+  margin: 0 4px;
 }
 
 .content .container_content .header-container .header-container-icon i:hover {
   color: #141313;
-  background-color: #fff;
+  opacity: 0.6;
 }
 
 .content .container_content .header-container .header-container-select select {
   width: 180px;
   height: 36px;
   color: #5a5959;
+  margin-left: 4px;
+}
+
+.content .container_content .wrapper-content {
+  display: flex;
 }
 
 .content .main-content .main-list .main-list-item {
-  //   position: relative;
-  //   overflow: hidden;
+  width: 25%;
+  margin-top: 32px;
+}
+
+.main-list-item > a {
+  display: block;
 }
 
 .content .main-content .main-list .main-list-item img {
@@ -63,6 +83,7 @@ a {
   -o-object-fit: contain;
   object-fit: contain;
   border-radius: 4px;
+  display: block;
 }
 
 .content .main-content .main-list .main-list-item:hover img {
@@ -74,7 +95,7 @@ a {
 .content .main-content .main-list .main-list-item .main-discription p {
   display: -webkit-inline-box;
   color: black;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   line-height: 1.3;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -92,16 +113,18 @@ a {
   margin: 6px 0;
 }
 
-.content .main-content .main-list .main-list-item .main-price p {
+.main-list-item .main-price p {
   color: #4eab0c;
   font-weight: 900;
+  font-size: 18px;
 }
 
-.content .main-content .main-list .main-list-item .main-price span {
+.main-list-item .main-price span {
   font-size: 0.9rem;
   color: #8e8a8a;
   text-decoration: line-through;
   margin-left: auto;
+  font-size: 18px;
 }
 
 .content .main-content .main-list .main-list-item .main-rate i {
@@ -216,12 +239,18 @@ a {
 }
 
 .content .last-container .end-page {
-  padding: 10px;
   background-color: #c9c6c6;
 }
 
 .content .last-container .end-page p {
+  padding: 10px;
+  background-color: #c9c6c6;
   color: white;
+  min-width: 40px;
+  text-align: center;
+  border-radius: 4px;
+  -webkit-transition: ease 0.2s;
+  transition: ease 0.2s;
 }
 
 .content .last-container .end-page:hover {
@@ -246,7 +275,7 @@ a {
 .list-filter ul li span {
   color: #5a5858;
   margin-left: 5px;
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 .list-filter ul li span:hover {
