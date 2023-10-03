@@ -63,13 +63,13 @@ export default function Header() {
                             </div>
                         </Link>
 
-                        <Link to="/cart">
+                        <Link to="/">
                             <div class="header-list">
                                 <div class="menu-header">
                                     {/*Start: Menu đã login */}
                                     <div className="wrapper-menu-logged">
-                                        <li>
-                                            <Link to="/profile">
+                                        <Link to="/profile">
+                                            <li>
                                                 <img src={PLatinum} alt="" />
                                                 <div style={{ display: 'inline-block' }}>
                                                     <span className="user-name">
@@ -82,49 +82,49 @@ export default function Header() {
                                                         style={{
                                                             position: 'absolute',
                                                             color: '#000',
-                                                            lineHeight: '48px',
                                                             right: '18px',
+                                                            top: '40%',
                                                         }}
                                                         class="fa-solid fa-chevron-left fa-rotate-180"
                                                     ></i>
                                                 </div>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/login">
+                                            </li>
+                                        </Link>
+                                        <Link to="/login">
+                                            <li>
                                                 <span className="user-name">
                                                     <i class="fa-regular fa-clipboard"></i> Đơn hàng của tôi
                                                 </span>{' '}
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/login">
+                                            </li>
+                                        </Link>
+                                        <Link to="/login">
+                                            <li>
                                                 <span className="user-name">
                                                     <i class="fa-regular fa-heart"></i> Sản phẩm yêu thích
                                                 </span>{' '}
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/login">
+                                            </li>
+                                        </Link>
+                                        <Link to="/login">
+                                            <li>
                                                 <span className="user-name">
                                                     <i class="fa-solid fa-ticket"></i> Wallet Voucher
                                                 </span>{' '}
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/login">
+                                            </li>
+                                        </Link>
+                                        <Link to="/login">
+                                            <li>
                                                 <span className="user-name">
                                                     <i class="fa-solid fa-f"></i> Tài khoản F-point
                                                 </span>{' '}
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/login">
+                                            </li>
+                                        </Link>
+                                        <Link to="/login">
+                                            <li>
                                                 <span className="user-name">
                                                     <i class="fa-solid fa-arrow-right-from-bracket"></i> Thoát tài khoản
                                                 </span>{' '}
-                                            </Link>
-                                        </li>
+                                            </li>
+                                        </Link>
                                     </div>
                                     {/*End: Menu đã login */}
                                     {/*Start: Menu chưa login */}
@@ -183,7 +183,7 @@ export default function Header() {
                     </div>
                 </div>
             </div>
-            <hr class="hr" />
+            <div class="line-bottom-header" />
         </div>
         // </div>
         // </div>
