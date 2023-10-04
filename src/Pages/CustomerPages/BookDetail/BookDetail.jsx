@@ -44,16 +44,32 @@ export default function BookDetail() {
                     </div>
                     <div class="images-product">
                         <div class="small-image-product">
-                            <img src={Img} alt="" onclick="showImage(this.src)"></img>
+                            <img
+                                src={`http://localhost:8081/image/${list && list[0]?.images}`}
+                                alt=""
+                                className="avatar-image"
+                            />
                         </div>
                         <div class="small-image-product">
-                            <img src={Img} alt="" onclick="showImage(this.src)"></img>
+                            <img
+                                src={`http://localhost:8081/image/${list && list[0]?.images}`}
+                                alt=""
+                                className="avatar-image"
+                            />
                         </div>
                         <div class="small-image-product">
-                            <img src={Img} alt="" onclick="showImage(this.src)"></img>
+                            <img
+                                src={`http://localhost:8081/image/${list && list[0]?.images}`}
+                                alt=""
+                                className="avatar-image"
+                            />
                         </div>
                         <div class="small-image-product">
-                            <img src={Img} alt="" onclick="showImage(this.src)"></img>
+                            <img
+                                src={`http://localhost:8081/image/${list && list[0]?.images}`}
+                                alt=""
+                                className="avatar-image"
+                            />
                         </div>
                     </div>
                 </div>
