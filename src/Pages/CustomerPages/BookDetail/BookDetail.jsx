@@ -102,7 +102,7 @@ export default function BookDetail() {
               <p
                 style={{
                   fontSize: "18px",
-                  marginTop: "16px",
+                  // marginTop: "16px",
                 }}
               >
                 {number}
