@@ -1,19 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import './BookDetail.scss';
+import axios from 'axios';
+// import Img from "../../../Assets/img/aoMU.jpg";
+// import toast, { Toaster } from "react-hot-toast";
 import Img from '../../../Assets/img/kgd.jpg';
 
 export default function BookDetail() {
+    const [list, setList] = useState([]);
     const [number, setNumber] = useState(1); //number of item
     const updateQuantity = (value) => {
         setNumber((prevState) => prevState + value);
     };
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const id = urlParams.get('id');
+
+    async function getDetailProduct() {
+        // const result = await axiosApiInstance.get(
+        //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
+        // );
+        const result = await axios.get(`http://localhost:8081/api/v1/chiTiet?id=${id}`);
+        setList(result?.data.listProduct);
+        console.log(result.data);
+        // console.log(list.price);
+    }
+    useEffect(() => {
+        getDetailProduct();
+    }, []);
+
     return (
         <div className="products-info">
             <div class="product-info">
                 <div class="left-product">
                     <div class="big-image-product">
-                        <img src={Img} alt=""></img>
+                        <img
+                            src={`http://localhost:8081/image/${list && list[0]?.images}`}
+                            alt=""
+                            className="avatar-image"
+                        />
+                        {/* <img src={Img} alt=""></img> */}
                     </div>
                     <div class="images-product">
                         <div class="small-image-product">
@@ -32,11 +59,7 @@ export default function BookDetail() {
                 </div>
 
                 <div class="right-product">
-                    <div class="product-name">Không Gia Đình</div>
-                    <div class="book-info">
-                        <p className="product-nxb">Nhà xuất bản: Kim Đồng</p>
-                        <p className="product-author"> Tác giả: Hector Malot</p>
-                    </div>
+                    <div class="product-name">{list && list[0]?.name_product}</div>
                     <div class="rating">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -44,11 +67,20 @@ export default function BookDetail() {
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
                     </div>
-                    <div class="main-price-bookdetail">
-                        <div class="price">110.000đ</div>
+
+                    <div class="main-price">
+                        <div class="price">
+                            {list &&
+                                list[0]?.price.toLocaleString('vi', {
+                                    style: 'currency',
+                                    currency: 'VND',
+                                })}{' '}
+                            {/* 200.000 đ */}
+                        </div>
                         <span>150.000đ</span>
                     </div>
-                    <div class="time-delivery">
+
+                    <div className="time-delivery">
                         <div className="info-delivery">
                             <p>Thời gian giao hàng</p>
                             <p>Chính sách đổi trả</p>
@@ -58,6 +90,7 @@ export default function BookDetail() {
                             <p>Khui sách = miễn đổi trả</p>
                         </div>
                     </div>
+
                     <div class="quantity">
                         <p class="quantityName">Số lượng :</p>
                         <button class="counter">
@@ -67,7 +100,7 @@ export default function BookDetail() {
                             <p
                                 style={{
                                     fontSize: '18px',
-                                    marginTop: '-3px',
+                                    // marginTop: "16px",
                                 }}
                             >
                                 {number}
@@ -77,6 +110,19 @@ export default function BookDetail() {
                             </button>
                         </button>
                     </div>
+
+                    {/* <div class="btn-box">
+            <button id="add-btn" class="cart-btn">
+              <i class="fa-solid fa-plus add-btn-box"></i>
+              Thêm
+            </button>
+
+            <button id="order-btn" class="buy-btn">
+              <i class="fa-solid fa-shopping-cart order-btn-box"></i>
+              Đặt hàng
+            </button>
+          </div> */}
+
                     <div class="btn-box">
                         <div class="cart-btn">
                             <Button id="add-btn" variant="outline-danger">
@@ -93,6 +139,7 @@ export default function BookDetail() {
                     </div>
                 </div>
             </div>
+
             <div class="product-related">
                 <div class="product-related-title">
                     <p>Bạn có thể thích</p>
@@ -118,6 +165,9 @@ export default function BookDetail() {
                     </div>
                 </div>
             </div>
+
+            <div class="line"></div>
+
             <div class="info-describe">
                 <h4> Thông tin sản phẩm</h4>
 

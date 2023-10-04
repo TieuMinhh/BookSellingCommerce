@@ -85,6 +85,49 @@ export default function OrderHistory() {
                     </div>
                 </div>
             </div>
+            {/* Start: Modal */}
+            <div className="modal-order-wrapper">
+                <div className="modal-order-container">
+                    <div className="modal-order-inner">
+                        <div className="modal-header">
+                            <h6 className="modal-header-title">CHI TIẾT ĐƠN HÀNG</h6>
+                            <p className="hightlight-status">
+                                Đơn hàng <span className="status-order">Chờ xác nhận</span>
+                            </p>
+                            <div className="modal-header-content">
+                                <div className="left-modal-content">
+                                    <p className="code-order-label">
+                                        Mã đơn hàng: <span className="code-order">103312781</span>
+                                    </p>
+                                    <p className="code-order-label">
+                                        Ngày mua: <span className="code-order">03/10/2023</span>
+                                    </p>
+                                    <p className="code-order-label">
+                                        Tổng tiền: <span className="code-order">85.000 đ</span>
+                                    </p>
+                                    <p className="code-order-label">
+                                        Thông tin xuất hóa đơn: <span className="code-order">(Không có)</span>
+                                    </p>
+                                    <p className="code-order-label">
+                                        GTGT: <span className="code-order">(Không có)</span>
+                                    </p>
+                                    <p className="code-order-label">
+                                        Ghi chú: <span className="code-order">(Không có)</span>
+                                    </p>
+                                </div>
+
+                                <div className="right-modal-content">
+                                    <button className="btn-re-order">Đặt hàng lại</button>
+                                    <button className="btn-cancel-order">Hủy đơn hàng</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-body"></div>
+                        <div className="modal-footer"></div>
+                    </div>
+                </div>
+            </div>
+            {/* End: Modal */}
         </div>
     );
 }

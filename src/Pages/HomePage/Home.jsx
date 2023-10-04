@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Home.scss';
 
 import AoMU from '../../Assets/img/aoMU.jpg';
 import toan from '../../Assets/img/toan.png';
 import tienganh12 from '../../Assets/img/tienganh12.jpg';
 import Filter from '../../Components/FilterBook/Filter';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
+    const [change, setChange] = useState(false);
+    const [list, setList] = useState([]);
+
+    async function getListProduct() {
+        // const result = await axiosApiInstance.get(
+        //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
+        // );
+        const result = await axios.get(`http://localhost:8081/api/v1/admin/product?id=ALL`);
+        setList(result?.data.listProduct);
+        // console.log(result.data);
+    }
+    useEffect(() => {
+        getListProduct();
+    }, [change]);
+
     return (
         <div class="content row grid wide">
             <div class="container_content">
                 <div class="header-container">
+                    {/* <h1 class="header-container-categories">Premier League</h1> */}
                     <div class="header-container-icon">
                         <i class="fa-solid fa-bars"></i>
                         <i class="fa-solid fa-table-list"></i>
@@ -34,605 +52,40 @@ export default function Home() {
 
                     <div class="main-content">
                         <div class="main-list row">
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Áo bóng đá CLB Manchester United Sân Nhà</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="main-list-item">
-                                <a href="/book-detail">
-                                    <div class="main-discription mt-8 mb-8">
-                                        <img src={toan} alt=""></img>
-                                        <p class="item-desp ">Đột phá môn toán 8+</p>
-                                    </div>
-                                    <div class="main-price">
-                                        <p>110.000đ</p>
-                                        <span>150.000đ</span>
-                                    </div>
-                                    <div class="main-rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                </a>
-                            </div>
+                            {list &&
+                                list.map((item, index) => {
+                                    return (
+                                        <div class="main-list-item">
+                                            <Link to={`/book/detail?id=${item.id_product}`}>
+                                                <div class="main-discription mt-8 mb-8">
+                                                    {/* <img
+                            src={`http://localhost:8081/image/${item.images}`}
+                            alt=""
+                            className="avatar-image"
+                          /> */}
+                                                    <img src={toan} alt=""></img>
+                                                    <p class="item-desp">{item.name_product}</p>
+                                                </div>
+                                                <div class="main-price">
+                                                    <p>
+                                                        {item.price.toLocaleString('vi', {
+                                                            style: 'currency',
+                                                            currency: 'VND',
+                                                        })}{' '}
+                                                    </p>
+                                                    <span>500.000đ</span>
+                                                </div>
+                                                <div class="main-rate">
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-regular fa-star"></i>
+                                                </div>
+                                            </Link>
+                                        </div>
+                                    );
+                                })}
                         </div>
                     </div>
                 </div>
