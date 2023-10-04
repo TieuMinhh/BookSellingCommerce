@@ -93,7 +93,7 @@ function App() {
                                         <Route path="/login" element={<Login />} />
                                         <Route path="/signup" element={<SignUp />} />
                                         <Route path="/cart" element={<Cart />} />
-                                        <Route path="/book-detail" element={<BookDetail />} />
+                                        <Route path="/book/detail" element={<BookDetail />} />
                                         <Route path="/profile" element={<Profile />} />
                                         <Route path="/change-info" element={<ChangeInfo />} />
                                         <Route path="/change-address" element={<ChangeAddress />} />

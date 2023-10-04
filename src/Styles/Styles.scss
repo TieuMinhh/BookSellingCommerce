@@ -1,21 +1,29 @@
-@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
 
 .background-header {
-  background-color: green;
+    background-color: green;
 }
 
 .color-title {
-  color: #fff;
-  font-size: 20px;
+    color: #fff;
+    font-size: 20px;
 }
 
 .text-size-fit {
-  font-size: 16px;
+    font-size: 16px;
 }
 .text-size-title {
-  font-size: 20px;
+    font-size: 20px;
 }
 
 .user-layout {
-  background-color: #fff !important;
+    background-color: #fff !important;
+}
+
+.text-right {
+    float: right;
+}
+
+.color-red {
+    color: #c83707;
 }
