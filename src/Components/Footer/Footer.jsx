@@ -117,12 +117,21 @@ export default function Footer() {
                         </h3>
                         <div class="footer-download">
                             <img
-                                style={{ width: '180px', marginRight: '16px' }}
+                                style={{
+                                    width: '180px',
+                                    marginLeft: '20px',
+                                    marginBottom: '12px',
+                                }}
                                 alt="down"
                                 src={GooglePlay}
                                 class="footer-download-img"
                             ></img>
-                            <img style={{ width: '180px' }} alt="down" src={AppStore} class="footer-download-img"></img>
+                            <img
+                                style={{ width: '180px', marginLeft: '20px' }}
+                                alt="down"
+                                src={AppStore}
+                                class="footer-download-img"
+                            ></img>
                         </div>
                     </div>
 
@@ -144,33 +153,6 @@ export default function Footer() {
                             <img style={{ width: '138px' }} alt="transport" src={Ninja} class="footer-ship-img"></img>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="footer-about-me">
-                <div class="footer-about-me-list">
-                    <a href="https://www.facebook.com/xiaoming4869">
-                        <i class="fa-brands fa-facebook-f"></i>
-                    </a>
-                    <a href="https://www.instagram.com/liang_mingg/">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                    <a href="https://www.youtube.com/channel/UC3cpdjGmTA6Joe2mUBmGEhQ">
-                        <i class="fa-brands fa-youtube"></i>
-                    </a>
-                    <a href="#/">
-                        <i class="fa-brands fa-twitter"></i>
-                    </a>
-                    <a href="https://www.tiktok.com/@xiaoming4869">
-                        <i class="fa-brands fa-tiktok"></i>
-                    </a>
-                    <a href="https://github.com/TieuMinhh">
-                        <i class="fa-brands fa-github"></i>
-                    </a>
-                </div>
-                <div class="footer-power">
-                    <p>
-                        Powered by <a href="https://www.facebook.com/xiaoming4869">小 明 先 生</a>
-                    </p>
                 </div>
             </div>
         </footer>

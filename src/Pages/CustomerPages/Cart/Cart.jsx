@@ -4,6 +4,7 @@ import './Cart.scss';
 import BookImg from '../../../Assets/img/toan.png';
 import BookImg2 from '../../../Assets/img/tienganh12.jpg';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Cart() {
     const [selectedItem, setSelectedItem] = useState([]);
@@ -152,9 +153,9 @@ export default function Cart() {
                         <span class="price-cart">220.000đ</span>
                     </div>
                     <div id="order" className="order">
-                        <a href="order-cart">
+                        <Link to="/order-pay" href="order-cart">
                             <i className="fa-solid fa-shopping-cart fa-shopping"></i>Thanh toán
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
