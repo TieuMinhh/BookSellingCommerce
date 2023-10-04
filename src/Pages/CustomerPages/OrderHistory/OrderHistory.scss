@@ -1,0 +1,143 @@
+// Start common css
+.wrapper-profile {
+    background-color: #f0f0f0;
+}
+
+.container-profile {
+    display: flex;
+    width: 1230px;
+    margin: 0 auto;
+    background-color: #f0f0f0;
+    justify-content: space-between;
+    padding: 10px 0 20px;
+}
+
+.sidebar-profile {
+    flex: 1;
+    background-color: #fff;
+    margin-right: 10px;
+}
+
+.wrapper-sidebar {
+    h3 {
+        color: #c92127;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 1.6rem;
+        border-bottom: 2px solid #f6f6f6;
+        padding: 18px;
+    }
+}
+
+.wrapper-sidebar .items-sidebar {
+    list-style-type: none;
+    padding: 12px;
+    li {
+        border-bottom: 2px solid #f6f6f6;
+        a {
+            padding: 10px 0;
+            display: block;
+            font-size: 1rem;
+            color: #000;
+        }
+    }
+}
+
+.sidebar-cart-info {
+    background-color: #fff;
+    flex: 3;
+
+    h5 {
+        color: #000;
+        font-weight: bold;
+        padding: 16px 0 0 16px;
+    }
+}
+// End common css
+
+.wrapper-header-myorder {
+    border-bottom: 8px solid #f0f0f0;
+}
+
+.wrapper-info-myorder {
+    padding: 32px 28px;
+}
+
+.lists-status-cart {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0 28px;
+
+    .status-item {
+        cursor: pointer;
+        margin-bottom: 4px;
+        border-right: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        width: 20%;
+
+        .count-of-status {
+            margin: 0;
+        }
+
+        .name-status {
+            margin: 0;
+        }
+    }
+}
+
+.status-item {
+    text-align: center;
+}
+
+.count-of-status {
+}
+
+.name-status {
+}
+
+.line-cart {
+    height: 4px;
+    background-color: #ccc;
+}
+
+.more-info-myorder {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.title-more-info {
+    display: table-row;
+    border-bottom: 1px solid #ccc;
+    p {
+        display: table-cell;
+        padding: 14px 0;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #616161;
+    }
+}
+
+.detail-title {
+    display: table-row;
+    border-bottom: 1px solid #ccc;
+
+    .detail-btn {
+        border: none;
+        color: #f7941e;
+        background-color: transparent;
+        font-size: 0.9rem;
+    }
+
+    p {
+        display: table-cell;
+        padding: 14px 0;
+        font-size: 1rem;
+        color: #616161;
+    }
+}
+
+.detail-btn {
+}
