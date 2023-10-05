@@ -76,7 +76,7 @@ export default function Header() {
                             </div>
                         </Link>
 
-                        <Link to="/profile" className="second">
+                        <Link to="" className="second">
                             <div class="header-list">
                                 <div class="menu-header">
                                     {!localStorage.getItem('accessToken') ? (
@@ -130,28 +130,28 @@ export default function Header() {
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link to="/login">
+                                                <Link to="/order-history">
                                                     <span className="user-name">
                                                         <i class="fa-regular fa-clipboard"></i> Đơn hàng của tôi
                                                     </span>{' '}
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link to="/login">
+                                                <Link to="/favourite">
                                                     <span className="user-name">
                                                         <i class="fa-regular fa-heart"></i> Sản phẩm yêu thích
                                                     </span>{' '}
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link to="/login">
+                                                <Link to="/my-voucher">
                                                     <span className="user-name">
                                                         <i class="fa-solid fa-ticket"></i> Wallet Voucher
                                                     </span>{' '}
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link to="/login">
+                                                <Link to="/account-fpoint">
                                                     <span className="user-name">
                                                         <i class="fa-solid fa-f"></i> Tài khoản F-point
                                                     </span>{' '}
