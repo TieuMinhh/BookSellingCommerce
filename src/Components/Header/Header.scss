@@ -208,13 +208,10 @@ a {
     min-width: 260px;
     opacity: 0.8;
     li {
-        // position: relative;
-        font-size: 0.9rem;
+        font-size: 1rem;
         list-style-type: none;
         padding: 10px;
         border-bottom: 1px solid #ccc;
-        // display: flex;
-        // align-items: center;
 
         &:hover {
             background-color: #eee;
