@@ -280,14 +280,16 @@ h3 {
         display: block;
         text-align: center;
         height: 40px;
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         text-transform: uppercase;
         font-weight: 600;
         line-height: 40px;
         border-radius: 5px;
+        max-width: 260px;
         background: -webkit-linear-gradient(left, #7579ff, #b224ef);
         color: #fff;
         text-decoration: none;
+        margin: 0 auto;
     }
 }
 

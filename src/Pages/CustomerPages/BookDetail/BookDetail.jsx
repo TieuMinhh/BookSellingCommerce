@@ -222,6 +222,7 @@ export default function BookDetail() {
                         chính... Bàn về Không gia đình không cần bất cứ lời bình luận hoa mỹ nào khác, chỉ gói gọn trong
                         hai từ: Kinh điển!
                     </p>
+                    <div className=""></div>
                 </div>
             </div>
         </div>
