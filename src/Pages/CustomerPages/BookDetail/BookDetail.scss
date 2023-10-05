@@ -69,8 +69,7 @@
             }
 
             .main-price {
-                margin-bottom: -28px;
-
+                margin: 20px 0;
                 .price {
                     color: #4eab0c;
                     font-size: 24px;
@@ -80,13 +79,9 @@
                 }
 
                 span {
-                    position: relative;
-                    top: -55px;
-                    left: 170px;
                     font-size: 24px;
                     color: #8e8a8a;
                     text-decoration: line-through;
-                    margin-left: auto;
                 }
             }
 
@@ -233,8 +228,7 @@
         flex-direction: column;
         border-radius: 10px;
         width: 1200px;
-        height: 480px;
-        margin: auto;
+        margin: 0 auto;
 
         h4 {
             color: #000;
@@ -288,6 +282,7 @@
 
             p {
                 font-size: 16px;
+                text-align: justify;
             }
         }
     }

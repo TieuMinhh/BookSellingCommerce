@@ -47,14 +47,15 @@ a {
 }
 .footer-item-link {
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #757575;
     margin: 16px 0;
     display: block;
     cursor: pointer;
 
     &:hover {
-        color: #1bdd14;
+        color: #ee4d2d;
+        font-weight: bold;
     }
 }
 .footer-item-link .special-item {
