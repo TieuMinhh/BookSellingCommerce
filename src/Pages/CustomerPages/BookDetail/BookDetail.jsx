@@ -5,10 +5,17 @@ import axios from 'axios';
 // import Img from "../../../Assets/img/aoMU.jpg";
 // import toast, { Toaster } from "react-hot-toast";
 import Img from '../../../Assets/img/kgd.jpg';
+import { toast } from 'react-toastify';
+
+import { getToken } from '../../../Services/Token';
+
+// import { AddToCart } from '../../../api/UserServices';
 
 export default function BookDetail() {
     const [list, setList] = useState([]);
     const [number, setNumber] = useState(1); //number of item
+    const [quantity, setQuantity] = useState(1);
+
     const updateQuantity = (value) => {
         setNumber((prevState) => prevState + value);
     };
@@ -26,6 +33,35 @@ export default function BookDetail() {
         console.log(result.data);
         // console.log(list.price);
     }
+
+    const handleIncrement = () => {
+        updateQuantity(1);
+        setQuantity(quantity + 1);
+    };
+
+    const handleDecrement = () => {
+        if (number >= 1) updateQuantity(-1);
+        if (quantity > 0) setQuantity(quantity - 1);
+    };
+
+    const handleAddToCart = async () => {
+        let token = await getToken();
+        // console.log('Token là ', token);
+        let id_product = id;
+        // let result = await AddToCart(token, id_product, quantity);
+
+        // console.log(result.message);
+
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        // console.log('Add Cart: ', token, id_product, quantity);
+        let result = await axios.post(`http://localhost:8081/api/v1/add-to-cart/${id_product}`, { quantity });
+        console.log(result);
+        // return response.data;
+
+        if (result.status === 200) toast.success(result.data.message);
+        if (result.status === 500) toast.error(result.data.message);
+    };
+
     useEffect(() => {
         getDetailProduct();
     }, []);
@@ -110,7 +146,7 @@ export default function BookDetail() {
                     <div class="quantity">
                         <p class="quantityName">Số lượng :</p>
                         <button class="counter">
-                            <button class="btn-giam" onClick={() => updateQuantity(-1)}>
+                            <button class="btn-giam" onClick={handleDecrement}>
                                 -
                             </button>
                             <p
@@ -121,7 +157,7 @@ export default function BookDetail() {
                             >
                                 {number}
                             </p>
-                            <button class="btn-tang" onClick={() => updateQuantity(1)}>
+                            <button class="btn-tang" onClick={handleIncrement}>
                                 +
                             </button>
                         </button>
@@ -141,7 +177,7 @@ export default function BookDetail() {
 
                     <div class="btn-box">
                         <div class="cart-btn">
-                            <Button id="add-btn" variant="outline-danger">
+                            <Button id="add-btn" variant="outline-danger" onClick={handleAddToCart}>
                                 <i class="fa-solid fa-shopping-cart add-btn-box"></i>
                                 Thêm vào giỏ hàng
                             </Button>
