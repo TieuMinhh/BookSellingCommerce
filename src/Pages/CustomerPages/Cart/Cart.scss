@@ -128,14 +128,12 @@ h3 {
     }
 }
 
-.product-name {
-    font-size: 18px;
-    margin-bottom: 12px;
-}
 .product-sub-name {
     font-size: 16px;
     color: #333333;
     opacity: 0.9;
+    font-weight: 100;
+    padding: 0;
 }
 .product-price {
     margin-bottom: 20px;
@@ -217,13 +215,48 @@ h3 {
 // }
 .quantity {
     display: flex;
+
+
+    .counter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 24px;
+        border: 1px solid #f53d2d;
+        height: 28px;
+        border-radius: 4px;
+        margin-top: auto;
+        margin-bottom: auto;
+
+        .btn-giam {
+            border: none;
+            margin-right: 10px;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .btn-tang {
+            border: none;
+            margin-left: 10px;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+    }
+}
     flex-direction: row;
+
 
     .quantityName {
         position: relative;
+
+        top: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #000;
+
         top: 8px;
         font-size: 18px;
         font-weight: 500;
+
     }
 
     .counter {
