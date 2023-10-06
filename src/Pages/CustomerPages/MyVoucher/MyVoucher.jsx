@@ -17,7 +17,7 @@ export default function MyVoucher() {
                                 <Link to="/change-info">Thông tin tài khoản</Link>
                             </li>
                             <li>
-                                <Link to="/change-address">Sổ địa chỉ</Link>
+                                <Link to="/change-password">Đổi mật khẩu</Link>
                             </li>
                             <li>
                                 <Link to="/order-history">Đơn hàng của tôi</Link>
