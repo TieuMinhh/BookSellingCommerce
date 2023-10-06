@@ -47,6 +47,7 @@ function App() {
 
     // let role = 0;
 
+    console.log(localStorage.getItem('userData'));
     // console.log(role);
 
     // useEffect(() => {
