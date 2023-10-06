@@ -16,6 +16,9 @@ export default function Profile() {
                                 <Link to="/change-info">Thông tin tài khoản</Link>
                             </li>
                             <li>
+                                <Link to="/change-password">Đổi mật khẩu</Link>
+                            </li>
+                            <li>
                                 <Link to="/order-history">Đơn hàng của tôi</Link>
                             </li>
                             <li>

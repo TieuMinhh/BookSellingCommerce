@@ -33,6 +33,7 @@ import HomePage from './Pages/HomePage/Home';
 import Cart from './Pages/CustomerPages/Cart/Cart';
 import BookDetail from './Pages/CustomerPages/BookDetail/BookDetail';
 import OrderPay from './Pages/CustomerPages/OrderPay/OrderPay';
+import ChangePassword from './Pages/CustomerPages/ChangePassword/ChangePassword';
 
 function App() {
     const [theme, colorMode] = useMode();
@@ -99,7 +100,7 @@ function App() {
                                         <Route path="/profile" element={<Profile />} />
                                         <Route path="/order-pay" element={<OrderPay />} />
                                         <Route path="/change-info" element={<ChangeInfo />} />
-                                        <Route path="/change-address" element={<ChangeAddress />} />
+                                        <Route path="/change-password" element={<ChangePassword />} />
                                         <Route path="/order-history" element={<OrderHistory />} />
                                         <Route path="/my-voucher" element={<MyVoucher />} />
 
