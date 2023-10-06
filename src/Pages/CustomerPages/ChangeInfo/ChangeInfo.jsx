@@ -65,19 +65,19 @@ export default function ChangeInfo() {
                         <h3>Tài khoản</h3>
                         <ul className="items-sidebar">
                             <li>
-                                <a href="profile">Bảng điều khiển tài khoản</a>
+                                <Link to="/profile">Bảng điều khiển tài khoản</Link>
                             </li>
                             <li>
-                                <a href="change-info">Thông tin tài khoản</a>
+                                <Link to="/change-info">Thông tin tài khoản</Link>
                             </li>
                             <li>
-                                <a href="change-address">Sổ địa chỉ</a>
+                                <Link to="/change-password">Đổi mật khẩu</Link>
                             </li>
                             <li>
-                                <a href="order-history">Đơn hàng của tôi</a>
+                                <Link to="/order-history">Đơn hàng của tôi</Link>
                             </li>
                             <li>
-                                <a href="my-voucher">Ví voucher</a>
+                                <Link to="/my-voucher">Ví voucher</Link>
                             </li>
                         </ul>
                     </div>
@@ -112,17 +112,6 @@ export default function ChangeInfo() {
                                 />
                             </div>
 
-                            {/* <div className="cover-input">
-                                <label htmlFor="">Email</label>
-                                <input
-                                    type="email"
-                                    name=""
-                                    id=""
-                                    className="form-control-input"
-                                    placeholder="Email..."
-                                />
-                            </div> */}
-
                             <div className="cover-input">
                                 <label htmlFor="">Địa chỉ</label>
                                 <input
@@ -135,54 +124,7 @@ export default function ChangeInfo() {
                                     onChange={(e) => setAddress(e.target.value)}
                                 />
                             </div>
-
-                            <div className="cover-input">
-                                <label htmlFor="">Đổi mật khẩu</label>
-                                <input
-                                    type="checkbox"
-                                    name=""
-                                    id=""
-                                    className="form-control-checkbox"
-                                    onChange={handleInputPassword}
-                                />
-                            </div>
-
-                            {isUpdatePass && (
-                                <>
-                                    {' '}
-                                    <div className="cover-input">
-                                        <label htmlFor="">Mật khẩu hiện tại</label>
-                                        <input
-                                            type="email"
-                                            name=""
-                                            id=""
-                                            className="form-control-input"
-                                            placeholder="Mật khẩu hiện tại..."
-                                        />
-                                    </div>
-                                    <div className="cover-input">
-                                        <label htmlFor="">Mật khẩu mới</label>
-                                        <input
-                                            type="email"
-                                            name=""
-                                            id=""
-                                            className="form-control-input"
-                                            placeholder="Mật khẩu mới..."
-                                        />
-                                    </div>
-                                    <div className="cover-input">
-                                        <label htmlFor="">Nhập lại mật khẩu mới</label>
-                                        <input
-                                            type="email"
-                                            name=""
-                                            id=""
-                                            className="form-control-input"
-                                            placeholder="Nhập lại mật khẩu mới..."
-                                        />
-                                    </div>
-                                </>
-                            )}
-
+                        
                             <div className="cover-btn" onClick={ChangeInfo}>
                                 <button className="update-btn">Lưu thay đổi</button>
                             </div>

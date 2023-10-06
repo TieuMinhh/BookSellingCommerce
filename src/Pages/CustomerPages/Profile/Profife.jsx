@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Profile.scss';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
@@ -28,19 +28,19 @@ export default function Profile() {
                         <h3>Tài khoản</h3>
                         <ul className="items-sidebar">
                             <li>
-                                <NavLink to="/profile-detail">Bảng điều khiển tài khoản</NavLink>
+                                <Link to="/profile">Bảng điều khiển tài khoản</Link>
                             </li>
                             <li>
-                                <NavLink to="/change-info">Thông tin tài khoản</NavLink>
+                                <Link to="/change-info">Thông tin tài khoản</Link>
                             </li>
                             <li>
-                                <NavLink to="/change-address">Sổ địa chỉ</NavLink>
+                                <Link to="/change-password">Đổi mật khẩu</Link>
                             </li>
                             <li>
-                                <NavLink to="/order-history">Đơn hàng của tôi</NavLink>
+                                <Link to="/order-history">Đơn hàng của tôi</Link>
                             </li>
                             <li>
-                                <NavLink to="/my-voucher">Ví voucher</NavLink>
+                                <Link to="/my-voucher">Ví voucher</Link>
                             </li>
                         </ul>
                     </div>
@@ -74,10 +74,6 @@ export default function Profile() {
                             <h5>SỔ ĐỊA CHỈ</h5>
                             <h6>ĐỊA CHỈ GIAO HÀNG MẶC ĐỊNH</h6>
                             <p>{user && user?.address}</p>
-
-                            <a href="edit-address" style={{ color: '#c92127', fontSize: '.9rem' }}>
-                                Sửa đỉa chỉ
-                            </a>
                         </div>
                     </div>
                 </div>
