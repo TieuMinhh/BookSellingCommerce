@@ -77,12 +77,13 @@
     padding: 16px;
 
     .container-content-voucher {
-        padding: 8px;
+        padding: 4px;
         border: 1px solid #ddd;
         border-radius: 10px;
+        max-height: 400px;
+        overflow-y: auto;
         .header-content-voucher {
-            padding-bottom: 10px;
-
+            // padding-bottom: 10px;
             display: flex;
             align-items: center;
             border-bottom: 1px solid #eee;
@@ -102,8 +103,8 @@
         padding: 0 8px;
         position: relative;
         border: 1px solid #2f80ed;
-
         border-radius: 8px;
+
         .title-voucher {
             color: #000;
             margin-top: 10px;

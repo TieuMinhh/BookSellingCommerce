@@ -3,6 +3,7 @@ import './ChangeInfo.scss';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { getToken } from '../../../Services/Token';
+import { Link } from 'react-router-dom';
 
 export default function ChangeInfo() {
     const [isUpdatePass, setIsUpdatePass] = useState(false);
@@ -12,14 +13,6 @@ export default function ChangeInfo() {
     const [user, setUser] = useState([]);
     const [change, setChange] = useState([]);
     const [idAccount, setIdAccount] = useState('');
-
-    const handleInputPassword = (e) => {
-        if (e.target.checked) {
-            setIsUpdatePass(true);
-        } else {
-            setIsUpdatePass(false);
-        }
-    };
 
     const getInfoUser = async () => {
         let token = await getToken();
@@ -124,7 +117,7 @@ export default function ChangeInfo() {
                                     onChange={(e) => setAddress(e.target.value)}
                                 />
                             </div>
-                        
+
                             <div className="cover-btn" onClick={ChangeInfo}>
                                 <button className="update-btn">Lưu thay đổi</button>
                             </div>

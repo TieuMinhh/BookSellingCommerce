@@ -1,18 +1,66 @@
 import { Link } from 'react-router-dom';
 import './OrderHistory.scss';
 import BookDemo from '../../../Assets/img/tienganh12.jpg';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getToken } from '../../../Services/Token';
+import { checkToken } from '../../../api/UserServices';
+import axios from 'axios';
+import moment from 'moment';
 
 export default function OrderHistory() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [user, getUser] = useState([]);
+    const [listOrderByAccount, setListOrderByAccount] = useState([]);
+    const [detailOrderByStatus, setDetailOrderByStatus] = useState([]);
+    const [change, setChange] = useState([]);
 
-    const showModal = () => {
+    const showModalDetail = (item) => {
+        console.log('id order là :', item.id_order);
         setIsModalOpen(true);
     };
 
     const hideModal = () => {
         setIsModalOpen(false);
     };
+
+    async function getOrderList() {
+        // let token = await getToken();
+        // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        // let result = await axios.get('http://localhost:8081/api/v1/account/info');
+        // getUser(result.data.userInfo);
+        // console.log('Check token neeee:', result.data.userInfo);
+        let token = await getToken();
+
+        let data = await checkToken(token);
+
+        let orderByAccount = await axios.get(
+            `http://localhost:8081/api/v1/account/donhangtheotaikhoan/${data.userInfo.id_account}`,
+        );
+        setListOrderByAccount(orderByAccount?.data.listOrder);
+        console.log(orderByAccount.data);
+    }
+
+    const getOrderByStatus = async (status) => {
+        // let token = await getToken();
+        // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        // let result = await axios.get('http://localhost:8081/api/v1/account/info');
+        // getUser(result.data.userInfo);
+        // console.log('Check token neeee:', result.data.userInfo);
+        let token = await getToken();
+
+        let data = await checkToken(token);
+
+        let orderByStatus = await axios.get(
+            `http://localhost:8081/api/v1/account/lichsudathang/${data.userInfo.id_account}/${status}`,
+        );
+        setDetailOrderByStatus(orderByStatus?.data.listOrder);
+        console.log(orderByStatus.data);
+    };
+
+    useEffect(() => {
+        getOrderList();
+        getOrderByStatus();
+    }, [change]);
 
     return (
         <div className="wrapper-profile ">
@@ -72,32 +120,34 @@ export default function OrderHistory() {
                                 <p>Mã đơn hàng</p>
                                 <p>Ngày mua</p>
                                 <p>Người nhận</p>
-                                <p>Tổng tiền</p>
+                                <p>Địa chỉ</p>
                                 <p>Trạng thái</p>
-                                <p></p>
+                                <p>Thao tác</p>
                             </div>
 
-                            <div className="detail-title">
-                                <p>103312781</p>
-                                <p>03/10/2023</p>
-                                <p>Ming Xiao</p>
-                                <p>85.000 đ</p>
-                                <p>Bị hủy</p>
-                                <button onClick={showModal} className="detail-btn">
-                                    Xem chi tiết
-                                </button>
-                            </div>
-
-                            <div className="detail-title">
-                                <p>103312781</p>
-                                <p>03/10/2023</p>
-                                <p>Ming Xiao</p>
-                                <p>85.000 đ</p>
-                                <p>Bị hủy</p>
-                                <button onClick={showModal} className="detail-btn">
-                                    Xem chi tiết
-                                </button>
-                            </div>
+                            {listOrderByAccount &&
+                                listOrderByAccount.map((item, index) => {
+                                    return (
+                                        <div className="detail-title">
+                                            <p>MH{item.id_order}</p>
+                                            <p>{moment(item.order_time).format('llll')}</p>
+                                            <p>{item.name}</p>
+                                            <p>{item.address}</p>
+                                            {item.status === 0 ? (
+                                                <p style={{ color: 'blue' }}>Đã hoàn thành</p>
+                                            ) : item.status === 1 ? (
+                                                <p style={{ color: '#FFD700' }}>Chờ xác nhận</p>
+                                            ) : item.status === 2 ? (
+                                                <p style={{ color: 'green' }}>Đang giao</p>
+                                            ) : (
+                                                <p style={{ color: 'red' }}>Đã huỷ</p>
+                                            )}
+                                            <button onClick={() => showModalDetail(item)} className="detail-btn">
+                                                Xem chi tiết
+                                            </button>
+                                        </div>
+                                    );
+                                })}
                         </div>
                     </div>
                 </div>
@@ -113,16 +163,16 @@ export default function OrderHistory() {
                             <div className="modal-header-order">
                                 <h6 className="modal-header-title">CHI TIẾT ĐƠN HÀNG</h6>
                                 <p className="hightlight-status-wait">
-                                    Đơn hàng <span className="status-order-wait">Chờ xác nhận</span>
+                                    <span className="status-order-wait">Chờ xác nhận</span>
                                 </p>
                                 <p className="hightlight-status-delivery">
-                                    Đơn hàng <span className="status-order-cancel">Đang giao</span>
+                                    <span className="status-order-cancel">Đang giao</span>
                                 </p>
                                 <p className="hightlight-status-done">
-                                    Đơn hàng <span className="status-order-cancel">Hoàn tất</span>
+                                    <span className="status-order-cancel">Hoàn tất</span>
                                 </p>
                                 <p className="hightlight-status-cancel">
-                                    Đơn hàng <span className="status-order-cancel">Bị hủy</span>
+                                    <span className="status-order-cancel">Bị hủy</span>
                                 </p>
                                 <div className="modal-header-content">
                                     <div className="left-modal-content">

@@ -18,7 +18,7 @@ function formatMoney(price) {
         : '0 đ';
 }
 
-export default function Cart() {
+export default function Cart(props) {
     const [selectedItem, setSelectedItem] = useState([]);
 
     const [number, setNumber] = useState(1); //number of item
@@ -96,7 +96,6 @@ export default function Cart() {
         getListProduct();
     }, [change]);
 
-
     const handleSelectAllCheckBox = (e) => {
         if (e.target.checked) {
             setSelectedItem([1, 2, 3]);
@@ -123,7 +122,7 @@ export default function Cart() {
         <div className="container">
             <div class="cart-title">
                 <h2 class="">GIỎ HÀNG</h2>
-                <span class="font-16">{`(${3} sản phẩm)`}</span>
+                <span class="font-16">({list.length} sản phẩm)</span>
             </div>
             <div className="cart">
                 <div className="products">
@@ -138,148 +137,6 @@ export default function Cart() {
                         />{' '}
                         Chọn tất cả {`(${3} sản phẩm)`}
                     </div>
-
-                    <div className="product">
-                        <input
-                            checked={selectedItem.includes(1)}
-                            value="1"
-                            onChange={handleSingleCheckBox}
-                            class="carts-check"
-                            type="checkbox"
-                            name=""
-                            id=""
-                        />
-                        <a href="/components/product/product.html">
-                            <img src={BookImg} alt="book"></img>
-                        </a>
-                        <div className="product-info">
-                            <h3 className="product-name">Đột phá 8+ môn toán</h3>
-                            <h4 className="product-sub-name">Sách dành cho nhà giàu tiêu tiền không cần nhìn giá</h4>
-                            <div className="main-price">
-                                <div className="price">110.000đ</div>
-                                <span>150.000đ</span>
-                            </div>
-
-                            <div className="quantity">
-                                <p>Số lượng :</p>
-                                <button class="counter">
-                                    <button class="btn-giam" onClick={() => updateQuantity(-1)}>
-                                        -
-                                    </button>
-                                    <p
-                                        style={{
-                                            fontSize: '18px',
-                                            // marginTop: "16px",
-                                        }}
-                                    >
-                                        {number}
-                                    </p>
-                                    <button class="btn-tang" onClick={() => updateQuantity(1)}>
-                                        +
-                                    </button>
-                                </button>
-                            </div>
-                            <p id="remove-product" className="product-remove">
-                                <i className="fa fa-trash fa-color" aria-hidden="true"></i>
-                                <span className="remove">Xoá</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="product">
-                        <input
-                            checked={selectedItem.includes(2)}
-                            value="2"
-                            onChange={handleSingleCheckBox}
-                            class="carts-check"
-                            type="checkbox"
-                            name=""
-                            id=""
-                        />
-                        <a href="/components/product/product.html">
-                            <img src={BookImg2} alt="book"></img>
-                        </a>
-                        <div className="product-info">
-                            <h3 className="product-name">Ôn tập và kiểm tra tiếng anh 12</h3>
-                            <h4 className="product-sub-name">Sách dành cho nhà giàu tiêu tiền không cần nhìn giá</h4>
-                            <div className="main-price">
-                                <div className="price">110.000đ</div>
-                                <span>150.000đ</span>
-                            </div>
-
-                            <div className="quantity">
-                                <p>Số lượng :</p>
-                                <button class="counter">
-                                    <button class="btn-giam" onClick={() => updateQuantity(-1)}>
-                                        -
-                                    </button>
-                                    <p
-                                        style={{
-                                            fontSize: '18px',
-                                            // marginTop: "16px",
-                                        }}
-                                    >
-                                        {number}
-                                    </p>
-                                    <button class="btn-tang" onClick={() => updateQuantity(1)}>
-                                        +
-                                    </button>
-                                </button>
-                            </div>
-                            <p id="remove-product" className="product-remove">
-                                <i className="fa fa-trash fa-color" aria-hidden="true"></i>
-                                <span className="remove">Xoá</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="product">
-                        <input
-                            checked={selectedItem.includes(3)}
-                            value="3"
-                            onChange={handleSingleCheckBox}
-                            class="carts-check"
-                            type="checkbox"
-                            name=""
-                            id=""
-                        />
-                        <a href="/components/product/product.html">
-                            <img src={BookImg2} alt="book"></img>
-                        </a>
-                        <div className="product-info">
-                            <h3 className="product-name">Ôn tập và kiểm tra tiếng anh 12</h3>
-                            <h4 className="product-sub-name">Sách dành cho nhà giàu tiêu tiền không cần nhìn giá</h4>
-                            <div className="main-price">
-                                <div className="price">110.000đ</div>
-                                <span>150.000đ</span>
-                            </div>
-
-                            <div className="quantity">
-                                <p>Số lượng :</p>
-                                <button class="counter">
-                                    <button class="btn-giam" onClick={() => updateQuantity(-1)}>
-                                        -
-                                    </button>
-                                    <p
-                                        style={{
-                                            fontSize: '18px',
-                                            // marginTop: "16px",
-                                        }}
-                                    >
-                                        {number}
-                                    </p>
-                                    <button class="btn-tang" onClick={() => updateQuantity(1)}>
-                                        +
-                                    </button>
-                                </button>
-                            </div>
-                            <p id="remove-product" className="product-remove">
-                                <i className="fa fa-trash fa-color" aria-hidden="true"></i>
-                                <span className="remove">Xoá</span>
-                            </p>
-                        </div>
-                    </div>
-
 
                     {list &&
                         list.map((item, index) => {
@@ -324,7 +181,6 @@ export default function Cart() {
                                                 <p
                                                     style={{
                                                         fontSize: '18px',
-                                                        marginTop: '16px',
                                                     }}
                                                 >
                                                     {item && item?.quantity}
@@ -346,7 +202,6 @@ export default function Cart() {
                                 </div>
                             );
                         })}
-
                 </div>
 
                 <div className="cart-total">
