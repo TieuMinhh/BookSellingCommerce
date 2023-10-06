@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './ChangeAddress.scss';
 
 export default function ChangeAddress() {
@@ -9,19 +10,19 @@ export default function ChangeAddress() {
                         <h3>Tài khoản</h3>
                         <ul className="items-sidebar">
                             <li>
-                                <a href="profile">Bảng điều khiển tài khoản</a>
+                                <Link to="/profile">Bảng điều khiển tài khoản</Link>
                             </li>
                             <li>
-                                <a href="change-info">Thông tin tài khoản</a>
+                                <Link to="/change-info">Thông tin tài khoản</Link>
                             </li>
                             <li>
-                                <a href="change-address">Sổ địa chỉ</a>
+                                <Link to="/change-address">Sổ địa chỉ</Link>
                             </li>
                             <li>
-                                <a href="order-history">Đơn hàng của tôi</a>
+                                <Link to="/order-history">Đơn hàng của tôi</Link>
                             </li>
                             <li>
-                                <a href="my-voucher">Ví voucher</a>
+                                <Link to="/my-voucher">Ví voucher</Link>
                             </li>
                         </ul>
                     </div>

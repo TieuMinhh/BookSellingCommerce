@@ -8,6 +8,10 @@ import { Link } from 'react-router-dom';
 
 export default function Cart() {
     const [selectedItem, setSelectedItem] = useState([]);
+    const [number, setNumber] = useState(1); //number of item
+    const updateQuantity = (value) => {
+        setNumber((prevState) => prevState + value);
+    };
 
     const handleSelectAllCheckBox = (e) => {
         if (e.target.checked) {
@@ -73,7 +77,22 @@ export default function Cart() {
 
                             <div className="quantity">
                                 <p>Số lượng :</p>
-                                <input type="number" min="1" defaultValue={1} name="" id=""></input>
+                                <button class="counter">
+                                    <button class="btn-giam" onClick={() => updateQuantity(-1)}>
+                                        -
+                                    </button>
+                                    <p
+                                        style={{
+                                            fontSize: '18px',
+                                            // marginTop: "16px",
+                                        }}
+                                    >
+                                        {number}
+                                    </p>
+                                    <button class="btn-tang" onClick={() => updateQuantity(1)}>
+                                        +
+                                    </button>
+                                </button>
                             </div>
                             <p id="remove-product" className="product-remove">
                                 <i className="fa fa-trash fa-color" aria-hidden="true"></i>
@@ -105,7 +124,22 @@ export default function Cart() {
 
                             <div className="quantity">
                                 <p>Số lượng :</p>
-                                <input type="number" min="1" defaultValue={1} name="" id=""></input>
+                                <button class="counter">
+                                    <button class="btn-giam" onClick={() => updateQuantity(-1)}>
+                                        -
+                                    </button>
+                                    <p
+                                        style={{
+                                            fontSize: '18px',
+                                            // marginTop: "16px",
+                                        }}
+                                    >
+                                        {number}
+                                    </p>
+                                    <button class="btn-tang" onClick={() => updateQuantity(1)}>
+                                        +
+                                    </button>
+                                </button>
                             </div>
                             <p id="remove-product" className="product-remove">
                                 <i className="fa fa-trash fa-color" aria-hidden="true"></i>
@@ -137,7 +171,22 @@ export default function Cart() {
 
                             <div className="quantity">
                                 <p>Số lượng :</p>
-                                <input type="number" min="1" defaultValue={1} name="" id=""></input>
+                                <button class="counter">
+                                    <button class="btn-giam" onClick={() => updateQuantity(-1)}>
+                                        -
+                                    </button>
+                                    <p
+                                        style={{
+                                            fontSize: '18px',
+                                            // marginTop: "16px",
+                                        }}
+                                    >
+                                        {number}
+                                    </p>
+                                    <button class="btn-tang" onClick={() => updateQuantity(1)}>
+                                        +
+                                    </button>
+                                </button>
                             </div>
                             <p id="remove-product" className="product-remove">
                                 <i className="fa fa-trash fa-color" aria-hidden="true"></i>

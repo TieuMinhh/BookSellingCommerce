@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Profile.scss';
 
 export default function Profile() {
@@ -10,19 +10,19 @@ export default function Profile() {
                         <h3>Tài khoản</h3>
                         <ul className="items-sidebar">
                             <li>
-                                <NavLink to="/profile-detail">Bảng điều khiển tài khoản</NavLink>
+                                <Link to="/profile">Bảng điều khiển tài khoản</Link>
                             </li>
                             <li>
-                                <NavLink to="/change-info">Thông tin tài khoản</NavLink>
+                                <Link to="/change-info">Thông tin tài khoản</Link>
                             </li>
                             <li>
-                                <NavLink to="/change-address">Sổ địa chỉ</NavLink>
+                                <Link to="/change-address">Sổ địa chỉ</Link>
                             </li>
                             <li>
-                                <NavLink to="/order-history">Đơn hàng của tôi</NavLink>
+                                <Link to="/order-history">Đơn hàng của tôi</Link>
                             </li>
                             <li>
-                                <NavLink to="/my-voucher">Ví voucher</NavLink>
+                                <Link to="/my-voucher">Ví voucher</Link>
                             </li>
                         </ul>
                     </div>
