@@ -24,7 +24,6 @@ export default function Cart() {
     const [change, setChange] = useState(false);
     const [list, setList] = useState([]);
     const [total, setTotal] = useState('0');
-    const [id, setID] = useState('');
 
     async function getListProduct() {
         // const result = await axiosApiInstance.get(
@@ -42,13 +41,12 @@ export default function Cart() {
         // const result = await axiosApiInstance.get(
         //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
         // );
-        console.log('id là :', id);
-        setID(item.id_product);
+        console.log('id là :', item.id_product);
 
         let token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-        const result = await axios.delete(`http://localhost:8081/api/v1/remove-from-cart/${id}`);
+        const result = await axios.delete(`http://localhost:8081/api/v1/remove-from-cart/${item.id_product}`);
         // setList(result?.data.list);
         // setTotal(result?.data.total);
         setChange(!change);
@@ -59,19 +57,34 @@ export default function Cart() {
     }
 
     async function IncrementProductFromCart(item) {
-        console.log('id là :', id);
-        setID(item.id_product);
+        console.log('id là :', item.id_product);
         let token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const result = await axios.put(`http://localhost:8081/api/v1/account/increment-product-from-cart/${id}`, {
-            data: { quantity: item.quantity },
-        });
+        const result = await axios.put(
+            `http://localhost:8081/api/v1/account/increment-product-from-cart/${item.id_product}`,
+            {
+                quantity: item.quantity,
+            },
+        );
 
         console.log(result);
         setChange(!change);
     }
 
-    const DecrementProductFromCart = async () => {};
+    async function DecrementProductFromCart(item) {
+        console.log('id là :', item.id_product);
+        let token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        const result = await axios.put(
+            `http://localhost:8081/api/v1/account/decrement-product-from-cart/${item.id_product}`,
+            {
+                quantity: item.quantity,
+            },
+        );
+
+        console.log(result);
+        setChange(!change);
+    }
 
     useEffect(() => {
         getListProduct();
