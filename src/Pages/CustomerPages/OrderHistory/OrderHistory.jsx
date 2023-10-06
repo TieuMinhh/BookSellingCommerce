@@ -28,9 +28,6 @@ export default function OrderHistory() {
                                 <Link to="/change-info">Thông tin tài khoản</Link>
                             </li>
                             <li>
-                                <Link to="/change-address">Sổ địa chỉ</Link>
-                            </li>
-                            <li>
                                 <Link to="/order-history">Đơn hàng của tôi</Link>
                             </li>
                             <li>
@@ -214,7 +211,8 @@ export default function OrderHistory() {
                                 </div>
                             </div>
                             <div className="modal-footer-order">
-                                <p className="code-order-label">
+                                <h5>Danh sách sản phẩm</h5>
+                                {/* <p className="code-order-label">
                                     Mã đơn hàng: <span className="code-order">103312781</span>
                                 </p>
                                 <p className="hightlight-status-wait">
@@ -234,7 +232,7 @@ export default function OrderHistory() {
                                 </p>
                                 <p className="code-order-label">
                                     Số lượng: <span className="code-order">1</span>
-                                </p>
+                                </p> */}
 
                                 <div className="table-detail-order" style={{ display: 'table' }}>
                                     <div className="table-order-row" style={{ display: 'table-row' }}>

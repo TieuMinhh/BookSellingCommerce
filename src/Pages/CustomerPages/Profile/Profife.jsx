@@ -16,9 +16,6 @@ export default function Profile() {
                                 <Link to="/change-info">Thông tin tài khoản</Link>
                             </li>
                             <li>
-                                <Link to="/change-address">Sổ địa chỉ</Link>
-                            </li>
-                            <li>
                                 <Link to="/order-history">Đơn hàng của tôi</Link>
                             </li>
                             <li>
@@ -56,10 +53,6 @@ export default function Profile() {
                             <h5>SỔ ĐỊA CHỈ</h5>
                             <h6>ĐỊA CHỈ GIAO HÀNG MẶC ĐỊNH</h6>
                             <p>97 Man Thiện, Thành phố Thủ Đức</p>
-
-                            <a href="edit-address" style={{ color: '#c92127', fontSize: '.9rem' }}>
-                                Sửa đỉa chỉ
-                            </a>
                         </div>
                     </div>
                 </div>

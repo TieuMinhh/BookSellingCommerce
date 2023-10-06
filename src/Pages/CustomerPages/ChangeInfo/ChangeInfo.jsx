@@ -27,9 +27,6 @@ export default function ChangeInfo() {
                                 <Link to="/change-info">Thông tin tài khoản</Link>
                             </li>
                             <li>
-                                <Link to="/change-address">Sổ địa chỉ</Link>
-                            </li>
-                            <li>
                                 <Link to="/order-history">Đơn hàng của tôi</Link>
                             </li>
                             <li>
@@ -72,6 +69,17 @@ export default function ChangeInfo() {
                                     id=""
                                     className="form-control-input"
                                     placeholder="Email..."
+                                />
+                            </div>
+
+                            <div className="cover-input">
+                                <label htmlFor="">Địa chỉ</label>
+                                <input
+                                    type="text"
+                                    name=""
+                                    id=""
+                                    className="form-control-input"
+                                    placeholder="Địa chỉ..."
                                 />
                             </div>
 
