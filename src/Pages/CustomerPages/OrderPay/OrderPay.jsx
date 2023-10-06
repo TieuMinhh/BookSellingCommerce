@@ -12,7 +12,7 @@ export default function OrderPay() {
         <>
             <div className="containerPay">
                 <div className="delivery-address">
-                    <h4> ĐỊA CHỈ GIAO HÀNG</h4>
+                    <h4 className="h4"> Địa chỉ nhận hàng</h4>
                     <div class="line"></div>
                     <div className="info-delivery">
                         <ul className="left-info">
@@ -33,12 +33,12 @@ export default function OrderPay() {
                     </div>
                 </div>
                 <div className="method-delivery">
-                    <h4>PHƯƠNG THỨC VẬN CHUYỂN</h4>
+                    <h4 className="h4">Phương thức vận chuyển</h4>
                     <div class="line"></div>
                     <p className="info-method">Qúy khách vui lòng điền tên và địa chỉ giao nhận trước</p>
                 </div>
                 <div className="method-pay">
-                    <h4>PHƯƠNG THỨC THANH TOÁN</h4>
+                    <h4 className="h4">Phương thức thanh toán</h4>
                     <div class="line"></div>
 
                     <p className="info-method-pay">
@@ -47,7 +47,7 @@ export default function OrderPay() {
                     </p>
                 </div>
                 <div className="discout">
-                    <h4>Mã khuyến mãi</h4>
+                    <h4 className="h4">Mã khuyến mãi</h4>
                     <div class="line"></div>
                     <div className="info-discout">
                         <p>Mã khuyến mãi</p>
