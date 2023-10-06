@@ -71,7 +71,7 @@ h3 {
 
 .products {
     flex: 0.75;
-    max-height: 800px; /* Đặt chiều cao tối đa mà bạn muốn hiển thị trên màn hình */
+    max-height: 450px; /* Đặt chiều cao tối đa mà bạn muốn hiển thị trên màn hình */
     overflow-y: auto; /* Tạo thanh cuộn dọc */
 }
 
@@ -190,8 +190,32 @@ h3 {
     font-weight: 500;
 }
 
+// .quantity {
+//     display: flex;
+// }
+
+// .quantity {
+//     p {
+//         position: relative;
+//         top: 10px;
+//         font-size: 16px;
+//         font-weight: 600;
+//     }
+// }
+
+// .quantity {
+//     input {
+//         width: 30px;
+//         height: 30px;
+//         font-size: 16px;
+//         //   font-weight: 500;
+//         margin-top: 8px;
+//         margin-left: 8px;
+//     }
+// }
 .quantity {
     display: flex;
+
 
     .counter {
         display: flex;
@@ -218,30 +242,51 @@ h3 {
         }
     }
 }
+    flex-direction: row;
 
-.quantity {
-    p {
+
+    .quantityName {
         position: relative;
+
         top: 10px;
         font-size: 16px;
         font-weight: 600;
         color: #000;
-    }
-}
 
-.quantity {
-    input {
-        width: 30px;
-        height: 30px;
-        font-size: 16px;
-        //   font-weight: 500;
-        margin-top: 8px;
-        margin-left: 8px;
+        top: 8px;
+        font-size: 18px;
+        font-weight: 500;
+
+    }
+
+    .counter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 24px;
+        border: 1px solid #ff5e00;
+        height: 28px;
+        border-radius: 10%;
+        margin-top: auto;
+        margin-bottom: auto;
+
+        .btn-giam {
+            border: none;
+            margin-right: 10px;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .btn-tang {
+            border: none;
+            margin-left: 10px;
+            border-radius: 4px;
+            font-size: 16px;
+        }
     }
 }
 .product-remove {
     position: absolute;
-    bottom: 4px;
+    bottom: 28px;
     right: 20px;
     padding: 8px 24px;
     background: -webkit-linear-gradient(left, #b224ef, #7579ff);

@@ -1,17 +1,88 @@
 import React, { useEffect } from 'react';
 import './Cart.scss';
-
+import axios from 'axios';
 import BookImg from '../../../Assets/img/toan.png';
 import BookImg2 from '../../../Assets/img/tienganh12.jpg';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import { getToken } from '../../../Services/Token';
+
+function formatMoney(price) {
+    return price
+        ? price.toLocaleString('vi', {
+              style: 'currency',
+              currency: 'VND',
+          })
+        : '0 đ';
+}
 
 export default function Cart() {
     const [selectedItem, setSelectedItem] = useState([]);
+
     const [number, setNumber] = useState(1); //number of item
     const updateQuantity = (value) => {
         setNumber((prevState) => prevState + value);
     };
+
+    const [quantity, setQuantity] = useState('1');
+    const [change, setChange] = useState(false);
+    const [list, setList] = useState([]);
+    const [total, setTotal] = useState('0');
+    const [id, setID] = useState('');
+
+    async function getListProduct() {
+        // const result = await axiosApiInstance.get(
+        //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
+        // );
+        let token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        const result = await axios.post(`http://localhost:8081/api/v1/account/cart`);
+        setList(result?.data.list);
+        setTotal(result?.data.total);
+        console.log(result.data.total);
+    }
+
+    async function RemoveProductFromCart(item) {
+        // const result = await axiosApiInstance.get(
+        //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
+        // );
+        console.log('id là :', id);
+        setID(item.id_product);
+
+        let token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+        const result = await axios.delete(`http://localhost:8081/api/v1/remove-from-cart/${id}`);
+        // setList(result?.data.list);
+        // setTotal(result?.data.total);
+        setChange(!change);
+        console.log(result);
+
+        if (result.status === 200) toast.success(result.data.message);
+        if (result.status === 500) toast.error(result.data.message);
+    }
+
+    async function IncrementProductFromCart(item) {
+        console.log('id là :', id);
+        setID(item.id_product);
+        let token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        const result = await axios.put(`http://localhost:8081/api/v1/account/increment-product-from-cart/${id}`, {
+            data: { quantity: item.quantity },
+        });
+
+        console.log(result);
+        setChange(!change);
+    }
+
+    const DecrementProductFromCart = async () => {};
+
+    useEffect(() => {
+        getListProduct();
+    }, [change]);
+
 
     const handleSelectAllCheckBox = (e) => {
         if (e.target.checked) {
@@ -54,6 +125,7 @@ export default function Cart() {
                         />{' '}
                         Chọn tất cả {`(${3} sản phẩm)`}
                     </div>
+
                     <div className="product">
                         <input
                             checked={selectedItem.includes(1)}
@@ -194,12 +266,80 @@ export default function Cart() {
                             </p>
                         </div>
                     </div>
+
+
+                    {list &&
+                        list.map((item, index) => {
+                            return (
+                                <div className="product">
+                                    <input
+                                        checked={selectedItem.includes(1)}
+                                        value="1"
+                                        onChange={handleSingleCheckBox}
+                                        class="carts-check"
+                                        type="checkbox"
+                                        name=""
+                                        id=""
+                                    />
+                                    <Link to="/">
+                                        <img
+                                            src={`http://localhost:8081/image/${item && item?.images}`}
+                                            alt=""
+                                            className="avatar-image"
+                                        />
+                                    </Link>
+                                    <div className="product-info">
+                                        <h3 className="product-name">{item && item?.name_product}</h3>
+                                        <h4 className="product-sub-name">{item && item?.detail}</h4>
+                                        <div className="main-price">
+                                            <div className="price">
+                                                {item &&
+                                                    item?.price.toLocaleString('vi', {
+                                                        style: 'currency',
+                                                        currency: 'VND',
+                                                    })}{' '}
+                                            </div>
+                                            <span>150.000đ</span>
+                                        </div>
+
+                                        <div class="quantity">
+                                            <p class="quantityName">Số lượng :</p>
+                                            <div class="counter">
+                                                <button class="btn-giam" onClick={() => DecrementProductFromCart(item)}>
+                                                    -
+                                                </button>
+                                                <p
+                                                    style={{
+                                                        fontSize: '18px',
+                                                        marginTop: '16px',
+                                                    }}
+                                                >
+                                                    {item && item?.quantity}
+                                                </p>
+                                                <button class="btn-tang" onClick={() => IncrementProductFromCart(item)}>
+                                                    +
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div
+                                            id="remove-product"
+                                            className="product-remove"
+                                            onClick={() => RemoveProductFromCart(item)}
+                                        >
+                                            <i className="fa fa-trash fa-color" aria-hidden="true"></i>
+                                            <span className="remove">Xoá</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+
                 </div>
 
                 <div className="cart-total">
                     <div class="price-content">
                         <span class="total-price-title">Thành tiền</span>
-                        <span class="price-cart">220.000đ</span>
+                        <span class="price-cart">{formatMoney(total && total)}</span>
                     </div>
                     <div id="order" className="order">
                         <Link to="/order-pay" href="order-cart">
