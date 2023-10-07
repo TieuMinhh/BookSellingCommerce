@@ -144,7 +144,7 @@ export default function Cart(props) {
                                 <div className="product">
                                     <input
                                         checked={selectedItem.includes(1)}
-                                        value="1"
+                                        value=""
                                         onChange={handleSingleCheckBox}
                                         class="carts-check"
                                         type="checkbox"

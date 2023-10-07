@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './OrderPay.scss';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Img1 from '../../../Assets/img/kgd.jpg';
 import Img2 from '../../../Assets/img/delivery.png';
 import { Link } from 'react-router-dom';
+import CuponIcon from '../../../Assets/svg/ico_coupon.svg';
+import VoucherImg from '../../../Assets/img/voucher-icon.jpg';
 
 export default function OrderPay() {
-    const [modalShow, setModalShow] = React.useState(false);
+    const hideModal = () => {
+        const modal = document.querySelector('.modal-promotion-wrapper');
+        modal.classList.remove('active');
+        modal.classList.add('hidden');
+    };
+
+    const showModal = () => {
+        const modal = document.querySelector('.modal-promotion-wrapper');
+        modal.classList.remove('hidden');
+        modal.classList.add('active');
+    };
+
     return (
         <>
             <div className="containerPay">
@@ -55,7 +68,7 @@ export default function OrderPay() {
                             <input className="input" type="text" placeholder="Nhập mã khuyến mãi"></input>
                             <Button className="apply-btn">Áp dụng</Button>
                         </div>
-                        <Button className="discout-btn" variant="link" onClick={() => setModalShow(true)}>
+                        <Button className="discout-btn" variant="link" onClick={showModal}>
                             Chọn mã khuyến mãi
                         </Button>
                     </div>
@@ -103,15 +116,89 @@ export default function OrderPay() {
                         <span className="total-text"> 100.000.000 đ</span>
                     </div>
 
-                    <Button
-                        className="confirm-btn"
-                        // variant="danger"
-                        onClick={() => setModalShow(true)}
-                    >
+                    <Button className="confirm-btn">
                         <span>Xác nhận thanh toán</span>
                     </Button>
                 </div>
             </div>
+
+            {/* Modal ticket promotion */}
+
+            <div className="modal-promotion-wrapper">
+                <div className="modal-promotion-container">
+                    <div className="close-modal-promotion" onClick={hideModal}>
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    <div className="modal-promotion-header">
+                        <p className="title-promotion-header">
+                            <img src={CuponIcon} alt="" /> Chọn mã khuyến mãi
+                        </p>
+                        <div className="cover-input-promotion">
+                            <input
+                                type="text"
+                                name=""
+                                id=""
+                                className="form-promotion"
+                                placeholder="Nhập mã khuyến mãi/Quà tặng"
+                            />
+                            <button className="apply-promotion-btn-top">Áp dụng</button>
+                        </div>
+                    </div>
+                    <div className="modal-promotion-inner">
+                        <div className="modal-promotion-content">
+                            <p className="title-content">Mã giảm giá</p>
+
+                            {/* a Ticket */}
+                            <div className="cover-promotion-ticket">
+                                <div className="inner-promotion-ticket">
+                                    <div className="left-promotion-ticket" style={{ color: '#000' }}>
+                                        <img src={VoucherImg} alt="voucher" className="voucher-img" />
+                                    </div>
+                                    <div className="right-promotion-ticket">
+                                        <p className="title-right-promotion">Mã giảm giá 10K - Đơn hàng từ 1000K</p>
+                                        <p className="sub-title-promotion">
+                                            Không Áp Dụng Cho Phiếu Quà Tặng và Sách Giáo Khoa
+                                        </p>
+                                        <button className="apply-promotion-btn-bottom">Áp dụng</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="cover-promotion-ticket">
+                                <div className="inner-promotion-ticket">
+                                    <div className="left-promotion-ticket" style={{ color: '#000' }}>
+                                        <img src={VoucherImg} alt="voucher" className="voucher-img" />
+                                    </div>
+                                    <div className="right-promotion-ticket">
+                                        <p className="title-right-promotion">Mã giảm giá 10K - Đơn hàng từ 1000K</p>
+                                        <p className="sub-title-promotion">
+                                            Không Áp Dụng Cho Phiếu Quà Tặng và Sách Giáo Khoa
+                                        </p>
+                                        <button className="apply-promotion-btn-bottom">Áp dụng</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="cover-promotion-ticket">
+                                <div className="inner-promotion-ticket">
+                                    <div className="left-promotion-ticket" style={{ color: '#000' }}>
+                                        <img src={VoucherImg} alt="voucher" className="voucher-img" />
+                                    </div>
+                                    <div className="right-promotion-ticket">
+                                        <p className="title-right-promotion">Mã giảm giá 10K - Đơn hàng từ 1000K</p>
+                                        <p className="sub-title-promotion">
+                                            Không Áp Dụng Cho Phiếu Quà Tặng và Sách Giáo Khoa
+                                        </p>
+                                        <button className="apply-promotion-btn-bottom">Áp dụng</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* End Modal */}
         </>
     );
 }
