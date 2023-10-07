@@ -91,7 +91,7 @@ export default function Header() {
 
                         <Link to="/cart" className="first">
                             <div class="header-list">
-                                <b>{listCart.length}</b>
+                                <b>{listCart?.length || 0}</b>
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 <p>Giỏ hàng</p>
                             </div>

@@ -51,13 +51,14 @@ export default function Profile() {
                         <div className="wrapper-detail-info">
                             <div className="detail-info-profile">
                                 <p className="user-name-profile ">
-                                    Họ và tên: <strong>{user && user?.name}</strong>
+                                    Họ và tên:{' '}
+                                    <strong style={{ color: '#000' }}>{(user && user?.name) || 'SayMyName'}</strong>
                                 </p>
                                 <p className="user-email-profile ">
-                                    Email: <strong>{user && user?.email}</strong>
+                                    Email: <strong style={{ color: '#000' }}>{user && user?.email}</strong>
                                 </p>
                                 <p className="user-level-profile ">
-                                    Cấp độ thành viên: <strong>Thân Thiết</strong>
+                                    Cấp độ thành viên: <strong style={{ color: '#000' }}>Thân Thiết</strong>
                                 </p>
                                 <h6>Thông tin tài khoản</h6>
 
