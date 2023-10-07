@@ -4,6 +4,7 @@ import CuponIcon from '../../../Assets/svg/ico_coupon.svg';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
+import SidebarProfile from '../SidebarProfile/SidebarProfile';
 
 export default function MyVoucher() {
     const [change, setChange] = useState(false);
@@ -26,24 +27,7 @@ export default function MyVoucher() {
             <div className="container-profile ">
                 <div className="sidebar-profile">
                     <div className="wrapper-sidebar">
-                        <h3>Tài khoản</h3>
-                        <ul className="items-sidebar">
-                            <li>
-                                <Link to="/profile">Bảng điều khiển tài khoản</Link>
-                            </li>
-                            <li>
-                                <Link to="/change-info">Thông tin tài khoản</Link>
-                            </li>
-                            <li>
-                                <Link to="/change-password">Đổi mật khẩu</Link>
-                            </li>
-                            <li>
-                                <Link to="/order-history">Đơn hàng của tôi</Link>
-                            </li>
-                            <li>
-                                <Link to="/my-voucher">Ví voucher</Link>
-                            </li>
-                        </ul>
+                        <SidebarProfile />
                     </div>
                 </div>
                 <div className="sidebar-voucher">
