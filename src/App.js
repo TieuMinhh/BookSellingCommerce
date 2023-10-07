@@ -15,7 +15,6 @@ import Login from './Pages/Auths/Login/Login';
 import SignUp from './Pages/Auths/Signin/Signin';
 import Profile from './Pages/CustomerPages/Profile/Profife';
 import ChangeInfo from './Pages/CustomerPages/ChangeInfo/ChangeInfo';
-import ChangeAddress from './Pages/CustomerPages/ChangeAddress/ChangeAddress';
 import OrderHistory from './Pages/CustomerPages/OrderHistory/OrderHistory';
 import MyVoucher from './Pages/CustomerPages/MyVoucher/MyVoucher';
 

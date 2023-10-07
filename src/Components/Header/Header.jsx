@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Header.scss';
 import LogoPage from '../../Assets/img/FahaShopBe.png';
 import { Link } from 'react-router-dom';
@@ -6,11 +6,17 @@ import MyLoginModal from '../../Pages/Auths/Auths/Auths';
 import VietNamFlag from '../../Assets/img/vietnam.png';
 import PLatinum from '../../Assets/svg/platinum.svg';
 
+import axios from 'axios';
+import { getToken } from '../../Services/Token';
+
 // import classNames from "classnames/bind";
 
 // const cx = classNames.bind(styles);
 
 export default function Header() {
+    const [listCart, setListCart] = useState([]);
+    const [change, setChange] = useState(false);
+
     const [show, setShow] = useState(false);
     const handleShow = (e) => {
         setShow(true);
@@ -21,6 +27,21 @@ export default function Header() {
         // Gọi hàm này sau khi đăng nhập thành công để đóng modal.
         handleClose();
     };
+
+    async function getListProduct() {
+        // const result = await axiosApiInstance.get(
+        //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
+        // );
+        let token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        const result = await axios.post(`http://localhost:8081/api/v1/account/cart`);
+        setListCart(result?.data.list);
+        setChange(!change);
+    }
+
+    useEffect(() => {
+        getListProduct();
+    }, [change]);
 
     return (
         <div class="header">
@@ -70,7 +91,7 @@ export default function Header() {
 
                         <Link to="/cart" className="first">
                             <div class="header-list">
-                                <b>99</b>
+                                <b>{listCart.length}</b>
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 <p>Giỏ hàng</p>
                             </div>

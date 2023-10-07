@@ -152,7 +152,6 @@ export default function BookDetail() {
                             <p
                                 style={{
                                     fontSize: '18px',
-                                    // marginTop: "16px",
                                 }}
                             >
                                 {number}
@@ -162,18 +161,6 @@ export default function BookDetail() {
                             </button>
                         </button>
                     </div>
-
-                    {/* <div class="btn-box">
-            <button id="add-btn" class="cart-btn">
-              <i class="fa-solid fa-plus add-btn-box"></i>
-              Thêm
-            </button>
-
-            <button id="order-btn" class="buy-btn">
-              <i class="fa-solid fa-shopping-cart order-btn-box"></i>
-              Đặt hàng
-            </button>
-          </div> */}
 
                     <div class="btn-box">
                         <div class="cart-btn">

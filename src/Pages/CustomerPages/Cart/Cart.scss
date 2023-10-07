@@ -93,8 +93,8 @@ h3 {
 
 .cart .product {
     input {
-        width: 26px;
-        margin-left: 16px;
+        width: 22px;
+        margin: 6px;
     }
 }
 
@@ -116,7 +116,7 @@ h3 {
 }
 
 .product-info {
-    padding: 20px;
+    padding: 16px;
     width: 100%;
     position: relative;
 }
@@ -128,26 +128,30 @@ h3 {
     }
 }
 
+.product-name {
+    font-size: 22px;
+    margin-bottom: 12px;
+    color: #444444;
+}
+
 .product-sub-name {
     font-size: 16px;
     color: #333333;
-    opacity: 0.9;
+    opacity: 0.8;
     font-weight: 100;
     padding: 0;
 }
-.product-price {
-    margin-bottom: 20px;
-}
-
 .main-price {
+    margin-bottom: 4px;
 }
 
 .main-price .price {
-    color: #4eab0c;
+    // color: #4eab0c;
+    color: #f53d2d;
     font-size: 24px;
     line-height: 1.4;
     font-weight: 900;
-    margin: 4px 0;
+    // margin: 12px 0;
     display: inline;
 }
 
@@ -241,10 +245,13 @@ h3 {
 }
 .product-remove {
     position: absolute;
+
     bottom: 4px;
+    bottom: 12px;
     right: 20px;
     padding: 8px 24px;
-    background: -webkit-linear-gradient(left, #b224ef, #7579ff);
+    // background: -webkit-linear-gradient(left, #b224ef, #7579ff);
+    background: linear-gradient(-180deg, #f53d2d, #f63);
     color: white;
     cursor: pointer;
     border-radius: 5px;
@@ -252,7 +259,9 @@ h3 {
 
 .product-remove:hover {
     background-color: white;
-    background: -webkit-linear-gradient(left, #7579ff, #b224ef);
+    // background: -webkit-linear-gradient(left, #7579ff, #b224ef);
+    background: linear-gradient(-180deg, #f63, #f53d2d);
+
     font-weight: 600;
     border: 1px solid #4eab0c;
 }
@@ -310,7 +319,9 @@ h3 {
         line-height: 40px;
         border-radius: 5px;
         max-width: 260px;
-        background: -webkit-linear-gradient(left, #7579ff, #b224ef);
+        // background: -webkit-linear-gradient(left, #7579ff, #b224ef);
+        background: linear-gradient(-180deg, #f53d2d, #f63);
+
         color: #fff;
         text-decoration: none;
         margin: 0 auto;
@@ -318,7 +329,8 @@ h3 {
 }
 
 .cart-total a:hover {
-    background: -webkit-linear-gradient(left, #b224ef, #7579ff);
+    // background: -webkit-linear-gradient(left, #b224ef, #7579ff);
+    background: linear-gradient(-180deg, #f63, #f53d2d);
 }
 
 .cart-total .total-price-title {

@@ -108,12 +108,15 @@
         font-size: 1rem;
         font-weight: 700;
         color: #616161;
+        // text-align: center;
     }
 }
 
 .detail-title {
     display: table-row;
     border-bottom: 1px solid #ccc;
+    max-height: 300px;
+    overflow-y: auto;
 
     .detail-btn {
         border: none;
