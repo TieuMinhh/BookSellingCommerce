@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Home.scss';
 
-import AoMU from '../../Assets/img/aoMU.jpg';
 import toan from '../../Assets/img/toan.png';
-import tienganh12 from '../../Assets/img/tienganh12.jpg';
 import Filter from '../../Components/FilterBook/Filter';
 import { Link } from 'react-router-dom';
 
