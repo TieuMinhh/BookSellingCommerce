@@ -262,6 +262,7 @@ p {
 .modal-promotion-wrapper {
     background-color: rgba(0, 0, 0, 0.3);
     position: fixed;
+    display: none;
     align-items: center;
     justify-content: center;
     inset: 0;
