@@ -63,7 +63,7 @@
                     // background: linear-gradient(to right, #6dd5fa, #ffffff);
                     color: #000;
                     border: 1px solid #fff;
-                    font-size: 14px;
+                    font-size: 1rem;
                     font-weight: bold;
                 }
 
@@ -73,14 +73,15 @@
                     // padding: 8px;
                     color: #000;
                     text-align: center;
-                    font-size: 14px;
+                    font-size: 1rem;
                     font-weight: 600;
                     opacity: 0.9;
 
                     .avatar-image {
-                        width: 35px;
-                        height: 35px;
+                        height: 50px;
                         border-radius: 20%;
+                        padding: 10px 0;
+                        box-sizing: content-box;
                     }
 
                     .btn-edit {
@@ -88,7 +89,7 @@
                         color: #b1ff00;
                         font-size: 14px;
                         background-color: transparent;
-                        width: 25%;
+                        width: 40%;
 
                         &:hover {
                             color: #000;
@@ -169,3 +170,37 @@
     margin-top: 8px;
     margin-bottom: 8px;
 }
+
+// Reboot css defaut from library
+.css-156xqnd-MuiInputBase-input {
+    font-size: 1rem !important;
+}
+
+.css-19ht0v3-MuiTypography-root {
+    color: #4cceac !important;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.css-y0u0hj {
+    position: relative;
+}
+
+.css-ykcw1u {
+    width: 40%;
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+.css-17w9904-MuiTypography-root {
+    color: #fff !important;
+    font-size: 1rem !important;
+}
+
+strong {
+    color: #000;
+    font-size: 1rem;
+}
+
+// End reboot
