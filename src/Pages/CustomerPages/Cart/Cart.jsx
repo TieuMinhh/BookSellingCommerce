@@ -122,7 +122,7 @@ export default function Cart(props) {
         <div className="container">
             <div class="cart-title">
                 <h2 class="">GIỎ HÀNG</h2>
-                <span class="font-16">({list.length} sản phẩm)</span>
+                <span class="font-16">({list?.length} sản phẩm)</span>
             </div>
             <div className="cart">
                 <div className="products">
