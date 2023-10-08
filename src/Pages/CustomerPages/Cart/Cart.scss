@@ -71,7 +71,7 @@ h3 {
 
 .products {
     flex: 0.75;
-    max-height: 450px; /* Đặt chiều cao tối đa mà bạn muốn hiển thị trên màn hình */
+    max-height: 800px; /* Đặt chiều cao tối đa mà bạn muốn hiển thị trên màn hình */
     overflow-y: auto; /* Tạo thanh cuộn dọc */
 }
 
@@ -245,6 +245,8 @@ h3 {
 }
 .product-remove {
     position: absolute;
+
+    bottom: 4px;
     bottom: 12px;
     right: 20px;
     padding: 8px 24px;

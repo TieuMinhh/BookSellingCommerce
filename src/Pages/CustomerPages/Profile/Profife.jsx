@@ -3,6 +3,7 @@ import './Profile.scss';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { getToken } from '../../../Services/Token';
+import SidebarProfile from '../SidebarProfile/SidebarProfile';
 
 export default function Profile() {
     const [user, getUser] = useState([]);
@@ -25,24 +26,7 @@ export default function Profile() {
             <div className="container-profile ">
                 <div className="sidebar-profile">
                     <div className="wrapper-sidebar">
-                        <h3>Tài khoản</h3>
-                        <ul className="items-sidebar">
-                            <li>
-                                <Link to="/profile">Bảng điều khiển tài khoản</Link>
-                            </li>
-                            <li>
-                                <Link to="/change-info">Thông tin tài khoản</Link>
-                            </li>
-                            <li>
-                                <Link to="/change-password">Đổi mật khẩu</Link>
-                            </li>
-                            <li>
-                                <Link to="/order-history">Đơn hàng của tôi</Link>
-                            </li>
-                            <li>
-                                <Link to="/my-voucher">Ví voucher</Link>
-                            </li>
-                        </ul>
+                        <SidebarProfile />
                     </div>
                 </div>
                 <div className="sidebar-item-info">
@@ -51,13 +35,14 @@ export default function Profile() {
                         <div className="wrapper-detail-info">
                             <div className="detail-info-profile">
                                 <p className="user-name-profile ">
-                                    Họ và tên: <strong>{user && user?.name}</strong>
+                                    Họ và tên:{' '}
+                                    <strong style={{ color: '#000' }}>{(user && user?.name) || 'SayMyName'}</strong>
                                 </p>
                                 <p className="user-email-profile ">
-                                    Email: <strong>{user && user?.email}</strong>
+                                    Email: <strong style={{ color: '#000' }}>{user && user?.email}</strong>
                                 </p>
                                 <p className="user-level-profile ">
-                                    Cấp độ thành viên: <strong>Thân Thiết</strong>
+                                    Cấp độ thành viên: <strong style={{ color: '#000' }}>Thân Thiết</strong>
                                 </p>
                                 <h6>Thông tin tài khoản</h6>
 

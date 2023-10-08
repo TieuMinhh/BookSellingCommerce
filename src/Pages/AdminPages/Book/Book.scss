@@ -1,7 +1,6 @@
 .product-main-container {
     background: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%);
-    // background: linear-gradient(to right, #e0eafc, #cfdef3);
-    // background-color: #e0e4ed; // Chỗ này đổi màu nền
+    margin-top: 70px;
 
     .title-product {
         color: #000000;
@@ -63,7 +62,7 @@
                     // background: linear-gradient(to right, #6dd5fa, #ffffff);
                     color: #000;
                     border: 1px solid #fff;
-                    font-size: 14px;
+                    font-size: 1rem;
                     font-weight: bold;
                 }
 
@@ -73,14 +72,15 @@
                     // padding: 8px;
                     color: #000;
                     text-align: center;
-                    font-size: 14px;
+                    font-size: 1rem;
                     font-weight: 600;
                     opacity: 0.9;
 
                     .avatar-image {
-                        width: 35px;
-                        height: 35px;
+                        height: 50px;
                         border-radius: 20%;
+                        padding: 10px 0;
+                        box-sizing: content-box;
                     }
 
                     .btn-edit {
@@ -88,7 +88,7 @@
                         color: #b1ff00;
                         font-size: 14px;
                         background-color: transparent;
-                        width: 25%;
+                        width: 40%;
 
                         &:hover {
                             color: #000;
@@ -169,3 +169,84 @@
     margin-top: 8px;
     margin-bottom: 8px;
 }
+
+// Reboot css defaut from library
+.css-156xqnd-MuiInputBase-input {
+    font-size: 1rem !important;
+}
+
+.css-19ht0v3-MuiTypography-root {
+    color: #4cceac !important;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.css-k008qs {
+    color: #fff !important;
+}
+
+.css-y0u0hj {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 270px;
+    background-color: #000;
+    z-index: 1;
+    padding-bottom: 30px !important;
+}
+
+.pro-sidebar > .pro-sidebar-inner > .pro-sidebar-layout {
+    overflow-y: hidden;
+}
+
+.css-ykcw1u {
+    width: 40%;
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+.css-zwiamn {
+    margin-top: 80px !important;
+}
+
+.content {
+    margin-left: 270px;
+}
+
+.pro-sidebar .pro-menu {
+    padding-top: 0;
+    padding-bottom: 10px;
+}
+
+.pro-sidebar-layout {
+    overflow-y: hidden;
+}
+
+.css-1j1s727 {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.css-uv7eon-MuiTypography-root {
+    color: #000 !important;
+}
+
+.css-17w9904-MuiTypography-root {
+    color: #fff !important;
+    font-size: 1rem !important;
+}
+
+.css-1n2mv2k {
+    .profile-user {
+    }
+}
+
+strong {
+    color: #fff;
+    font-size: 1rem;
+}
+
+// End reboot

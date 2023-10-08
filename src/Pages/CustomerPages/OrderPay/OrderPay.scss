@@ -257,3 +257,185 @@ p {
     font-weight: bold;
     // margin-right: 16px;
 }
+
+// start Modal
+.modal-promotion-wrapper {
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    inset: 0;
+    z-index: 99999;
+}
+
+.modal-promotion-wrapper.hidden {
+    display: none;
+    animation: hideModalPromotion ease-in-out 0.3s;
+}
+
+.modal-promotion-wrapper.active {
+    display: flex;
+    animation: showModalPromotion ease-in-out 0.2s;
+}
+
+@keyframes showModalPromotion {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes hideModalPromotion {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.modal-promotion-container {
+    background-color: #fff;
+    width: 550px;
+    max-width: calc(100% - 32px);
+    border-radius: 8px;
+    position: relative;
+
+    .close-modal-promotion {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #ccc;
+        font-size: 1.4rem;
+        width: 60px;
+        height: 60px;
+        cursor: pointer;
+        line-height: 60px;
+        text-align: center;
+        &:hover {
+            color: #000;
+        }
+    }
+
+    .modal-promotion-header {
+        box-shadow: 0 0px 8px rgba(0, 0, 0, 0.3);
+        border-radius: 8px 8px 0 0;
+        padding: 16px;
+        .title-promotion-header {
+            color: #2f80ed;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+    }
+}
+
+.modal-promotion-inner {
+    padding: 16px;
+}
+
+.cover-input-promotion {
+    display: flex;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    .form-promotion {
+        width: 100%;
+        flex: 8;
+        border: none;
+        outline: none;
+        padding: 0 10px;
+        font-weight: bold;
+
+        &::placeholder {
+            font-weight: bold;
+            color: #ccc;
+        }
+    }
+
+    .apply-promotion-btn-top {
+        flex: 2;
+        border: none;
+        border-radius: 8px;
+        padding: 4px 2px;
+        font-weight: bold;
+        color: #fff;
+        background: #2f80ed;
+    }
+}
+
+.form-promotion {
+}
+
+.modal-promotion-content {
+    max-height: 480px;
+    overflow-y: auto;
+    .title-content {
+        font-weight: bold;
+    }
+}
+
+.cover-promotion-ticket {
+    margin-bottom: 18px;
+    .inner-promotion-ticket {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        display: flex;
+        border-radius: 8px;
+        border: 1px solid #fff;
+        min-height: 146px;
+        position: relative;
+        margin: 0 5px;
+        &:hover {
+            border: 2px solid #2f80ed;
+            cursor: pointer;
+        }
+
+        .left-promotion-ticket {
+            padding: 10px;
+            flex: 3;
+
+            .voucher-img {
+                width: 100%;
+                border-radius: 4px;
+            }
+        }
+
+        .right-promotion-ticket {
+            padding: 10px;
+            flex: 7;
+
+            .title-right-promotion {
+                font-weight: bold;
+                text-transform: uppercase;
+                margin-bottom: 0;
+            }
+
+            .sub-title-promotion {
+                color: #7a7e7f;
+                font-size: 14px;
+            }
+
+            .apply-promotion-btn-bottom {
+                position: absolute;
+                bottom: 6px;
+                right: 6px;
+                border: none;
+                border-radius: 8px;
+                padding: 4px 26px;
+                font-weight: bold;
+                color: #fff;
+                background: #2f80ed;
+            }
+        }
+    }
+}
+
+.title-right-promotion {
+}
+
+.sub-title-promotion {
+}
+
+// End Modal

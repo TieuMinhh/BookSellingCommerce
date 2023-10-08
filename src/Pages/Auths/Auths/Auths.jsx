@@ -140,6 +140,11 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
                                 name="password"
                                 value={password}
                                 onChange={handleOnChangePassword}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        handleLogin();
+                                    }
+                                }}
                             />
                             {password.length != 0 ? (
                                 isValidPass ? null : (
@@ -206,6 +211,7 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
                                         height: '20px',
                                         borderRadius: '50%',
                                         marginRight: '4px',
+                                        lineHeight: '20px',
                                     }}
                                 ></i>
                                 Đăng nhập bằng Facebook
@@ -255,6 +261,11 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
                                 name="phone"
                                 value={phone}
                                 onChange={handleOnChangePhone}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        handleSignup();
+                                    }
+                                }}
                             />
                             {/* <Form.Label className="text-right color-red mx-4">
               Quên mật khẩu ?

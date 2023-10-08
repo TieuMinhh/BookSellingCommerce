@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 import jwtDecode from 'jwt-decode';
 
-// import Avatar from "../../assets/Images/avatar.png";
+import Avatar from '../../Assets/img/Avatar.jpg';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme();
@@ -32,10 +32,6 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
         </MenuItem>
     );
 };
-
-// const click = () => {
-//   console.log("Xiao Ming");
-// };
 
 const Sidebar = () => {
     const theme = useTheme();
@@ -100,12 +96,13 @@ const Sidebar = () => {
                                 <Box display="flex" justifyContent="center" alignItems="center">
                                     <img
                                         alt="profile-user"
-                                        width="100px"
-                                        height="100px"
-                                        // src={Avatar}
+                                        src={Avatar}
                                         style={{
+                                            width: '120px',
+                                            height: '120px',
                                             cursor: 'pointer',
                                             borderRadius: '50%',
+                                            objectFit: 'cover',
                                         }}
                                     />
                                 </Box>
@@ -116,7 +113,7 @@ const Sidebar = () => {
                                         fontWeight="bold"
                                         sx={{ m: '10px 0 0 0' }}
                                     >
-                                        Minh Bảo
+                                        Asami
                                     </Typography>
                                     <Typography variant="h6" color={colors.greenAccent[500]}>
                                         Quản trị viên
