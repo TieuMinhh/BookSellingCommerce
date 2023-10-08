@@ -60,6 +60,13 @@
                 font-size: 37px;
                 font-weight: 700;
             }
+            .book-info {
+                display: flex;
+                flex-direction: row;
+                .product-author {
+                    margin-left: 140px;
+                }
+            }
 
             .rating {
                 i {

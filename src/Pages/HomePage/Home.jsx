@@ -66,12 +66,18 @@ export default function Home() {
                                                 </div>
                                                 <div class="main-price">
                                                     <p>
+                                                        {/* {item.price_reducing.toLocaleString('vi', {
+                                                            style: 'currency',
+                                                            currency: 'VND',
+                                                        })}{' '} */}
+                                                        200.000 đ
+                                                    </p>
+                                                    <span>
                                                         {item.price.toLocaleString('vi', {
                                                             style: 'currency',
                                                             currency: 'VND',
-                                                        })}{' '}
-                                                    </p>
-                                                    <span>500.000đ</span>
+                                                        })}
+                                                    </span>
                                                 </div>
                                                 <div class="main-rate">
                                                     <i class="fa-solid fa-star"></i>
