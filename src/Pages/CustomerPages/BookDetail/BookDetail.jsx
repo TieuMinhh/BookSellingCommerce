@@ -112,6 +112,10 @@ export default function BookDetail() {
 
                 <div class="right-product">
                     <div class="product-name">{list && list[0]?.name_product}</div>
+                    <div class="book-info">
+                        <p className="product-nxb">Nhà xuất bản: {list && list[0]?.name_company}</p>
+                        <p className="product-author"> Tác giả: {list && list[0]?.author}</p>
+                    </div>
                     <div class="rating">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>

@@ -1,9 +1,24 @@
 import React from 'react';
 import './Filter.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export default function Filter() {
     const [valueMoney, setValueMoney] = useState(0);
+    const [list, setList] = useState([]);
+
+    async function getListCategory() {
+        // const result = await axiosApiInstance.get(
+        //   axiosApiInstance.defaults.baseURL + "/api/v1/category?id=ALL"
+        // );
+        let result = await axios.get(`http://localhost:8081/api/v1/category?id=ALL`);
+        setList(result?.data.listCategory);
+        // console.log(result.data);
+    }
+
+    useEffect(() => {
+        getListCategory();
+    }, []);
 
     return (
         <div class="sidebar_content col l-3 c-0 m-0">
@@ -16,30 +31,15 @@ export default function Filter() {
                 <div class="list-filter">
                     <div class="filter-item">
                         <ul>
-                            <li>
-                                <input id="1" type="checkbox"></input>
-                                <label for="1">Sách tiếng việt</label>
-                            </li>
-                            <li>
-                                <input id="2" type="checkbox"></input>
-                                <label for="2">Sách tiếng anh</label>
-                            </li>
-                            <li>
-                                <input id="3" type="checkbox"></input>
-                                <label for="3">Tiểu thuyết</label>
-                            </li>
-                            <li>
-                                <input id="4" type="checkbox"></input>
-                                <label for="4">Trinh thám</label>
-                            </li>
-                            <li>
-                                <input id="5" type="checkbox"></input>
-                                <label for="5">Văn học</label>
-                            </li>
-                            <li>
-                                <input type="checkbox"></input>
-                                <span>Toán học</span>
-                            </li>
+                            {list &&
+                                list.map((item, index) => {
+                                    return (
+                                        <li>
+                                            <input id="1" type="checkbox"></input>
+                                            <label for="1">{item.name}</label>
+                                        </li>
+                                    );
+                                })}
                         </ul>
                     </div>
                 </div>
