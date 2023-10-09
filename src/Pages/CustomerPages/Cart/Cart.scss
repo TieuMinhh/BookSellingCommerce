@@ -335,6 +335,8 @@ h3 {
 
 .cart-total .total-price-title {
     color: #000;
+    white-space: nowrap;
+    margin-right: 8px;
 }
 
 .cart-total .price-content {

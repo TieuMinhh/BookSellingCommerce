@@ -409,12 +409,17 @@ p {
             .title-right-promotion {
                 font-weight: bold;
                 text-transform: uppercase;
-                margin-bottom: 0;
+                margin-bottom: 4px;
             }
 
             .sub-title-promotion {
-                color: #7a7e7f;
+                // margin-top: 4px;
+                color: #444444;
                 font-size: 14px;
+            }
+
+            .voucher-time {
+                margin-top: -8px;
             }
 
             .apply-promotion-btn-bottom {

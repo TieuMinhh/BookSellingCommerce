@@ -177,17 +177,22 @@ export default function Order() {
                     <Modal.Body>
                         <div className="ctm">
                             <div className="ctm_name">
-                                Họ tên: <div className="pull-right">{listOrderDetail && listOrderDetail[0]?.name}</div>
+                                Họ tên:{' '}
+                                <div className="pull-right">{listOrderDetail && listOrderDetail[0]?.customer_name}</div>
                                 {/* Họ tên: <div className="pull-right">Xiao Ming</div> */}
                             </div>
                             <div className="ctm_phone">
                                 Điện thoại:{' '}
-                                <div className="pull-right">{listOrderDetail && listOrderDetail[0]?.phone}</div>
+                                <div className="pull-right">
+                                    {listOrderDetail && listOrderDetail[0]?.customer_phone}
+                                </div>
                                 {/* Điện thoại: <div className="pull-right">0966932267</div> */}
                             </div>
                             <div className="ctm_address">
                                 Địa chỉ:{' '}
-                                <div className="pull-right">{listOrderDetail && listOrderDetail[0]?.address}</div>
+                                <div className="pull-right">
+                                    {listOrderDetail && listOrderDetail[0]?.delivery_address}
+                                </div>
                                 {/* Địa chỉ: <div className="pull-right">Hồ Chí Minh</div> */}
                             </div>
                         </div>
@@ -203,20 +208,26 @@ export default function Order() {
                                         </div>
                                         <div className="item_product_right">
                                             <div className="item_name text-black">{item?.name_product}</div>
-                                            <div className="item_size text-black">
+                                            {/* <div className="item_size text-black">
                                                 Size : &nbsp;
                                                 {item.size === 360 ? 'S' : item.size === 500 ? 'M' : 'L'}
-                                            </div>
-                                            <div className="item_qty me-2 text-black">x{item?.amount}</div>
+                                            </div> */}
+                                            <div className="item_qty me-2 text-black">x{item?.quantity}</div>
                                             <div className="item_price me-2 text-black">
-                                                {item?.price.toLocaleString('vi', {
+                                                {item?.price_reducing.toLocaleString('vi', {
+                                                    style: 'currency',
+                                                    currency: 'VND',
+                                                })}
+                                            </div>
+                                            <div className="item_price2 me-2 text-black">
+                                                {item?.original_price.toLocaleString('vi', {
                                                     style: 'currency',
                                                     currency: 'VND',
                                                 })}
                                             </div>
                                             <div style={{ display: 'none', color: '#000' }}>
                                                 {' '}
-                                                {(total += item?.amount * item?.price)}
+                                                {(total += item?.quantity * item?.price_reducing)}
                                             </div>
                                         </div>
                                     </div>
@@ -236,7 +247,10 @@ export default function Order() {
                         <div className="shipping_price">
                             Giảm giá{' '}
                             <div className="pull-right">
-                                {(((listOrderDetail[0]?.percentage || 0) / 100) * total).toLocaleString('vi', {
+                                {(
+                                    ((listOrderDetail && listOrderDetail[0]?.discount_percentage) / 100) *
+                                    total
+                                ).toLocaleString('vi', {
                                     style: 'currency',
                                     currency: 'VND',
                                 })}
@@ -249,7 +263,7 @@ export default function Order() {
                                 {(
                                     feeShip +
                                     total -
-                                    ((listOrderDetail[0]?.percentage || 0) / 100) * total
+                                    ((listOrderDetail && listOrderDetail[0]?.discount_percentage) / 100) * total
                                 )?.toLocaleString('vi', {
                                     style: 'currency',
                                     currency: 'VND',

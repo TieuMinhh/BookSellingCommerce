@@ -10,7 +10,7 @@ export default function MyVoucher() {
     const [change, setChange] = useState(false);
     const [list, setList] = useState([]);
 
-    async function getListProduct() {
+    async function getListVoucher() {
         // const result = await axiosApiInstance.get(
         //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
         // );
@@ -19,7 +19,7 @@ export default function MyVoucher() {
         // console.log(result.data);
     }
     useEffect(() => {
-        getListProduct();
+        getListVoucher();
     }, [change]);
 
     return (
@@ -57,12 +57,6 @@ export default function MyVoucher() {
                                         </div>
                                     );
                                 })}
-
-                            {/* <div className="detail-content-voucher">
-                                <p className="title-voucher">MÃ GIẢM 30K - ĐƠN HÀNG TỪ 270K</p>
-                                <p className="voucher-time">ÁP DỤNG TỪ THỨ 2 ĐẾN THỨ 4 HÀNG TUẦN</p>
-                                <p className="detail-voucher">Chi tiết</p>
-                            </div> */}
                         </div>
                     </div>
                 </div>

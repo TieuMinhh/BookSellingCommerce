@@ -154,6 +154,12 @@
     color: #37474f !important;
     text-align: right;
 }
+.item_product .item_price2 {
+    color: #37474f !important;
+    text-align: right;
+    text-decoration: line-through;
+}
+
 .shipping_price,
 .total_price {
     float: left;

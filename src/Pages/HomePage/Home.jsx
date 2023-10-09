@@ -56,21 +56,22 @@ export default function Home() {
                                         <div class="main-list-item">
                                             <Link to={`/book/detail?id=${item.id_product}`}>
                                                 <div class="main-discription mt-8 mb-8">
-                                                    {/* <img
-                            src={`http://localhost:8081/image/${item.images}`}
-                            alt=""
-                            className="avatar-image"
-                          /> */}
-                                                    <img src={toan} alt=""></img>
+                                                    <img
+                                                        src={`http://localhost:8081/image/${item.images}`}
+                                                        alt=""
+                                                        className="avatar-image"
+                                                    />
+                                                    {/* <img src={toan} alt=""></img> */}
                                                     <p class="item-desp">{item.name_product}</p>
+                                                    <p class="item-desp">{item.detail}</p>
                                                 </div>
                                                 <div class="main-price">
                                                     <p>
-                                                        {/* {item.price_reducing.toLocaleString('vi', {
+                                                        {item.price_reducing.toLocaleString('vi', {
                                                             style: 'currency',
                                                             currency: 'VND',
-                                                        })}{' '} */}
-                                                        200.000 đ
+                                                        })}{' '}
+                                                        {/* 200.000 đ */}
                                                     </p>
                                                     <span>
                                                         {item.price.toLocaleString('vi', {

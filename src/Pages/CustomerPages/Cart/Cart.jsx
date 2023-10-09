@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './Cart.scss';
 import axios from 'axios';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { getToken } from '../../../Services/Token';
@@ -27,7 +27,9 @@ export default function Cart(props) {
     const [quantity, setQuantity] = useState('1');
     const [change, setChange] = useState(false);
     const [list, setList] = useState([]);
-    const [total, setTotal] = useState('0');
+    const [total, setTotal] = useState(0);
+
+    const [selectedItems, setSelectedItems] = useState([]); // Danh sách các sản phẩm được chọn
 
     async function getListProduct() {
         // const result = await axiosApiInstance.get(
@@ -37,8 +39,9 @@ export default function Cart(props) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         const result = await axios.post(`http://localhost:8081/api/v1/account/cart`);
         setList(result?.data.list);
-        setTotal(result?.data.total);
-        console.log(result.data.total);
+        // console.log(result.data)
+        // setTotal(result?.data.total);
+        // console.log(result.data.total);
     }
 
     async function RemoveProductFromCart(item) {
@@ -90,31 +93,117 @@ export default function Cart(props) {
         setChange(!change);
     }
 
+    // Hàm xử lý khi ấn vào ô input tick text
+    // const handleToggleSelect = (item) => {
+    //     // Kiểm tra xem sản phẩm đã được chọn chưa
+    //     if (selectedItems.includes(item.id_product)) {
+    //         // Nếu đã chọn, loại bỏ sản phẩm khỏi danh sách
+    //         setSelectedItems((prevSelectedItems) => prevSelectedItems.filter((id) => id !== item.id_product));
+    //     } else {
+    //         // Nếu chưa chọn, thêm sản phẩm vào danh sách
+    //         setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item.id_product]);
+    //     }
+
+    //     // Sau khi thay đổi danh sách selectedItems, tính tổng tiền
+    //     calculateTotal();
+    // };
+
+    // Hàm xử lý khi ấn vào ô input tick text
+    // const handleToggleSelect = (item) => {
+    //     // Kiểm tra xem sản phẩm đã được chọn chưa
+    //     if (selectedItems.some((selectedItem) => selectedItem.id_product === item.id_product)) {
+    //         // Nếu đã chọn, loại bỏ sản phẩm khỏi danh sách
+    //         setSelectedItems((prevSelectedItems) =>
+    //             prevSelectedItems.filter((selectedItem) => selectedItem.id_product !== item.id_product),
+    //         );
+    //     } else {
+    //         // Nếu chưa chọn, thêm sản phẩm vào danh sách
+    //         setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
+    //     }
+
+    //     // Sau khi thay đổi danh sách selectedItems, tính tổng tiền
+    //     calculateTotal();
+    // };
+
+    const handleToggleSelect = (item) => {
+        // Kiểm tra xem sản phẩm đã được chọn chưa
+        if (selectedItems.some((selectedItem) => selectedItem.id_product === item.id_product)) {
+            // Nếu đã chọn, loại bỏ sản phẩm khỏi danh sách
+            setSelectedItems((prevSelectedItems) =>
+                prevSelectedItems.filter((selectedItem) => selectedItem.id_product !== item.id_product),
+            );
+        } else {
+            // Nếu chưa chọn, thêm sản phẩm vào danh sách
+            setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
+        }
+        // console.log('dssp:', selectedItems);
+
+        // Sau khi thay đổi danh sách selectedItems, tính tổng tiền
+        calculateTotal();
+    };
+
+    // const handleSelectAll = (list) => {
+    //     // Kiểm tra nếu đã chọn tất cả thì bỏ chọn tất cả, ngược lại chọn tất cả
+    //     if (selectedItems.length === list.length) {
+    //         setSelectedItems([]);
+    //     } else {
+    //         // Gán toàn bộ danh sách sản phẩm vào selectedItems
+    //         setSelectedItems(list.map((item) => item.id_product));
+    //     }
+    //     // Sau khi thay đổi danh sách selectedItems, tính tổng tiền
+    //     calculateTotal();
+    // };
+
+    const handleSelectAll = (list) => {
+        // Kiểm tra nếu đã chọn tất cả thì bỏ chọn tất cả, ngược lại chọn tất cả
+        if (selectedItems.length === list.length) {
+            setSelectedItems([]);
+        } else {
+            // Gán toàn bộ danh sách sản phẩm vào selectedItems
+            setSelectedItems(list.map((item) => item.id_product));
+        }
+        // Sau khi thay đổi danh sách selectedItems, tính tổng tiền
+        calculateTotal();
+    };
+
+    const addToSelectedItems = (item) => {
+        setSelectedItems([...selectedItems, item]);
+        // console.log('Danh sách sản phẩm là : ', selectedItems);
+    };
+    // const addToSelectedItems = (item) => {
+    //     // Chỉ thêm sản phẩm nếu nó chưa có trong danh sách
+    //     if (!selectedItems.some((selectedItem) => selectedItem.id_product === item.id_product)) {
+    //         setSelectedItems([...selectedItems, item]);
+    //     }
+    // };
+
+    // Hàm tính tổng tiền dựa trên danh sách sản phẩm được chọn
+    const calculateTotal = () => {
+        let totalPrice = 0;
+        // Duyệt qua danh sách các sản phẩm đã chọn
+        selectedItems.forEach((selectedProductId) => {
+            // Tìm sản phẩm trong danh sách gốc bằng id_product
+            const selectedProduct = list.find((item) => item.id_product === selectedProductId);
+            // Nếu sản phẩm được tìm thấy, thì cộng giá vào tổng tiền
+            if (selectedProduct) {
+                totalPrice += selectedProduct.price_reducing * selectedProduct.quantity;
+            }
+        });
+        // Lưu tổng tiền khi danh sách sản phẩm được chọn thay đổi
+        console.log('Danh sách sp là :', selectedItems);
+        setTotal(totalPrice);
+    };
+
+    const navigate = useNavigate();
+    const goToOrderPage = () => {
+        // Sử dụng `selectedItems` để truyền danh sách đã chọn khi chuyển trang
+        navigate('/order-pay', { state: { selectedItems: selectedItems } });
+    };
+
     useEffect(() => {
         getListProduct();
-    }, [change]);
-
-    const handleSelectAllCheckBox = (e) => {
-        if (e.target.checked) {
-            setSelectedItem([1, 2, 3]);
-        } else {
-            setSelectedItem([]);
-        }
-    };
-
-    const handleSingleCheckBox = (e) => {
-        const value = parseInt(e.target.value);
-
-        if (e.target.checked) {
-            setSelectedItem([...selectedItem, value]);
-        } else {
-            setSelectedItem((prevData) => {
-                return prevData.filter((id) => {
-                    return id !== value;
-                });
-            });
-        }
-    };
+        calculateTotal();
+    }, [change, selectedItems]);
 
     return (
         <div className="container">
@@ -127,11 +216,10 @@ export default function Cart(props) {
                     <div className="product-header">
                         <input
                             class="carts-check"
-                            checked={selectedItem.length === 3}
+                            checked={setSelectedItems.length === list && list.length}
                             type="checkbox"
-                            onChange={handleSelectAllCheckBox}
-                            name="select-all"
-                            id=""
+                            onChange={() => handleSelectAll(list)}
+                            // onClick={() => addToSelectedItems(list)}
                         />{' '}
                         Chọn tất cả {`(${list && list.length} sản phẩm)`}
                     </div>
@@ -139,16 +227,14 @@ export default function Cart(props) {
                     {list &&
                         list.map((item, index) => {
                             return (
-                                <div className="product">
+                                <div className="product" key={list.id_product}>
                                     <input
-                                        checked={selectedItem.includes(1)}
-                                        value=""
-                                        onChange={handleSingleCheckBox}
-                                        class="carts-check"
                                         type="checkbox"
-                                        name=""
-                                        id=""
+                                        checked={selectedItems.includes(item.id_product)}
+                                        onChange={() => handleToggleSelect(item)}
+                                        // onClick={() => addToSelectedItems(item)}
                                     />
+
                                     <Link to="/">
                                         <img
                                             src={`http://localhost:8081/image/${item && item?.images}`}
@@ -162,12 +248,18 @@ export default function Cart(props) {
                                         <div className="main-price">
                                             <div className="price">
                                                 {item &&
-                                                    item?.price.toLocaleString('vi', {
+                                                    item?.price_reducing.toLocaleString('vi', {
                                                         style: 'currency',
                                                         currency: 'VND',
                                                     })}{' '}
                                             </div>
-                                            <span>150.000đ</span>
+                                            <span>
+                                                {item &&
+                                                    item?.price.toLocaleString('vi', {
+                                                        style: 'currency',
+                                                        currency: 'VND',
+                                                    })}{' '}
+                                            </span>
                                         </div>
 
                                         <div class="quantity">
@@ -205,10 +297,10 @@ export default function Cart(props) {
                 <div className="cart-total">
                     <div class="price-content">
                         <span class="total-price-title">Thành tiền</span>
-                        <span class="price-cart">{formatMoney(total && total)}</span>
+                        <span class="price-cart">{formatMoney(total)}</span>
                     </div>
-                    <div id="order" className="order">
-                        <Link to="/order-pay" href="order-cart">
+                    <div id="order" className="order" onClick={goToOrderPage}>
+                        <Link>
                             <i className="fa-solid fa-shopping-cart fa-shopping"></i>Thanh toán
                         </Link>
                     </div>
