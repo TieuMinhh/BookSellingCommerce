@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 export default function Home() {
     const [change, setChange] = useState(false);
     const [list, setList] = useState([]);
+    const [currentIndexPage, setCurrentIndexPage] = useState(1);
 
     async function getListProduct() {
         // const result = await axiosApiInstance.get(
@@ -56,11 +57,6 @@ export default function Home() {
                                         <div class="main-list-item">
                                             <Link to={`/book/detail?id=${item.id_product}`}>
                                                 <div class="main-discription mt-8 mb-8">
-                                                    {/* <img
-                            src={`http://localhost:8081/image/${item.images}`}
-                            alt=""
-                            className="avatar-image"
-                          /> */}
                                                     <img src={toan} alt=""></img>
                                                     <p class="item-desp">{item.name_product}</p>
                                                 </div>
@@ -96,22 +92,36 @@ export default function Home() {
 
                 <div class="last-container">
                     <div class="container-page">
-                        <p>1</p>
+                        <p
+                            class={currentIndexPage === 1 ? 'page-number active' : 'page-number'}
+                            onClick={() => setCurrentIndexPage(1)}
+                        >
+                            1
+                        </p>
                     </div>
                     <div class="container-page">
-                        <p>2</p>
+                        <p
+                            class={currentIndexPage === 2 ? 'page-number active' : 'page-number'}
+                            onClick={() => setCurrentIndexPage(2)}
+                        >
+                            2
+                        </p>
                     </div>
                     <div class="container-page">
-                        <p>3</p>
+                        <p
+                            class={currentIndexPage === 3 ? 'page-number active' : 'page-number'}
+                            onClick={() => setCurrentIndexPage(3)}
+                        >
+                            3
+                        </p>
                     </div>
                     <div class="container-page">
-                        <p>.</p>
-                    </div>
-                    <div class="container-page">
-                        <p>13</p>
-                    </div>
-                    <div class="container-page">
-                        <p>Trang cuối</p>
+                        <p
+                            class={currentIndexPage === 4 ? 'page-number active' : 'page-number'}
+                            onClick={() => setCurrentIndexPage(4)}
+                        >
+                            4
+                        </p>
                     </div>
                 </div>
             </div>
