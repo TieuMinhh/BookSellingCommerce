@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import './Cart.scss';
 import axios from 'axios';
-import BookImg from '../../../Assets/img/toan.png';
-import BookImg2 from '../../../Assets/img/tienganh12.jpg';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -135,7 +133,7 @@ export default function Cart(props) {
                             name="select-all"
                             id=""
                         />{' '}
-                        Chọn tất cả {`(${3} sản phẩm)`}
+                        Chọn tất cả {`(${list && list.length} sản phẩm)`}
                     </div>
 
                     {list &&
