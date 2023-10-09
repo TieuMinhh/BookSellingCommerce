@@ -207,7 +207,7 @@ a {
     margin: 0 3px;
 }
 
-.content .last-container .container-page p {
+.content .last-container .container-page .page-number {
     padding: 10px;
     background-color: #c9c6c6;
     color: white;
@@ -216,9 +216,14 @@ a {
     border-radius: 4px;
     -webkit-transition: ease 0.2s;
     transition: ease 0.2s;
+    user-select: none;
 }
 
-.content .last-container .container-page p:hover {
+.content .last-container .container-page .page-number:hover {
+    opacity: 0.8;
+}
+
+.content .last-container .container-page .page-number.active {
     background-color: #6bc90c;
 }
 
