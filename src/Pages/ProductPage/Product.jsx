@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Home.scss';
+import './Product.scss';
 
 import toan from '../../Assets/img/toan.png';
 import Filter from '../../Components/FilterBook/Filter';

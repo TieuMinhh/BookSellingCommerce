@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import './SidebarProfile';
+import { NavLink } from 'react-router-dom';
+import './SidebarProfile.scss';
 
 export default function SidebarProfile() {
     return (
@@ -7,19 +7,19 @@ export default function SidebarProfile() {
             <h3>Tài khoản</h3>
             <ul className="items-sidebar">
                 <li>
-                    <Link to="/profile">Bảng điều khiển tài khoản</Link>
+                    <NavLink to="/profile">Bảng điều khiển tài khoản</NavLink>
                 </li>
                 <li>
-                    <Link to="/change-info">Thông tin tài khoản</Link>
+                    <NavLink to="/change-info">Thông tin tài khoản</NavLink>
                 </li>
                 <li>
-                    <Link to="/change-password">Đổi mật khẩu</Link>
+                    <NavLink to="/change-password">Đổi mật khẩu</NavLink>
                 </li>
                 <li>
-                    <Link to="/order-history">Đơn hàng của tôi</Link>
+                    <NavLink to="/order-history">Đơn hàng của tôi</NavLink>
                 </li>
                 <li>
-                    <Link to="/my-voucher">Ví voucher</Link>
+                    <NavLink to="/my-voucher">Ví voucher</NavLink>
                 </li>
             </ul>
         </>

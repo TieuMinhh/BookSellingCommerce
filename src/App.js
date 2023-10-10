@@ -28,36 +28,32 @@ import { ToastContainer } from 'react-toastify';
 import Footer from './Components/Footer/Footer';
 import Header from './Components/Header/Header';
 
-import HomePage from './Pages/HomePage/Home';
+import Product from './Pages/ProductPage/Product';
 import Cart from './Pages/CustomerPages/Cart/Cart';
 import BookDetail from './Pages/CustomerPages/BookDetail/BookDetail';
 import OrderPay from './Pages/CustomerPages/OrderPay/OrderPay';
 import ChangePassword from './Pages/CustomerPages/ChangePassword/ChangePassword';
+import HomePage from './Pages/HomePage/HomePage';
+import PageUp from './Components/PageUp/PageUp';
 
 function App() {
     const [theme, colorMode] = useMode();
     const [isSidebar, setIsSidebar] = useState(true);
+    const [isScrollTop, setIsScrollTop] = useState(false);
 
-    // let role = localStorage.getItem("accessToken");
-
-    // let role = localStorage.getItem("accessToken")
-    //   ? jwtDecode(localStorage.getItem("accessToken")).role_id
-    //   : 0;
     let role = localStorage.getItem('accessToken') ? jwtDecode(localStorage.getItem('accessToken')).role_id : 0;
 
-    // let role = 0;
-
     console.log(localStorage.getItem('userData'));
-    // console.log(role);
 
-    // useEffect(() => {
-    //   console.log("Is login: ", isLogin);
-    //   setRole(
-    //     localStorage.getItem("accessToken")
-    //       ? jwtDecode(localStorage.getItem("accessToken")).role
-    //       : 0
-    //   );
-    // }, []);
+    useEffect(() => {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                setIsScrollTop(true);
+            } else {
+                setIsScrollTop(false);
+            }
+        });
+    }, []);
 
     return (
         <AuthContextProvider>
@@ -79,7 +75,6 @@ function App() {
                                             <Route path="/revenue" element={<Revenue />} />
                                             <Route path="/customer" element={<Customer />} />
                                             <Route path="/promotion" element={<Promotion />} />
-                                            {/* <Route path="/setting" element={<Setting />} /> */}
                                             <Route path="/login" element={<Login />} />
                                             <Route path="/signup" element={<SignUp />} />
                                         </Routes>
@@ -87,12 +82,10 @@ function App() {
                                 </>
                             ) : (
                                 <div className="user-layout">
-                                    {/* <Routes>
-                    <Route path="/login" element={<Login />} />
-                  </Routes> */}
                                     <Header />
                                     <Routes>
                                         <Route path="/" exact element={<HomePage />} />
+                                        <Route path="/product" exact element={<Product />} />
                                         <Route path="/login" element={<Login />} />
                                         <Route path="/signup" element={<SignUp />} />
                                         <Route path="/cart" element={<Cart />} />
@@ -103,16 +96,8 @@ function App() {
                                         <Route path="/change-password" element={<ChangePassword />} />
                                         <Route path="/order-history" element={<OrderHistory />} />
                                         <Route path="/my-voucher" element={<MyVoucher />} />
-
-                                        {/* <Route path="/hero" element={<Hero />} />
-                <Route path="/hero/detail" element={<HeroDetail />} />
-                <Route path="/academy" element={<Hero />}>
-                  <Route path="introduce" element={<Introduce />} />
-
-                </Route>
-                <Route path="/skin" element={<Skin />} />
-                <Route path="/skin/detail" element={<SkinDetail />} /> */}
                                     </Routes>
+                                    {isScrollTop && <PageUp />}
                                     <Footer />
                                 </div>
                             )}

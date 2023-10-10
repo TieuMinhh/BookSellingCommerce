@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import MyLoginModal from '../../Pages/Auths/Auths/Auths';
 import VietNamFlag from '../../Assets/img/vietnam.png';
 import PLatinum from '../../Assets/svg/platinum.svg';
+import IconMenu from '../../Assets/img/icon-menu.png';
 
 import axios from 'axios';
 import { getToken } from '../../Services/Token';
@@ -68,11 +69,58 @@ export default function Header() {
 
             <div class="mid-header">
                 <div class="container-header row grid wide">
-                    <div class="container-header-1 col">
+                    <div class="container-header-1 col" style={{ display: 'flex' }}>
                         <Link to="/">
                             <img src={LogoPage} alt="" style={{ width: '200px' }}></img>
                         </Link>
+                        <div class="cover-img-menu">
+                            <img src={IconMenu} alt="" className="icon-menu-header" />
+                            <i class="down-menu-icon fa-solid fa-angle-down"></i>
+                            <div className="modal-wrapper-cate">
+                                <div className="modal-container-cate">
+                                    <p className="modal-title-cate">
+                                        <i class="fa-regular fa-bookmark" style={{ marginRight: '16px' }}></i>Danh mục
+                                        sản phẩm
+                                    </p>
+
+                                    <Link to="">
+                                        <p className="modal-item-cate">
+                                            <i class="fa-solid fa-book-open" style={{ marginRight: '16px' }}></i> Sách
+                                            Thánh
+                                        </p>
+                                    </Link>
+                                    <Link to="">
+                                        <p className="modal-item-cate">
+                                            <i class="fa-solid fa-book-open" style={{ marginRight: '16px' }}></i> Sách
+                                            Phép Thuật
+                                        </p>
+                                    </Link>
+
+                                    <Link to="">
+                                        <p className="modal-item-cate">
+                                            <i class="fa-solid fa-book-open" style={{ marginRight: '16px' }}></i> Sách
+                                            Thần Kỳ
+                                        </p>
+                                    </Link>
+
+                                    <Link to="">
+                                        <p className="modal-item-cate">
+                                            <i class="fa-solid fa-book-open" style={{ marginRight: '16px' }}></i> Sách
+                                            Thần Bí
+                                        </p>
+                                    </Link>
+
+                                    <Link to="">
+                                        <p className="modal-item-cate">
+                                            <i class="fa-solid fa-book-open" style={{ marginRight: '16px' }}></i> Sách
+                                            Gì Đó
+                                        </p>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="container-header-2 col">
                         <div class="header-search">
                             <input type="text" placeholder="Nhập để tìm kiếm ..."></input>

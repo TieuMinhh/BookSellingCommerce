@@ -363,6 +363,12 @@ p {
         font-weight: bold;
         color: #fff;
         background: #2f80ed;
+
+        &:hover {
+            color: #2f80ed;
+            background: #fff;
+            border: 1px solid #2f80ed;
+        }
     }
 }
 
@@ -424,6 +430,12 @@ p {
                 font-weight: bold;
                 color: #fff;
                 background: #2f80ed;
+
+                &:hover {
+                    color: #2f80ed;
+                    background: #fff;
+                    border: 1px solid #2f80ed;
+                }
             }
         }
     }
