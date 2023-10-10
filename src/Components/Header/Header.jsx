@@ -37,7 +37,7 @@ export default function Header() {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         const result = await axios.post(`http://localhost:8081/api/v1/account/cart`);
         setListCart(result?.data.list);
-        setChange(!change);
+        // setChange(!change);
     }
 
     useEffect(() => {
@@ -139,7 +139,8 @@ export default function Header() {
 
                         <Link to="/cart" className="first">
                             <div class="header-list">
-                                <b>{listCart?.length || 0}</b>
+                                {/* <b>{listCart.length}</b> */}
+                                <b>{listCart && listCart?.length}</b>
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 <p>Giỏ hàng</p>
                             </div>
