@@ -13,10 +13,78 @@
         margin: auto;
         margin-bottom: 14px;
 
+        .wrapper-address-delivery {
+            padding: 32px;
+
+            .cover-detail-address {
+                display: flex;
+                align-items: center;
+                padding-bottom: 10px;
+                cursor: pointer;
+                position: relative;
+
+                .cover-edit-delete {
+                    position: absolute;
+                    right: 0;
+                    .btn-edit-address {
+                        border: none;
+                        background-color: transparent;
+                        color: #007bff;
+                        font-size: 1rem;
+                        font-weight: bold;
+                    }
+
+                    .btn-delete-address {
+                        border: none;
+                        background-color: transparent;
+                        color: #007bff;
+                        font-size: 1rem;
+                        font-weight: bold;
+                        margin-left: 8px;
+                    }
+                }
+
+                .form-address {
+                    display: none;
+                }
+
+                input[type='radio']:checked + .detail-address-delivery::before {
+                    height: 20px;
+                    width: 20px;
+                    background-color: #fff;
+                    border: 6px solid #c92127;
+                }
+
+                .detail-address-delivery {
+                    width: 100%;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    user-select: none;
+                }
+
+                .detail-address-delivery::before {
+                    content: '';
+                    height: 20px;
+                    width: 20px;
+                    border-radius: 50%;
+                    margin-right: 20px;
+                    border: 2px solid #ccc;
+                }
+            }
+        }
+
+        .detail-address-delivery {
+            color: #000;
+            font-size: 1rem;
+            max-width: 68%;
+        }
+
         .info-delivery {
             display: flex;
             flex-direction: row;
             position: relative;
+            border-bottom: 1px solid #eee;
             .left-info {
                 li {
                     margin-bottom: 16px;
@@ -54,11 +122,75 @@
         background-color: white;
         border-radius: 4px;
         width: 1200px;
-        height: 120px;
+
         margin: auto;
         margin-bottom: 14px;
         .info-method {
             margin-left: 30px;
+        }
+
+        .wrapper-address-delivery {
+            padding: 0px 32px 32px;
+
+            .cover-detail-address {
+                display: flex;
+                align-items: center;
+                padding-bottom: 10px;
+                cursor: pointer;
+                position: relative;
+
+                .cover-edit-delete {
+                    position: absolute;
+                    right: 0;
+                    .btn-edit-address {
+                        border: none;
+                        background-color: transparent;
+                        color: #007bff;
+                        font-size: 1rem;
+                        font-weight: bold;
+                    }
+
+                    .btn-delete-address {
+                        border: none;
+                        background-color: transparent;
+                        color: #007bff;
+                        font-size: 1rem;
+                        font-weight: bold;
+                        margin-left: 8px;
+                    }
+                }
+
+                .form-address {
+                    display: none;
+                }
+
+                input[type='radio']:checked + .detail-address-delivery::before {
+                    height: 20px;
+                    width: 20px;
+                    background-color: #fff;
+                    border: 6px solid #c92127;
+                }
+
+                .detail-address-delivery {
+                    width: 100%;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    user-select: none;
+                    color: #000;
+                    font-size: 1rem;
+                    font-weight: bold;
+                }
+
+                .detail-address-delivery::before {
+                    content: '';
+                    height: 20px;
+                    width: 20px;
+                    border-radius: 50%;
+                    margin-right: 20px;
+                    border: 2px solid #ccc;
+                }
+            }
         }
     }
     .method-pay {
@@ -177,7 +309,6 @@
     justify-content: space-evenly;
     background-color: #fff;
     width: 100%;
-    height: 100px;
     z-index: 999;
     position: sticky;
     bottom: 0;
@@ -185,55 +316,77 @@
     right: 0;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
 
-    .line1 {
-        width: 78%;
-        border: 1px solid #bbb;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .done {
-        display: flex;
-        align-items: center;
-        .back-btn {
+    .pay-inner {
+        min-width: 1280px;
+        margin: 0 auto;
+
+        .cover-check-money {
+            text-align: right;
+            .book-total-money {
+                margin-bottom: 0;
+                padding: 4px 0;
+                font-size: 1.1rem;
+                .detail-total-money {
+                    min-width: 180px;
+                    display: inline-block;
+                }
+
+                .total-all-money {
+                    min-width: 180px;
+                    display: inline-block;
+                    color: #f39801;
+                    font-weight: bold;
+                    font-size: 1.2rem;
+                }
+            }
+        }
+
+        .line1 {
+            width: 100%;
+            border: 1px solid #bbb;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .done {
             display: flex;
             align-items: center;
-            background-color: white;
-            border: none;
-            margin-left: 160px;
-            a {
-                color: black;
-                font-size: 18px;
-                font-weight: 600;
-                padding-left: 8px;
+            .back-btn {
+                display: flex;
+                align-items: center;
+                background-color: white;
+                border: none;
+                margin-left: 160px;
+                a {
+                    color: black;
+                    font-size: 18px;
+                    font-weight: 600;
+                    padding-left: 8px;
+                }
             }
-        }
-        .total-total {
-            // margin-right: auto;
-            // margin-left: auto;
-            margin-left: 500px;
-            .total-text {
-                font-size: 20px;
-                font-weight: 600;
-                color: #ee4d2d;
-                // margin-left: 50px;
-                // margin-right: auto;
-                // margin-left: auto;
+            .total-total {
+                margin-left: 500px;
+                .total-text {
+                    font-size: 20px;
+                    font-weight: 600;
+                    color: #ee4d2d;
+                }
             }
-        }
-        .confirm-btn {
-            border-color: #ee4d2d;
-            background-color: #ee4d2d;
-            padding: 10px 60px;
-            margin-left: auto;
-            margin-right: 11%;
-
-            &:hover {
+            .confirm-btn {
                 border-color: #ee4d2d;
-                background-color: #fff;
-                color: #ee4d2d;
-            }
-            span {
-                font-family: 'nunito-sans', sans-serif, Helvetica, Arial;
+                background-color: #ee4d2d;
+                padding: 10px 60px;
+                margin: 10px 0 18px auto;
+                font-weight: bold;
+                font-size: 1.2rem;
+
+                &:hover {
+                    border-color: #ee4d2d;
+                    background-color: #fff;
+                    color: #ee4d2d;
+                }
+                span {
+                    font-family: 'nunito-sans', sans-serif, Helvetica, Arial;
+                }
             }
         }
     }
@@ -258,7 +411,7 @@ p {
     // margin-right: 16px;
 }
 
-// start Modal
+// start Modal Promotion
 .modal-promotion-wrapper {
     background-color: rgba(0, 0, 0, 0.3);
     position: fixed;
@@ -441,4 +594,91 @@ p {
     }
 }
 
-// End Modal
+// End Modal Promotion
+
+// Start Modal Edit address
+
+.modal-edit-address-wrapper {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    animation: showModalPromotion ease-in-out 0.3s;
+}
+
+.modal-edit-address-container {
+    width: 600px;
+    max-width: calc(100% - 32px);
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 8px;
+
+    .btn-modal-save-address {
+        margin: 0 auto;
+        display: block;
+        margin-bottom: 18px;
+        font-size: 1rem;
+        border: none;
+        font-weight: bold;
+        background-color: #c92127;
+        color: #fff;
+        border-radius: 4px;
+        padding: 8px 38px;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .btn-modal-cancel-address {
+        margin: 0 auto;
+        display: block;
+        font-size: 1rem;
+        border: none;
+        font-weight: bold;
+        background-color: #fff;
+        border: 1px solid #c92127;
+        border-radius: 4px;
+        color: #c92127;
+        padding: 6px 60px;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .title-edit-address {
+        color: #f7941e;
+        text-transform: uppercase;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .cover-item-address-input {
+        display: flex;
+        margin-bottom: 20px;
+        .label-input-address {
+            margin-bottom: 0;
+            min-width: 200px;
+        }
+
+        .form-edit-address {
+            outline: none;
+            padding: 3px 16px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .form-edit-address::placeholder {
+            color: #ccc;
+            font-weight: 100;
+        }
+    }
+}
+
+// End Modal Edit address

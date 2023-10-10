@@ -55,6 +55,7 @@ h3 {
         margin-bottom: 20px;
         background-color: #eee;
         padding: 8px 16px;
+        user-select: none;
     }
 }
 
@@ -290,18 +291,32 @@ h3 {
     border: 1px solid silver;
     border-radius: 5px;
     background-color: #eee;
-    height: 200px;
+    user-select: none;
 }
 
 .cart-total .price-content {
-    display: flex;
-    justify-content: space-between;
     margin-bottom: 40px;
     font-size: 20px;
     background-color: #fff;
     padding: 8px 16px;
     border-radius: 4px;
     font-weight: 600;
+
+    .cover-total-money {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        .total-price-title {
+            color: #000;
+            line-height: 38px;
+        }
+
+        .price-content {
+            display: flex;
+            align-items: center;
+        }
+    }
 }
 
 .fa-shopping {
@@ -331,15 +346,6 @@ h3 {
 .cart-total a:hover {
     // background: -webkit-linear-gradient(left, #b224ef, #7579ff);
     background: linear-gradient(-180deg, #f63, #f53d2d);
-}
-
-.cart-total .total-price-title {
-    color: #000;
-}
-
-.cart-total .price-content {
-    display: flex;
-    align-items: center;
 }
 
 .cart-total .price-cart {

@@ -9,16 +9,27 @@ import CuponIcon from '../../../Assets/svg/ico_coupon.svg';
 import VoucherImg from '../../../Assets/img/voucher-icon.jpg';
 
 export default function OrderPay() {
-    const hideModal = () => {
+    const [isShowModalAddress, setIsShowModalAddress] = useState(false);
+    const [isNewAddress, setIsNewAddress] = useState(false);
+
+    const hideModalPromotion = () => {
         const modal = document.querySelector('.modal-promotion-wrapper');
         modal.classList.remove('active');
         modal.classList.add('hidden');
     };
 
-    const showModal = () => {
+    const showModalPromotion = () => {
         const modal = document.querySelector('.modal-promotion-wrapper');
         modal.classList.remove('hidden');
         modal.classList.add('active');
+    };
+
+    const hideModalAddress = () => {
+        setIsShowModalAddress(false);
+    };
+
+    const showModalAddress = () => {
+        setIsShowModalAddress(true);
     };
 
     return (
@@ -29,19 +40,101 @@ export default function OrderPay() {
                     <div class="line"></div>
                     <div className="info-delivery">
                         <ul className="left-info">
-                            <li>Họ và tên người nhận</li>
-                            <li>Email </li>
-                            <li>Số điện thoại</li>
-                            <li>Địa chỉ nhận hàng</li>
+                            <li>Họ và tên người nhận :</li>
+                            <li>Email :</li>
+                            <li>Số điện thoại :</li>
                         </ul>
                         <ul className="right-info">
                             <li>Ngô Duy Tân</li>
                             <li>znamtrung@gmail.com</li>
                             <li>0912486205</li>
-                            <li>284/4/34 Trần Trâm, P.13, Q.Bình Thanh, TPHCM</li>
                         </ul>
                         <div className="img-delivery">
                             <img src={Img2} alt=""></img>
+                        </div>
+                    </div>
+                    <div className="wrapper-address-delivery">
+                        <p>
+                            <i class="fa-solid fa-map-location-dot"></i> Địa chỉ nhận hàng :
+                        </p>
+
+                        <div className="cover-detail-address">
+                            <input className="form-address" type="radio" name="option" id="address1" />
+                            <label htmlFor="address1" className="detail-address-delivery">
+                                167 Tăng Nhơn Phú, phường Phước Long B, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, Việt
+                                Nam
+                            </label>
+                            <div className="cover-edit-delete">
+                                <button
+                                    className="btn-edit-address"
+                                    onClick={() => {
+                                        showModalAddress();
+                                        setIsNewAddress(false);
+                                    }}
+                                >
+                                    Sửa
+                                </button>
+                                <button className="btn-delete-address">Xóa</button>
+                            </div>
+                        </div>
+
+                        <div className="cover-detail-address">
+                            <input className="form-address" type="radio" name="option" id="address2" />
+                            <label htmlFor="address2" className="detail-address-delivery">
+                                Giao ở đâu tùy ý
+                            </label>
+                            <div className="cover-edit-delete">
+                                <button
+                                    className="btn-edit-address"
+                                    onClick={() => {
+                                        showModalAddress();
+                                        setIsNewAddress(false);
+                                    }}
+                                >
+                                    Sửa
+                                </button>
+                                <button className="btn-delete-address">Xóa</button>
+                            </div>
+                        </div>
+
+                        <div className="cover-detail-address">
+                            <input className="form-address" type="radio" name="option" id="address3" />
+                            <label htmlFor="address3" className="detail-address-delivery">
+                                Sao Hỏa
+                            </label>
+                            <div className="cover-edit-delete">
+                                <button
+                                    className="btn-edit-address"
+                                    onClick={() => {
+                                        showModalAddress();
+                                        setIsNewAddress(false);
+                                    }}
+                                >
+                                    Sửa
+                                </button>
+                                <button className="btn-delete-address">Xóa</button>
+                            </div>
+                        </div>
+
+                        <div
+                            className="cover-detail-address"
+                            onClick={() => {
+                                showModalAddress();
+                                setIsNewAddress(true);
+                            }}
+                        >
+                            <i class="fa-solid fa-circle-plus" style={{ color: '#C92127', fontSize: '18px' }}></i>
+                            <label
+                                style={{
+                                    color: '#000',
+                                    paddingLeft: '18px',
+                                    fontSize: '1rem',
+                                    userSelect: 'none',
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                Giao đến địa chỉ khác
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -49,6 +142,29 @@ export default function OrderPay() {
                     <h4 className="h4">Phương thức vận chuyển</h4>
                     <div class="line"></div>
                     <p className="info-method">Qúy khách vui lòng điền tên và địa chỉ giao nhận trước</p>
+
+                    <div className="wrapper-address-delivery">
+                        <div className="cover-detail-address">
+                            <input className="form-address" type="radio" name="method" id="method1" />
+                            <label htmlFor="method1" className="detail-address-delivery">
+                                Giao hàng tiêu chuẩn : 1.000.000.000đ
+                            </label>
+                        </div>
+
+                        <div className="cover-detail-address">
+                            <input className="form-address" type="radio" name="method" id="method2" />
+                            <label htmlFor="method2" className="detail-address-delivery">
+                                Giao hàng nhanh : 2.000.000.000đ
+                            </label>
+                        </div>
+
+                        <div className="cover-detail-address">
+                            <input className="form-address" type="radio" name="method" id="method3" />
+                            <label htmlFor="method3" className="detail-address-delivery">
+                                Giao hàng siêu tốc : 3.000.000.000đ
+                            </label>
+                        </div>
+                    </div>
                 </div>
                 <div className="method-pay">
                     <h4 className="h4">Phương thức thanh toán</h4>
@@ -68,7 +184,7 @@ export default function OrderPay() {
                             <input className="input" type="text" placeholder="Nhập mã khuyến mãi"></input>
                             <Button className="apply-btn">Áp dụng</Button>
                         </div>
-                        <Button className="discout-btn" variant="link" onClick={showModal}>
+                        <Button className="discout-btn" variant="link" onClick={showModalPromotion}>
                             Chọn mã khuyến mãi
                         </Button>
                     </div>
@@ -105,28 +221,43 @@ export default function OrderPay() {
             </div>
 
             <div className="pay-container">
-                <div class="line1"></div>
-                <div className="done">
-                    <Button className="back-btn" variant="light">
-                        <i class="fa-solid fa-arrow-left" style={{ color: 'black' }}></i>
-                        <Link to="/cart"> Quay về giỏ hàng</Link>
-                    </Button>
-                    <div className="total-total">
-                        <span className="total-text">Tổng tiền :</span>
-                        <span className="total-text"> 100.000.000 đ</span>
+                <div className="pay-inner">
+                    <div className="cover-check-money">
+                        <p className="book-total-money">
+                            Thành tiền <span className="detail-total-money">1.000.000.000đ</span>
+                        </p>
+                        <p className="book-total-money">
+                            Phí vận chuyển (Giao hàng tiêu chuẩn){' '}
+                            <span className="detail-total-money">2.000.000.000đ</span>
+                        </p>
+                        <p className="book-total-money" style={{ fontWeight: 'bold' }}>
+                            Tổng số tiền <span className="total-all-money">3.000.000.000đ</span>
+                        </p>
                     </div>
+                    <div class="line1"></div>
+                    <div className="done">
+                        <Button className="back-btn" variant="light">
+                            <i class="fa-solid fa-arrow-left" style={{ color: 'black' }}></i>
+                            <Link to="/cart"> Quay về giỏ hàng</Link>
+                        </Button>
 
-                    <Button className="confirm-btn">
-                        <span>Xác nhận thanh toán</span>
-                    </Button>
+                        <Button className="confirm-btn">
+                            <span>Xác nhận thanh toán</span>
+                        </Button>
+                    </div>
                 </div>
             </div>
 
             {/* Modal ticket promotion */}
 
-            <div className="modal-promotion-wrapper">
-                <div className="modal-promotion-container">
-                    <div className="close-modal-promotion" onClick={hideModal}>
+            <div className="modal-promotion-wrapper" onClick={hideModalPromotion}>
+                <div
+                    className="modal-promotion-container"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
+                >
+                    <div className="close-modal-promotion" onClick={hideModalPromotion}>
                         <i class="fa-solid fa-xmark"></i>
                     </div>
                     <div className="modal-promotion-header">
@@ -198,7 +329,55 @@ export default function OrderPay() {
                 </div>
             </div>
 
-            {/* End Modal */}
+            {/* End Modal Ticket Promotion*/}
+
+            {/* Start Modal Edit Address */}
+            {isShowModalAddress && (
+                <div className="modal-edit-address-wrapper" onClick={hideModalAddress}>
+                    <div
+                        className="modal-edit-address-container"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
+                    >
+                        {!isNewAddress && <h5 className="title-edit-address">Thay đổi địa chỉ giao hàng</h5>}
+                        {isNewAddress && <h5 className="title-edit-address">Thêm mới địa chỉ giao hàng</h5>}
+
+                        <div className="cover-item-address-input">
+                            <p className="label-input-address">Họ và tên người nhận</p>
+                            <input
+                                type="text"
+                                name=""
+                                id=""
+                                className="form-edit-address"
+                                placeholder="Nhập họ và tên"
+                            />
+                        </div>
+
+                        <div className="cover-item-address-input">
+                            <p className="label-input-address">Số điện thoại</p>
+                            <input
+                                type="text"
+                                name=""
+                                id=""
+                                className="form-edit-address"
+                                placeholder="Nhập số điện thoại"
+                            />
+                        </div>
+
+                        <div className="cover-item-address-input">
+                            <p className="label-input-address">Địa chỉ nhận hàng</p>
+                            <input type="text" name="" id="" className="form-edit-address" placeholder="Nhập địa chỉ" />
+                        </div>
+
+                        <button className="btn-modal-save-address">Lưu địa chỉ</button>
+                        <button className="btn-modal-cancel-address" onClick={hideModalAddress}>
+                            Hủy
+                        </button>
+                    </div>
+                </div>
+            )}
+            {/* End Modal Edit Address */}
         </>
     );
 }
