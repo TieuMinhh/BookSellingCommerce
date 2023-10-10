@@ -74,8 +74,10 @@ export default function Header() {
                             <img src={LogoPage} alt="" style={{ width: '200px' }}></img>
                         </Link>
                         <div class="cover-img-menu">
-                            <img src={IconMenu} alt="" className="icon-menu-header" />
-                            <i class="down-menu-icon fa-solid fa-angle-down"></i>
+                            <Link to="/product">
+                                <img src={IconMenu} alt="" className="icon-menu-header" />
+                                <i class="down-menu-icon fa-solid fa-angle-down"></i>
+                            </Link>
                             <div className="modal-wrapper-cate">
                                 <div className="modal-container-cate">
                                     <p className="modal-title-cate">
@@ -139,8 +141,12 @@ export default function Header() {
 
                         <Link to="/cart" className="first">
                             <div class="header-list">
-                                {/* <b>{listCart.length}</b> */}
+                             
+
+                              
+
                                  {listCart?.length > 0 && <b>{listCart && listCart?.length}</b>}
+
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 <p>Giỏ hàng</p>
                             </div>

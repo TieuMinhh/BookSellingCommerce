@@ -14,6 +14,7 @@ export default function OrderHistory() {
     const [listOrderByAccount, setListOrderByAccount] = useState([]);
     const [detailOrderByStatus, setDetailOrderByStatus] = useState([]);
     const [change, setChange] = useState([]);
+    const [statusCart, setStatusCart] = useState(1);
 
     const showModalDetail = (item) => {
         console.log('id order là :', item.id_order);
@@ -75,25 +76,33 @@ export default function OrderHistory() {
                     <div className="wrapper-header-myorder">
                         <h5>ĐƠN HÀNG CỦA TÔI</h5>
                         <div className="lists-status-cart">
-                            <div className="status-item" style={{ borderLeft: '2px solid #ccc' }}>
-                                <p className="count-of-status">99</p>
-                                <p className="name-status">Tất cả</p>
+                            <div
+                                className="status-item"
+                                style={{ borderLeft: '2px solid #ccc' }}
+                                onClick={() => setStatusCart(1)}
+                            >
+                                <p className={statusCart === 1 ? 'count-of-status active' : 'count-of-status'}>99</p>
+                                <p className={statusCart === 1 ? 'name-status active' : 'name-status'}>Tất cả</p>
                             </div>
-                            <div className="status-item">
-                                <p className="count-of-status">37</p>
-                                <p className="name-status">Chờ xác nhận</p>
+                            <div className="status-item" onClick={() => setStatusCart(2)}>
+                                <p className={statusCart === 2 ? 'count-of-status active' : 'count-of-status'}>37</p>
+                                <p className={statusCart === 2 ? 'name-status active' : 'name-status'}>Chờ xác nhận</p>
                             </div>
-                            <div className="status-item">
-                                <p className="count-of-status">12</p>
-                                <p className="name-status">Đang giao</p>
+                            <div className="status-item" onClick={() => setStatusCart(3)}>
+                                <p className={statusCart === 3 ? 'count-of-status active' : 'count-of-status'}>12</p>
+                                <p className={statusCart === 3 ? 'name-status active' : 'name-status'}>Đang giao</p>
                             </div>
-                            <div className="status-item">
-                                <p className="count-of-status">10</p>
-                                <p className="name-status">Hoàn tất</p>
+                            <div className="status-item" onClick={() => setStatusCart(4)}>
+                                <p className={statusCart === 4 ? 'count-of-status active' : 'count-of-status'}>10</p>
+                                <p className={statusCart === 4 ? 'name-status active' : 'name-status'}>Hoàn tất</p>
                             </div>
-                            <div className="status-item" style={{ borderRight: '2px solid #ccc' }}>
-                                <p className="count-of-status">40</p>
-                                <p className="name-status">Bị hủy</p>
+                            <div
+                                className="status-item"
+                                style={{ borderRight: '2px solid #ccc' }}
+                                onClick={() => setStatusCart(5)}
+                            >
+                                <p className={statusCart === 5 ? 'count-of-status active' : 'count-of-status'}>40</p>
+                                <p className={statusCart === 5 ? 'name-status active' : 'name-status'}>Bị hủy</p>
                             </div>
                         </div>
                     </div>
@@ -138,8 +147,13 @@ export default function OrderHistory() {
             </div>
             {/* Start: Modal */}
             {isModalOpen && (
-                <div className="modal-order-wrapper">
-                    <div className="modal-order-container">
+                <div className="modal-order-wrapper" onClick={hideModal}>
+                    <div
+                        className="modal-order-container"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
+                    >
                         <div className="close-modal-btn" onClick={hideModal}>
                             <i class="fa-solid fa-xmark"></i>
                         </div>

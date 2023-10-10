@@ -131,9 +131,12 @@ export default function Cart(props) {
                             type="checkbox"
                             onChange={handleSelectAllCheckBox}
                             name="select-all"
-                            id=""
+                            id="check-all"
                         />{' '}
-                        Chọn tất cả {`(${list && list.length} sản phẩm)`}
+                        <label style={{ cursor: 'pointer', width: '100%' }} htmlFor="check-all">
+                            {' '}
+                            Chọn tất cả {`(${(list && list?.length) || 0} sản phẩm)`}
+                        </label>
                     </div>
 
                     {list &&
@@ -204,9 +207,29 @@ export default function Cart(props) {
 
                 <div className="cart-total">
                     <div class="price-content">
-                        <span class="total-price-title">Thành tiền</span>
-                        <span class="price-cart">{formatMoney(total && total)}</span>
+                        <div className="cover-total-money">
+                            <span class="total-price-title">
+                                <i class="fa-regular fa-credit-card"></i> Thành tiền
+                            </span>
+                            <span class="price-cart">{formatMoney(total && total)}</span>
+                        </div>
+                        <div
+                            className="cover-total-money"
+                            style={{ borderBottom: '1px solid #ccc', paddingBottom: '18px' }}
+                        >
+                            <span class="total-price-title">
+                                <i class="fa-solid fa-truck-fast"></i> Phí ship
+                            </span>
+                            <span class="price-cart">{formatMoney(total && total)}</span>
+                        </div>
+                        <div className="cover-total-money">
+                            <span class="total-price-title">
+                                <i class="fa-regular fa-money-bill-1"></i> Tổng tiền
+                            </span>
+                            <span class="price-cart">{formatMoney(total && total)}</span>
+                        </div>
                     </div>
+
                     <div id="order" className="order">
                         <Link to="/order-pay" href="order-cart">
                             <i className="fa-solid fa-shopping-cart fa-shopping"></i>Thanh toán
