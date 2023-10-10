@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Img1 from '../../../Assets/img/kgd.jpg';
 import Img2 from '../../../Assets/img/delivery.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import CuponIcon from '../../../Assets/svg/ico_coupon.svg';
 import VoucherImg from '../../../Assets/img/voucher-icon.jpg';
@@ -20,9 +20,11 @@ export default function OrderPay() {
     let totalOriginalPrice = 0;
     let totalReducedPrice = 0;
     let shipFee = 20000;
+    const navigate = useNavigate();
 
     const [code, setCode] = useState('');
     const [discount, setDiscount] = useState(null);
+    const [deliveryAddress, setDeliveryAddress] = useState(null);
 
     const hideModal = () => {
         const modal = document.querySelector('.modal-promotion-wrapper');
@@ -45,7 +47,9 @@ export default function OrderPay() {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         let result = await axios.get('http://localhost:8081/api/v1/account/info');
         getUser(result.data.userInfo);
+        setDeliveryAddress(result.data.userInfo.address);
         console.log('Check token neeee:', result.data.userInfo);
+        // console.log(deliveryAddress);
     };
 
     async function getListVocuher() {
@@ -58,23 +62,86 @@ export default function OrderPay() {
     }
 
     async function AddVoucher() {
-        const response = await axios.get(`http://localhost:8081/api/v1/getDiscountByCode?discount_code=${code}`);
+        try {
+            const response = await axios.get(`http://localhost:8081/api/v1/getDiscountByCode?discount_code=${code}`);
 
-        console.log(response);
+            console.log(response);
 
-        const check = response.data.data;
+            const check = response.data.data;
 
-        const today = new Date();
-        const startDay = new Date(check.start_date);
-        const endDay = new Date(check.end_date);
+            const today = new Date();
+            const startDay = new Date(check.start_date);
+            const endDay = new Date(check.end_date);
 
-        if (startDay < today && endDay >= today) {
-            setDiscount({ ...check });
-            toast.success('Đã áp dụng mã giảm giá');
-        } else {
-            toast.error('Mã giảm giá không hợp lệ');
+            if (startDay < today && endDay >= today) {
+                setDiscount({ ...check });
+                setTimeout(() => {
+                    hideModal();
+                    toast.success('Đã áp dụng mã giảm giá');
+                }, 1000);
+            } else {
+                toast.error('Mã giảm giá không hợp lệ');
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error('Đã xảy ra lỗi khi sử dụng mã giảm giá');
         }
     }
+
+    async function ChooseVoucher(item) {
+        try {
+            const response = await axios.get(
+                `http://localhost:8081/api/v1/getDiscountByCode?discount_code=${item.discount_code}`,
+            );
+
+            console.log(response);
+
+            const check = response.data.data;
+
+            const today = new Date();
+            const startDay = new Date(check.start_date);
+            const endDay = new Date(check.end_date);
+
+            if (startDay < today && endDay >= today) {
+                setDiscount({ ...check });
+                setTimeout(() => {
+                    hideModal();
+                    toast.success('Đã áp dụng mã giảm giá');
+                }, 1000);
+            } else {
+                toast.error('Mã giảm giá không hợp lệ');
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error('Đã xảy ra lỗi khi sử dụng mã giảm giá');
+        }
+    }
+
+    const handleOrder = async () => {
+        try {
+            const addressId = deliveryAddress ? deliveryAddress.id_address : null;
+            const order = await axios.post('http://localhost:8081/api/v1/dathang', {
+                arr: listProduct,
+                discount_id: discount?.discount_id,
+                id_address: addressId,
+            });
+
+            console.log(order);
+
+            // Đặt lại giá trị giỏ hàng và tiền cần thanh toán
+            setCode('');
+            setDiscount(null);
+
+            toast.success('Đặt hàng thành công');
+            // Thực hiện điều hướng hoặc cập nhật giao diện sau khi đặt hàng thành công
+            setTimeout(() => {
+                navigate('/');
+            }, 1500);
+        } catch (error) {
+            console.error(error);
+            toast.error('Đã xảy ra lỗi khi đặt hàng');
+        }
+    };
 
     useEffect(() => {
         getInfoUser();
@@ -245,7 +312,7 @@ export default function OrderPay() {
                         </span>
                     </div>
 
-                    <Button className="confirm-btn">
+                    <Button className="confirm-btn" onClick={handleOrder}>
                         <span>Xác nhận thanh toán</span>
                     </Button>
                 </div>
@@ -295,7 +362,10 @@ export default function OrderPay() {
                                                         ÁP DỤNG TỪ {moment(item.start_date).format('L')} ĐẾN{' '}
                                                         {moment(item.end_date).format('L')}
                                                     </p>
-                                                    <button className="apply-promotion-btn-bottom" onClick={AddVoucher}>
+                                                    <button
+                                                        className="apply-promotion-btn-bottom"
+                                                        onClick={() => ChooseVoucher(item)}
+                                                    >
                                                         Áp dụng
                                                     </button>
                                                 </div>
