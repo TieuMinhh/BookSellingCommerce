@@ -71,7 +71,7 @@ h3 {
 }
 
 .products {
-    flex: 0.75;
+    flex: 0.7;
     max-height: 800px; /* Đặt chiều cao tối đa mà bạn muốn hiển thị trên màn hình */
     overflow-y: auto; /* Tạo thanh cuộn dọc */
 }
@@ -285,7 +285,7 @@ h3 {
 }
 
 .cart-total {
-    flex: 0.25;
+    flex: 0.3;
     margin-left: 20px;
     padding: 20px;
     border: 1px solid silver;
@@ -353,6 +353,7 @@ h3 {
     font-weight: 700;
     font-size: 1.6rem;
     letter-spacing: 1px;
+    text-align: right;
 }
 
 .payment {

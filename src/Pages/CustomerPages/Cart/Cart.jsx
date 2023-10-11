@@ -139,6 +139,10 @@ export default function Cart(props) {
                         </label>
                     </div>
 
+                    {/* Test */}
+
+                    {/* End Test */}
+
                     {list &&
                         list.map((item, index) => {
                             return (
