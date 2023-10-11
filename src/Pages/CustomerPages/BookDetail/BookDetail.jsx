@@ -42,7 +42,7 @@ export default function BookDetail() {
         // const result = await axiosApiInstance.get(
         //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
         // );
-        const result = await axios.get(`http://localhost:8081/api/v1/chiTiet?id=${id}`);
+        const result = await axios.get(`http://localhost:8081/api/v1/detail-product?id=${id}`);
         setList(result?.data.listProduct);
         console.log(result.data);
         // console.log(list.price);
@@ -141,13 +141,18 @@ export default function BookDetail() {
                     <div class="main-price">
                         <div class="price">
                             {list &&
+                                list[0]?.price_reducing.toLocaleString('vi', {
+                                    style: 'currency',
+                                    currency: 'VND',
+                                })}{' '}
+                        </div>
+                        <span>
+                            {list &&
                                 list[0]?.price.toLocaleString('vi', {
                                     style: 'currency',
                                     currency: 'VND',
                                 })}{' '}
-                            {/* 200.000 đ */}
-                        </div>
-                        <span>150.000đ</span>
+                        </span>
                     </div>
 
                     <div className="time-delivery">
@@ -250,28 +255,17 @@ export default function BookDetail() {
                     <ul className="right-info">
                         <li>8935230009887</li>
                         <li>Cty Văn Hóa & Truyền Thông Trí Việt.</li>
-                        <li>Hector Malot</li>
+                        <li>{list && list[0]?.author}</li>
                         <li>Xiao Ming</li>
-                        <li>Tân Đen Co.op publish</li>
-                        <li>2023</li>
+                        <li>{list && list[0]?.name_company}</li>
+                        <li>{list && list[0]?.year_publish}</li>
                     </ul>
                 </div>
 
                 <div class="line"></div>
                 <p class="name-describe"> Không Gia Đình</p>
                 <div class="detail-describe">
-                    <p>
-                        Thở xa lắm, giữa lòng nước Pháp thế kỷ XIX, có một câu chuyện... Câu chuyện về cậu bé bất hạnh
-                        Rémi lang bạt trên dặm trường thiên lý, dấn thân giữa tất cả những bần cùng đói khổ và những xa
-                        hoa lộng lẫy. Cậu thiếu niên nhỏ tuổi đã đi qua biết bao miền quê, thấy biết bao cảnh đời, mỗi
-                        bước chân đều in dấu ấn của những câu chuyện kỳ lạ, có lúc hoan hỉ mừng vui, có khi thê lương
-                        đau đớn nhưng luôn lấp lánh tình người. Cuộc hành trình của Rémi với đoàn xiếc khỉ, chó, với
-                        những người thợ mỏ, với cậu bé hát rong người Ý đưa người đọc trải nghiệm mọi cung bậc cảm xúc:
-                        thích thú, bất ngờ, hồi hộp, thương tâm, thậm chí cả tuyệt vọng và dạy cho ta - những người
-                        chưa, đang, hay đã trưởng thành - những bài học thấm thía về ý chí, nghị lực và lao động chân
-                        chính... Bàn về Không gia đình không cần bất cứ lời bình luận hoa mỹ nào khác, chỉ gói gọn trong
-                        hai từ: Kinh điển!
-                    </p>
+                    <p>{list && list[0]?.content}</p>
                     <div className=""></div>
                 </div>
             </div>

@@ -36,7 +36,7 @@ export default function Filter() {
                                     return (
                                         <li>
                                             <input id="1" type="checkbox"></input>
-                                            <label for="1">{item.name}</label>
+                                            <label for="1">{item.name_category}</label>
                                         </li>
                                     );
                                 })}
