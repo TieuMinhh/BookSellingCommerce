@@ -147,22 +147,25 @@ export default function OrderPay() {
                         <div className="cover-detail-address">
                             <input className="form-address" type="radio" name="method" id="method1" />
                             <label htmlFor="method1" className="detail-address-delivery">
-                                Giao hàng tiêu chuẩn : 1.000.000.000đ
+                                Giao hàng tiêu chuẩn :
                             </label>
+                            <span>1.000.000.000đ</span>
                         </div>
 
                         <div className="cover-detail-address">
                             <input className="form-address" type="radio" name="method" id="method2" />
                             <label htmlFor="method2" className="detail-address-delivery">
-                                Giao hàng nhanh : 2.000.000.000đ
+                                Giao hàng nhanh :
                             </label>
+                            <span>2.000.000.000đ</span>
                         </div>
 
                         <div className="cover-detail-address">
                             <input className="form-address" type="radio" name="method" id="method3" />
                             <label htmlFor="method3" className="detail-address-delivery">
-                                Giao hàng siêu tốc : 3.000.000.000đ
+                                Giao hàng siêu tốc :
                             </label>
+                            <span>3.000.000.000đ</span>
                         </div>
                     </div>
                 </div>
@@ -230,7 +233,7 @@ export default function OrderPay() {
                             Phí vận chuyển (Giao hàng tiêu chuẩn){' '}
                             <span className="detail-total-money">2.000.000.000đ</span>
                         </p>
-                        <p className="book-total-money" style={{ fontWeight: 'bold' }}>
+                        <p className="book-total-money" style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
                             Tổng số tiền <span className="total-all-money">3.000.000.000đ</span>
                         </p>
                     </div>

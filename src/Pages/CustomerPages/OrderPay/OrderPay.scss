@@ -172,7 +172,6 @@
                 }
 
                 .detail-address-delivery {
-                    width: 100%;
                     cursor: pointer;
                     display: flex;
                     align-items: center;
@@ -180,6 +179,13 @@
                     color: #000;
                     font-size: 1rem;
                     font-weight: bold;
+                    min-width: 220px;
+                }
+
+                span {
+                    color: #000;
+                    font-size: 0.9rem;
+                    font-family: Arial, Helvetica, sans-serif;
                 }
 
                 .detail-address-delivery::before {

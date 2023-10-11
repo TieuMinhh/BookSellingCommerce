@@ -2,19 +2,33 @@ import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import './BookDetail.scss';
 import axios from 'axios';
-// import Img from "../../../Assets/img/aoMU.jpg";
-// import toast, { Toaster } from "react-hot-toast";
+
 import Img from '../../../Assets/img/kgd.jpg';
 import { toast } from 'react-toastify';
 
 import { getToken } from '../../../Services/Token';
-
-// import { AddToCart } from '../../../api/UserServices';
+import { Link } from 'react-router-dom';
 
 export default function BookDetail() {
     const [list, setList] = useState([]);
     const [number, setNumber] = useState(1); //number of item
     const [quantity, setQuantity] = useState(1);
+    const [isAddSuccess, setIsAddSuccess] = useState(false);
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'instant',
+        });
+    }, []);
+
+    useEffect(() => {
+        if (isAddSuccess === true) {
+            setTimeout(() => {
+                setIsAddSuccess(false);
+            }, 6000);
+        }
+    }, [isAddSuccess]);
 
     const updateQuantity = (value) => {
         setNumber((prevState) => prevState + value);
@@ -168,16 +182,25 @@ export default function BookDetail() {
 
                     <div class="btn-box">
                         <div class="cart-btn">
-                            <Button id="add-btn" variant="outline-danger" onClick={handleAddToCart}>
+                            <Button
+                                id="add-btn"
+                                variant="outline-danger"
+                                onClick={() => {
+                                    handleAddToCart();
+                                    setIsAddSuccess(true);
+                                }}
+                            >
                                 <i class="fa-solid fa-shopping-cart add-btn-box"></i>
                                 Thêm vào giỏ hàng
                             </Button>
                         </div>
                         <div class="buy-btn">
-                            <Button id="order-btn" variant="danger">
-                                <i class="fa-solid order-btn-box"></i>
-                                Mua ngay
-                            </Button>
+                            <Link to="/cart">
+                                <Button id="order-btn" variant="danger">
+                                    <i class="fa-solid order-btn-box"></i>
+                                    Mua ngay
+                                </Button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -252,6 +275,24 @@ export default function BookDetail() {
                     <div className=""></div>
                 </div>
             </div>
+
+            {/* Start modal add cart success */}
+            {isAddSuccess && (
+                <div className="modal-add-success" onClick={() => setIsAddSuccess(false)}>
+                    <div className="modal-container-success">
+                        <div className="cover-icon-success">
+                            <i
+                                class="fa-solid fa-check detail-icon-success"
+                                style={{ color: '#fff', lineHeight: '60px' }}
+                            ></i>
+                        </div>
+                        <p className="sub-a-success" style={{ color: '#fff' }}>
+                            Sản phẩm đã được thêm vào Giỏ hàng
+                        </p>
+                    </div>
+                </div>
+            )}
+            {/* End modal add cart success */}
         </div>
     );
 }
