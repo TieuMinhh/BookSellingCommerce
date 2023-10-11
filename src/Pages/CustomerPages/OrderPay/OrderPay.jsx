@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './OrderPay.scss';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Img1 from '../../../Assets/img/kgd.jpg';
 import Img2 from '../../../Assets/img/delivery.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { getToken } from '../../../Services/Token';
+import moment from 'moment';
+import { toast } from 'react-toastify';
 import CuponIcon from '../../../Assets/svg/ico_coupon.svg';
 import VoucherImg from '../../../Assets/img/voucher-icon.jpg';
 
 export default function OrderPay() {
     const [isShowModalAddress, setIsShowModalAddress] = useState(false);
     const [isNewAddress, setIsNewAddress] = useState(false);
+    const location = useLocation();
+    const listProduct = location.state ? location.state.selectedItems : []; // Lấy danh sách sản phẩm đã chọn từ trang giỏ hàng
+    console.log('Danh sách sp là :', listProduct);
+    let totalOriginalPrice = 0;
+    let totalReducedPrice = 0;
+    let shipFee = 20000;
+    const navigate = useNavigate();
+
+    const [code, setCode] = useState('');
+    const [discount, setDiscount] = useState(null);
+    const [deliveryAddress, setDeliveryAddress] = useState(null);
 
     const hideModalPromotion = () => {
         const modal = document.querySelector('.modal-promotion-wrapper');
@@ -32,6 +47,129 @@ export default function OrderPay() {
         setIsShowModalAddress(true);
     };
 
+    const [user, getUser] = useState([]);
+    const [change, setChange] = useState([]);
+    const [listVoucher, setListVoucher] = useState([]);
+
+    const getInfoUser = async () => {
+        let token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        let result = await axios.get('http://localhost:8081/api/v1/account/info');
+        getUser(result.data.userInfo);
+        setDeliveryAddress(result.data.userInfo.address);
+        console.log('Check token neeee:', result.data.userInfo);
+        // console.log(deliveryAddress);
+    };
+
+    async function getListVocuher() {
+        // const result = await axiosApiInstance.get(
+        //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
+        // );
+        const result = await axios.get(`http://localhost:8081/api/v1/discount?id=ALL`);
+        setListVoucher(result?.data.listDiscount);
+        // console.log(result.data);
+    }
+
+    async function AddVoucher() {
+        try {
+            const response = await axios.get(`http://localhost:8081/api/v1/getDiscountByCode?discount_code=${code}`);
+
+            console.log(response);
+
+            const check = response.data.data;
+
+            const today = new Date();
+            const startDay = new Date(check.start_date);
+            const endDay = new Date(check.end_date);
+
+            if (startDay < today && endDay >= today) {
+                setDiscount({ ...check });
+                setTimeout(() => {
+                    hideModalPromotion();
+                    toast.success('Đã áp dụng mã giảm giá');
+                }, 1000);
+            } else {
+                toast.error('Mã giảm giá không hợp lệ');
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error('Đã xảy ra lỗi khi sử dụng mã giảm giá');
+        }
+    }
+
+    async function ChooseVoucher(item) {
+        try {
+            const response = await axios.get(
+                `http://localhost:8081/api/v1/getDiscountByCode?discount_code=${item.discount_code}`,
+            );
+
+            console.log(response);
+
+            const check = response.data.data;
+
+            const today = new Date();
+            const startDay = new Date(check.start_date);
+            const endDay = new Date(check.end_date);
+
+            if (startDay < today && endDay >= today) {
+                setDiscount({ ...check });
+                setTimeout(() => {
+                    hideModalPromotion();
+                    toast.success('Đã áp dụng mã giảm giá');
+                }, 1000);
+            } else {
+                toast.error('Mã giảm giá không hợp lệ');
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error('Đã xảy ra lỗi khi sử dụng mã giảm giá');
+        }
+    }
+
+    const handleOrder = async () => {
+        try {
+            const addressId = deliveryAddress ? deliveryAddress.id_address : null;
+            const order = await axios.post('http://localhost:8081/api/v1/dathang', {
+                arr: listProduct,
+                discount_id: discount?.discount_id,
+                id_address: addressId,
+            });
+
+            console.log(order);
+
+            // Đặt lại giá trị giỏ hàng và tiền cần thanh toán
+            setCode('');
+            setDiscount(null);
+
+            toast.success('Đặt hàng thành công');
+            // Thực hiện điều hướng hoặc cập nhật giao diện sau khi đặt hàng thành công
+            setTimeout(() => {
+                navigate('/');
+            }, 1500);
+        } catch (error) {
+            console.error(error);
+            toast.error('Đã xảy ra lỗi khi đặt hàng');
+        }
+    };
+
+    useEffect(() => {
+        getInfoUser();
+        getListVocuher();
+    }, [change]);
+
+    // Tính tổng giá trị sản phẩm trước khi giảm giá
+    listProduct.forEach((item) => {
+        totalOriginalPrice += item?.price * item?.quantity;
+        totalReducedPrice += item?.price_reducing * item?.quantity;
+    });
+
+    // Tính số tiền giảm giá từ mã khuyến mãi
+    console.log(discount);
+    const discountAmount = ((discount?.percentage || 0) / 100) * totalReducedPrice;
+
+    // Tính tổng tiền sau khi giảm giá
+    const totalAfterDiscount = totalReducedPrice - discountAmount;
+
     return (
         <>
             <div className="containerPay">
@@ -40,14 +178,16 @@ export default function OrderPay() {
                     <div class="line"></div>
                     <div className="info-delivery">
                         <ul className="left-info">
-                            <li>Họ và tên người nhận :</li>
-                            <li>Email :</li>
-                            <li>Số điện thoại :</li>
+                            <li>Họ và tên người nhận</li>
+                            <li>Email </li>
+                            <li>Số điện thoại</li>
+                            <li>Địa chỉ nhận hàng</li>
                         </ul>
                         <ul className="right-info">
-                            <li>Ngô Duy Tân</li>
-                            <li>znamtrung@gmail.com</li>
-                            <li>0912486205</li>
+                            <li>{user && user?.name}</li>
+                            <li>{user && user?.email}</li>
+                            <li>{user && user?.phone}</li>
+                            <li>{user && user?.address}</li>
                         </ul>
                         <div className="img-delivery">
                             <img src={Img2} alt=""></img>
@@ -184,8 +324,16 @@ export default function OrderPay() {
                     <div className="info-discout">
                         <p>Mã khuyến mãi</p>
                         <div class="apply">
-                            <input className="input" type="text" placeholder="Nhập mã khuyến mãi"></input>
-                            <Button className="apply-btn">Áp dụng</Button>
+                            <input
+                                className="input"
+                                type="text"
+                                placeholder="Nhập mã khuyến mãi"
+                                value={code}
+                                onChange={(e) => setCode(e.target.value)}
+                            ></input>
+                            <Button className="apply-btn" onClick={AddVoucher}>
+                                Áp dụng
+                            </Button>
                         </div>
                         <Button className="discout-btn" variant="link" onClick={showModalPromotion}>
                             Chọn mã khuyến mãi
@@ -195,31 +343,49 @@ export default function OrderPay() {
                 <div className="check">
                     <h4>KIỂM TRA LẠI ĐƠN HÀNG</h4>
                     <div class="line"></div>
-                    <div class="product-order">
-                        <img src={Img1} alt=""></img>
-                        <p className="info-check">Không Gia Đình</p>
-                        <div className="check-right">
-                            <div className="temporary">
-                                <p>133.200 đ</p>
-                                <span>148.000 đ</span>
-                            </div>
-                            <p className="quantity">x1</p>
-                            <p className="total">133.200 đ</p>
-                        </div>
-                    </div>
+
+                    {listProduct &&
+                        listProduct.map((item, index) => {
+                            return (
+                                <div class="product-order">
+                                    <img
+                                        src={`http://localhost:8081/image/${item && item?.images}`}
+                                        alt=""
+                                        className="avatar-image"
+                                    />
+                                    <p className="info-check">{item && item?.name}</p>
+                                    <div className="check-right">
+                                        <div className="temporary">
+                                            <p>
+                                                {item &&
+                                                    (Math.round(item?.price_reducing / 1000) * 1000).toLocaleString(
+                                                        'vi',
+                                                        {
+                                                            style: 'currency',
+                                                            currency: 'VND',
+                                                        },
+                                                    )}
+                                            </p>
+                                            <span>
+                                                {item &&
+                                                    (Math.round(item?.price / 1000) * 1000).toLocaleString('vi', {
+                                                        style: 'currency',
+                                                        currency: 'VND',
+                                                    })}
+                                            </span>
+                                        </div>
+                                        <p className="quantity">{item && item?.quantity}</p>
+                                        <p className="total">
+                                            {(item && item?.price_reducing * item?.quantity).toLocaleString('vi', {
+                                                style: 'currency',
+                                                currency: 'VND',
+                                            })}
+                                        </p>
+                                    </div>
+                                </div>
+                            );
+                        })}
                     <div class="line"></div>
-                    <div class="product-order">
-                        <img src={Img1} alt=""></img>
-                        <p className="info-check">Không Gia Đình</p>
-                        <div className="check-right">
-                            <div className="temporary">
-                                <p>133.200 đ</p>
-                                <span>148.000 đ</span>
-                            </div>
-                            <p className="quantity">x1</p>
-                            <p className="total">133.200 đ</p>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -227,14 +393,43 @@ export default function OrderPay() {
                 <div className="pay-inner">
                     <div className="cover-check-money">
                         <p className="book-total-money">
-                            Thành tiền <span className="detail-total-money">1.000.000.000đ</span>
+                            Tổng tiền{' '}
+                            <span className="detail-total-money">
+                                {(Math.round(totalReducedPrice / 1000) * 1000).toLocaleString('vi', {
+                                    style: 'currency',
+                                    currency: 'VND',
+                                })}
+                            </span>
                         </p>
                         <p className="book-total-money">
                             Phí vận chuyển (Giao hàng tiêu chuẩn){' '}
-                            <span className="detail-total-money">2.000.000.000đ</span>
+                            <span className="detail-total-money">
+                                {' '}
+                                {shipFee.toLocaleString('vi', {
+                                    style: 'currency',
+                                    currency: 'VND',
+                                })}
+                            </span>
+                        </p>
+                        <p className="book-total-money">
+                            Giảm giá :{' '}
+                            <span className="detail-total-money">
+                                {' '}
+                                {discountAmount.toLocaleString('vi', {
+                                    style: 'currency',
+                                    currency: 'VND',
+                                })}
+                            </span>
                         </p>
                         <p className="book-total-money" style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                            Tổng số tiền <span className="total-all-money">3.000.000.000đ</span>
+                            Thành tiền{' '}
+                            <span className="total-all-money">
+                                {' '}
+                                {(Math.round(totalAfterDiscount / 1000) * 1000 + shipFee).toLocaleString('vi', {
+                                    style: 'currency',
+                                    currency: 'VND',
+                                })}
+                            </span>
                         </p>
                     </div>
                     <div class="line1"></div>
@@ -244,7 +439,7 @@ export default function OrderPay() {
                             <Link to="/cart"> Quay về giỏ hàng</Link>
                         </Button>
 
-                        <Button className="confirm-btn">
+                        <Button className="confirm-btn" onClick={handleOrder}>
                             <span>Xác nhận thanh toán</span>
                         </Button>
                     </div>
@@ -271,11 +466,14 @@ export default function OrderPay() {
                             <input
                                 type="text"
                                 name=""
-                                id=""
                                 className="form-promotion"
                                 placeholder="Nhập mã khuyến mãi/Quà tặng"
+                                value={code}
+                                onChange={(e) => setCode(e.target.value)}
                             />
-                            <button className="apply-promotion-btn-top">Áp dụng</button>
+                            <button className="apply-promotion-btn-top" onClick={AddVoucher}>
+                                Áp dụng
+                            </button>
                         </div>
                     </div>
                     <div className="modal-promotion-inner">
@@ -283,50 +481,32 @@ export default function OrderPay() {
                             <p className="title-content">Mã giảm giá</p>
 
                             {/* a Ticket */}
-                            <div className="cover-promotion-ticket">
-                                <div className="inner-promotion-ticket">
-                                    <div className="left-promotion-ticket" style={{ color: '#000' }}>
-                                        <img src={VoucherImg} alt="voucher" className="voucher-img" />
-                                    </div>
-                                    <div className="right-promotion-ticket">
-                                        <p className="title-right-promotion">Mã giảm giá 10K - Đơn hàng từ 1000K</p>
-                                        <p className="sub-title-promotion">
-                                            Không Áp Dụng Cho Phiếu Quà Tặng và Sách Giáo Khoa
-                                        </p>
-                                        <button className="apply-promotion-btn-bottom">Áp dụng</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="cover-promotion-ticket">
-                                <div className="inner-promotion-ticket">
-                                    <div className="left-promotion-ticket" style={{ color: '#000' }}>
-                                        <img src={VoucherImg} alt="voucher" className="voucher-img" />
-                                    </div>
-                                    <div className="right-promotion-ticket">
-                                        <p className="title-right-promotion">Mã giảm giá 10K - Đơn hàng từ 1000K</p>
-                                        <p className="sub-title-promotion">
-                                            Không Áp Dụng Cho Phiếu Quà Tặng và Sách Giáo Khoa
-                                        </p>
-                                        <button className="apply-promotion-btn-bottom">Áp dụng</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="cover-promotion-ticket">
-                                <div className="inner-promotion-ticket">
-                                    <div className="left-promotion-ticket" style={{ color: '#000' }}>
-                                        <img src={VoucherImg} alt="voucher" className="voucher-img" />
-                                    </div>
-                                    <div className="right-promotion-ticket">
-                                        <p className="title-right-promotion">Mã giảm giá 10K - Đơn hàng từ 1000K</p>
-                                        <p className="sub-title-promotion">
-                                            Không Áp Dụng Cho Phiếu Quà Tặng và Sách Giáo Khoa
-                                        </p>
-                                        <button className="apply-promotion-btn-bottom">Áp dụng</button>
-                                    </div>
-                                </div>
-                            </div>
+                            {listVoucher &&
+                                listVoucher.map((item, index) => {
+                                    return (
+                                        <div className="cover-promotion-ticket">
+                                            <div className="inner-promotion-ticket">
+                                                <div className="left-promotion-ticket" style={{ color: '#000' }}>
+                                                    <img src={VoucherImg} alt="voucher" className="voucher-img" />
+                                                </div>
+                                                <div className="right-promotion-ticket">
+                                                    <p className="title-right-promotion">{item.discount_code}</p>
+                                                    <p className="sub-title-promotion">{item.description}</p>
+                                                    <p className="voucher-time">
+                                                        ÁP DỤNG TỪ {moment(item.start_date).format('L')} ĐẾN{' '}
+                                                        {moment(item.end_date).format('L')}
+                                                    </p>
+                                                    <button
+                                                        className="apply-promotion-btn-bottom"
+                                                        onClick={() => ChooseVoucher(item)}
+                                                    >
+                                                        Áp dụng
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                         </div>
                     </div>
                 </div>

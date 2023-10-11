@@ -57,16 +57,19 @@ export default function Home() {
                                         <div class="main-list-item">
                                             <Link to={`/book/detail?id=${item.id_product}`}>
                                                 <div class="main-discription mt-8 mb-8">
-                                                    <img src={toan} alt=""></img>
+                                                    <img
+                                                        src={`http://localhost:8081/image/${item && item?.images}`}
+                                                        alt=""
+                                                        className="avatar-image"
+                                                    />
                                                     <p class="item-desp">{item.name_product}</p>
                                                 </div>
                                                 <div class="main-price">
                                                     <p>
-                                                        {/* {item.price_reducing.toLocaleString('vi', {
+                                                        {item.price_reducing.toLocaleString('vi', {
                                                             style: 'currency',
                                                             currency: 'VND',
-                                                        })}{' '} */}
-                                                        200.000 đ
+                                                        })}{' '}
                                                     </p>
                                                     <span>
                                                         {item.price.toLocaleString('vi', {
