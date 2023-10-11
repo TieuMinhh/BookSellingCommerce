@@ -33,18 +33,22 @@ export default function ChangeInfo() {
     };
 
     async function ChangeInfo() {
-        // console.log('id account là :', idAccount);
-        // console.log(idAccount, name, phone, address);
-        const result = await axios.put(`http://localhost:8081/api/v1/update_info/${idAccount}`, {
-            name,
-            phone,
-            address,
-        });
-        setChange(!change);
-        console.log(result);
+        try {
+            // console.log('id account là :', idAccount);
+            // console.log(idAccount, name, phone, address);
+            const result = await axios.put(`http://localhost:8081/api/v1/update_info/${idAccount}`, {
+                name,
+                phone,
+                address,
+            });
+            setChange(!change);
+            console.log(result);
 
-        if (result.status === 200) toast.success(result.data.message);
-        if (result.status === 400) toast.warning(result.data.message);
+            if (result.status === 200) toast.success(result.data.message);
+            if (result.status === 400) toast.warning(result.data.message);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     useEffect(() => {

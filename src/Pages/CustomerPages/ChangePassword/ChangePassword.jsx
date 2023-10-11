@@ -13,20 +13,24 @@ export default function ChangePassword() {
     const [change, setChange] = useState('');
 
     async function ChangePassword() {
-        let token = await getToken();
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const result = await axios.post(`http://localhost:8081/api/v1/change-password`, {
-            oldPassword: password,
-            newPassword: newPassword,
-            confirmPassword: confirmPassword,
-        });
-        setChange(!change);
-        console.log(result);
+        try {
+            let token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const result = await axios.post(`http://localhost:8081/api/v1/change-password`, {
+                oldPassword: password,
+                newPassword: newPassword,
+                confirmPassword: confirmPassword,
+            });
+            setChange(!change);
+            console.log(result);
 
-        if (result.status === 200) toast.success(result.data.message);
-        if (result.status === 201) toast.error(result.data.message);
-        if (result.status === 202) toast.error(result.data.message);
-        if (result.status === 500) toast.warning(result.data.message);
+            if (result.status === 200) toast.success(result.data.message);
+            if (result.status === 201) toast.error(result.data.message);
+            if (result.status === 202) toast.error(result.data.message);
+            if (result.status === 500) toast.warning(result.data.message);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (

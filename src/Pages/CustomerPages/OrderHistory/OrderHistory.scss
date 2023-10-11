@@ -86,6 +86,23 @@
             margin: 0;
         }
     }
+    .active {
+        cursor: pointer;
+        margin-bottom: 4px;
+        border-right: 2px solid #a90000;
+        border-left: 2px solid #a90000;
+        width: 20%;
+        text-align: center;
+        .count-of-status {
+            margin: 0;
+            color: #ed722f;
+        }
+
+        .name-status {
+            margin: 0;
+            color: #ed722f;
+        }
+    }
 }
 
 .line-cart {
@@ -119,6 +136,7 @@
     overflow-y: auto;
 
     .detail-btn {
+        text-decoration: underline;
         border: none;
         color: #f7941e;
         background-color: transparent;
@@ -237,6 +255,7 @@
     position: relative;
     .modal-header-title {
         color: #000;
+        font-size: 24px;
         font-weight: bold;
         padding-bottom: 6px;
     }
@@ -344,14 +363,14 @@
         box-sizing: border-box;
     }
 
-    .line-progress {
-        height: 3px;
-        background-color: #fa0001;
-        position: absolute;
-        width: calc(100% - 60px);
-        left: calc(50% + 30px);
-        top: calc(50% - 14px);
-    }
+    // .line-progress {
+    //     height: 3px;
+    //     background-color: #fa0001;
+    //     position: absolute;
+    //     width: calc(100% - 60px);
+    //     left: calc(50% + 30px);
+    //     top: calc(50% - 14px);
+    // }
 }
 
 // Footer modal

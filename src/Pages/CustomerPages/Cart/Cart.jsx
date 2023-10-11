@@ -45,52 +45,64 @@ export default function Cart(props) {
     }
 
     async function RemoveProductFromCart(item) {
-        // const result = await axiosApiInstance.get(
-        //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
-        // );
-        console.log('id là :', item.id_product);
+        try {
+            // const result = await axiosApiInstance.get(
+            //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
+            // );
+            console.log('id là :', item.id_product);
 
-        let token = await getToken();
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            let token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-        const result = await axios.delete(`http://localhost:8081/api/v1/remove-from-cart/${item.id_product}`);
-        // setList(result?.data.list);
-        // setTotal(result?.data.total);
-        setChange(!change);
-        console.log(result);
+            const result = await axios.delete(`http://localhost:8081/api/v1/remove-from-cart/${item.id_product}`);
+            // setList(result?.data.list);
+            // setTotal(result?.data.total);
+            setChange(!change);
+            console.log(result);
 
-        if (result.status === 200) toast.success(result.data.message);
-        if (result.status === 500) toast.error(result.data.message);
+            if (result.status === 200) toast.success(result.data.message);
+            if (result.status === 500) toast.error(result.data.message);
+        } catch (error) {
+            toast.error(error);
+        }
     }
 
     async function IncrementProductFromCart(item) {
-        console.log('id là :', item.id_product);
-        let token = await getToken();
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const result = await axios.put(
-            `http://localhost:8081/api/v1/account/increment-product-from-cart/${item.id_product}`,
-            {
-                quantity: item.quantity,
-            },
-        );
+        try {
+            console.log('id là :', item.id_product);
+            let token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const result = await axios.put(
+                `http://localhost:8081/api/v1/account/increment-product-from-cart/${item.id_product}`,
+                {
+                    quantity: item.quantity,
+                },
+            );
 
-        console.log(result);
-        setChange(!change);
+            console.log(result);
+            setChange(!change);
+        } catch (error) {
+            toast.error(error);
+        }
     }
 
     async function DecrementProductFromCart(item) {
-        console.log('id là :', item.id_product);
-        let token = await getToken();
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const result = await axios.put(
-            `http://localhost:8081/api/v1/account/decrement-product-from-cart/${item.id_product}`,
-            {
-                quantity: item.quantity,
-            },
-        );
+        try {
+            console.log('id là :', item.id_product);
+            let token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const result = await axios.put(
+                `http://localhost:8081/api/v1/account/decrement-product-from-cart/${item.id_product}`,
+                {
+                    quantity: item.quantity,
+                },
+            );
 
-        console.log(result);
-        setChange(!change);
+            console.log(result);
+            setChange(!change);
+        } catch (error) {
+            toast.error(error);
+        }
     }
 
     // Hàm xử lý khi ấn vào ô input tick text
