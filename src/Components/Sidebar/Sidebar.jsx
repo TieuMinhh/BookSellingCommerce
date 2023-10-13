@@ -181,8 +181,15 @@ const Sidebar = () => {
                                 setSelected={setSelected}
                             />
                             <Item
-                                title="Cài đặt"
-                                to="/setting"
+                                title="Nhà xuất bản"
+                                to="/publishing-company"
+                                icon={<HiCog />}
+                                selected={selected}
+                                setSelected={setSelected}
+                            />
+                            <Item
+                                title="Giảm giá sách"
+                                to="/promotion-product"
                                 icon={<HiCog />}
                                 selected={selected}
                                 setSelected={setSelected}

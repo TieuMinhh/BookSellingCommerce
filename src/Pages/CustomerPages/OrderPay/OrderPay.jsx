@@ -13,8 +13,6 @@ import CuponIcon from '../../../Assets/svg/ico_coupon.svg';
 import VoucherImg from '../../../Assets/img/voucher-icon.jpg';
 
 export default function OrderPay() {
-    const [isShowModalAddress, setIsShowModalAddress] = useState(false);
-    const [isNewAddress, setIsNewAddress] = useState(false);
     const location = useLocation();
     const listProduct = location.state ? location.state.selectedItems : []; // Lấy danh sách sản phẩm đã chọn từ trang giỏ hàng
     console.log('Danh sách sp là :', listProduct);
@@ -25,7 +23,18 @@ export default function OrderPay() {
 
     const [code, setCode] = useState('');
     const [discount, setDiscount] = useState(null);
+    const [listAddress, setListAddress] = useState(null);
     const [deliveryAddress, setDeliveryAddress] = useState(null);
+
+    const [formAddress, setFormAddress] = useState(null);
+    const [IdAddress, setIdAddress] = useState(null);
+    const [nameAddress, setNameAddress] = useState(null);
+    const [nameReceiver, setNameReceiver] = useState(null);
+    const [phoneReceiver, setPhoneReceiver] = useState(null);
+
+    const [isShowModalAddAddress, setIsShowModalAddAddress] = useState(false);
+    const [isShowModalEditAddress, setIsShowModalEditAddress] = useState(false);
+    const [isNewAddress, setIsNewAddress] = useState(false);
 
     const hideModalPromotion = () => {
         const modal = document.querySelector('.modal-promotion-wrapper');
@@ -39,17 +48,35 @@ export default function OrderPay() {
         modal.classList.add('active');
     };
 
-    const hideModalAddress = () => {
-        setIsShowModalAddress(false);
+    const hideModalAddAddress = () => {
+        setIsShowModalAddAddress(false);
     };
 
-    const showModalAddress = () => {
-        setIsShowModalAddress(true);
+    const showModalAddAddress = () => {
+        setFormAddress('add');
+        setIsShowModalAddAddress(true);
+    };
+
+    const hideModalEditAddress = () => {
+        setIsShowModalEditAddress(false);
+    };
+
+    const showModalEditAddress = (item) => {
+        setFormAddress('edit');
+        setIdAddress(item.id_address);
+        setNameAddress(item.name_address);
+        setNameReceiver(item.name_receiver);
+        setPhoneReceiver(item.phone_receiver);
+        setIsShowModalEditAddress(true);
     };
 
     const [user, getUser] = useState([]);
     const [change, setChange] = useState([]);
     const [listVoucher, setListVoucher] = useState([]);
+
+    const goToChangeInfo = () => {
+        navigate('/change-info');
+    };
 
     const getInfoUser = async () => {
         let token = await getToken();
@@ -68,6 +95,75 @@ export default function OrderPay() {
         const result = await axios.get(`http://localhost:8081/api/v1/discount?id=ALL`);
         setListVoucher(result?.data.listDiscount);
         // console.log(result.data);
+    }
+
+    async function getListDeliveryAddress() {
+        // const result = await axiosApiInstance.get(
+        //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
+        // );
+        let token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        const result = await axios.get(`http://localhost:8081/api/v1/delivery-address`);
+        setListAddress(result?.data.listAddress);
+        // console.log(result.data);
+    }
+
+    async function AddNewDeliveryAddress() {
+        try {
+            // const result = await axiosApiInstance.get(
+            //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
+            // );
+            let token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const result = await axios.post(`http://localhost:8081/api/v1/create-delivery-address`, {
+                name_address: nameAddress,
+                name_receiver: nameReceiver,
+                phone_receiver: phoneReceiver,
+            });
+
+            // setListAddress(result?.data.listAddress);
+            console.log(result.data);
+            setChange(!change);
+            setIsShowModalAddAddress(false);
+        } catch (error) {}
+    }
+
+    async function UpdateDeliveryAddress(item) {
+        try {
+            // const result = await axiosApiInstance.get(
+            //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
+            // );
+            let token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const result = await axios.post(`http://localhost:8081/api/v1/update-delivery-address/${IdAddress}`, {
+                name_address: nameAddress,
+                name_receiver: nameReceiver,
+                phone_receiver: phoneReceiver,
+            });
+            console.log(IdAddress, nameAddress, nameReceiver, phoneReceiver);
+
+            // setListAddress(result?.data.listAddress);
+            console.log(result.data);
+            setChange(!change);
+            setIsShowModalEditAddress(false);
+        } catch (error) {}
+    }
+
+    async function DeleteDeliveryAddress(item) {
+        try {
+            // const result = await axiosApiInstance.get(
+            //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
+            // );
+            let token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const result = await axios.delete(
+                `http://localhost:8081/api/v1/delete-delivery-address/${item.id_address}`,
+            );
+
+            // setListAddress(result?.data.listAddress);
+            console.log(result.data);
+            setChange(!change);
+        } catch (error) {}
     }
 
     async function AddVoucher() {
@@ -128,11 +224,10 @@ export default function OrderPay() {
 
     const handleOrder = async () => {
         try {
-            const addressId = deliveryAddress ? deliveryAddress.id_address : null;
             const order = await axios.post('http://localhost:8081/api/v1/dathang', {
                 arr: listProduct,
                 discount_id: discount?.discount_id,
-                id_address: addressId,
+                id_address: listAddress[0]?.id_address,
             });
 
             console.log(order);
@@ -155,6 +250,7 @@ export default function OrderPay() {
     useEffect(() => {
         getInfoUser();
         getListVocuher();
+        getListDeliveryAddress();
     }, [change]);
 
     // Tính tổng giá trị sản phẩm trước khi giảm giá
@@ -201,65 +297,45 @@ export default function OrderPay() {
                         <div className="cover-detail-address">
                             <input className="form-address" type="radio" name="option" id="address1" />
                             <label htmlFor="address1" className="detail-address-delivery">
-                                167 Tăng Nhơn Phú, phường Phước Long B, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, Việt
-                                Nam
+                                {user && user?.address}
                             </label>
                             <div className="cover-edit-delete">
-                                <button
-                                    className="btn-edit-address"
-                                    onClick={() => {
-                                        showModalAddress();
-                                        setIsNewAddress(false);
-                                    }}
-                                >
+                                <button className="btn-edit-address" onClick={goToChangeInfo}>
                                     Sửa
                                 </button>
                                 <button className="btn-delete-address">Xóa</button>
                             </div>
                         </div>
 
-                        <div className="cover-detail-address">
-                            <input className="form-address" type="radio" name="option" id="address2" />
-                            <label htmlFor="address2" className="detail-address-delivery">
-                                Giao ở đâu tùy ý
-                            </label>
-                            <div className="cover-edit-delete">
-                                <button
-                                    className="btn-edit-address"
-                                    onClick={() => {
-                                        showModalAddress();
-                                        setIsNewAddress(false);
-                                    }}
-                                >
-                                    Sửa
-                                </button>
-                                <button className="btn-delete-address">Xóa</button>
-                            </div>
-                        </div>
-
-                        <div className="cover-detail-address">
-                            <input className="form-address" type="radio" name="option" id="address3" />
-                            <label htmlFor="address3" className="detail-address-delivery">
-                                Sao Hỏa
-                            </label>
-                            <div className="cover-edit-delete">
-                                <button
-                                    className="btn-edit-address"
-                                    onClick={() => {
-                                        showModalAddress();
-                                        setIsNewAddress(false);
-                                    }}
-                                >
-                                    Sửa
-                                </button>
-                                <button className="btn-delete-address">Xóa</button>
-                            </div>
-                        </div>
-
+                        {listAddress &&
+                            listAddress.map((item, index) => {
+                                return (
+                                    <div className="cover-detail-address">
+                                        <input className="form-address" type="radio" name="option" id="address2" />
+                                        <label htmlFor="address2" className="detail-address-delivery">
+                                            {item && item?.name_address}
+                                        </label>
+                                        <div className="cover-edit-delete">
+                                            <button
+                                                className="btn-edit-address"
+                                                onClick={() => showModalEditAddress(item)}
+                                            >
+                                                Sửa
+                                            </button>
+                                            <button
+                                                className="btn-delete-address"
+                                                onClick={() => DeleteDeliveryAddress(item)}
+                                            >
+                                                Xóa
+                                            </button>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         <div
                             className="cover-detail-address"
                             onClick={() => {
-                                showModalAddress();
+                                showModalAddAddress();
                                 setIsNewAddress(true);
                             }}
                         >
@@ -289,23 +365,12 @@ export default function OrderPay() {
                             <label htmlFor="method1" className="detail-address-delivery">
                                 Giao hàng tiêu chuẩn :
                             </label>
-                            <span>1.000.000.000đ</span>
-                        </div>
-
-                        <div className="cover-detail-address">
-                            <input className="form-address" type="radio" name="method" id="method2" />
-                            <label htmlFor="method2" className="detail-address-delivery">
-                                Giao hàng nhanh :
-                            </label>
-                            <span>2.000.000.000đ</span>
-                        </div>
-
-                        <div className="cover-detail-address">
-                            <input className="form-address" type="radio" name="method" id="method3" />
-                            <label htmlFor="method3" className="detail-address-delivery">
-                                Giao hàng siêu tốc :
-                            </label>
-                            <span>3.000.000.000đ</span>
+                            <span>
+                                {shipFee.toLocaleString('vi', {
+                                    style: 'currency',
+                                    currency: 'VND',
+                                })}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -341,7 +406,7 @@ export default function OrderPay() {
                     </div>
                 </div>
                 <div className="check">
-                    <h4>KIỂM TRA LẠI ĐƠN HÀNG</h4>
+                    <h4 className="h4">KIỂM TRA LẠI ĐƠN HÀNG</h4>
                     <div class="line"></div>
 
                     {listProduct &&
@@ -412,7 +477,7 @@ export default function OrderPay() {
                             </span>
                         </p>
                         <p className="book-total-money">
-                            Giảm giá :{' '}
+                            Giảm giá{' '}
                             <span className="detail-total-money">
                                 {' '}
                                 {discountAmount.toLocaleString('vi', {
@@ -421,7 +486,10 @@ export default function OrderPay() {
                                 })}
                             </span>
                         </p>
-                        <p className="book-total-money" style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                        <p
+                            className="book-total-money"
+                            style={{ fontWeight: 'bold', fontSize: '1.1rem', color: '#fa0001' }}
+                        >
                             Thành tiền{' '}
                             <span className="total-all-money">
                                 {' '}
@@ -514,17 +582,16 @@ export default function OrderPay() {
 
             {/* End Modal Ticket Promotion*/}
 
-            {/* Start Modal Edit Address */}
-            {isShowModalAddress && (
-                <div className="modal-edit-address-wrapper" onClick={hideModalAddress}>
+            {/* Start Modal Add Address */}
+            {isShowModalAddAddress && (
+                <div className="modal-edit-address-wrapper" onClick={hideModalAddAddress}>
                     <div
                         className="modal-edit-address-container"
                         onClick={(e) => {
                             e.stopPropagation();
                         }}
                     >
-                        {!isNewAddress && <h5 className="title-edit-address">Thay đổi địa chỉ giao hàng</h5>}
-                        {isNewAddress && <h5 className="title-edit-address">Thêm mới địa chỉ giao hàng</h5>}
+                        {formAddress === 'add' && <h5 className="title-edit-address">Thêm mới địa chỉ giao hàng</h5>}
 
                         <div className="cover-item-address-input">
                             <p className="label-input-address">Họ và tên người nhận</p>
@@ -534,6 +601,8 @@ export default function OrderPay() {
                                 id=""
                                 className="form-edit-address"
                                 placeholder="Nhập họ và tên"
+                                value={nameReceiver}
+                                onChange={(e) => setNameReceiver(e.target.value)}
                             />
                         </div>
 
@@ -545,16 +614,89 @@ export default function OrderPay() {
                                 id=""
                                 className="form-edit-address"
                                 placeholder="Nhập số điện thoại"
+                                value={phoneReceiver}
+                                onChange={(e) => setPhoneReceiver(e.target.value)}
                             />
                         </div>
 
                         <div className="cover-item-address-input">
                             <p className="label-input-address">Địa chỉ nhận hàng</p>
-                            <input type="text" name="" id="" className="form-edit-address" placeholder="Nhập địa chỉ" />
+                            <input
+                                type="text"
+                                name=""
+                                id=""
+                                className="form-edit-address"
+                                placeholder="Nhập địa chỉ"
+                                value={nameAddress}
+                                onChange={(e) => setNameAddress(e.target.value)}
+                            />
                         </div>
 
-                        <button className="btn-modal-save-address">Lưu địa chỉ</button>
-                        <button className="btn-modal-cancel-address" onClick={hideModalAddress}>
+                        <button className="btn-modal-save-address" onClick={AddNewDeliveryAddress}>
+                            Lưu địa chỉ
+                        </button>
+                        <button className="btn-modal-cancel-address" onClick={hideModalAddAddress}>
+                            Hủy
+                        </button>
+                    </div>
+                </div>
+            )}
+            {/* End Modal Add Address */}
+
+            {/* Start Modal Edit Address */}
+            {isShowModalEditAddress && (
+                <div className="modal-edit-address-wrapper" onClick={hideModalAddAddress}>
+                    <div
+                        className="modal-edit-address-container"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
+                    >
+                        {formAddress === 'edit' && <h5 className="title-edit-address">Thay đổi địa chỉ giao hàng</h5>}
+
+                        <div className="cover-item-address-input">
+                            <p className="label-input-address">Họ và tên người nhận</p>
+                            <input
+                                type="text"
+                                name=""
+                                id=""
+                                className="form-edit-address"
+                                placeholder="Nhập họ và tên"
+                                value={nameReceiver}
+                                onChange={(e) => setNameReceiver(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="cover-item-address-input">
+                            <p className="label-input-address">Số điện thoại</p>
+                            <input
+                                type="text"
+                                name=""
+                                id=""
+                                className="form-edit-address"
+                                placeholder="Nhập số điện thoại"
+                                value={phoneReceiver}
+                                onChange={(e) => setPhoneReceiver(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="cover-item-address-input">
+                            <p className="label-input-address">Địa chỉ nhận hàng</p>
+                            <input
+                                type="text"
+                                name=""
+                                id=""
+                                className="form-edit-address"
+                                placeholder="Nhập địa chỉ"
+                                value={nameAddress}
+                                onChange={(e) => setNameAddress(e.target.value)}
+                            />
+                        </div>
+
+                        <button className="btn-modal-save-address" onClick={UpdateDeliveryAddress}>
+                            Lưu địa chỉ
+                        </button>
+                        <button className="btn-modal-cancel-address" onClick={hideModalEditAddress}>
                             Hủy
                         </button>
                     </div>

@@ -6,7 +6,6 @@ import MyLoginModal from '../../Pages/Auths/Auths/Auths';
 import VietNamFlag from '../../Assets/img/vietnam.png';
 import PLatinum from '../../Assets/svg/platinum.svg';
 import IconMenu from '../../Assets/img/icon-menu.png';
-
 import axios from 'axios';
 import { getToken } from '../../Services/Token';
 
@@ -17,6 +16,7 @@ import { getToken } from '../../Services/Token';
 export default function Header() {
     const [listCart, setListCart] = useState([]);
     const [change, setChange] = useState(false);
+    const [listCategory, setListCategory] = useState([]);
 
     const [show, setShow] = useState(false);
     const handleShow = (e) => {
@@ -39,6 +39,19 @@ export default function Header() {
         setListCart(result?.data.list);
         // setChange(!change);
     }
+
+    async function getListCategory() {
+        // const result = await axiosApiInstance.get(
+        //   axiosApiInstance.defaults.baseURL + "/api/v1/category?id=ALL"
+        // );
+        let result = await axios.get(`http://localhost:8081/api/v1/category?id=ALL`);
+        setListCategory(result?.data.listCategory);
+        // console.log(result.data);
+    }
+
+    useEffect(() => {
+        getListCategory();
+    }, []);
 
     useEffect(() => {
         getListProduct();
@@ -85,7 +98,21 @@ export default function Header() {
                                         sản phẩm
                                     </p>
 
-                                    <Link to="">
+                                    {listCategory &&
+                                        listCategory.map((item, index) => {
+                                            return (
+                                                <Link to="/">
+                                                    <p className="modal-item-cate">
+                                                        <i
+                                                            class="fa-solid fa-book-open"
+                                                            style={{ marginRight: '16px' }}
+                                                        ></i>{' '}
+                                                        {item && item?.name_category}
+                                                    </p>
+                                                </Link>
+                                            );
+                                        })}
+                                    {/* <Link to="">
                                         <p className="modal-item-cate">
                                             <i class="fa-solid fa-book-open" style={{ marginRight: '16px' }}></i> Sách
                                             Thánh
@@ -117,7 +144,7 @@ export default function Header() {
                                             <i class="fa-solid fa-book-open" style={{ marginRight: '16px' }}></i> Sách
                                             Gì Đó
                                         </p>
-                                    </Link>
+                                    </Link> */}
                                 </div>
                             </div>
                         </div>
@@ -141,11 +168,7 @@ export default function Header() {
 
                         <Link to="/cart" className="first">
                             <div class="header-list">
-                             
-
-                              
-
-                                 {listCart?.length > 0 && <b>{listCart && listCart?.length}</b>}
+                                {listCart?.length > 0 && <b>{listCart && listCart?.length}</b>}
 
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 <p>Giỏ hàng</p>

@@ -340,7 +340,7 @@ export default function Cart() {
                             <span class="total-price-title">
                                 <i class="fa-regular fa-money-bill-1"></i> Thành tiền
                             </span>
-                            <span class="price-cart">{formatMoney(total && shipFee)}</span>
+                            <span class="price-cart">{formatMoney(total + shipFee)}</span>
                         </div>
                     </div>
 
