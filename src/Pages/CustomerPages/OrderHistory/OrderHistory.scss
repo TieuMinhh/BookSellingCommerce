@@ -63,11 +63,6 @@
         border-left: 1px solid #ccc;
         width: 20%;
         text-align: center;
-        user-select: none;
-
-        &:hover {
-            letter-spacing: 0.4px;
-        }
 
         .count-of-status {
             margin: 0;
@@ -76,13 +71,22 @@
         .name-status {
             margin: 0;
         }
-
-        .count-of-status.active {
-            color: #f53d2d;
+    }
+    .active {
+        cursor: pointer;
+        margin-bottom: 4px;
+        border-right: 2px solid #a90000;
+        border-left: 2px solid #a90000;
+        width: 20%;
+        text-align: center;
+        .count-of-status {
+            margin: 0;
+            color: #ed722f;
         }
 
-        .name-status.active {
-            color: #f53d2d;
+        .name-status {
+            margin: 0;
+            color: #ed722f;
         }
     }
 }

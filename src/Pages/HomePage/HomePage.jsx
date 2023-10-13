@@ -36,9 +36,25 @@ import IconMenu from '../../Assets/img/icon-menu.png';
 import BookTrend from '../../Assets/img/book_trend.jpg';
 import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 export default function HomePage() {
     const [numberCate, setNumberCate] = useState('1');
+    const [listCategory, setListCategory] = useState([]);
+
+    async function getListCategory() {
+        // const result = await axiosApiInstance.get(
+        //   axiosApiInstance.defaults.baseURL + "/api/v1/category?id=ALL"
+        // );
+        let result = await axios.get(`http://localhost:8081/api/v1/category?id=ALL`);
+        setListCategory(result?.data.listCategory);
+        // console.log(result.data);
+    }
+
+    useEffect(() => {
+        getListCategory();
+    }, []);
 
     return (
         <div className="wrapper-content-homepage">
@@ -121,46 +137,19 @@ export default function HomePage() {
                     </div>
 
                     <div className="detail-cate-item">
-                        <div className="cover-content-item">
-                            <img loading="lazy" src={Cate1} alt="" />
-                            <p>Halloween</p>
-                        </div>
-                        <div className="cover-content-item">
-                            <img loading="lazy" src={Cate2} alt="" />
-                            <p>Đồ chơi giáo dục</p>
-                        </div>
-                        <div className="cover-content-item">
-                            <img loading="lazy" src={Cate3} alt="" />
-                            <p>Giấy photo</p>
-                        </div>
-                        <div className="cover-content-item">
-                            <img loading="lazy" src={Cate4} alt="" />
-                            <p>Tâm linh luân hồn</p>
-                        </div>
-                        <div className="cover-content-item">
-                            <img loading="lazy" src={Cate5} alt="" />
-                            <p>Ngôn tình</p>
-                        </div>
-                        <div className="cover-content-item">
-                            <img loading="lazy" src={Cate6} alt="" />
-                            <p>Xu hướng kinh tế</p>
-                        </div>
-                        <div className="cover-content-item">
-                            <img loading="lazy" src={Cate7} alt="" />
-                            <p>Tâm lý thao túng</p>
-                        </div>
-                        <div className="cover-content-item">
-                            <img loading="lazy" src={Cate8} alt="" />
-                            <p>Thiếu nhi</p>
-                        </div>
-                        <div className="cover-content-item">
-                            <img loading="lazy" src={Cate9} alt="" />
-                            <p>Văn học kinh điển</p>
-                        </div>
-                        <div className="cover-content-item">
-                            <img loading="lazy" src={Cate10} alt="" />
-                            <p>Tiểu thuyết</p>
-                        </div>
+                        {listCategory &&
+                            listCategory.map((item, index) => {
+                                return (
+                                    <div className="cover-content-item">
+                                        <img
+                                            src={`http://localhost:8081/image/${item.logo}`}
+                                            alt=""
+                                            className="avatar-image"
+                                        />
+                                        <p>{item && item?.name_category}</p>
+                                    </div>
+                                );
+                            })}
                     </div>
                 </div>
                 <div className="content-trend-homepage">

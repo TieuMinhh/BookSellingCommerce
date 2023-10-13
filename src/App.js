@@ -35,6 +35,8 @@ import OrderPay from './Pages/CustomerPages/OrderPay/OrderPay';
 import ChangePassword from './Pages/CustomerPages/ChangePassword/ChangePassword';
 import HomePage from './Pages/HomePage/HomePage';
 import PageUp from './Components/PageUp/PageUp';
+import Publishing from './Pages/AdminPages/Publishing/Publishing';
+import ProductPromotion from './Pages/AdminPages/ProductPromotion/ProductPromotion';
 
 function App() {
     const [theme, colorMode] = useMode();
@@ -75,6 +77,8 @@ function App() {
                                             <Route path="/revenue" element={<Revenue />} />
                                             <Route path="/customer" element={<Customer />} />
                                             <Route path="/promotion" element={<Promotion />} />
+                                            <Route path="/promotion-product" element={<ProductPromotion />} />
+                                            <Route path="/publishing-company" element={<Publishing />} />
                                             <Route path="/login" element={<Login />} />
                                             <Route path="/signup" element={<SignUp />} />
                                         </Routes>

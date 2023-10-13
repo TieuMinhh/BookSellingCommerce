@@ -107,7 +107,7 @@
                 display: flex;
                 width: 180px;
                 position: absolute;
-                right: 24%;
+                right: 20%;
                 bottom: 50%;
                 transform: translateY(50%);
                 img {
@@ -330,8 +330,9 @@
             text-align: right;
             .book-total-money {
                 margin-bottom: 0;
-                padding: 4px 0;
+                padding: 2px 0;
                 font-size: 1.1rem;
+
                 .detail-total-money {
                     min-width: 180px;
                     display: inline-block;
@@ -340,7 +341,7 @@
                 .total-all-money {
                     min-width: 180px;
                     display: inline-block;
-                    color: #f39801;
+                    color: #fa0001;
                     font-weight: bold;
                     font-size: 1.2rem;
                 }
@@ -356,6 +357,7 @@
         .done {
             display: flex;
             align-items: center;
+            height: 50px;
             .back-btn {
                 display: flex;
                 align-items: center;
@@ -380,11 +382,9 @@
             .confirm-btn {
                 border-color: #ee4d2d;
                 background-color: #ee4d2d;
-                padding: 10px 60px;
-                margin: 10px 0 18px auto;
+                padding: 8px 54px;
+                margin: 18px 0 18px auto;
                 font-weight: bold;
-                font-size: 1.2rem;
-
                 &:hover {
                     border-color: #ee4d2d;
                     background-color: #fff;
@@ -610,6 +610,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: -200px;
     background-color: rgba(0, 0, 0, 0.3);
     animation: showModalPromotion ease-in-out 0.3s;
 }
