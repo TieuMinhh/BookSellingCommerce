@@ -14,6 +14,7 @@ export default function ChangeInfo() {
     const [user, setUser] = useState([]);
     const [change, setChange] = useState([]);
     const [idAccount, setIdAccount] = useState('');
+    const [isSuccess, setIsSuccess] = useState('');
 
     const getInfoUser = async () => {
         let token = await getToken();
@@ -43,7 +44,12 @@ export default function ChangeInfo() {
         setChange(!change);
         console.log(result);
 
-        if (result.status === 200) toast.success(result.data.message);
+        if (result.status === 200) {
+            setIsSuccess(true);
+            setTimeout(() => {
+                setIsSuccess(false);
+            }, 3000);
+        }
         if (result.status === 400) toast.warning(result.data.message);
     }
 
@@ -109,6 +115,23 @@ export default function ChangeInfo() {
                     </div>
                 </div>
             </div>
+
+            {/* Start modal add cart success */}
+            {isSuccess && (
+                <div className="modal-add-success" onClick={() => setIsSuccess(false)}>
+                    <div className="modal-container-success">
+                        <div className="cover-icon-success">
+                            <i
+                                class="fa-solid fa-check detail-icon-success"
+                                style={{ color: '#fff', lineHeight: '60px' }}
+                            ></i>
+                        </div>
+                        <p className="sub-a-success" style={{ color: '#fff' }}>
+                            Ngài đã thay đổi thông tin thành công
+                        </p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -25,6 +25,7 @@ export default function OrderPay() {
     const [discount, setDiscount] = useState(null);
     const [listAddress, setListAddress] = useState(null);
     const [deliveryAddress, setDeliveryAddress] = useState(null);
+    const [orderSuccess, setOrderSuccess] = useState(false);
 
     const [formAddress, setFormAddress] = useState(null);
     const [IdAddress, setIdAddress] = useState(null);
@@ -88,7 +89,7 @@ export default function OrderPay() {
         // console.log(deliveryAddress);
     };
 
-    async function getListVocuher() {
+    async function getListVoucher() {
         // const result = await axiosApiInstance.get(
         //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
         // );
@@ -125,7 +126,9 @@ export default function OrderPay() {
             console.log(result.data);
             setChange(!change);
             setIsShowModalAddAddress(false);
-        } catch (error) {}
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     async function UpdateDeliveryAddress(item) {
@@ -236,7 +239,12 @@ export default function OrderPay() {
             setCode('');
             setDiscount(null);
 
-            toast.success('Đặt hàng thành công');
+            setOrderSuccess(true);
+            setTimeout(() => {
+                setOrderSuccess(false);
+            }, 5000);
+            // toast.success('Đặt hàng thành công');
+
             // Thực hiện điều hướng hoặc cập nhật giao diện sau khi đặt hàng thành công
             setTimeout(() => {
                 navigate('/');
@@ -247,9 +255,22 @@ export default function OrderPay() {
         }
     };
 
+    const [selectedAddress, setSelectedAddress] = useState(null);
+    const handleRadioChange = (index) => {
+        // Cập nhật trạng thái của địa chỉ được chọn
+        const updatedAddresses = listAddress.map((item, idx) => ({
+            ...item,
+            checked: idx === index,
+        }));
+        // Lưu trạng thái đã chọn và cập nhật danh sách địa chỉ
+        setSelectedAddress(updatedAddresses[index]);
+        setListAddress(updatedAddresses);
+        console.log('địa chỉ là : ', updatedAddresses);
+    };
+
     useEffect(() => {
         getInfoUser();
-        getListVocuher();
+        getListVoucher();
         getListDeliveryAddress();
     }, [change]);
 
@@ -310,9 +331,30 @@ export default function OrderPay() {
                         {listAddress &&
                             listAddress.map((item, index) => {
                                 return (
-                                    <div className="cover-detail-address">
-                                        <input className="form-address" type="radio" name="option" id="address2" />
-                                        <label htmlFor="address2" className="detail-address-delivery">
+                                    <div className="cover-detail-address" key={index}>
+                                        {/* <input
+                                            className="form-address"
+                                            type="radio"
+                                            name="option"
+                                            id={`address${index}`}
+                                            checked={item.checked} // Lưu ý chỗ này, kiểm tra nếu địa chỉ được chọn thì đánh dấu là đã chọn
+                                            onChange={() => handleRadioChange(index)}
+                                        /> */}
+                                        {/* <input
+                                            className="form-address"
+                                            type="radio"
+                                            id={`address${index}`}
+                                            checked={selectedAddress === item} // Kiểm tra nếu địa chỉ đã chọn trùng với địa chỉ hiện tại
+                                            onChange={() => handleRadioChange(item)}
+                                        /> */}
+                                        <input
+                                            className="form-address"
+                                            type="radio"
+                                            id={`address${item.id}`}
+                                            checked={selectedAddress === item.id} // So sánh theo id
+                                            onChange={() => handleRadioChange(item)}
+                                        />
+                                        <label htmlFor={`address${item.id}`} className="detail-address-delivery">
                                             {item && item?.name_address}
                                         </label>
                                         <div className="cover-edit-delete">
@@ -332,6 +374,7 @@ export default function OrderPay() {
                                     </div>
                                 );
                             })}
+
                         <div
                             className="cover-detail-address"
                             onClick={() => {
@@ -703,6 +746,23 @@ export default function OrderPay() {
                 </div>
             )}
             {/* End Modal Edit Address */}
+
+            {/* Start modal add cart success */}
+            {orderSuccess && (
+                <div className="modal-add-success" onClick={() => setOrderSuccess(false)}>
+                    <div className="modal-container-success">
+                        <div className="cover-icon-success">
+                            <i
+                                class="fa-solid fa-check detail-icon-success"
+                                style={{ color: '#fff', lineHeight: '60px' }}
+                            ></i>
+                        </div>
+                        <p className="sub-a-success" style={{ color: '#fff' }}>
+                            Ngài đã đặt hàng thành công
+                        </p>
+                    </div>
+                </div>
+            )}
         </>
     );
 }
