@@ -18,6 +18,20 @@ export default function Header() {
     const [change, setChange] = useState(false);
     const [listCategory, setListCategory] = useState([]);
 
+    const [searchName, setSearchName] = useState('');
+
+    const searchProduct = async () => {
+        try {
+            const result = await axios.post('http://localhost:8081/api/v1/search-product', {
+                name: searchName,
+            });
+            console.log(result.data.message);
+            //   props.getSearchProduct(response.data.message);
+        } catch (error) {
+            console.error('Error fetching data: ', error);
+        }
+    };
+
     const [show, setShow] = useState(false);
     const handleShow = (e) => {
         setShow(true);
@@ -112,39 +126,6 @@ export default function Header() {
                                                 </Link>
                                             );
                                         })}
-                                    {/* <Link to="">
-                                        <p className="modal-item-cate">
-                                            <i class="fa-solid fa-book-open" style={{ marginRight: '16px' }}></i> Sách
-                                            Thánh
-                                        </p>
-                                    </Link>
-                                    <Link to="">
-                                        <p className="modal-item-cate">
-                                            <i class="fa-solid fa-book-open" style={{ marginRight: '16px' }}></i> Sách
-                                            Phép Thuật
-                                        </p>
-                                    </Link>
-
-                                    <Link to="">
-                                        <p className="modal-item-cate">
-                                            <i class="fa-solid fa-book-open" style={{ marginRight: '16px' }}></i> Sách
-                                            Thần Kỳ
-                                        </p>
-                                    </Link>
-
-                                    <Link to="">
-                                        <p className="modal-item-cate">
-                                            <i class="fa-solid fa-book-open" style={{ marginRight: '16px' }}></i> Sách
-                                            Thần Bí
-                                        </p>
-                                    </Link>
-
-                                    <Link to="">
-                                        <p className="modal-item-cate">
-                                            <i class="fa-solid fa-book-open" style={{ marginRight: '16px' }}></i> Sách
-                                            Gì Đó
-                                        </p>
-                                    </Link> */}
                                 </div>
                             </div>
                         </div>
@@ -152,8 +133,13 @@ export default function Header() {
 
                     <div class="container-header-2 col">
                         <div class="header-search">
-                            <input type="text" placeholder="Nhập để tìm kiếm ..."></input>
-                            <i class="icon fa fa-search"></i>
+                            <input
+                                type="text"
+                                placeholder="Nhập để tìm kiếm ..."
+                                value={searchName}
+                                onChange={(e) => setSearchName(e.target.value)}
+                            ></input>
+                            <i class="icon fa fa-search" onClick={searchProduct}></i>
                         </div>
                     </div>
 

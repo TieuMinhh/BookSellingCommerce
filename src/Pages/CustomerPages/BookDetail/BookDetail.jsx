@@ -22,14 +22,6 @@ export default function BookDetail() {
         });
     }, []);
 
-    useEffect(() => {
-        if (isAddSuccess === true) {
-            setTimeout(() => {
-                setIsAddSuccess(false);
-            }, 6000);
-        }
-    }, [isAddSuccess]);
-
     const updateQuantity = (value) => {
         setNumber((prevState) => prevState + value);
     };
@@ -54,8 +46,8 @@ export default function BookDetail() {
     };
 
     const handleDecrement = () => {
-        if (number >= 1) updateQuantity(-1);
-        if (quantity > 0) setQuantity(quantity - 1);
+        if (number > 1) updateQuantity(-1);
+        if (quantity > 1) setQuantity(quantity - 1);
     };
 
     const handleAddToCart = async () => {
@@ -72,7 +64,13 @@ export default function BookDetail() {
         console.log(result);
         // return response.data;
 
-        if (result.status === 200) toast.success(result.data.message);
+        if (result.status === 200) {
+            setIsAddSuccess(true);
+            setTimeout(() => {
+                setIsAddSuccess(false);
+            }, 3000);
+        }
+
         if (result.status === 500) toast.error(result.data.message);
     };
 
@@ -281,12 +279,27 @@ export default function BookDetail() {
                             ></i>
                         </div>
                         <p className="sub-a-success" style={{ color: '#fff' }}>
-                            Sản phẩm đã được thêm vào Giỏ hàng
+                            Sản phẩm đã được thêm vào giỏ hàng
                         </p>
                     </div>
                 </div>
             )}
-            {/* End modal add cart success */}
+            {/* {isAddSuccess && (
+                <div className="modal-add-success" onClick={() => setIsAddSuccess(false)}>
+                    <div className="modal-container-success">
+                        <div className="cover-icon-success">
+                            <i
+                                class="fa-solid fa-check detail-icon-danger"
+                                style={{ color: '#fff', lineHeight: '60px' }}
+                            ></i>
+                        </div>
+                        <p className="sub-a-success" style={{ color: '#fff' }}>
+                            Có lỗi xảy ra
+                        </p>
+                    </div>
+                </div>
+            )}
+            End modal add cart success */}
         </div>
     );
 }

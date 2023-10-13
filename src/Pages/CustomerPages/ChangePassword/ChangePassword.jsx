@@ -11,6 +11,7 @@ export default function ChangePassword() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [change, setChange] = useState('');
+    const [isSuccess, setIsSuccess] = useState('');
 
     async function ChangePassword() {
         let token = await getToken();
@@ -21,9 +22,14 @@ export default function ChangePassword() {
             confirmPassword: confirmPassword,
         });
         setChange(!change);
-        console.log(result);
+        // console.log(result);
 
-        if (result.status === 200) toast.success(result.data.message);
+        if (result.status === 200) {
+            setIsSuccess(true);
+            setTimeout(() => {
+                setIsSuccess(false);
+            }, 3000);
+        }
         if (result.status === 201) toast.error(result.data.message);
         if (result.status === 202) toast.error(result.data.message);
         if (result.status === 500) toast.warning(result.data.message);
@@ -84,6 +90,22 @@ export default function ChangePassword() {
                     </div>
                 </div>
             </div>
+            {/* Start modal add cart success */}
+            {isSuccess && (
+                <div className="modal-add-success" onClick={() => setIsSuccess(false)}>
+                    <div className="modal-container-success">
+                        <div className="cover-icon-success">
+                            <i
+                                class="fa-solid fa-check detail-icon-success"
+                                style={{ color: '#fff', lineHeight: '60px' }}
+                            ></i>
+                        </div>
+                        <p className="sub-a-success" style={{ color: '#fff' }}>
+                            Ngài đã thay đổi mật khẩu thành công
+                        </p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
