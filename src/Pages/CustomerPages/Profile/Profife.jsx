@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import './Profile.scss';
-import axios from 'axios';
+import axios from '../../../api/axios';
 import { useState, useEffect } from 'react';
 import { getToken } from '../../../Services/Token';
 import SidebarProfile from '../SidebarProfile/SidebarProfile';
@@ -12,7 +12,7 @@ export default function Profile() {
     const getInfoUser = async () => {
         let token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        let result = await axios.get('http://localhost:8081/api/v1/account/info');
+        let result = await axios.get(axios.defaults.baseURL + '/api/v1/account/info');
         getUser(result.data.userInfo);
         console.log('Check token neeee:', result.data.userInfo);
     };

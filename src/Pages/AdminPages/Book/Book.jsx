@@ -4,7 +4,7 @@ import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 
 import './Book.scss';
 // import SearchProduct from "../../Components/SearchProduct/SearchProduct";
-import axios from 'axios';
+import axios from '../../../api/axios';
 import { toast } from 'react-toastify';
 
 export default function Book() {
@@ -64,37 +64,25 @@ export default function Book() {
     const handleCloseDel = () => setShowDel(false);
 
     async function getListProduct() {
-        // const result = await axiosApiInstance.get(
-        //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
-        // );
-        const result = await axios.get(`http://localhost:8081/api/v1/admin/product?id=ALL`);
+        const result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/product?id=ALL`);
         setList(result?.data.listProduct);
         // console.log(result.data);
     }
 
     async function getListCategory() {
-        // const result = await axiosApiInstance.get(
-        //   axiosApiInstance.defaults.baseURL + "/api/v1/category?id=ALL"
-        // );
-        let result = await axios.get(`http://localhost:8081/api/v1/category?id=ALL`);
+        let result = await axios.get(axios.defaults.baseURL + `/api/v1/category?id=ALL`);
         setListCategory(result?.data.listCategory);
         // console.log(result.data);
     }
 
     async function getListNXB() {
-        // const result = await axiosApiInstance.get(
-        //   axiosApiInstance.defaults.baseURL + "/api/v1/category?id=ALL"
-        // );
-        let result = await axios.get(`http://localhost:8081/api/v1/admin/publishing-company?id=ALL`);
+        let result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/publishing-company?id=ALL`);
         setListNXB(result?.data.listNXB);
         // console.log(result.data);
     }
 
     async function getListDiscount() {
-        // const result = await axiosApiInstance.get(
-        //   axiosApiInstance.defaults.baseURL + "/api/v1/category?id=ALL"
-        // );
-        let result = await axios.get(`http://localhost:8081/api/v1/admin/promotion-product?id=ALL`);
+        let result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/promotion-product?id=ALL`);
         setListDiscount(result?.data.listPromotionProduct);
         console.log(result.data);
     }
@@ -125,7 +113,7 @@ export default function Book() {
 
         console.log(name, image, detail, price, id_category, content, author, yearPublish, id_company, id_promotion);
 
-        const result = await axios.post('http://localhost:8081/api/v1/admin/createNewProduct', formData, {
+        const result = await axios.post(axios.defaults.baseURL + '/api/v1/admin/createNewProduct', formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
         });
 
@@ -166,9 +154,13 @@ export default function Book() {
 
         console.log(name, image, detail, price, content, author, yearPublish, id_category, id_company, id_promotion);
 
-        const result = await axios.post(`http://localhost:8081/api/v1/admin/updateProduct/${id_product}`, formData, {
-            headers: { 'Content-Type': 'multipart/form-data' },
-        });
+        const result = await axios.post(
+            axios.defaults.baseURL + `/api/v1/admin/updateProduct/${id_product}`,
+            formData,
+            {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            },
+        );
 
         // console.log(result);
 
@@ -192,7 +184,7 @@ export default function Book() {
     };
 
     const handleSubmitDel = async () => {
-        const result = await axios.delete(`http://localhost:8081/api/v1/admin/deleteProduct/${id_product}`, {
+        const result = await axios.delete(axios.defaults.baseURL + `/api/v1/admin/deleteProduct/${id_product}`, {
             headers: { 'Content-Type': 'multipart/form-data' },
         });
 

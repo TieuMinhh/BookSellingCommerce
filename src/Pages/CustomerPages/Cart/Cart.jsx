@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import './Cart.scss';
-import axios from 'axios';
+import axios from '../../../api/axios';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
 import { getToken } from '../../../Services/Token';
 
 function formatMoney(price) {
@@ -32,12 +31,10 @@ export default function Cart() {
     let shipFee = 20000;
 
     async function getListProduct() {
-        // const result = await axiosApiInstance.get(
-        //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
-        // );
         let token = await getToken();
+        // console.log('accessToken là : ', token);
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const result = await axios.post(`http://localhost:8081/api/v1/account/cart`);
+        const result = await axios.post(axios.defaults.baseURL + `/api/v1/account/cart`);
         setList(result?.data.list);
         setTotal(result?.data.total);
         console.log(result.data.total);
@@ -45,15 +42,12 @@ export default function Cart() {
 
     async function RemoveProductFromCart(item) {
         try {
-            // const result = await axiosApiInstance.get(
-            //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
-            // );
             console.log('id là :', item.id_product);
 
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-            const result = await axios.delete(`http://localhost:8081/api/v1/remove-from-cart/${item.id_product}`);
+            const result = await axios.delete(axios.defaults.baseURL + `/api/v1/remove-from-cart/${item.id_product}`);
             // setList(result?.data.list);
             // setTotal(result?.data.total);
             setChange(!change);
@@ -72,7 +66,7 @@ export default function Cart() {
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const result = await axios.put(
-                `http://localhost:8081/api/v1/account/increment-product-from-cart/${item.id_product}`,
+                axios.defaults.baseURL + `/api/v1/account/increment-product-from-cart/${item.id_product}`,
                 {
                     quantity: item.quantity,
                 },
@@ -91,7 +85,7 @@ export default function Cart() {
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const result = await axios.put(
-                `http://localhost:8081/api/v1/account/decrement-product-from-cart/${item.id_product}`,
+                axios.defaults.baseURL + `/api/v1/account/decrement-product-from-cart/${item.id_product}`,
                 {
                     quantity: item.quantity,
                 },
