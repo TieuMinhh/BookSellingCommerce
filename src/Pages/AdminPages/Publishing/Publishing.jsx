@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-// import './Promotion.scss';
-import axios from 'axios';
-// import { Link } from "react-router-dom";
+import axios from '../../../api/axios';
 import { FaTrash, FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
-import moment from 'moment';
 import { toast } from 'react-toastify';
 
 export default function Publishing() {
@@ -20,16 +17,8 @@ export default function Publishing() {
     const [address, setAddress] = useState();
     const [IDCompany, setIDCompany] = useState();
 
-    // const originalValue = "2023-08-06T17:00:00.000Z";
-    // // Chuyển đổi thành định dạng 'yyyy-MM-dd'
-    // const formattedValue = new Date(originalValue).toISOString().slice(0, 10);
-    // console.log(formattedValue); // Output: "2023-08-06"
-
     async function getListNXB() {
-        // const result = await axiosApiInstance.get(
-        //   axiosApiInstance.defaults.baseURL + "/api/v1/category?id=ALL"
-        // );
-        let result = await axios.get(`http://localhost:8081/api/v1/admin/publishing-company?id=ALL`);
+        let result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/publishing-company?id=ALL`);
         setList(result?.data.listNXB);
         // console.log(result.data);
     }
@@ -63,7 +52,7 @@ export default function Publishing() {
     const handleCloseDel = () => setShowDel(false);
 
     const handleSubmitAdd = async () => {
-        const result = await axios.post('http://localhost:8081/api/v1/admin/create-nxb', {
+        const result = await axios.post(axios.defaults.baseURL + '/api/v1/admin/create-nxb', {
             name_company: name,
             email_company: email,
             phone_company: phone,
@@ -86,7 +75,7 @@ export default function Publishing() {
     };
 
     const handleSubmitEdit = async () => {
-        const result = await axios.post(`http://localhost:8081/api/v1/admin/update-nxb/${IDCompany}`, {
+        const result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/update-nxb/${IDCompany}`, {
             name_company: name,
             email_company: email,
             phone_company: phone,
@@ -107,7 +96,7 @@ export default function Publishing() {
     };
 
     const handleSubmitDel = async () => {
-        const result = await axios.delete(`http://localhost:8081/api/v1/admin/delete-nxb/${IDCompany}`);
+        const result = await axios.delete(axios.defaults.baseURL + `/api/v1/admin/delete-nxb/${IDCompany}`);
 
         console.log(result);
 

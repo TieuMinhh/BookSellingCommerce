@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './MyVoucher.scss';
 import CuponIcon from '../../../Assets/svg/ico_coupon.svg';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../../../api/axios';
 import moment from 'moment';
 import SidebarProfile from '../SidebarProfile/SidebarProfile';
 
@@ -11,10 +11,7 @@ export default function MyVoucher() {
     const [list, setList] = useState([]);
 
     async function getListProduct() {
-        // const result = await axiosApiInstance.get(
-        //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
-        // );
-        const result = await axios.get(`http://localhost:8081/api/v1/discount?id=ALL`);
+        const result = await axios.get(axios.defaults.baseURL + `/api/v1/discount?id=ALL`);
         setList(result?.data.listDiscount);
         // console.log(result.data);
     }

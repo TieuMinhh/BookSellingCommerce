@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import './BookDetail.scss';
-import axios from 'axios';
-
+import axios from '../../../api/axios';
 import Img from '../../../Assets/img/kgd.jpg';
 import { toast } from 'react-toastify';
 
@@ -10,6 +9,8 @@ import { getToken } from '../../../Services/Token';
 import { Link } from 'react-router-dom';
 
 export default function BookDetail() {
+    // const baseURL = 'http://localhost:8081/public/images/';
+
     const [list, setList] = useState([]);
     const [number, setNumber] = useState(1); //number of item
     const [quantity, setQuantity] = useState(1);
@@ -31,10 +32,7 @@ export default function BookDetail() {
     const id = urlParams.get('id');
 
     async function getDetailProduct() {
-        // const result = await axiosApiInstance.get(
-        //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
-        // );
-        const result = await axios.get(`http://localhost:8081/api/v1/detail-product?id=${id}`);
+        const result = await axios.get(axios.defaults.baseURL + `/api/v1/detail-product?id=${id}`);
         setList(result?.data.listProduct);
         console.log(result.data);
         // console.log(list.price);
@@ -54,13 +52,9 @@ export default function BookDetail() {
         let token = await getToken();
         // console.log('Token là ', token);
         let id_product = id;
-        // let result = await AddToCart(token, id_product, quantity);
-
-        // console.log(result.message);
-
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         // console.log('Add Cart: ', token, id_product, quantity);
-        let result = await axios.post(`http://localhost:8081/api/v1/add-to-cart/${id_product}`, { quantity });
+        let result = await axios.post(axios.defaults.baseURL + `/api/v1/add-to-cart/${id_product}`, { quantity });
         console.log(result);
         // return response.data;
 

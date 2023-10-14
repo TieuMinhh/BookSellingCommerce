@@ -1,21 +1,18 @@
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './OrderHistory.scss';
-import BookDemo from '../../../Assets/img/tienganh12.jpg';
-import React, { useState, useEffect } from 'react';
 import { getToken } from '../../../Services/Token';
 import { checkToken } from '../../../api/UserServices';
-import axios from 'axios';
+import axios from '../../../api/axios';
 import moment from 'moment';
 import SidebarProfile from '../SidebarProfile/SidebarProfile';
 import { toast } from 'react-toastify';
 
 export default function OrderHistory() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [user, getUser] = useState([]);
     const [listOrderByAccount, setListOrderByAccount] = useState([]);
     const [detailOrderByStatus, setDetailOrderByStatus] = useState([]);
     const [change, setChange] = useState([]);
-    const [statusCart, setStatusCart] = useState(1);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [status, setStatus] = useState();
 
@@ -38,41 +35,31 @@ export default function OrderHistory() {
     };
 
     async function getOrderList() {
-        // let token = await getToken();
-        // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        // let result = await axios.get('http://localhost:8081/api/v1/account/info');
-        // getUser(result.data.userInfo);
-        // console.log('Check token neeee:', result.data.userInfo);
         let token = await getToken();
 
         let data = await checkToken(token);
 
         let orderByAccount = await axios.get(
-            `http://localhost:8081/api/v1/account/donhangtheotaikhoan/${data.userInfo.id_account}`,
+            axios.defaults.baseURL + `/api/v1/account/order-history-by-account/${data.userInfo.id_account}`,
         );
         setListOrderByAccount(orderByAccount?.data.listOrder);
         console.log(orderByAccount.data);
     }
 
     const getOrderByStatus = async () => {
-        // let token = await getToken();
-        // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        // let result = await axios.get('http://localhost:8081/api/v1/account/info');
-        // getUser(result.data.userInfo);
-        // console.log('Check token neeee:', result.data.userInfo);
         let token = await getToken();
 
         let data = await checkToken(token);
 
         let orderByStatus = await axios.get(
-            `http://localhost:8081/api/v1/account/lichsudathang/${data.userInfo.id_account}/${status}`,
+            axios.defaults.baseURL + `/api/v1/account/order-history-by-status/${data.userInfo.id_account}/${status}`,
         );
         setDetailOrderByStatus(orderByStatus?.data.listOrder);
         console.log(orderByStatus.data);
     };
 
     const handleCancel = async (id_order) => {
-        let result = await axios.post(`http://localhost:8081/api/v1/admin/huydonhang/${id_order}`);
+        let result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/cancel-order/${id_order}`);
         console.log(result);
         setChange(!change);
         if (result.data.errCode === 0) toast.success(result.data.message);

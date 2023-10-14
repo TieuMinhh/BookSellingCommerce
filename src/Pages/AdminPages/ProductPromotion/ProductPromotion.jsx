@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import './Promotion.scss';
-import axios from 'axios';
-// import { Link } from "react-router-dom";
+import axios from '../../../api/axios';
 import { FaTrash, FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import moment from 'moment';
@@ -19,16 +17,8 @@ export default function ProductPromotion() {
     const [endDay, setEndDay] = useState();
     const [ID_discount, setIDDiscount] = useState();
 
-    // const originalValue = "2023-08-06T17:00:00.000Z";
-    // // Chuyển đổi thành định dạng 'yyyy-MM-dd'
-    // const formattedValue = new Date(originalValue).toISOString().slice(0, 10);
-    // console.log(formattedValue); // Output: "2023-08-06"
-
     async function getListDiscount() {
-        // const result = await axiosApiInstance.get(
-        //   axiosApiInstance.defaults.baseURL + "/api/v1/category?id=ALL"
-        // );
-        let result = await axios.get(`http://localhost:8081/api/v1/admin/promotion-product?id=ALL`);
+        let result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/promotion-product?id=ALL`);
         setList(result?.data.listPromotionProduct);
         console.log(result.data);
     }
@@ -60,7 +50,7 @@ export default function ProductPromotion() {
     const handleCloseDel = () => setShowDel(false);
 
     const handleSubmitAdd = async () => {
-        const result = await axios.post('http://localhost:8081/api/v1/admin/create-promotion-product', {
+        const result = await axios.post(axios.defaults.baseURL + '/api/v1/admin/create-promotion-product', {
             percentage: percentage,
             start_date: startDay,
             end_date: endDay,
@@ -81,11 +71,14 @@ export default function ProductPromotion() {
     };
 
     const handleSubmitEdit = async () => {
-        const result = await axios.post(`http://localhost:8081/api/v1/admin/update-promotion-product/${ID_discount}`, {
-            percentage: percentage,
-            start_date: startDay,
-            end_date: endDay,
-        });
+        const result = await axios.post(
+            axios.defaults.baseURL + `/api/v1/admin/update-promotion-product/${ID_discount}`,
+            {
+                percentage: percentage,
+                start_date: startDay,
+                end_date: endDay,
+            },
+        );
 
         console.log(result);
 
@@ -100,7 +93,9 @@ export default function ProductPromotion() {
     };
 
     const handleSubmitDel = async () => {
-        const result = await axios.delete(`http://localhost:8081/api/v1/admin/delete-promotion-product/${ID_discount}`);
+        const result = await axios.delete(
+            axios.defaults.baseURL + `/api/v1/admin/delete-promotion-product/${ID_discount}`,
+        );
 
         console.log(result);
 

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './ChangeInfo.scss';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import { getToken } from '../../../Services/Token';
 import { Link } from 'react-router-dom';
 import SidebarProfile from '../SidebarProfile/SidebarProfile';
+import axios from '../../../api/axios';
 
 export default function ChangeInfo() {
     const [isUpdatePass, setIsUpdatePass] = useState(false);
@@ -19,7 +19,7 @@ export default function ChangeInfo() {
     const getInfoUser = async () => {
         let token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        let result = await axios.get('http://localhost:8081/api/v1/account/info');
+        let result = await axios.get(axios.defaults.baseURL + '/api/v1/account/info');
         setUser(result.data.userInfo);
         // console.log('Check token neeee:', result.data.userInfo);
 
@@ -36,7 +36,7 @@ export default function ChangeInfo() {
     async function ChangeInfo() {
         // console.log('id account là :', idAccount);
         // console.log(idAccount, name, phone, address);
-        const result = await axios.put(`http://localhost:8081/api/v1/update_info/${idAccount}`, {
+        const result = await axios.put(axios.defaults.baseURL + `/api/v1/update_info/${idAccount}`, {
             name,
             phone,
             address,
