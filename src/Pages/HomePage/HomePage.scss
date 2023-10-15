@@ -65,6 +65,7 @@
         padding: 18px 0 20px;
         text-align: center;
         cursor: pointer;
+
         img {
             width: 48px;
         }
@@ -91,6 +92,11 @@
             cursor: pointer;
             padding: 0 4px;
             text-align: center;
+
+            img {
+                height: 46px;
+            }
+
             p {
                 font-size: 1.1rem;
                 padding-top: 12px;

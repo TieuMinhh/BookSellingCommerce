@@ -77,15 +77,6 @@ a {
     display: block;
 }
 
-.content .main-content .main-list .main-list-item img {
-    width: 100%;
-    transition: all 0.3s ease;
-    -o-object-fit: contain;
-    object-fit: contain;
-    border-radius: 4px;
-    display: block;
-}
-
 .content .main-content .main-list .main-list-item:hover img {
     transform: scale(1.2);
     margin-bottom: 16px;
@@ -93,9 +84,23 @@ a {
 }
 
 .content .main-content .main-list .main-list-item .main-discription {
-    min-height: 300px;
+    min-height: 258px;
+
+    .cover-img-product {
+        height: 200px;
+        width: 100%;
+        .avatar-image-product {
+            margin: 0 auto;
+            height: 100%;
+            transition: all 0.3s ease;
+            -o-object-fit: contain;
+            object-fit: contain;
+            border-radius: 4px;
+            display: block;
+        }
+    }
     p {
-        margin: 10px;
+        margin: 10px 10px 10px 0;
         display: -webkit-inline-box;
         color: black;
         font-size: 1.2rem;

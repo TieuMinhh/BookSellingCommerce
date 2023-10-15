@@ -141,11 +141,7 @@ export default function HomePage() {
                             listCategory.map((item, index) => {
                                 return (
                                     <div className="cover-content-item">
-                                        <img
-                                            src={`http://localhost:8081/image/${item.logo}`}
-                                            alt=""
-                                            className="avatar-image"
-                                        />
+                                        <img src={`http://localhost:8081/image/${item.logo}`} alt="" className="" />
                                         <p>{item && item?.name_category}</p>
                                     </div>
                                 );
