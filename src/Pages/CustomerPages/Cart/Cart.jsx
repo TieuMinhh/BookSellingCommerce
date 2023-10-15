@@ -177,7 +177,7 @@ export default function Cart() {
                                         checked={selectedItem.includes(item.id_product)}
                                         onChange={handleSingleCheckBox}
                                     />
-                                    <Link to="/">
+                                    <Link to="/cart">
                                         <img
                                             src={`http://localhost:8081/image/${item && item?.images}`}
                                             alt=""

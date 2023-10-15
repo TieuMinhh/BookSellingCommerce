@@ -73,6 +73,11 @@ export default function Home() {
                                                                     alt=""
                                                                     className="avatar-image-product"
                                                                 />
+                                                                <div className="promotion-percentent-circle">
+                                                                    <span className="detail-number-percent">
+                                                                        -{item && item.percentage}%
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                             <p class="item-desp">{item && item?.name_product}</p>
                                                         </div>
@@ -185,6 +190,11 @@ export default function Home() {
                                                                     alt=""
                                                                     className="avatar-image-product"
                                                                 />
+                                                                <div className="promotion-percentent-circle">
+                                                                    <span className="detail-number-percent">
+                                                                        -{item && item.percentage}%
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                             <p class="item-desp">{item && item?.name_product}</p>
                                                         </div>
@@ -297,6 +307,11 @@ export default function Home() {
                                                                     alt=""
                                                                     className="avatar-image-product"
                                                                 />
+                                                                <div className="promotion-percentent-circle">
+                                                                    <span className="detail-number-percent">
+                                                                        -{item && item.percentage}%
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                             <p class="item-desp">{item.name_product}</p>
                                                         </div>

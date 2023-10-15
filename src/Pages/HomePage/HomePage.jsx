@@ -191,13 +191,15 @@ export default function HomePage() {
                                     return (
                                         <Link to={`/book/detail?id=${item.id_product}`}>
                                             <div className="item-book-trend">
-                                                <img
-                                                    loading="lazy"
-                                                    src={`http://localhost:8081/image/${item.images}`}
-                                                    alt=""
-                                                    className="avatar-image"
-                                                    style={{ height: '100px' }}
-                                                />
+                                                <div className="cover-img-trend">
+                                                    <img
+                                                        loading="lazy"
+                                                        src={`http://localhost:8081/image/${item.images}`}
+                                                        alt=""
+                                                        className="avatar-image"
+                                                        style={{ height: '100px' }}
+                                                    />
+                                                </div>
                                                 <p className="item-trend-name">{item && item?.name_product}</p>
                                                 <p class="item-trend-price">
                                                     {item &&
@@ -234,13 +236,15 @@ export default function HomePage() {
                                     return (
                                         <Link to={`/book/detail?id=${item.id_product}`}>
                                             <div className="item-book-trend">
-                                                <img
-                                                    loading="lazy"
-                                                    src={`http://localhost:8081/image/${item.images}`}
-                                                    alt=""
-                                                    className="avatar-image"
-                                                    style={{ height: '100px' }}
-                                                />
+                                                <div className="cover-img-trend">
+                                                    <img
+                                                        loading="lazy"
+                                                        src={`http://localhost:8081/image/${item.images}`}
+                                                        alt=""
+                                                        className="avatar-image"
+                                                        style={{ height: '100px' }}
+                                                    />
+                                                </div>
                                                 <p className="item-trend-name">{item && item?.name_product}</p>
                                                 <p class="item-trend-price">
                                                     {item &&

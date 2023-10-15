@@ -78,12 +78,13 @@ h3 {
 
 .product {
     display: flex;
+    align-items: center;
     width: 100%;
-    height: 170px;
     overflow: hidden;
     border: 1px solid silver;
     margin-bottom: 20px;
     background-color: #eee;
+    padding: 4px;
 }
 
 .product:hover {
@@ -94,8 +95,12 @@ h3 {
 
 .cart .product {
     input {
-        width: 22px;
-        margin: 6px;
+        display: block;
+        margin-right: 16px;
+        margin-left: 4px;
+        width: 20px;
+        height: 20px;
+        box-sizing: content-box;
     }
 }
 
@@ -106,7 +111,7 @@ h3 {
 .product {
     a {
         img {
-            height: 100%;
+            width: 120px;
             object-fit: cover;
         }
     }
