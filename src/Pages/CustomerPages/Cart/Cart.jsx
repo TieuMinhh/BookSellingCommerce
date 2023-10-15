@@ -27,7 +27,6 @@ export default function Cart() {
     const [change, setChange] = useState(false);
     const [list, setList] = useState([]);
     const [total, setTotal] = useState('0');
-    const [selectedItems, setSelectedItems] = useState([]); // Danh sách các sản phẩm được chọn
     let shipFee = 20000;
 
     async function getListProduct() {
@@ -36,12 +35,14 @@ export default function Cart() {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         const result = await axios.post(axios.defaults.baseURL + `/api/v1/account/cart`);
         setList(result?.data.list);
-        setTotal(result?.data.total);
-        console.log(result.data.total);
     }
 
     async function RemoveProductFromCart(item) {
         try {
+            // let token = await getToken();
+            // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            // const result = await axios.delete(`http://localhost:8081/api/v1/remove-from-cart/${item.id_product}`);
+
             console.log('id là :', item.id_product);
 
             let token = await getToken();
@@ -51,7 +52,6 @@ export default function Cart() {
             // setList(result?.data.list);
             // setTotal(result?.data.total);
             setChange(!change);
-            console.log(result);
 
             if (result.status === 200) toast.success(result.data.message);
             if (result.status === 500) toast.error(result.data.message);
@@ -62,7 +62,6 @@ export default function Cart() {
 
     async function IncrementProductFromCart(item) {
         try {
-            console.log('id là :', item.id_product);
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const result = await axios.put(
@@ -71,8 +70,6 @@ export default function Cart() {
                     quantity: item.quantity,
                 },
             );
-
-            console.log(result);
             setChange(!change);
         } catch (error) {
             toast.error(error);
@@ -98,124 +95,57 @@ export default function Cart() {
         }
     }
 
-    // const handleSelectAllCheckBox = (e) => {
-    //   if (e.target.checked) {
-    //     setSelectedItem([1, 2, 3]);
-    //   } else {
-    //     setSelectedItem([]);
-    //   }
-    // };
-
-    // const handleSingleCheckBox = (e) => {
-    //   const value = parseInt(e.target.value);
-
-    //   if (e.target.checked) {
-    //     setSelectedItem([...selectedItem, value]);
-    //   } else {
-    //     setSelectedItem((prevData) => {
-    //       return prevData.filter((id) => {
-    //         return id !== value;
-    //       });
-    //     });
-    //   }
-    // };
-
-    // Hàm xử lý khi ấn vào ô input tick text
-    // const handleToggleSelect = (item) => {
-    //     // Kiểm tra xem sản phẩm đã được chọn chưa
-    //     if (selectedItems.some((selectedItem) => selectedItem.id_product === item.id_product)) {
-    //         // Nếu đã chọn, loại bỏ sản phẩm khỏi danh sách
-    //         setSelectedItems((prevSelectedItems) =>
-    //             prevSelectedItems.filter((selectedItem) => selectedItem.id_product !== item.id_product),
-    //         );
-    //     } else {
-    //         // Nếu chưa chọn, thêm sản phẩm vào danh sách
-    //         setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
-    //     }
-
-    //     // Sau khi thay đổi danh sách selectedItems, tính tổng tiền
-    //     calculateTotal();
-    // };
-
-    const handleToggleSelect = (item) => {
-        // Kiểm tra xem sản phẩm đã được chọn chưa
-        if (selectedItems.some((selectedItem) => selectedItem.id_product === item.id_product)) {
-            // Nếu đã chọn, loại bỏ sản phẩm khỏi danh sách
-            setSelectedItems((prevSelectedItems) =>
-                prevSelectedItems.filter((selectedItem) => selectedItem.id_product !== item.id_product),
-            );
+    const handleSelectAllCheckBox = (e, list) => {
+        if (e.target.checked) {
+            const allId = list.map((item) => item.id_product);
+            setSelectedItem(allId);
         } else {
-            // Nếu chưa chọn, thêm sản phẩm vào danh sách
-            setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
+            setSelectedItem([]);
         }
-        // console.log('dssp:', selectedItems);
-
-        // Sau khi thay đổi danh sách selectedItems, tính tổng tiền
-        calculateTotal();
     };
 
-    // const handleSelectAll = (list) => {
-    //     // Kiểm tra nếu đã chọn tất cả thì bỏ chọn tất cả, ngược lại chọn tất cả
-    //     if (selectedItems.length === list.length) {
-    //         setSelectedItems([]);
-    //     } else {
-    //         // Gán toàn bộ danh sách sản phẩm vào selectedItems
-    //         setSelectedItems(list.map((item) => item.id_product));
-    //     }
-    //     // Sau khi thay đổi danh sách selectedItems, tính tổng tiền
-    //     calculateTotal();
-    // };
+    const handleSingleCheckBox = (e) => {
+        const value = parseInt(e.target.value);
 
-    const handleSelectAll = (list) => {
-        // Kiểm tra nếu đã chọn tất cả thì bỏ chọn tất cả, ngược lại chọn tất cả
-        if (selectedItems.length === list.length) {
-            setSelectedItems([]);
+        if (e.target.checked) {
+            setSelectedItem([...selectedItem, value]);
         } else {
-            // Gán toàn bộ danh sách sản phẩm vào selectedItems
-            setSelectedItems(list.map((item) => item.id_product));
+            setSelectedItem((prevData) => {
+                return prevData.filter((id) => {
+                    return id !== value;
+                });
+            });
         }
-        // Sau khi thay đổi danh sách selectedItems, tính tổng tiền
-        calculateTotal();
     };
-
-    const addToSelectedItems = (item) => {
-        setSelectedItems([...selectedItems, item]);
-        // console.log('Danh sách sản phẩm là : ', selectedItems);
-    };
-    // const addToSelectedItems = (item) => {
-    //     // Chỉ thêm sản phẩm nếu nó chưa có trong danh sách
-    //     if (!selectedItems.some((selectedItem) => selectedItem.id_product === item.id_product)) {
-    //         setSelectedItems([...selectedItems, item]);
-    //     }
-    // };
-
     // Hàm tính tổng tiền dựa trên danh sách sản phẩm được chọn
-    const calculateTotal = () => {
-        let totalPrice = 0;
-        // Duyệt qua danh sách các sản phẩm đã chọn
-        selectedItems.forEach((selectedProductId) => {
-            // Tìm sản phẩm trong danh sách gốc bằng id_product
-            const selectedProduct = list.find((item) => item.id_product === selectedProductId);
-            // Nếu sản phẩm được tìm thấy, thì cộng giá vào tổng tiền
-            if (selectedProduct) {
-                totalPrice += selectedProduct.price_reducing * selectedProduct.quantity;
-            }
-        });
-        // Lưu tổng tiền khi danh sách sản phẩm được chọn thay đổi
-        console.log('Danh sách sp là :', selectedItems);
-        setTotal(totalPrice);
-    };
 
     const navigate = useNavigate();
     const goToOrderPage = () => {
-        // Sử dụng `selectedItems` để truyền danh sách đã chọn khi chuyển trang
-        navigate('/order-pay', { state: { selectedItems: selectedItems } });
+        navigate('/order-pay', {
+            state: {
+                selectedItems: list.filter((item) => selectedItem.includes(item.id_product)),
+            },
+        });
     };
 
     useEffect(() => {
         getListProduct();
+        const calculateTotal = () => {
+            let totalPrice = 0;
+            // Duyệt qua danh sách các sản phẩm đã chọn
+            selectedItem.forEach((selectedProductId) => {
+                // Tìm sản phẩm trong danh sách gốc bằng id_product
+                const selectedProduct = list.find((item) => item.id_product === selectedProductId);
+                // Nếu sản phẩm được tìm thấy, thì cộng giá vào tổng tiền
+                if (selectedProduct) {
+                    totalPrice += selectedProduct.price_reducing * selectedProduct.quantity;
+                }
+            });
+            // Lưu tổng tiền khi danh sách sản phẩm được chọn thay đổi
+            setTotal(totalPrice);
+        };
         calculateTotal();
-    }, [change, selectedItems]);
+    }, [change, list, selectedItem]);
 
     return (
         <div className="container">
@@ -228,33 +158,26 @@ export default function Cart() {
                     <div className="product-header">
                         <input
                             class="carts-check"
-                            checked={setSelectedItems.length === list && list.length}
                             type="checkbox"
-                            onChange={() => handleSelectAll(list)}
-                            // onClick={() => addToSelectedItems(list)}
+                            onChange={(e) => handleSelectAllCheckBox(e, list)}
                             id="check-all"
-                        />{' '}
+                        />
                         <label style={{ cursor: 'pointer', width: '100%' }} htmlFor="check-all">
-                            {' '}
                             Chọn tất cả {`(${(list && list?.length) || 0} sản phẩm)`}
                         </label>
                     </div>
 
-                    {/* Test */}
-
-                    {/* End Test */}
-
                     {list &&
                         list.map((item, index) => {
                             return (
-                                <div className="product" key={list.id_product}>
+                                <div className="product" key={item.id_product}>
                                     <input
                                         type="checkbox"
-                                        checked={selectedItems.includes(item.id_product)}
-                                        onChange={() => handleToggleSelect(item)}
-                                        // onClick={() => addToSelectedItems(item)}
+                                        value={item.id_product}
+                                        checked={selectedItem.includes(item.id_product)}
+                                        onChange={handleSingleCheckBox}
                                     />
-                                    <Link to="/">
+                                    <Link to="/cart">
                                         <img
                                             src={`http://localhost:8081/image/${item && item?.images}`}
                                             alt=""

@@ -15,7 +15,6 @@ import VoucherImg from '../../../Assets/img/voucher-icon.jpg';
 export default function OrderPay() {
     const location = useLocation();
     const listProduct = location.state ? location.state.selectedItems : []; // Lấy danh sách sản phẩm đã chọn từ trang giỏ hàng
-    console.log('Danh sách sp là :', listProduct);
     let totalOriginalPrice = 0;
     let totalReducedPrice = 0;
     let shipFee = 20000;
@@ -86,13 +85,12 @@ export default function OrderPay() {
         getUser(result.data.userInfo);
         setDeliveryAddress(result.data.userInfo.address);
         console.log('Check token neeee:', result.data.userInfo);
-        // console.log(deliveryAddress);
     };
 
     async function getListVoucher() {
+        // const result = await axios.get(`http://localhost:8081/api/v1/discount?id=ALL`);
         const result = await axios.get(axios.defaults.baseURL + `/api/v1/discount?id=ALL`);
         setListVoucher(result?.data.listDiscount);
-        // console.log(result.data);
     }
 
     async function getListDeliveryAddress() {
@@ -100,7 +98,6 @@ export default function OrderPay() {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         const result = await axios.get(axios.defaults.baseURL + `/api/v1/delivery-address`);
         setListAddress(result?.data.listAddress);
-        // console.log(result.data);
     }
 
     async function AddNewDeliveryAddress() {
@@ -113,7 +110,6 @@ export default function OrderPay() {
                 phone_receiver: phoneReceiver,
             });
 
-            // setListAddress(result?.data.listAddress);
             console.log(result.data);
             setChange(!change);
             setIsShowModalAddAddress(false);
@@ -133,7 +129,6 @@ export default function OrderPay() {
             });
             console.log(IdAddress, nameAddress, nameReceiver, phoneReceiver);
 
-            // setListAddress(result?.data.listAddress);
             console.log(result.data);
             setChange(!change);
             setIsShowModalEditAddress(false);
@@ -148,7 +143,6 @@ export default function OrderPay() {
                 axios.defaults.baseURL + `/api/v1/delete-delivery-address/${item.id_address}`,
             );
 
-            // setListAddress(result?.data.listAddress);
             console.log(result.data);
             setChange(!change);
         } catch (error) {}
@@ -262,7 +256,7 @@ export default function OrderPay() {
     }, [change]);
 
     // Tính tổng giá trị sản phẩm trước khi giảm giá
-    listProduct.forEach((item) => {
+    listProduct?.forEach((item) => {
         totalOriginalPrice += item?.price * item?.quantity;
         totalReducedPrice += item?.price_reducing * item?.quantity;
     });

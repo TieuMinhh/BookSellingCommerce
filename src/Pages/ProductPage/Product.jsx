@@ -69,13 +69,20 @@ export default function Home() {
                                                 <div class="main-list-item">
                                                     <Link to={`/book/detail?id=${item && item?.id_product}`}>
                                                         <div class="main-discription mt-8 mb-8">
-                                                            <img
-                                                                src={`http://localhost:8081/image/${
-                                                                    item && item?.images
-                                                                }`}
-                                                                alt=""
-                                                                className="avatar-image"
-                                                            />
+                                                            <div className="cover-img-product">
+                                                                <img
+                                                                    src={`http://localhost:8081/image/${
+                                                                        item && item?.images
+                                                                    }`}
+                                                                    alt=""
+                                                                    className="avatar-image-product"
+                                                                />
+                                                                <div className="promotion-percentent-circle">
+                                                                    <span className="detail-number-percent">
+                                                                        -{item && item.percentage}%
+                                                                    </span>
+                                                                </div>
+                                                            </div>
                                                             <p class="item-desp">{item && item?.name_product}</p>
                                                         </div>
                                                         <div class="main-price">
@@ -179,13 +186,20 @@ export default function Home() {
                                                 <div class="main-list-item">
                                                     <Link to={`/book/detail?id=${item && item?.id_product}`}>
                                                         <div class="main-discription mt-8 mb-8">
-                                                            <img
-                                                                src={`http://localhost:8081/image/${
-                                                                    item && item?.images
-                                                                }`}
-                                                                alt=""
-                                                                className="avatar-image"
-                                                            />
+                                                            <div className="cover-img-product">
+                                                                <img
+                                                                    src={`http://localhost:8081/image/${
+                                                                        item && item?.images
+                                                                    }`}
+                                                                    alt=""
+                                                                    className="avatar-image-product"
+                                                                />
+                                                                <div className="promotion-percentent-circle">
+                                                                    <span className="detail-number-percent">
+                                                                        -{item && item.percentage}%
+                                                                    </span>
+                                                                </div>
+                                                            </div>
                                                             <p class="item-desp">{item && item?.name_product}</p>
                                                         </div>
                                                         <div class="main-price">
@@ -397,13 +411,20 @@ export default function Home() {
                                                 <div class="main-list-item">
                                                     <Link to={`/book/detail?id=${item.id_product}`}>
                                                         <div class="main-discription mt-8 mb-8">
-                                                            <img
-                                                                src={`http://localhost:8081/image/${
-                                                                    item && item?.images
-                                                                }`}
-                                                                alt=""
-                                                                className="avatar-image"
-                                                            />
+                                                            <div className="cover-img-product">
+                                                                <img
+                                                                    src={`http://localhost:8081/image/${
+                                                                        item && item?.images
+                                                                    }`}
+                                                                    alt=""
+                                                                    className="avatar-image-product"
+                                                                />
+                                                                <div className="promotion-percentent-circle">
+                                                                    <span className="detail-number-percent">
+                                                                        -{item && item.percentage}%
+                                                                    </span>
+                                                                </div>
+                                                            </div>
                                                             <p class="item-desp">{item.name_product}</p>
                                                         </div>
                                                         <div class="main-price">

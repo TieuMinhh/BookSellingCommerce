@@ -65,6 +65,7 @@
         padding: 18px 0 20px;
         text-align: center;
         cursor: pointer;
+
         img {
             width: 48px;
         }
@@ -91,6 +92,11 @@
             cursor: pointer;
             padding: 0 4px;
             text-align: center;
+
+            img {
+                height: 46px;
+            }
+
             p {
                 font-size: 1.1rem;
                 padding-top: 12px;
@@ -168,6 +174,7 @@
 
     .item-trend-name {
         font-family: Arial, Helvetica, sans-serif;
+        padding-top: 10px;
     }
 
     .item-trend-price {
@@ -175,15 +182,16 @@
         font-weight: bold;
         font-size: 1.2rem;
         margin-bottom: 0;
+        text-align: left;
     }
 
     .item-price-old {
         text-decoration: line-through;
         margin-bottom: 8px;
+        text-align: left;
     }
 
     .item-book-trend {
-        text-align: center;
         cursor: pointer;
         padding: 8px;
         &:hover {
@@ -191,12 +199,13 @@
             border-radius: 8px;
         }
 
-        img {
-            max-width: 190px;
-            min-height: 190px;
-        }
-        p {
-            text-align: left;
+        .cover-img-trend {
+            width: 100%;
+            text-align: center;
+            img {
+                max-width: 190px;
+                min-height: 190px;
+            }
         }
 
         .main-rate {

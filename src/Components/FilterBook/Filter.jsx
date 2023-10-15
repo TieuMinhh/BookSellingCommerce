@@ -61,8 +61,8 @@ export default function Filter() {
                                 list.map((item, index) => {
                                     return (
                                         <li>
-                                            <input id="1" type="checkbox"></input>
-                                            <label for="1">{item.name_category}</label>
+                                            <input id={item.id_category} type="checkbox"></input>
+                                            <label for={item.id_category}>{item.name_category}</label>
                                         </li>
                                     );
                                 })}
