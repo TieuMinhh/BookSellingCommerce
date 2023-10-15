@@ -19,7 +19,7 @@ import Item9 from '../../Assets/img/item9.png';
 import Item10 from '../../Assets/img/item10.png';
 import TrendImg from '../../Assets/img/trend-buy.png';
 import IconMenu from '../../Assets/img/icon-menu.png';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from '../../api/axios';
 import { useEffect } from 'react';
@@ -50,6 +50,23 @@ export default function HomePage() {
 
     const handleTabClick = (tabName) => {
         setNumberCate(tabName);
+    };
+
+    const navigate = useNavigate();
+
+    const handleCategoryClick = async (item) => {
+        console.log('Id category là : ', item.id_category);
+        try {
+            const result = await axios.post(axios.defaults.baseURL + '/api/v1/search-product-by-id-category', {
+                id_category: item.id_category,
+            });
+            console.log(result.data.message);
+
+            // Chuyển hướng đến trang product cùng với kết quả tìm kiếm
+            navigate(`/product?category=${item.id_category}`, { state: { searchResult3: result.data.message } });
+        } catch (error) {
+            console.error('Error fetching data: ', error);
+        }
     };
 
     useEffect(() => {
@@ -142,7 +159,11 @@ export default function HomePage() {
                         {listCategory &&
                             listCategory.map((item, index) => {
                                 return (
-                                    <div className="cover-content-item">
+                                    <div
+                                        className="cover-content-item"
+                                        key={index}
+                                        onClick={() => handleCategoryClick(item)}
+                                    >
                                         <img
                                             src={`http://localhost:8081/image/${item.logo}`}
                                             alt=""

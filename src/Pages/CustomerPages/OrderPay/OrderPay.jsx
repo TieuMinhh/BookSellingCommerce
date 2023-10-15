@@ -538,7 +538,7 @@ export default function OrderPay() {
                         </Button>
 
                         <Button className="confirm-btn" onClick={handleOrder}>
-                            <span>Xác nhận thanh toán</span>
+                            <span>Xác nhận đặt hàng</span>
                         </Button>
                     </div>
                 </div>
