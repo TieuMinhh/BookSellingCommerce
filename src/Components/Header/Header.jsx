@@ -9,9 +9,6 @@ import IconMenu from '../../Assets/img/icon-menu.png';
 import axios from '../../api/axios';
 import { getToken } from '../../Services/Token';
 import useDebounce from '../../api/useDebounce';
-// import classNames from "classnames/bind";
-
-// const cx = classNames.bind(styles);
 
 export default function Header() {
     const [listCart, setListCart] = useState([]);
@@ -23,22 +20,48 @@ export default function Header() {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const searchProduct = async () => {
-            try {
-                const result = await axios.post(axios.defaults.baseURL + '/api/v1/search-product', {
-                    name: debouncedValue,
-                });
-                console.log(result.data.message);
+    const [shouldSearch, setShouldSearch] = useState(false);
 
-                // Chuyển hướng đến trang product cùng với kết quả tìm kiếm
-                navigate('/product', { state: { searchResult: result.data.message } });
-            } catch (error) {
-                console.error('Error fetching data: ', error);
-            }
-        };
-        searchProduct();
-    }, [debouncedValue]);
+    useEffect(() => {
+        if (shouldSearch) {
+            const searchProduct = async () => {
+                try {
+                    const result = await axios.post(axios.defaults.baseURL + '/api/v1/search-product', {
+                        name: debouncedValue,
+                    });
+                    console.log(result.data.message);
+
+                    // Chuyển hướng đến trang product cùng với kết quả tìm kiếm
+                    navigate(`/product?search-product=${debouncedValue}`, {
+                        state: { searchResult: result.data.message },
+                    });
+                } catch (error) {
+                    console.error('Error fetching data: ', error);
+                }
+            };
+            searchProduct();
+        }
+    }, [debouncedValue, shouldSearch]);
+
+    const handleInputChange = (e) => {
+        setSearchName(e.target.value);
+        setShouldSearch(e.target.value !== '');
+    };
+
+    const handleCategoryClick = async (item) => {
+        console.log('Id category là : ', item.id_category);
+        try {
+            const result = await axios.post(axios.defaults.baseURL + '/api/v1/search-product-by-id-category', {
+                id_category: item.id_category,
+            });
+            console.log(result.data.message);
+
+            // Chuyển hướng đến trang product cùng với kết quả tìm kiếm
+            navigate(`/product?category=${item.id_category}`, { state: { searchResult3: result.data.message } });
+        } catch (error) {
+            console.error('Error fetching data: ', error);
+        }
+    };
 
     const [show, setShow] = useState(false);
     const handleShow = (e) => {
@@ -117,7 +140,7 @@ export default function Header() {
                                     {listCategory &&
                                         listCategory.map((item, index) => {
                                             return (
-                                                <Link to="/">
+                                                <div key={index} onClick={() => handleCategoryClick(item)}>
                                                     <p className="modal-item-cate">
                                                         <i
                                                             class="fa-solid fa-book-open"
@@ -125,7 +148,7 @@ export default function Header() {
                                                         ></i>{' '}
                                                         {item && item?.name_category}
                                                     </p>
-                                                </Link>
+                                                </div>
                                             );
                                         })}
                                 </div>
@@ -137,9 +160,9 @@ export default function Header() {
                         <div class="header-search">
                             <input
                                 type="text"
-                                placeholder="你 要 买 什 么 东 西 ..."
+                                placeholder="Nhập để tìm kiếm ..."
                                 value={searchName}
-                                onChange={(e) => setSearchName(e.target.value)}
+                                onChange={handleInputChange}
                             ></input>
                             <i class="icon fa fa-search"></i>
                         </div>
@@ -163,7 +186,7 @@ export default function Header() {
                             </div>
                         </Link>
 
-                        <Link to="" className="second">
+                        <Link to="/profile" className="second">
                             <div class="header-list">
                                 <div class="menu-header">
                                     {!localStorage.getItem('accessToken') ? (
