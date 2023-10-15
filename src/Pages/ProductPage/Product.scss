@@ -77,18 +77,15 @@ a {
     display: block;
 }
 
-.content .main-content .main-list .main-list-item:hover img {
-    transform: scale(1.2);
-    margin-bottom: 16px;
-    border: 1.5px solid black;
+.content .main-content .main-list .main-list-item:hover .cover-img-product {
+    transform: scale(1.1);
 }
 
 .content .main-content .main-list .main-list-item .main-discription {
-    min-height: 258px;
+    min-height: 250px;
 
     .cover-img-product {
         height: 200px;
-        width: 100%;
         .avatar-image-product {
             margin: 0 auto;
             height: 100%;

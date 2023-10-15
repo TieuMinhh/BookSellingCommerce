@@ -3,8 +3,8 @@ import './ChangePassword.scss';
 import { useState } from 'react';
 import { getToken } from '../../../Services/Token';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import SidebarProfile from '../SidebarProfile/SidebarProfile';
+import axios from '../../../api/axios';
 
 export default function ChangePassword() {
     const [password, setPassword] = useState('');
@@ -16,7 +16,7 @@ export default function ChangePassword() {
     async function ChangePassword() {
         let token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const result = await axios.post(`http://localhost:8081/api/v1/change-password`, {
+        const result = await axios.post(axios.defaults.baseURL + `/api/v1/change-password`, {
             oldPassword: password,
             newPassword: newPassword,
             confirmPassword: confirmPassword,

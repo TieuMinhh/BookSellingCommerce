@@ -4,7 +4,8 @@ import './Order.scss';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
-import axios from 'axios';
+import axios from '../../../api/axios';
+
 import moment from 'moment';
 
 const feeShip = 20000;
@@ -30,42 +31,34 @@ export default function Order() {
     const handleCloseDetailOrder = () => setShowDetailOrder(false);
 
     async function getListOrder() {
-        // const result = await axiosApiInstance.get(
-        //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
-        // );
-        const result = await axios.get(`http://localhost:8081/api/v1/admin/getorders`);
-
+        const result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/get-orders`);
         setList(result?.data.listOrder);
         // console.log(result.data);
     }
 
     async function getListOrderDetail(id_order) {
-        // const result = await axiosApiInstance.get(
-        //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
-        // );
-        const result = await axios.get(`http://localhost:8081/api/v1/admin/detailorder/${id_order}`);
-
+        const result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/detail-order/${id_order}`);
         setListOrderDetail(result?.data.listOrderDetail);
         console.log(result.data);
     }
     // getListOrderDetail();
 
     const handleConfirm = async (item) => {
-        let result = await axios.post(`http://localhost:8081/api/v1/admin/xacnhandonhang/${item.id_order}`);
+        let result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/confirm-order/${item.id_order}`);
         console.log(result);
         setChange(!change);
         if (result.data.errCode === 0) toast.success(result.data.message);
     };
 
     const handleComplete = async (item) => {
-        let result = await axios.post(`http://localhost:8081/api/v1/admin/hoanthanhdonhang/${item.id_order}`);
+        let result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/complete-order/${item.id_order}`);
         console.log(result);
         setChange(!change);
         if (result.data.errCode === 0) toast.success(result.data.message);
     };
 
     const handleCancel = async (item) => {
-        let result = await axios.post(`http://localhost:8081/api/v1/admin/huydonhang/${item.id_order}`);
+        let result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/cancel-order/${item.id_order}`);
         console.log(result);
         setChange(!change);
         if (result.data.errCode === 0) toast.success(result.data.message);

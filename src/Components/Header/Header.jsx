@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './Header.scss';
 import LogoPage from '../../Assets/img/FahaShopBe.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MyLoginModal from '../../Pages/Auths/Auths/Auths';
 import VietNamFlag from '../../Assets/img/vietnam.png';
 import PLatinum from '../../Assets/svg/platinum.svg';
 import IconMenu from '../../Assets/img/icon-menu.png';
-import axios from 'axios';
+import axios from '../../api/axios';
 import { getToken } from '../../Services/Token';
-
+import useDebounce from '../../api/useDebounce';
 // import classNames from "classnames/bind";
 
 // const cx = classNames.bind(styles);
@@ -17,20 +17,28 @@ export default function Header() {
     const [listCart, setListCart] = useState([]);
     const [change, setChange] = useState(false);
     const [listCategory, setListCategory] = useState([]);
-
     const [searchName, setSearchName] = useState('');
 
-    const searchProduct = async () => {
-        try {
-            const result = await axios.post('http://localhost:8081/api/v1/search-product', {
-                name: searchName,
-            });
-            console.log(result.data.message);
-            //   props.getSearchProduct(response.data.message);
-        } catch (error) {
-            console.error('Error fetching data: ', error);
-        }
-    };
+    const debouncedValue = useDebounce(searchName, 500);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const searchProduct = async () => {
+            try {
+                const result = await axios.post(axios.defaults.baseURL + '/api/v1/search-product', {
+                    name: debouncedValue,
+                });
+                console.log(result.data.message);
+
+                // Chuyển hướng đến trang product cùng với kết quả tìm kiếm
+                navigate('/product', { state: { searchResult: result.data.message } });
+            } catch (error) {
+                console.error('Error fetching data: ', error);
+            }
+        };
+        searchProduct();
+    }, [debouncedValue]);
 
     const [show, setShow] = useState(false);
     const handleShow = (e) => {
@@ -44,21 +52,15 @@ export default function Header() {
     };
 
     async function getListProduct() {
-        // const result = await axiosApiInstance.get(
-        //   axiosApiInstance.defaults.baseURL + "/api/v1/hero/get"
-        // );
         let token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const result = await axios.post(`http://localhost:8081/api/v1/account/cart`);
+        const result = await axios.post(axios.defaults.baseURL + `/api/v1/account/cart`);
         setListCart(result?.data.list);
         // setChange(!change);
     }
 
     async function getListCategory() {
-        // const result = await axiosApiInstance.get(
-        //   axiosApiInstance.defaults.baseURL + "/api/v1/category?id=ALL"
-        // );
-        let result = await axios.get(`http://localhost:8081/api/v1/category?id=ALL`);
+        let result = await axios.get(axios.defaults.baseURL + `/api/v1/category?id=ALL`);
         setListCategory(result?.data.listCategory);
         // console.log(result.data);
     }
@@ -135,11 +137,11 @@ export default function Header() {
                         <div class="header-search">
                             <input
                                 type="text"
-                                placeholder="Nhập để tìm kiếm ..."
+                                placeholder="你 要 买 什 么 东 西 ..."
                                 value={searchName}
                                 onChange={(e) => setSearchName(e.target.value)}
                             ></input>
-                            <i class="icon fa fa-search" onClick={searchProduct}></i>
+                            <i class="icon fa fa-search"></i>
                         </div>
                     </div>
 

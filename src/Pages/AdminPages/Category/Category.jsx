@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './Category.scss';
 import { FaTrash, FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { Button, Modal, Form } from 'react-bootstrap';
-// import axiosApiInstance from "../../Configs/interceptor";
-import axios from 'axios';
+import axios from '../../../api/axios';
 import { toast } from 'react-toastify';
 
 export default function Category() {
@@ -44,10 +43,7 @@ export default function Category() {
     const handleCloseDel = () => setShowDel(false);
 
     async function getListCategory() {
-        // const result = await axiosApiInstance.get(
-        //   axiosApiInstance.defaults.baseURL + "/api/v1/category?id=ALL"
-        // );
-        let result = await axios.get(`http://localhost:8081/api/v1/category?id=ALL`);
+        const result = await axios.get(axios.defaults.baseURL + '/api/v1/category?id=ALL');
         setList(result?.data.listCategory);
         // console.log(result.data);
     }
@@ -68,7 +64,7 @@ export default function Category() {
         formData.append('name_category', name);
         formData.append('logo', image);
 
-        const result = await axios.post('http://localhost:8081/api/v1/admin/create-category', formData, {
+        const result = await axios.post(axios.defaults.baseURL + '/api/v1/admin/create-category', formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
         });
         console.log(result);
@@ -90,7 +86,7 @@ export default function Category() {
         formData.append('name_category', name);
         formData.append('logo', image);
 
-        const result = await axios.post(`http://localhost:8081/api/v1/admin/update-category?id=${id}`, formData, {
+        const result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/update-category?id=${id}`, formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
         });
 
@@ -105,7 +101,7 @@ export default function Category() {
     };
 
     const handleSubmitDel = async () => {
-        const result = await axios.delete(`http://localhost:8081/api/v1/admin/delete-category?id_category=${id}`, {
+        const result = await axios.delete(axios.defaults.baseURL + `/api/v1/admin/delete-category?id_category=${id}`, {
             headers: { 'Content-Type': 'multipart/form-data' },
         });
 

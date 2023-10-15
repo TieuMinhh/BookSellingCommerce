@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 
 import { setToken } from '../../../Services/Token';
-import axios from 'axios';
+import axios from '../../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -20,7 +20,7 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
     const handleLogin = () => {
         (async () => {
             let result = (
-                await axios.post(`http://localhost:8081/api/v1/login`, {
+                await axios.post(axios.defaults.baseURL + `/api/v1/login`, {
                     email: username,
                     password,
                 })
@@ -29,7 +29,7 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
             if (result.errCode === 0) {
                 // setToken(result.accessToken, result.refreshToken);
                 console.log(result);
-                setToken(result.userData);
+                setToken(result.accessToken);
                 setTimeout(() => {
                     navigate('/');
                 }, 1500);
@@ -43,15 +43,15 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
             else toast.error(result.message);
 
             console.log(result);
-        })().catch((err) => {
-            console.log(err);
+        })().catch((error) => {
+            console.log(error.response.data);
         });
     };
 
     const handleSignup = () => {
         (async () => {
             const data = (
-                await axios.post('http://localhost:8081/api/v1/account/signup', {
+                await axios.post(axios.defaults.baseURL + '/api/v1/account/signup', {
                     email: username,
                     password,
                     phone,

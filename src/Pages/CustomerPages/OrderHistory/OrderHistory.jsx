@@ -1,21 +1,17 @@
-import { Link } from 'react-router-dom';
-import './OrderHistory.scss';
-import BookDemo from '../../../Assets/img/tienganh12.jpg';
 import React, { useState, useEffect } from 'react';
+import './OrderHistory.scss';
 import { getToken } from '../../../Services/Token';
 import { checkToken } from '../../../api/UserServices';
-import axios from 'axios';
+import axios from '../../../api/axios';
 import moment from 'moment';
 import SidebarProfile from '../SidebarProfile/SidebarProfile';
 import { toast } from 'react-toastify';
 
 export default function OrderHistory() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [user, getUser] = useState([]);
     const [listOrderByAccount, setListOrderByAccount] = useState([]);
     const [detailOrderByStatus, setDetailOrderByStatus] = useState([]);
     const [change, setChange] = useState([]);
-    const [statusCart, setStatusCart] = useState(1);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [status, setStatus] = useState();
 
@@ -23,12 +19,9 @@ export default function OrderHistory() {
     const handleTabClick = (tabName, status) => {
         setActiveTab(tabName);
         setStatus(status);
-        console.log(status);
     };
 
     const showModalDetail = async (item) => {
-        console.log('id order là :', item.id_order);
-        console.log(item);
         setIsModalOpen(true);
     };
 
@@ -38,42 +31,29 @@ export default function OrderHistory() {
     };
 
     async function getOrderList() {
-        // let token = await getToken();
-        // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        // let result = await axios.get('http://localhost:8081/api/v1/account/info');
-        // getUser(result.data.userInfo);
-        // console.log('Check token neeee:', result.data.userInfo);
         let token = await getToken();
 
         let data = await checkToken(token);
 
         let orderByAccount = await axios.get(
-            `http://localhost:8081/api/v1/account/donhangtheotaikhoan/${data.userInfo.id_account}`,
+            axios.defaults.baseURL + `/api/v1/account/order-history-by-account/${data.userInfo.id_account}`,
         );
         setListOrderByAccount(orderByAccount?.data.listOrder);
-        console.log(orderByAccount.data);
     }
 
     const getOrderByStatus = async () => {
-        // let token = await getToken();
-        // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        // let result = await axios.get('http://localhost:8081/api/v1/account/info');
-        // getUser(result.data.userInfo);
-        // console.log('Check token neeee:', result.data.userInfo);
         let token = await getToken();
 
         let data = await checkToken(token);
 
         let orderByStatus = await axios.get(
-            `http://localhost:8081/api/v1/account/lichsudathang/${data.userInfo.id_account}/${status}`,
+            axios.defaults.baseURL + `/api/v1/account/order-history-by-status/${data.userInfo.id_account}/${status}`,
         );
         setDetailOrderByStatus(orderByStatus?.data.listOrder);
-        console.log(orderByStatus.data);
     };
 
     const handleCancel = async (id_order) => {
-        let result = await axios.post(`http://localhost:8081/api/v1/admin/huydonhang/${id_order}`);
-        console.log(result);
+        let result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/cancel-order/${id_order}`);
         setChange(!change);
         if (result.data.errCode === 0) toast.success(result.data.message);
     };
@@ -91,10 +71,9 @@ export default function OrderHistory() {
     let totalOriginalPrice = 0;
     let totalReducedPrice = 0;
 
-    detailOrderByStatus[0]?.products.forEach((item) => {
+    detailOrderByStatus[0]?.products?.forEach((item) => {
         totalOriginalPrice += item?.price * item?.quantity;
         totalReducedPrice += item?.price_reducing * item?.quantity;
-        console.log(totalOriginalPrice, totalReducedPrice);
     });
 
     // Tính số tiền giảm giá từ mã khuyến mãi
@@ -192,7 +171,7 @@ export default function OrderHistory() {
                                 </div>
 
                                 {listOrderByAccount &&
-                                    listOrderByAccount.map((item, index) => {
+                                    listOrderByAccount?.map((item, index) => {
                                         return (
                                             <div className="detail-title">
                                                 <p>MH{item.id_order}</p>
@@ -231,7 +210,7 @@ export default function OrderHistory() {
                                 </div>
 
                                 {listOrderByAccount &&
-                                    listOrderByAccount.map((item, index) => {
+                                    listOrderByAccount?.map((item, index) => {
                                         return (
                                             <div className="detail-title">
                                                 {item.status === 1 ? (
@@ -269,7 +248,7 @@ export default function OrderHistory() {
                                 </div>
 
                                 {listOrderByAccount &&
-                                    listOrderByAccount.map((item, index) => {
+                                    listOrderByAccount?.map((item, index) => {
                                         return (
                                             <div className="detail-title">
                                                 {item.status === 2 ? (
@@ -307,7 +286,7 @@ export default function OrderHistory() {
                                 </div>
 
                                 {listOrderByAccount &&
-                                    listOrderByAccount.map((item, index) => {
+                                    listOrderByAccount?.map((item, index) => {
                                         return (
                                             <div className="detail-title">
                                                 {item.status === 0 ? (
@@ -345,7 +324,7 @@ export default function OrderHistory() {
                                 </div>
 
                                 {listOrderByAccount &&
-                                    listOrderByAccount.map((item, index) => {
+                                    listOrderByAccount?.map((item, index) => {
                                         return (
                                             <div className="detail-title">
                                                 {item.status === 3 ? (
@@ -581,7 +560,6 @@ export default function OrderHistory() {
                                     </div>
 
                                     {detailOrderByStatus[0]?.products.map((item, index) => {
-                                        console.log(detailOrderByStatus[0]?.products);
                                         return (
                                             <div className="table-order-row">
                                                 <p className="table-order-cell">
@@ -647,7 +625,7 @@ export default function OrderHistory() {
                                     <p className="code-order-label">
                                         Giảm giá :{' '}
                                         <span className="code-order">
-                                            {discountAmount.toLocaleString('vi', {
+                                            {discountAmount?.toLocaleString('vi', {
                                                 style: 'currency',
                                                 currency: 'VND',
                                             })}
@@ -665,7 +643,7 @@ export default function OrderHistory() {
                                     <p className="code-order-label" style={{ fontSize: '20px', color: '#fa0001' }}>
                                         Thành tiền :{' '}
                                         <span className="code-order">
-                                            {totalAfterDiscount.toLocaleString('vi', {
+                                            {totalAfterDiscount?.toLocaleString('vi', {
                                                 style: 'currency',
                                                 currency: 'VND',
                                             })}
