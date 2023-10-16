@@ -4,6 +4,7 @@ import { FaLock, FaUnlock } from 'react-icons/fa';
 import { Button, Modal, Form } from 'react-bootstrap';
 import axios from '../../../api/axios';
 import moment from 'moment';
+import config from '../../../api/base';
 
 export default function Customer() {
     const [list, setList] = useState([]);
@@ -62,7 +63,7 @@ export default function Customer() {
                                         <td>{index + 1}</td>
                                         <td>
                                             <img
-                                                src={`http://localhost:8081/image/${item.avatar}`}
+                                                src={`${config.PUBLIC_IMAGE_URL}${item.avatar}`}
                                                 alt="user-avatar"
                                                 className="avatar-image"
                                             />

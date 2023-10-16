@@ -6,6 +6,7 @@ import axios from '../../../api/axios';
 import moment from 'moment';
 import SidebarProfile from '../SidebarProfile/SidebarProfile';
 import { toast } from 'react-toastify';
+import config from '../../../api/base';
 
 export default function OrderHistory() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -564,7 +565,7 @@ export default function OrderHistory() {
                                             <div className="table-order-row">
                                                 <p className="table-order-cell">
                                                     <img
-                                                        src={`http://localhost:8081/image/${item && item?.images}`}
+                                                        src={`${config.PUBLIC_IMAGE_URL}${item && item?.images}`}
                                                         alt=""
                                                         className="footer-order-image"
                                                     />

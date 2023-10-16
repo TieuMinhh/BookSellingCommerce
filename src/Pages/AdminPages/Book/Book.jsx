@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { FaTrash, FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
-
 import './Book.scss';
-// import SearchProduct from "../../Components/SearchProduct/SearchProduct";
 import axios from '../../../api/axios';
 import { toast } from 'react-toastify';
+import config from '../../../api/base';
 
 export default function Book() {
     const [showAdd, setShowAdd] = useState(false);
@@ -243,7 +242,7 @@ export default function Book() {
                                         <td>{index + 1}</td>
                                         <td>
                                             <img
-                                                src={`http://localhost:8081/image/${item.images}`}
+                                                src={`${config.PUBLIC_IMAGE_URL}${item.images}`}
                                                 alt=""
                                                 className="avatar-image"
                                             />
@@ -640,8 +639,7 @@ export default function Book() {
                                     Ngài có chắc chắn muốn xóa sản phẩm : {name}
                                     {/* {categoryDelete.name} */}
                                 </label>
-                                <img src={`http://localhost:8081/image/${image}`} height={150} width={150} alt="img" />
-                                {/* <input type='file' onChange={(event) => this.fileSelectedHandle(event)}></input> */}
+                                <img src={`${config.PUBLIC_IMAGE_URL}${image}`} height={150} width={150} alt="img" />
                             </div>
                         </div>
                     </Modal.Body>

@@ -11,10 +11,12 @@ import moment from 'moment';
 import { toast } from 'react-toastify';
 import CuponIcon from '../../../Assets/svg/ico_coupon.svg';
 import VoucherImg from '../../../Assets/img/voucher-icon.jpg';
+import config from '../../../api/base';
 
 export default function OrderPay() {
     const location = useLocation();
     const listProduct = location.state ? location.state.selectedItems : []; // Lấy danh sách sản phẩm đã chọn từ trang giỏ hàng
+    console.log(location.state.selectedItems);
     let totalOriginalPrice = 0;
     let totalReducedPrice = 0;
     let shipFee = 20000;
@@ -88,7 +90,6 @@ export default function OrderPay() {
     };
 
     async function getListVoucher() {
-        // const result = await axios.get(`http://localhost:8081/api/v1/discount?id=ALL`);
         const result = await axios.get(axios.defaults.baseURL + `/api/v1/discount?id=ALL`);
         setListVoucher(result?.data.listDiscount);
     }
@@ -438,7 +439,7 @@ export default function OrderPay() {
                             return (
                                 <div class="product-order">
                                     <img
-                                        src={`http://localhost:8081/image/${item && item?.images}`}
+                                        src={`${config.PUBLIC_IMAGE_URL}${item && item?.images}`}
                                         alt=""
                                         className="avatar-image"
                                     />

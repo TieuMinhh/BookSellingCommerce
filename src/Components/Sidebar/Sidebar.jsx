@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import { Box, IconButton, Typography, useTheme } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -11,9 +11,9 @@ import { HiCircleStack } from 'react-icons/hi2';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { useNavigate } from 'react-router-dom';
 
-import jwtDecode from 'jwt-decode';
-
-import Avatar from '../../Assets/img/Avatar.jpg';
+import axios from '../../api/axios';
+import { getToken } from '../../Services/Token';
+import config from '../../api/base';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme();
@@ -46,6 +46,21 @@ const Sidebar = () => {
     // const role = jwtDecode(
     //   localStorage.getItem("accessToken")
     // ).role_id;
+
+    const [user, getUser] = useState([]);
+    const [change, setChange] = useState([]);
+
+    const getInfoUser = async () => {
+        let token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        let result = await axios.get(axios.defaults.baseURL + '/api/v1/account/info');
+        getUser(result.data.userInfo);
+        console.log('Check token neeee:', result.data.userInfo);
+    };
+
+    useEffect(() => {
+        getInfoUser();
+    }, [change]);
 
     return (
         <div>
@@ -82,7 +97,7 @@ const Sidebar = () => {
                             {!isCollapsed && (
                                 <Box display="flex" justifyContent="space-between" alignItems="center" ml="15px">
                                     <Typography variant="h5" color={colors.grey[100]}>
-                                        Sport Administrator
+                                        Book Shop Administrator
                                     </Typography>
                                     <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                                         <MenuOutlinedIcon />
@@ -96,7 +111,7 @@ const Sidebar = () => {
                                 <Box display="flex" justifyContent="center" alignItems="center">
                                     <img
                                         alt="profile-user"
-                                        src={Avatar}
+                                        src={`${config.PUBLIC_IMAGE_URL}${user && user?.avatar}`}
                                         style={{
                                             width: '120px',
                                             height: '120px',
@@ -113,7 +128,7 @@ const Sidebar = () => {
                                         fontWeight="bold"
                                         sx={{ m: '10px 0 0 0' }}
                                     >
-                                        Asami
+                                        {user && user?.name}
                                     </Typography>
                                     <Typography variant="h6" color={colors.greenAccent[500]}>
                                         Quản trị viên

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getToken } from '../../../Services/Token';
+import config from '../../../api/base';
 
 function formatMoney(price) {
     return price
@@ -39,18 +40,11 @@ export default function Cart() {
 
     async function RemoveProductFromCart(item) {
         try {
-            // let token = await getToken();
-            // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            // const result = await axios.delete(`http://localhost:8081/api/v1/remove-from-cart/${item.id_product}`);
-
-            console.log('id là :', item.id_product);
-
+            // console.log('id là :', item.id_product);
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
             const result = await axios.delete(axios.defaults.baseURL + `/api/v1/remove-from-cart/${item.id_product}`);
-            // setList(result?.data.list);
-            // setTotal(result?.data.total);
             setChange(!change);
 
             if (result.status === 200) toast.success(result.data.message);
@@ -179,7 +173,7 @@ export default function Cart() {
                                     />
                                     <Link to="/cart">
                                         <img
-                                            src={`http://localhost:8081/image/${item && item?.images}`}
+                                            src={`${config.PUBLIC_IMAGE_URL}${item && item?.images}`}
                                             alt=""
                                             className="avatar-image"
                                         />
