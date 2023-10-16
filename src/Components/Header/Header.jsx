@@ -186,7 +186,7 @@ export default function Header() {
                             </div>
                         </Link>
 
-                        <Link to="/profile" className="second">
+                        <Link to="" className="second">
                             <div class="header-list">
                                 <div class="menu-header">
                                     {!localStorage.getItem('accessToken') ? (

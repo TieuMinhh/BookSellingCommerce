@@ -5,6 +5,7 @@ import { FaTrash, FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { Button, Modal, Form } from 'react-bootstrap';
 import axios from '../../../api/axios';
 import { toast } from 'react-toastify';
+import config from '../../../api/base';
 
 export default function Category() {
     const [showAdd, setShowAdd] = useState(false);
@@ -144,7 +145,7 @@ export default function Category() {
                                         <td>{index + 1}</td>
                                         <td>
                                             <img
-                                                src={`http://localhost:8081/image/${item.logo}`}
+                                                src={`${config.PUBLIC_IMAGE_URL}${item && item?.logo}`}
                                                 alt=""
                                                 className="avatar-image"
                                             />
@@ -285,7 +286,7 @@ export default function Category() {
                                 <label className="ban-co-muon-xoa text-black text-size-fit">
                                     Ngài có chắc chắn muốn xóa danh mục :{name}
                                 </label>
-                                <img src={`http://localhost:8081/image/${image}`} height={150} width={150} alt="img" />
+                                <img src={`${config.PUBLIC_IMAGE_URL}/${image}`} height={150} width={150} alt="img" />
                                 {/* <input type='file' onChange={(event) => this.fileSelectedHandle(event)}></input> */}
                             </div>
                         </div>

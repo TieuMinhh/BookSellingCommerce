@@ -23,6 +23,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from '../../api/axios';
 import { useEffect } from 'react';
+import config from '../../api/base';
 
 export default function HomePage() {
     const [numberCate, setNumberCate] = useState(1);
@@ -165,7 +166,7 @@ export default function HomePage() {
                                         onClick={() => handleCategoryClick(item)}
                                     >
                                         <img
-                                            src={`http://localhost:8081/image/${item.logo}`}
+                                            src={`${config.PUBLIC_IMAGE_URL}${item && item?.logo}`}
                                             alt=""
                                             className="avatar-image"
                                         />
@@ -219,7 +220,7 @@ export default function HomePage() {
                                                 <div className="cover-img-trend">
                                                     <img
                                                         loading="lazy"
-                                                        src={`http://localhost:8081/image/${item.images}`}
+                                                        src={`${config.PUBLIC_IMAGE_URL}${item.images}`}
                                                         alt=""
                                                         className="avatar-image"
                                                         style={{ height: '100px' }}
@@ -264,7 +265,7 @@ export default function HomePage() {
                                                 <div className="cover-img-trend">
                                                     <img
                                                         loading="lazy"
-                                                        src={`http://localhost:8081/image/${item.images}`}
+                                                        src={`${config.PUBLIC_IMAGE_URL}${item && item?.images}`}
                                                         alt=""
                                                         className="avatar-image"
                                                         style={{ height: '100px' }}

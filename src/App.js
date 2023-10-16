@@ -106,8 +106,6 @@ function App() {
                                 </div>
                             )}
                         </BrowserRouter>
-                        {/* <Footer /> */}
-
                         <ToastContainer />
                     </div>
                 </ThemeProvider>

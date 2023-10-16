@@ -7,10 +7,9 @@ import { toast } from 'react-toastify';
 
 import { getToken } from '../../../Services/Token';
 import { Link } from 'react-router-dom';
+import config from '../../../api/base';
 
 export default function BookDetail() {
-    // const baseURL = 'http://localhost:8081/public/images/';
-
     const [list, setList] = useState([]);
     const [number, setNumber] = useState(1); //number of item
     const [quantity, setQuantity] = useState(1);
@@ -78,37 +77,36 @@ export default function BookDetail() {
                 <div class="left-product">
                     <div class="big-image-product">
                         <img
-                            src={`http://localhost:8081/image/${list && list[0]?.images}`}
+                            src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
                             alt=""
                             className="avatar-image"
                         />
-                        {/* <img src={Img} alt=""></img> */}
                     </div>
                     <div class="images-product">
                         <div class="small-image-product">
                             <img
-                                src={`http://localhost:8081/image/${list && list[0]?.images}`}
+                                src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
                                 alt=""
                                 className="avatar-image"
                             />
                         </div>
                         <div class="small-image-product">
                             <img
-                                src={`http://localhost:8081/image/${list && list[0]?.images}`}
+                                src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
                                 alt=""
                                 className="avatar-image"
                             />
                         </div>
                         <div class="small-image-product">
                             <img
-                                src={`http://localhost:8081/image/${list && list[0]?.images}`}
+                                src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
                                 alt=""
                                 className="avatar-image"
                             />
                         </div>
                         <div class="small-image-product">
                             <img
-                                src={`http://localhost:8081/image/${list && list[0]?.images}`}
+                                src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
                                 alt=""
                                 className="avatar-image"
                             />

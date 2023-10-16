@@ -3,6 +3,7 @@ import axios from '../../api/axios';
 import './Product.scss';
 import Filter from '../../Components/FilterBook/Filter';
 import { Link, useLocation } from 'react-router-dom';
+import config from '../../api/base';
 
 export default function Home() {
     const [change, setChange] = useState(false);
@@ -14,6 +15,17 @@ export default function Home() {
         setList(result?.data.listProduct);
         // console.log(result.data);
     }
+
+    // const [page, setPage] = useState(1);
+    // const searchParams = new URLSearchParams(location.search);
+    // const currentPage = parseInt(searchParams.get('page'));
+    // console.log('Trang hiện tại là :', currentPage);
+
+    // async function getListProduct(page) {
+    //     const result = await axios.get(axios.defaults.baseURL + `/api/v1/product-by-pages?page=${page}`);
+    //     setList(result?.data.listProduct);
+    //     console.log(result.data);
+    // }
 
     const location = useLocation();
 
@@ -71,7 +83,7 @@ export default function Home() {
                                                         <div class="main-discription mt-8 mb-8">
                                                             <div className="cover-img-product">
                                                                 <img
-                                                                    src={`http://localhost:8081/image/${
+                                                                    src={`${config.PUBLIC_IMAGE_URL}${
                                                                         item && item?.images
                                                                     }`}
                                                                     alt=""
@@ -156,7 +168,6 @@ export default function Home() {
                 <div class="content row grid wide">
                     <div class="container_content">
                         <div class="header-container">
-                            {/* <h1 class="header-container-categories">Premier League</h1> */}
                             <div class="header-container-icon">
                                 <i class="fa-solid fa-bars"></i>
                                 <i class="fa-solid fa-table-list"></i>
@@ -188,7 +199,7 @@ export default function Home() {
                                                         <div class="main-discription mt-8 mb-8">
                                                             <div className="cover-img-product">
                                                                 <img
-                                                                    src={`http://localhost:8081/image/${
+                                                                    src={`${config.PUBLIC_IMAGE_URL}${
                                                                         item && item?.images
                                                                     }`}
                                                                     alt=""
@@ -302,13 +313,20 @@ export default function Home() {
                                                 <div class="main-list-item">
                                                     <Link to={`/book/detail?id=${item && item?.id_product}`}>
                                                         <div class="main-discription mt-8 mb-8">
-                                                            <img
-                                                                src={`http://localhost:8081/image/${
-                                                                    item && item?.images
-                                                                }`}
-                                                                alt=""
-                                                                className="avatar-image"
-                                                            />
+                                                            <div className="cover-img-product">
+                                                                <img
+                                                                    src={`${config.PUBLIC_IMAGE_URL}${
+                                                                        item && item?.images
+                                                                    }`}
+                                                                    alt=""
+                                                                    className="avatar-image-product"
+                                                                />
+                                                                <div className="promotion-percentent-circle">
+                                                                    <span className="detail-number-percent">
+                                                                        -{item && item.percentage}%
+                                                                    </span>
+                                                                </div>
+                                                            </div>
                                                             <p class="item-desp">{item && item?.name_product}</p>
                                                         </div>
                                                         <div class="main-price">
@@ -413,7 +431,7 @@ export default function Home() {
                                                         <div class="main-discription mt-8 mb-8">
                                                             <div className="cover-img-product">
                                                                 <img
-                                                                    src={`http://localhost:8081/image/${
+                                                                    src={`${config.PUBLIC_IMAGE_URL}${
                                                                         item && item?.images
                                                                     }`}
                                                                     alt=""

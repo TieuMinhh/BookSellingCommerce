@@ -34,11 +34,11 @@ const Navbar = () => {
                 {moment().format('MMMM Do YYYY, h:mm:ss')}
             </strong>
 
-            {/* <Box display="flex">
+            <Box display="flex">
                 <IconButton onClick={colorMode.toggleColorMode}>
                     {theme.palette.mode === 'dark' ? <DarkModeOutlinedIcon /> : <LightModeOutlinedIcon />}
                 </IconButton>
-                <IconButton>
+                {/* <IconButton>
                     <NotificationsOutlinedIcon />
                 </IconButton>
                 <IconButton>
@@ -46,8 +46,8 @@ const Navbar = () => {
                 </IconButton>
                 <IconButton>
                     <PersonOutlinedIcon />
-                </IconButton>
-            </Box> */}
+                </IconButton> */}
+            </Box>
         </Box>
     );
 };
