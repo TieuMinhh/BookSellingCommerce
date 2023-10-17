@@ -23,29 +23,30 @@ export default function Header() {
     const [shouldSearch, setShouldSearch] = useState(false);
 
     useEffect(() => {
-        if (shouldSearch) {
-            const searchProduct = async () => {
-                try {
-                    const result = await axios.post(axios.defaults.baseURL + '/api/v1/search-product', {
-                        name: debouncedValue,
-                    });
-                    console.log(result.data.message);
+        const searchProduct = async () => {
+            try {
+                const result = await axios.post(axios.defaults.baseURL + '/api/v1/search-product', {
+                    name: debouncedValue,
+                });
 
-                    // Chuyển hướng đến trang product cùng với kết quả tìm kiếm
+                // Chuyển hướng đến trang product cùng với kết quả tìm kiếm
+                if (shouldSearch) {
                     navigate(`/product?search-product=${debouncedValue}`, {
                         state: { searchResult: result.data.message },
                     });
-                } catch (error) {
-                    console.error('Error fetching data: ', error);
                 }
-            };
-            searchProduct();
-        }
-    }, [debouncedValue, shouldSearch]);
+                setShouldSearch(false);
+            } catch (error) {
+                console.error('Error fetching data: ', error);
+            }
+        };
+        searchProduct();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debouncedValue, navigate]);
 
     const handleInputChange = (e) => {
         setSearchName(e.target.value);
-        setShouldSearch(e.target.value !== '');
+        setShouldSearch(true);
     };
 
     const handleCategoryClick = async (item) => {

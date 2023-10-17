@@ -4,7 +4,8 @@ import { Modal, Form, Button } from 'react-bootstrap';
 import { setToken } from '../../../Services/Token';
 import axios from '../../../api/axios';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { NotifyModalSuccess } from '../../../Components/NotifyModalSuccess/NotifyModalSuccess';
+import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModalFail';
 
 function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
     const [activeTab, setActiveTab] = useState('tab1');
@@ -14,6 +15,10 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
     const [phone, setPhone] = useState('');
     const [isValidPass, setIsValidPass] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+
+    const [isNotiSuccess, setIsNotiSuccess] = useState(false);
+    const [detailNoti, setDetailNoti] = useState('');
+    const [isNotiFail, setIsNotiFail] = useState(false);
 
     const navigate = useNavigate();
 
@@ -36,11 +41,22 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
                 setIsSuccess(true);
                 setTimeout(() => {
                     setIsSuccess(false);
-                }, 5000);
-                // toast.success(result.message);
+                }, 3000);
+
                 handleLoginSuccess();
-            } else if (result.errCode === 1) toast.error(result.message);
-            else toast.error(result.message);
+            } else if (result.errCode === 1) {
+                setIsNotiFail(true);
+                setDetailNoti(result.message);
+                setTimeout(() => {
+                    setIsNotiFail(false);
+                }, 3000);
+            } else {
+                setIsNotiFail(true);
+                setDetailNoti(result.message);
+                setTimeout(() => {
+                    setIsNotiFail(false);
+                }, 3000);
+            }
 
             console.log(result);
         })().catch((error) => {
@@ -58,17 +74,33 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
                 })
             ).data;
             if (data.errCode === 1) {
-                toast.error(data.message);
+                setIsNotiFail(true);
+                setDetailNoti(data.message);
+                setTimeout(() => {
+                    setIsNotiFail(false);
+                }, 3000);
             } else if (data.errCode === 2) {
-                toast.warning(data.message);
+                setIsNotiFail(true);
+                setDetailNoti(data.message);
+                setTimeout(() => {
+                    setIsNotiFail(false);
+                }, 3000);
             } else {
-                toast.success(data.message);
+                setIsNotiSuccess(true);
+                setDetailNoti(data.message);
+                setTimeout(() => {
+                    setIsNotiSuccess(false);
+                }, 3000);
                 setActiveTab('tab1');
             }
-        })().catch((err) =>
-            toast.error(`Có lỗi xảy ra
-      ${err}`),
-        );
+        })().catch((err) => {
+            setIsNotiFail(true);
+            setDetailNoti('Có lỗi xảy ra: ', err);
+            setTimeout(() => {
+                setIsNotiFail(false);
+            }, 3000);
+            setActiveTab('tab2');
+        });
     };
 
     function handleOnChangeEmail(e) {
@@ -131,7 +163,7 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
                                     isValidUser ? (
                                         <span style={{ color: 'green' }}></span>
                                     ) : (
-                                        <span style={{ color: 'red' }}>Email không hợp lệ</span>
+                                        <span style={{ color: 'red', marginLeft: '20px' }}>Email không hợp lệ</span>
                                     )
                                 ) : null}
                             </Form.Group>
@@ -442,6 +474,13 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
                     </div>
                 </div>
             )}
+
+            <div onClick={() => setIsNotiSuccess(false)}>
+                <NotifyModalSuccess isSuccess={isNotiSuccess} detailNoti={detailNoti} />
+            </div>
+            <div onClick={() => setIsNotiFail(false)}>
+                <NotifyModalFail isFail={isNotiFail} detailNoti={detailNoti} />
+            </div>
         </>
     );
 }

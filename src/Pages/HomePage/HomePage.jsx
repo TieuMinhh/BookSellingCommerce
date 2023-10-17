@@ -205,7 +205,7 @@ export default function HomePage() {
                                 className={numberCate === 3 ? 'item-cate-trend active' : 'item-cate-trend '}
                                 onClick={() => handleTabClick(3)}
                             >
-                                Bestseller Ngoại Văn
+                                Bestseller Florentino
                             </p>
                         </NavLink>
                     </div>
@@ -225,6 +225,11 @@ export default function HomePage() {
                                                         className="avatar-image"
                                                         style={{ height: '100px' }}
                                                     />
+                                                    <div className="promotion-corner-trend">
+                                                        <span className="detail-promotion-trend">
+                                                            -{item && item?.percentage}%
+                                                        </span>
+                                                    </div>
                                                 </div>
                                                 <p className="item-trend-name">{item && item?.name_product}</p>
                                                 <p class="item-trend-price">
@@ -270,6 +275,11 @@ export default function HomePage() {
                                                         className="avatar-image"
                                                         style={{ height: '100px' }}
                                                     />
+                                                    <div className="promotion-corner-trend">
+                                                        <span className="detail-promotion-trend">
+                                                            -{item && item?.percentage}%
+                                                        </span>
+                                                    </div>
                                                 </div>
                                                 <p className="item-trend-name">{item && item?.name_product}</p>
                                                 <p class="item-trend-price">

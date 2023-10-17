@@ -14,11 +14,20 @@ export default function Filter() {
         setList(result?.data.listCategory);
         // console.log(result.data);
     }
+
     const [searchName, setSearchName] = useState('');
 
     const debouncedValue = useDebounce(searchName, 500);
 
     const navigate = useNavigate();
+
+    const filterBookCate = (e) => {
+        if (e.target.checked) {
+            setSearchName(e.target.value);
+        } else {
+            setSearchName('');
+        }
+    };
 
     useEffect(() => {
         const searchProductByCategory = async () => {
@@ -26,7 +35,6 @@ export default function Filter() {
                 const result = await axios.post(axios.defaults.baseURL + '/api/v1/search-product-by-category', {
                     name: debouncedValue,
                 });
-                console.log(result.data.message);
 
                 // Chuyển hướng đến trang product cùng với kết quả tìm kiếm
                 navigate('/product', { state: { searchResult2: result.data.message } });
@@ -61,7 +69,13 @@ export default function Filter() {
                                 list.map((item, index) => {
                                     return (
                                         <li>
-                                            <input id={item.id_category} type="checkbox"></input>
+                                            <input
+                                                id={item.id_category}
+                                                type="radio"
+                                                name="category"
+                                                value={item.name_category}
+                                                onChange={filterBookCate}
+                                            ></input>
                                             <label for={item.id_category}>{item.name_category}</label>
                                         </li>
                                     );
@@ -82,7 +96,13 @@ export default function Filter() {
                     onChange={(e) => setValueMoney(e.target.value)}
                 ></input>
                 <p>
-                    Tầm giá: <span id="price">{valueMoney.toLocaleString()}</span>
+                    Tầm giá:{' '}
+                    <span id="price">
+                        {valueMoney.toLocaleString('vi', {
+                            style: 'currency',
+                            currency: 'VND',
+                        })}
+                    </span>
                 </p>
             </div>
         </div>

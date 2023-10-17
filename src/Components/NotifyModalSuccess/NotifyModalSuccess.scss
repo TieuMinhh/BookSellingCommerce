@@ -1,0 +1,33 @@
+// Modal success address
+.modal-add-success {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    z-index: 99999;
+    .modal-container-success {
+        padding: 34px 24px;
+        border-radius: 2px;
+        background-color: rgba(0, 0, 0, 0.7);
+        .cover-icon-success {
+            width: 100%;
+            text-align: center;
+            .detail-icon-success {
+                padding: 0px 16px;
+                border-radius: 50%;
+                font-size: 2rem;
+                font-weight: bold;
+                background-color: #00bfa5;
+            }
+        }
+
+        .sub-a-success {
+            margin-top: 16px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 0.4px;
+        }
+    }
+}

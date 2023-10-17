@@ -198,9 +198,27 @@
         .cover-img-trend {
             width: 100%;
             text-align: center;
+            position: relative;
             img {
                 max-width: 190px;
                 min-height: 190px;
+            }
+
+            .promotion-corner-trend {
+                width: 44px;
+                height: 44px;
+                background-color: #f7941e;
+                position: absolute;
+                right: 0;
+                top: 0;
+                border-radius: 50%;
+                text-align: center;
+                .detail-promotion-trend {
+                    color: #fff;
+                    font-weight: bold;
+                    font-size: 1rem;
+                    line-height: 44px;
+                }
             }
         }
 

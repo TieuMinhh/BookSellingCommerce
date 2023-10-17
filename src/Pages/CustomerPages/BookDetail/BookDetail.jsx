@@ -8,12 +8,16 @@ import { toast } from 'react-toastify';
 import { getToken } from '../../../Services/Token';
 import { Link } from 'react-router-dom';
 import config from '../../../api/base';
+import { NotifyModalSuccess } from '../../../Components/NotifyModalSuccess/NotifyModalSuccess';
+import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModalFail';
 
 export default function BookDetail() {
     const [list, setList] = useState([]);
     const [number, setNumber] = useState(1); //number of item
     const [quantity, setQuantity] = useState(1);
-    const [isAddSuccess, setIsAddSuccess] = useState(false);
+    const [isNotiSuccess, setIsNotiSuccess] = useState(false);
+    const [detailNoti, setDetailNoti] = useState('');
+    const [isNotiFail, setIsNotiFail] = useState(false);
 
     useEffect(() => {
         window.scrollTo({
@@ -58,17 +62,25 @@ export default function BookDetail() {
         // return response.data;
 
         if (result.status === 200) {
-            setIsAddSuccess(true);
+            setIsNotiSuccess(true);
+            setDetailNoti(result.data.message);
             setTimeout(() => {
-                setIsAddSuccess(false);
+                setIsNotiSuccess(false);
             }, 3000);
         }
 
-        if (result.status === 500) toast.error(result.data.message);
+        if (result.status === 500) {
+            setIsNotiFail(true);
+            setDetailNoti(result.data.message);
+            setTimeout(() => {
+                setIsNotiFail(false);
+            }, 3000);
+        }
     };
 
     useEffect(() => {
         getDetailProduct();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -182,7 +194,7 @@ export default function BookDetail() {
                                 variant="outline-danger"
                                 onClick={() => {
                                     handleAddToCart();
-                                    setIsAddSuccess(true);
+                                    setIsNotiSuccess(true);
                                 }}
                             >
                                 <i class="fa-solid fa-shopping-cart add-btn-box"></i>
@@ -261,37 +273,12 @@ export default function BookDetail() {
             </div>
 
             {/* Start modal add cart success */}
-            {isAddSuccess && (
-                <div className="modal-add-success" onClick={() => setIsAddSuccess(false)}>
-                    <div className="modal-container-success">
-                        <div className="cover-icon-success">
-                            <i
-                                class="fa-solid fa-check detail-icon-success"
-                                style={{ color: '#fff', lineHeight: '60px' }}
-                            ></i>
-                        </div>
-                        <p className="sub-a-success" style={{ color: '#fff' }}>
-                            Sản phẩm đã được thêm vào giỏ hàng
-                        </p>
-                    </div>
-                </div>
-            )}
-            {/* {isAddSuccess && (
-                <div className="modal-add-success" onClick={() => setIsAddSuccess(false)}>
-                    <div className="modal-container-success">
-                        <div className="cover-icon-success">
-                            <i
-                                class="fa-solid fa-check detail-icon-danger"
-                                style={{ color: '#fff', lineHeight: '60px' }}
-                            ></i>
-                        </div>
-                        <p className="sub-a-success" style={{ color: '#fff' }}>
-                            Có lỗi xảy ra
-                        </p>
-                    </div>
-                </div>
-            )}
-            End modal add cart success */}
+            <div onClick={() => setIsNotiSuccess(false)}>
+                <NotifyModalSuccess isSuccess={isNotiSuccess} detailNoti={detailNoti} />
+            </div>
+            <div onClick={() => setIsNotiFail(false)}>
+                <NotifyModalFail isFail={isNotiFail} detailNoti={detailNoti} />
+            </div>
         </div>
     );
 }

@@ -3,9 +3,10 @@ import './Cart.scss';
 import axios from '../../../api/axios';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { getToken } from '../../../Services/Token';
 import config from '../../../api/base';
+import { NotifyModalSuccess } from '../../../Components/NotifyModalSuccess/NotifyModalSuccess';
+import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModalFail';
 
 function formatMoney(price) {
     return price
@@ -28,6 +29,10 @@ export default function Cart() {
     const [change, setChange] = useState(false);
     const [list, setList] = useState([]);
     const [total, setTotal] = useState('0');
+    const [isNotiSuccess, setIsNotiSuccess] = useState(false);
+    const [isNotiFail, setIsNotiFail] = useState(false);
+    const [detailNoti, setDetailNoti] = useState('');
+
     let shipFee = 20000;
 
     async function getListProduct() {
@@ -47,10 +52,22 @@ export default function Cart() {
             const result = await axios.delete(axios.defaults.baseURL + `/api/v1/remove-from-cart/${item.id_product}`);
             setChange(!change);
 
-            if (result.status === 200) toast.success(result.data.message);
-            if (result.status === 500) toast.error(result.data.message);
+            if (result.status === 200) {
+                setIsNotiSuccess(true);
+                setDetailNoti(result.data.message);
+                setTimeout(() => {
+                    setIsNotiSuccess(false);
+                }, 3000);
+            } else if (result.status === 500) {
+                setIsNotiFail(true);
+                setDetailNoti(result.data.message);
+                setTimeout(() => {
+                    setIsNotiFail(false);
+                }, 3000);
+            }
         } catch (error) {
-            toast.error(error);
+            setIsNotiFail(true);
+            setDetailNoti(error);
         }
     }
 
@@ -66,7 +83,8 @@ export default function Cart() {
             );
             setChange(!change);
         } catch (error) {
-            toast.error(error);
+            setIsNotiFail(true);
+            setDetailNoti(error);
         }
     }
 
@@ -85,7 +103,8 @@ export default function Cart() {
             console.log(result);
             setChange(!change);
         } catch (error) {
-            toast.error(error);
+            setIsNotiFail(true);
+            setDetailNoti(error);
         }
     }
 
@@ -261,6 +280,12 @@ export default function Cart() {
                         </Link>
                     </div>
                 </div>
+            </div>
+            <div onClick={() => setIsNotiFail(false)}>
+                <NotifyModalFail isFail={isNotiFail} detailNoti={detailNoti} />
+            </div>
+            <div onClick={() => setIsNotiSuccess(false)}>
+                <NotifyModalSuccess isSuccess={isNotiSuccess} detailNoti={detailNoti} />
             </div>
         </div>
     );

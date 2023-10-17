@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './OrderPay.scss';
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Img1 from '../../../Assets/img/kgd.jpg';
 import Img2 from '../../../Assets/img/delivery.png';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from '../../../api/axios';
@@ -12,6 +10,8 @@ import { toast } from 'react-toastify';
 import CuponIcon from '../../../Assets/svg/ico_coupon.svg';
 import VoucherImg from '../../../Assets/img/voucher-icon.jpg';
 import config from '../../../api/base';
+import { NotifyModalSuccess } from '../../../Components/NotifyModalSuccess/NotifyModalSuccess';
+import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModalFail';
 
 export default function OrderPay() {
     const location = useLocation();
@@ -75,6 +75,9 @@ export default function OrderPay() {
     const [user, getUser] = useState([]);
     const [change, setChange] = useState([]);
     const [listVoucher, setListVoucher] = useState([]);
+    const [isNotiSuccess, setIsNotiSuccess] = useState(false);
+    const [detailNoti, setDetailNoti] = useState('');
+    const [isNotiFail, setIsNotiFail] = useState(false);
 
     const goToChangeInfo = () => {
         navigate('/change-info');
@@ -165,16 +168,25 @@ export default function OrderPay() {
 
             if (startDay < today && endDay >= today) {
                 setDiscount({ ...check });
+                hideModalPromotion();
+                setIsNotiSuccess(true);
+                setDetailNoti('Đã áp dụng mã giảm giá');
                 setTimeout(() => {
-                    hideModalPromotion();
-                    toast.success('Đã áp dụng mã giảm giá');
-                }, 1000);
+                    setIsNotiSuccess(false);
+                }, 3000);
             } else {
-                toast.error('Mã giảm giá không hợp lệ');
+                setIsNotiFail(true);
+                setDetailNoti('Mã giảm giá không hợp lệ');
+                setTimeout(() => {
+                    setIsNotiFail(false);
+                }, 3000);
             }
         } catch (error) {
-            console.error(error);
-            toast.error('Đã xảy ra lỗi khi sử dụng mã giảm giá');
+            setIsNotiFail(true);
+            setDetailNoti('Đã xảy ra lỗi khi sử dụng mã giảm giá');
+            setTimeout(() => {
+                setIsNotiFail(false);
+            }, 3000);
         }
     }
 
@@ -194,16 +206,26 @@ export default function OrderPay() {
 
             if (startDay < today && endDay >= today) {
                 setDiscount({ ...check });
+                hideModalPromotion();
+
+                setIsNotiSuccess(true);
+                setDetailNoti('Đã áp dụng mã giảm giá');
                 setTimeout(() => {
-                    hideModalPromotion();
-                    toast.success('Đã áp dụng mã giảm giá');
-                }, 1000);
+                    setIsNotiSuccess(false);
+                }, 3000);
             } else {
-                toast.error('Mã giảm giá không hợp lệ');
+                setIsNotiFail(true);
+                setDetailNoti('Mã giảm giá không hợp lệ');
+                setTimeout(() => {
+                    setIsNotiFail(false);
+                }, 3000);
             }
         } catch (error) {
-            console.error(error);
-            toast.error('Đã xảy ra lỗi khi sử dụng mã giảm giá');
+            setIsNotiFail(true);
+            setDetailNoti('Đã xảy ra lỗi khi sử dụng mã giảm giá');
+            setTimeout(() => {
+                setIsNotiFail(false);
+            }, 3000);
         }
     }
 
@@ -314,21 +336,6 @@ export default function OrderPay() {
                             listAddress.map((item, index) => {
                                 return (
                                     <div className="cover-detail-address" key={index}>
-                                        {/* <input
-                                            className="form-address"
-                                            type="radio"
-                                            name="option"
-                                            id={`address${index}`}
-                                            checked={item.checked} // Lưu ý chỗ này, kiểm tra nếu địa chỉ được chọn thì đánh dấu là đã chọn
-                                            onChange={() => handleRadioChange(index)}
-                                        /> */}
-                                        {/* <input
-                                            className="form-address"
-                                            type="radio"
-                                            id={`address${index}`}
-                                            checked={selectedAddress === item} // Kiểm tra nếu địa chỉ đã chọn trùng với địa chỉ hiện tại
-                                            onChange={() => handleRadioChange(item)}
-                                        /> */}
                                         <input
                                             className="form-address"
                                             type="radio"
@@ -443,7 +450,9 @@ export default function OrderPay() {
                                         alt=""
                                         className="avatar-image"
                                     />
-                                    <p className="info-check">{item && item?.name}</p>
+                                    <p className="info-check" style={{ paddingLeft: '24px' }}>
+                                        {item && item?.name_product}
+                                    </p>
                                     <div className="check-right">
                                         <div className="temporary">
                                             <p>
@@ -745,6 +754,14 @@ export default function OrderPay() {
                     </div>
                 </div>
             )}
+
+            {/* Start modal add cart success */}
+            <div onClick={() => setIsNotiSuccess(false)}>
+                <NotifyModalSuccess isSuccess={isNotiSuccess} detailNoti={detailNoti} />
+            </div>
+            <div onClick={() => setIsNotiFail(false)}>
+                <NotifyModalFail isFail={isNotiFail} detailNoti={detailNoti} />
+            </div>
         </>
     );
 }
