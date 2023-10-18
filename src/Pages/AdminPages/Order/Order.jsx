@@ -65,13 +65,14 @@ export default function Order() {
     let feeShip = 20000;
 
     // Tính tổng giá trị sản phẩm trước khi giảm giá
-    listOrderDetail?.forEach((item) => {
-        totalOriginalPrice += item?.original_price * item?.quantity;
+    listOrderDetail[0]?.products?.forEach((item) => {
+        totalOriginalPrice += item?.price * item?.quantity;
         totalReducedPrice += item?.price_reducing * item?.quantity;
     });
 
     // Tính số tiền giảm giá từ mã khuyến mãi
-    const discountAmount = ((listOrderDetail[0]?.discount_percentage || 0) / 100) * totalReducedPrice;
+    const discountAmount =
+        (((listOrderDetail && listOrderDetail[0]?.discount_percentage) || 0) / 100) * totalReducedPrice;
 
     // Tính tổng tiền sau khi giảm giá
     const totalAfterDiscount = totalReducedPrice - discountAmount + feeShip;
@@ -184,7 +185,7 @@ export default function Order() {
                         </div>
                         <div className="detail_order overflow-auto w-100">
                             {listOrderDetail &&
-                                listOrderDetail.map((item) => (
+                                listOrderDetail[0]?.products?.map((item) => (
                                     <div className="item_product">
                                         <div className="item_product_left">
                                             <div className="item_img">

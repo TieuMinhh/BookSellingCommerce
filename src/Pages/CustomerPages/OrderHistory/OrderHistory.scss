@@ -47,6 +47,8 @@
 
 .wrapper-info-myorder {
     padding: 32px 28px;
+    max-height: 430px;
+    overflow-y: auto;
 }
 
 .lists-status-cart {
