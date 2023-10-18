@@ -6,7 +6,7 @@ import Img from '../../../Assets/img/kgd.jpg';
 import { toast } from 'react-toastify';
 
 import { getToken } from '../../../Services/Token';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import config from '../../../api/base';
 import { NotifyModalSuccess } from '../../../Components/NotifyModalSuccess/NotifyModalSuccess';
 import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModalFail';
@@ -76,6 +76,13 @@ export default function BookDetail() {
                 setIsNotiFail(false);
             }, 3000);
         }
+    };
+
+    const navigate = useNavigate();
+    const goToOrderPage = () => {
+        navigate('/order-pay', {
+            state: { selectedItems: [{ ...list, quantity: quantity }] },
+        });
     };
 
     useEffect(() => {
@@ -201,13 +208,11 @@ export default function BookDetail() {
                                 Thêm vào giỏ hàng
                             </Button>
                         </div>
-                        <div class="buy-btn">
-                            <Link to="/cart">
-                                <Button id="order-btn" variant="danger">
-                                    <i class="fa-solid order-btn-box"></i>
-                                    Mua ngay
-                                </Button>
-                            </Link>
+                        <div class="buy-btn" onClick={goToOrderPage}>
+                            <Button id="order-btn" variant="danger">
+                                <i class="fa-solid order-btn-box"></i>
+                                Mua ngay
+                            </Button>
                         </div>
                     </div>
                 </div>
