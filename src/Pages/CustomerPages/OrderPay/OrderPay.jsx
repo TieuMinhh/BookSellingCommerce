@@ -450,9 +450,11 @@ export default function OrderPay() {
                                         alt=""
                                         className="avatar-image"
                                     />
+
                                     <p className="info-check" style={{ paddingLeft: '24px' }}>
                                         {item && item?.name_product}
                                     </p>
+
                                     <div className="check-right">
                                         <div className="temporary">
                                             <p>

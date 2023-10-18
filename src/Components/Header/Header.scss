@@ -156,10 +156,12 @@ a {
     .modal-container-cate {
         padding: 16px;
         user-select: none;
+        max-height: 430px;
+        overflow-y: auto;
 
         .modal-title-cate {
             width: 100%;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: bold;
             color: #7a7e7f;
             border-bottom: 2px solid #ed722f;
@@ -169,6 +171,7 @@ a {
             font-size: 1rem;
             border-bottom: 1px solid #ddd;
             margin-bottom: 0;
+
             &:hover {
                 background-color: #f2f4f5;
             }

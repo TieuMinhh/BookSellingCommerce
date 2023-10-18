@@ -132,13 +132,30 @@ export default function Cart() {
     };
     // Hàm tính tổng tiền dựa trên danh sách sản phẩm được chọn
 
+    // const navigate = useNavigate();
+    // const goToOrderPage = () => {
+    //     navigate('/order-pay', {
+    //         state: {
+    //             selectedItems: list.filter((item) => selectedItem.includes(item.id_product)),
+    //         },
+    //     });
+    // };
+
     const navigate = useNavigate();
+
     const goToOrderPage = () => {
-        navigate('/order-pay', {
-            state: {
-                selectedItems: list.filter((item) => selectedItem.includes(item.id_product)),
-            },
-        });
+        if (selectedItem.length === 0) {
+            setIsNotiFail(true);
+            setDetailNoti('Ngài chưa chọn sản phẩm để thanh toán');
+            setTimeout(() => {
+                setIsNotiFail(false);
+            }, 3000);
+        } else {
+            const selectedItems = list.filter((item) => selectedItem.includes(item.id_product));
+            navigate('/order-pay', {
+                state: { selectedItems: selectedItems },
+            });
+        }
     };
 
     useEffect(() => {
