@@ -15,6 +15,8 @@ export default function OrderHistory() {
     const [change, setChange] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [status, setStatus] = useState();
+    const [id_order, setIDOrder] = useState();
+    const [listOrderDetail, setListOrderDetail] = useState([]);
 
     const [activeTab, setActiveTab] = useState('tab1');
     const handleTabClick = (tabName, status) => {
@@ -23,7 +25,11 @@ export default function OrderHistory() {
     };
 
     const showModalDetail = async (item) => {
+        setIDOrder(item.id_order);
+        console.log('id order là :', item.id_order);
+        console.log('status là:', item.status);
         setIsModalOpen(true);
+        getListOrderDetail(item.id_order);
     };
 
     const hideModal = () => {
@@ -42,7 +48,7 @@ export default function OrderHistory() {
         setListOrderByAccount(orderByAccount?.data.listOrder);
     }
 
-    const getOrderByStatus = async () => {
+    const getOrderByStatus = async (status) => {
         let token = await getToken();
 
         let data = await checkToken(token);
@@ -53,33 +59,43 @@ export default function OrderHistory() {
         setDetailOrderByStatus(orderByStatus?.data.listOrder);
     };
 
+    async function getListOrderDetail(id_order) {
+        const result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/detail-order/${id_order}`);
+        setListOrderDetail(result?.data.listOrderDetail);
+        console.log(result.data);
+    }
+
     const handleCancel = async (id_order) => {
         let result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/cancel-order/${id_order}`);
         setChange(!change);
         if (result.data.errCode === 0) toast.success(result.data.message);
+        setChange(!change);
     };
 
     useEffect(() => {
         getOrderList();
-        getOrderByStatus();
     }, [change]);
 
     useEffect(() => {
-        getOrderByStatus();
+        getOrderByStatus(status);
     }, [status]);
+
+    useEffect(() => {
+        getListOrderDetail();
+    }, [change]);
 
     let shipFee = 20000;
     let totalOriginalPrice = 0;
     let totalReducedPrice = 0;
 
-    detailOrderByStatus[0]?.products?.forEach((item) => {
+    listOrderDetail[0]?.products?.forEach((item) => {
         totalOriginalPrice += item?.price * item?.quantity;
         totalReducedPrice += item?.price_reducing * item?.quantity;
     });
 
     // Tính số tiền giảm giá từ mã khuyến mãi
     const discountAmount =
-        (((detailOrderByStatus && detailOrderByStatus[0]?.discount_percentage) || 0) / 100) * totalReducedPrice;
+        (((listOrderDetail && listOrderDetail[0]?.discount_percentage) || 0) / 100) * totalReducedPrice;
 
     // Tính tổng tiền sau khi giảm giá
     const totalAfterDiscount = totalReducedPrice - discountAmount + shipFee;
@@ -367,15 +383,15 @@ export default function OrderHistory() {
                             <div className="modal-header-order">
                                 <h6 className="modal-header-title">CHI TIẾT ĐƠN HÀNG</h6>
 
-                                {detailOrderByStatus && detailOrderByStatus[0]?.status === 0 ? (
+                                {listOrderDetail && listOrderDetail[0]?.status === 0 ? (
                                     <p className="hightlight-status-done">
                                         <span className="status-order-cancel">Đã hoàn thành</span>
                                     </p>
-                                ) : detailOrderByStatus && detailOrderByStatus[0]?.status === 1 ? (
+                                ) : listOrderDetail && listOrderDetail[0]?.status === 1 ? (
                                     <p className="hightlight-status-wait">
                                         <span className="status-order-wait">Chờ xác nhận</span>
                                     </p>
-                                ) : detailOrderByStatus && detailOrderByStatus[0]?.status === 2 ? (
+                                ) : listOrderDetail && listOrderDetail[0]?.status === 2 ? (
                                     <p className="hightlight-status-delivery">
                                         <span className="status-order-cancel">Đang giao</span>
                                     </p>
@@ -391,15 +407,15 @@ export default function OrderHistory() {
                                             Mã đơn hàng :{' '}
                                             <span className="code-order">
                                                 MH
-                                                {detailOrderByStatus && detailOrderByStatus[0]?.id_order}
+                                                {listOrderDetail && listOrderDetail[0]?.id_order}
                                             </span>
                                         </p>
                                         <p className="code-order-label">
                                             Ngày mua :{' '}
                                             <span className="code-order">
-                                                {moment(
-                                                    detailOrderByStatus && detailOrderByStatus[0]?.order_time,
-                                                ).format('llll')}
+                                                {moment(listOrderDetail && listOrderDetail[0]?.order_time).format(
+                                                    'llll',
+                                                )}
                                             </span>
                                         </p>
                                         <p className="code-order-label">
@@ -423,14 +439,12 @@ export default function OrderHistory() {
                                     </div>
 
                                     <div className="right-modal-content">
-                                        {(detailOrderByStatus && detailOrderByStatus[0]?.status === 1) ||
-                                        (detailOrderByStatus && detailOrderByStatus[0]?.status === 2) ? (
+                                        {(listOrderDetail && listOrderDetail[0]?.status === 1) ||
+                                        (listOrderDetail && listOrderDetail[0]?.status === 2) ? (
                                             <button
                                                 className="btn-cancel-order"
                                                 onClick={() =>
-                                                    handleCancel(
-                                                        detailOrderByStatus && detailOrderByStatus[0]?.id_order,
-                                                    )
+                                                    handleCancel(listOrderDetail && listOrderDetail[0]?.id_order)
                                                 }
                                             >
                                                 Hủy đơn hàng
@@ -445,15 +459,15 @@ export default function OrderHistory() {
                                     <div className="modal-info-receiver">
                                         <h5 className="modal-info-title">Thông tin người nhận</h5>
                                         <p className="modal-info-name">
-                                            Tên khách hàng : {detailOrderByStatus && detailOrderByStatus[0]?.name}
+                                            Tên khách hàng : {listOrderDetail && listOrderDetail[0]?.name_receiver}
                                         </p>
                                         <p className="modal-info-address">
-                                            Địa chỉ :{detailOrderByStatus && detailOrderByStatus[0]?.address}
+                                            Địa chỉ :{listOrderDetail && listOrderDetail[0]?.delivery_address}
                                         </p>
                                         <p className="modal-info-tel">
                                             Số điện thoại :
                                             <span className="modal-phone-number">
-                                                {detailOrderByStatus && detailOrderByStatus[0]?.phone}
+                                                {listOrderDetail && listOrderDetail[0]?.phone_receiver}
                                             </span>
                                         </p>
                                     </div>
@@ -471,26 +485,26 @@ export default function OrderHistory() {
                                 <div className="modal-body-bottom">
                                     {/* Bắt đầu: trạng thái hủy */}
 
-                                    {detailOrderByStatus && detailOrderByStatus[0]?.status === 0 ? (
+                                    {listOrderDetail && listOrderDetail[0]?.status === 0 ? (
                                         <div className="body-bottom-inner">
                                             <i class="icon-progress fa-regular fa-square-check"></i>
                                             <div className="icon-body-status"></div>
                                             <p className="title-icon">Giao hàng thành công</p>
-                                            <div className="line-progress"></div>
+                                            {/* <div className="line-progress"></div> */}
                                         </div>
-                                    ) : detailOrderByStatus && detailOrderByStatus[0]?.status === 1 ? (
+                                    ) : listOrderDetail && listOrderDetail[0]?.status === 1 ? (
                                         <div className="body-bottom-inner">
                                             <div className="icon-body-status"></div>
                                             <i class="icon-progress fa-solid fa-box-open"></i>
                                             <p className="title-icon">Đang xử lý</p>
-                                            <div className="line-progress"></div>
+                                            {/* <div className="line-progress"></div> */}
                                         </div>
-                                    ) : detailOrderByStatus && detailOrderByStatus[0]?.status === 2 ? (
+                                    ) : listOrderDetail && listOrderDetail[0]?.status === 2 ? (
                                         <div className="body-bottom-inner">
                                             <i class="icon-progress fa-solid fa-truck"></i>
                                             <div className="icon-body-status"></div>
                                             <p className="title-icon">Đang giao</p>
-                                            <div className="line-progress"></div>
+                                            {/* <div className="line-progress"></div> */}
                                         </div>
                                     ) : (
                                         <div className="body-bottom-inner">
@@ -547,7 +561,7 @@ export default function OrderHistory() {
                                             Tên sản phẩm
                                         </p>
                                         <p style={{ fontWeight: 'bold' }} className="table-order-cell">
-                                            Sku
+                                            Mã sản phẩm
                                         </p>
                                         <p style={{ fontWeight: 'bold' }} className="table-order-cell">
                                             Giá bán
@@ -560,57 +574,58 @@ export default function OrderHistory() {
                                         </p>
                                     </div>
 
-                                    {detailOrderByStatus[0]?.products.map((item, index) => {
-                                        return (
-                                            <div className="table-order-row">
-                                                <p className="table-order-cell">
-                                                    <img
-                                                        src={`${config.PUBLIC_IMAGE_URL}${item && item?.images}`}
-                                                        alt=""
-                                                        className="footer-order-image"
-                                                    />
-                                                </p>
-                                                <p className="table-order-cell" style={{ maxWidth: '200px' }}>
-                                                    {item && item?.name_product}
-                                                </p>
-                                                <p className="table-order-cell" style={{ whiteSpace: 'nowrap' }}>
-                                                    8936041300415
-                                                </p>
-                                                <p className="table-order-cell" style={{ whiteSpace: 'nowrap' }}>
-                                                    {item &&
-                                                        item?.price_reducing.toLocaleString('vi', {
-                                                            style: 'currency',
-                                                            currency: 'VND',
-                                                        })}
-                                                    <span
-                                                        style={{
-                                                            display: 'block',
-                                                            textDecoration: 'line-through',
-                                                            color: '#ccc',
-                                                            whiteSpace: 'nowrap',
-                                                        }}
-                                                    >
+                                    {listOrderDetail &&
+                                        listOrderDetail[0]?.products?.map((item, index) => {
+                                            return (
+                                                <div className="table-order-row">
+                                                    <p className="table-order-cell">
+                                                        <img
+                                                            src={`${config.PUBLIC_IMAGE_URL}${item && item?.images}`}
+                                                            alt=""
+                                                            className="footer-order-image"
+                                                        />
+                                                    </p>
+                                                    <p className="table-order-cell" style={{ maxWidth: '200px' }}>
+                                                        {item && item?.name_product}
+                                                    </p>
+                                                    <p className="table-order-cell" style={{ whiteSpace: 'nowrap' }}>
+                                                        VN{item && item?.id_product}
+                                                    </p>
+                                                    <p className="table-order-cell" style={{ whiteSpace: 'nowrap' }}>
                                                         {item &&
-                                                            item?.price.toLocaleString('vi', {
+                                                            item?.price_reducing.toLocaleString('vi', {
                                                                 style: 'currency',
                                                                 currency: 'VND',
                                                             })}
-                                                    </span>
-                                                </p>
-                                                <p className="table-order-cell" style={{ minWidth: '80px' }}>
-                                                    {item && item?.quantity}
-                                                </p>
-                                                <p className="table-order-cell" style={{ whiteSpace: 'nowrap' }}>
-                                                    {(
-                                                        (item && item?.price_reducing) * (item && item?.quantity)
-                                                    ).toLocaleString('vi', {
-                                                        style: 'currency',
-                                                        currency: 'VND',
-                                                    })}
-                                                </p>
-                                            </div>
-                                        );
-                                    })}
+                                                        <span
+                                                            style={{
+                                                                display: 'block',
+                                                                textDecoration: 'line-through',
+                                                                color: '#ccc',
+                                                                whiteSpace: 'nowrap',
+                                                            }}
+                                                        >
+                                                            {item &&
+                                                                item?.original_price.toLocaleString('vi', {
+                                                                    style: 'currency',
+                                                                    currency: 'VND',
+                                                                })}
+                                                        </span>
+                                                    </p>
+                                                    <p className="table-order-cell" style={{ minWidth: '80px' }}>
+                                                        {item && item?.quantity}
+                                                    </p>
+                                                    <p className="table-order-cell" style={{ whiteSpace: 'nowrap' }}>
+                                                        {(
+                                                            (item && item?.price_reducing) * (item && item?.quantity)
+                                                        ).toLocaleString('vi', {
+                                                            style: 'currency',
+                                                            currency: 'VND',
+                                                        })}
+                                                    </p>
+                                                </div>
+                                            );
+                                        })}
                                 </div>
 
                                 <div className="footer-count-money">
