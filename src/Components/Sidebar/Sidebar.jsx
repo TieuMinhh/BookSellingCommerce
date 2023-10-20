@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import { Box, IconButton, Typography, useTheme } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
 import { getToken } from '../../Services/Token';
 import config from '../../api/base';
+import { AuthContext } from '../AuthProvider/AuthProvider';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme();
@@ -46,6 +47,8 @@ const Sidebar = () => {
     // const role = jwtDecode(
     //   localStorage.getItem("accessToken")
     // ).role_id;
+
+    const authContext = useContext(AuthContext);
 
     const [user, getUser] = useState([]);
     const [change, setChange] = useState([]);
@@ -140,7 +143,7 @@ const Sidebar = () => {
                         <Box paddingLeft={isCollapsed ? undefined : '10%'}>
                             <Item
                                 title="Trang chủ"
-                                to="/"
+                                to="/admin"
                                 icon={<HiHome />}
                                 selected={selected}
                                 setSelected={setSelected}
@@ -151,28 +154,28 @@ const Sidebar = () => {
                             </Typography>
                             <Item
                                 title="Danh mục"
-                                to="/category"
+                                to="/admin/category"
                                 icon={<HiCircleStack />}
                                 selected={selected}
                                 setSelected={setSelected}
                             />
                             <Item
                                 title="Sách Bán"
-                                to="/book"
+                                to="/admin/book"
                                 icon={<HiCube />}
                                 selected={selected}
                                 setSelected={setSelected}
                             />
                             <Item
                                 title="Đơn hàng"
-                                to="/order"
+                                to="/admin/order"
                                 icon={<HiShoppingCart />}
                                 selected={selected}
                                 setSelected={setSelected}
                             />
                             <Item
                                 title="Khách hàng"
-                                to="/customer"
+                                to="/admin/customer"
                                 icon={<HiUsers />}
                                 selected={selected}
                                 setSelected={setSelected}
@@ -183,28 +186,28 @@ const Sidebar = () => {
                             </Typography>
                             <Item
                                 title="Khuyến mãi"
-                                to="/promotion"
+                                to="/admin/promotion"
                                 icon={<HiCog />}
                                 selected={selected}
                                 setSelected={setSelected}
                             />
                             <Item
                                 title="Doanh thu"
-                                to="/revenue"
+                                to="/admin/revenue"
                                 icon={<AttachMoneyIcon />}
                                 selected={selected}
                                 setSelected={setSelected}
                             />
                             <Item
                                 title="Nhà xuất bản"
-                                to="/publishing-company"
+                                to="/admin/publishing-company"
                                 icon={<HiCog />}
                                 selected={selected}
                                 setSelected={setSelected}
                             />
                             <Item
                                 title="Giảm giá sách"
-                                to="/promotion-product"
+                                to="/admin/promotion-product"
                                 icon={<HiCog />}
                                 selected={selected}
                                 setSelected={setSelected}
@@ -213,7 +216,7 @@ const Sidebar = () => {
                                 onClick={() => {
                                     localStorage.removeItem('accessToken');
                                     navigate('/');
-                                    // setRole = 0;
+                                    authContext.handleChangeRole();
                                 }}
                             >
                                 <Item

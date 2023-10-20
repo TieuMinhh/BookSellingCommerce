@@ -40,13 +40,11 @@ export default function HomePage() {
     async function getListMostByProduct() {
         let result = await axios.get(axios.defaults.baseURL + `/api/v1/most-by-product`);
         setListMostBuyProduct(result?.data.listMostBuyProduct);
-        console.log(result.data);
     }
 
     async function getListMostReducingProduct() {
         let result = await axios.get(axios.defaults.baseURL + `/api/v1/most-reducing-product`);
         setListMostReducingProduct(result?.data.listMostReducingProduct);
-        console.log(result.data);
     }
 
     const handleTabClick = (tabName) => {
@@ -56,12 +54,10 @@ export default function HomePage() {
     const navigate = useNavigate();
 
     const handleCategoryClick = async (item) => {
-        console.log('Id category là : ', item.id_category);
         try {
             const result = await axios.post(axios.defaults.baseURL + '/api/v1/search-product-by-id-category', {
                 id_category: item.id_category,
             });
-            console.log(result.data.message);
 
             // Chuyển hướng đến trang product cùng với kết quả tìm kiếm
             navigate(`/product?category=${item.id_category}`, { state: { searchResult3: result.data.message } });
@@ -215,7 +211,7 @@ export default function HomePage() {
                             {listMostBuyProduct &&
                                 listMostBuyProduct?.map((item, index) => {
                                     return (
-                                        <Link to={`/book/detail?id=${item.id_product}`}>
+                                        <Link to={`/book/detail?id=${item.id_product}`} key={item.id_product}>
                                             <div className="item-book-trend">
                                                 <div className="cover-img-trend">
                                                     <img
@@ -232,7 +228,7 @@ export default function HomePage() {
                                                     </div>
                                                 </div>
                                                 <p className="item-trend-name">{item && item?.name_product}</p>
-                                                <p class="item-trend-price">
+                                                <p className="item-trend-price">
                                                     {item &&
                                                         item?.price_reducing.toLocaleString('vi', {
                                                             style: 'currency',
@@ -246,12 +242,12 @@ export default function HomePage() {
                                                             currency: 'VND',
                                                         })}
                                                 </p>
-                                                <div class="main-rate">
-                                                    <i class="fa-solid fa-star"></i>
-                                                    <i class="fa-solid fa-star"></i>
-                                                    <i class="fa-solid fa-star"></i>
-                                                    <i class="fa-solid fa-star"></i>
-                                                    <i class="fa-regular fa-star"></i>
+                                                <div className="main-rate">
+                                                    <i className="fa-solid fa-star"></i>
+                                                    <i className="fa-solid fa-star"></i>
+                                                    <i className="fa-solid fa-star"></i>
+                                                    <i className="fa-solid fa-star"></i>
+                                                    <i className="fa-regular fa-star"></i>
                                                 </div>
                                             </div>
                                         </Link>
@@ -265,7 +261,7 @@ export default function HomePage() {
                             {listMostReducingProduct &&
                                 listMostReducingProduct?.map((item, index) => {
                                     return (
-                                        <Link to={`/book/detail?id=${item.id_product}`}>
+                                        <Link to={`/book/detail?id=${item.id_product}`} key={item.id_product}>
                                             <div className="item-book-trend">
                                                 <div className="cover-img-trend">
                                                     <img
@@ -282,7 +278,7 @@ export default function HomePage() {
                                                     </div>
                                                 </div>
                                                 <p className="item-trend-name">{item && item?.name_product}</p>
-                                                <p class="item-trend-price">
+                                                <p className="item-trend-price">
                                                     {item &&
                                                         item?.price_reducing.toLocaleString('vi', {
                                                             style: 'currency',
@@ -296,12 +292,12 @@ export default function HomePage() {
                                                             currency: 'VND',
                                                         })}
                                                 </p>
-                                                <div class="main-rate">
-                                                    <i class="fa-solid fa-star"></i>
-                                                    <i class="fa-solid fa-star"></i>
-                                                    <i class="fa-solid fa-star"></i>
-                                                    <i class="fa-solid fa-star"></i>
-                                                    <i class="fa-regular fa-star"></i>
+                                                <div className="main-rate">
+                                                    <i className="fa-solid fa-star"></i>
+                                                    <i className="fa-solid fa-star"></i>
+                                                    <i className="fa-solid fa-star"></i>
+                                                    <i className="fa-solid fa-star"></i>
+                                                    <i className="fa-regular fa-star"></i>
                                                 </div>
                                             </div>
                                         </Link>

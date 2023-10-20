@@ -17,105 +17,105 @@ import AppStore from '../../Assets/img/appstore.png';
 
 export default function Footer() {
     return (
-        <footer class="footer">
-            <div class="grid wide">
-                <div class="row">
-                    <div class="col">
-                        <h3 class="footer__heading">CHĂM SÓC KHÁCH HÀNG</h3>
-                        <ul class="footer-list">
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+        <footer className="footer">
+            <div className="grid wide">
+                <div className="row">
+                    <div className="col">
+                        <h3 className="footer__heading">CHĂM SÓC KHÁCH HÀNG</h3>
+                        <ul className="footer-list">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     Trung Tâm Trợ Giúp{' '}
                                 </a>
                             </li>
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     XiaoMing Blog
                                 </a>
                             </li>
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     XiaoMing Mall
                                 </a>
                             </li>
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     Hướng Dẫn Mua Hàng
                                 </a>
                             </li>
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     Hướng Dẫn Bán Hàng
                                 </a>
                             </li>
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     Thanh Toán
                                 </a>
                             </li>
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     Vận Chuyển
                                 </a>
                             </li>
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     Chăm Sóc Khách Hàng
                                 </a>
                             </li>
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     Chính Sách Bảo Hành
                                 </a>
                             </li>
                         </ul>
                     </div>
-                    <div class="col ">
-                        <h3 class="footer__heading">VỀ XIAO MING SHOP</h3>
-                        <ul class="footer-list">
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+                    <div className="col ">
+                        <h3 className="footer__heading">VỀ XIAO MING SHOP</h3>
+                        <ul className="footer-list">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     Giới Thiệu Về Xiao Ming shop
                                 </a>
                             </li>
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     Tuyển Dụng
                                 </a>
                             </li>
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     Điều Khoản
                                 </a>
                             </li>
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     Chính Sách Bảo Mật
                                 </a>
                             </li>
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     Flash Sale
                                 </a>
                             </li>
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     Kênh Người Bán
                                 </a>
                             </li>
-                            <li class="footer-item">
-                                <a href="!#" class="footer-item-link">
+                            <li className="footer-item">
+                                <a href="!#" className="footer-item-link">
                                     Liên Hệ Với Truyền Thông
                                 </a>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="col ">
-                        <h3 class="footer__heading" style={{ marginBottom: '54px' }}>
+                    <div className="col ">
+                        <h3 className="footer__heading" style={{ marginBottom: '54px' }}>
                             TẢI APP XIAO MING SHOP NGAY THÔI
                         </h3>
-                        <div class="footer-download">
+                        <div className="footer-download">
                             <img
                                 style={{
                                     width: '180px',
@@ -124,33 +124,53 @@ export default function Footer() {
                                 }}
                                 alt="down"
                                 src={GooglePlay}
-                                class="footer-download-img"
+                                className="footer-download-img"
                             ></img>
                             <img
                                 style={{ width: '180px', marginLeft: '20px' }}
                                 alt="down"
                                 src={AppStore}
-                                class="footer-download-img"
+                                className="footer-download-img"
                             ></img>
                         </div>
                     </div>
 
-                    <div class="col 2" style={{ marginLeft: '10px' }}>
-                        <h3 class="footer__heading">THANH TOÁN</h3>
-                        <div class="footer-pay">
-                            <img style={{ width: '120px' }} src={VnPay} class="footer-pay-img" alt="pay"></img>
-                            <img style={{ width: '120px' }} src={ZaloPay} class="footer-pay-img" alt="pay"></img>
-                            <img style={{ width: '50px' }} src={MoMo} class="footer-pay-img" alt="pay"></img>
-                            <img style={{ width: '95px' }} src={ShopePay} class="footer-pay-img" alt="pay"></img>
-                            <img style={{ width: '65px' }} src={Moca} class="footer-pay-img" alt="pay"></img>
+                    <div className="col 2" style={{ marginLeft: '10px' }}>
+                        <h3 className="footer__heading">THANH TOÁN</h3>
+                        <div className="footer-pay">
+                            <img style={{ width: '120px' }} src={VnPay} className="footer-pay-img" alt="pay"></img>
+                            <img style={{ width: '120px' }} src={ZaloPay} className="footer-pay-img" alt="pay"></img>
+                            <img style={{ width: '50px' }} src={MoMo} className="footer-pay-img" alt="pay"></img>
+                            <img style={{ width: '95px' }} src={ShopePay} className="footer-pay-img" alt="pay"></img>
+                            <img style={{ width: '65px' }} src={Moca} className="footer-pay-img" alt="pay"></img>
                         </div>
-                        <h3 class="footer__heading">ĐƠN VỊ VẬN CHUYỂN</h3>
-                        <div class="footer-ship">
-                            <img style={{ width: '100px' }} alt="transport" src={VnPost} class="footer-ship-img"></img>
-                            <img style={{ width: '138px' }} alt="transport" src={Ahamove} class="footer-ship-img"></img>
-                            <img style={{ width: '138px' }} alt="transport" src={GHN} class="footer-ship-img"></img>
-                            <img style={{ width: '138px' }} alt="transport" src={Snaapy} class="footer-ship-img"></img>
-                            <img style={{ width: '138px' }} alt="transport" src={Ninja} class="footer-ship-img"></img>
+                        <h3 className="footer__heading">ĐƠN VỊ VẬN CHUYỂN</h3>
+                        <div className="footer-ship">
+                            <img
+                                style={{ width: '100px' }}
+                                alt="transport"
+                                src={VnPost}
+                                className="footer-ship-img"
+                            ></img>
+                            <img
+                                style={{ width: '138px' }}
+                                alt="transport"
+                                src={Ahamove}
+                                className="footer-ship-img"
+                            ></img>
+                            <img style={{ width: '138px' }} alt="transport" src={GHN} className="footer-ship-img"></img>
+                            <img
+                                style={{ width: '138px' }}
+                                alt="transport"
+                                src={Snaapy}
+                                className="footer-ship-img"
+                            ></img>
+                            <img
+                                style={{ width: '138px' }}
+                                alt="transport"
+                                src={Ninja}
+                                className="footer-ship-img"
+                            ></img>
                         </div>
                     </div>
                 </div>

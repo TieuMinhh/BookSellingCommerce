@@ -8,7 +8,7 @@ export function NotifyModalFail({ isFail, detailNoti }) {
                     <div className="modal-container-success">
                         <div className="cover-icon-success">
                             <i
-                                class="fa-solid fa-xmark detail-icon-fail"
+                                className="fa-solid fa-xmark detail-icon-fail"
                                 style={{ color: '#fff', lineHeight: '58px' }}
                             ></i>
                         </div>

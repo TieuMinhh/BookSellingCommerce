@@ -94,6 +94,11 @@ a {
 .content .main-content .main-list .main-list-item .main-discription {
     min-height: 250px;
 
+    .item-desp {
+        min-height: 50px;
+        // max-height: 50px;
+    }
+
     .cover-img-product {
         height: 200px;
 

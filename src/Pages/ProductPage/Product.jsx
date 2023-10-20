@@ -14,7 +14,6 @@ export default function Home() {
     useEffect(() => {
         async function getAllProduct() {
             const result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/product?id=ALL`);
-            console.log('length list: ', result?.data.listProduct.length);
             let countPage = result?.data.listProduct.length / 8;
             if (countPage % 8 !== 0) {
                 countPage += 1;
@@ -108,7 +107,6 @@ export default function Home() {
 
         setList([...sortedList]); // Cập nhật list với mảng mới đã sắp xếp
         setChange(!change);
-        console.log('Danh sách sản phẩm sau khi sắp xếp:', list);
     };
 
     // useEffect(() => {
@@ -142,14 +140,14 @@ export default function Home() {
     return (
         <>
             {searchResult ? (
-                <div class="content row grid wide">
-                    <div class="container_content">
-                        <div class="header-container">
-                            <div class="header-container-icon">
-                                <i class="fa-solid fa-bars"></i>
-                                <i class="fa-solid fa-table-list"></i>
+                <div className="content row grid wide">
+                    <div className="container_content">
+                        <div className="header-container">
+                            <div className="header-container-icon">
+                                <i className="fa-solid fa-bars"></i>
+                                <i className="fa-solid fa-table-list"></i>
                             </div>
-                            <div class="header-container-select">
+                            <div className="header-container-select">
                                 <select id="cars" name="cars">
                                     <option>Mặc định</option>
                                     <option>A → Z</option>
@@ -161,17 +159,17 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div class="wrapper-content">
+                        <div className="wrapper-content">
                             <Filter />
 
-                            <div class="main-content">
-                                <div class="main-list row">
+                            <div className="main-content">
+                                <div className="main-list row">
                                     {searchResult &&
                                         searchResult.map((item, index) => {
                                             return (
-                                                <div class="main-list-item">
+                                                <div className="main-list-item" key={item && item?.id_product}>
                                                     <Link to={`/book/detail?id=${item && item?.id_product}`}>
-                                                        <div class="main-discription mt-8 mb-8">
+                                                        <div className="main-discription mt-8 mb-8">
                                                             <div className="cover-img-product">
                                                                 <img
                                                                     src={`${config.PUBLIC_IMAGE_URL}${
@@ -186,9 +184,13 @@ export default function Home() {
                                                                     </span>
                                                                 </div>
                                                             </div>
-                                                            <p class="item-desp">{item && item?.name_product}</p>
+                                                            <p className="item-desp">
+                                                                {item && item?.name_product.length > 38
+                                                                    ? item.name_product.substring(0, 38) + '...'
+                                                                    : item.name_product}
+                                                            </p>
                                                         </div>
-                                                        <div class="main-price">
+                                                        <div className="main-price">
                                                             <p>
                                                                 {item && item.price_reducing
                                                                     ? item.price_reducing.toLocaleString('vi', {
@@ -207,12 +209,12 @@ export default function Home() {
                                                                     : ''}
                                                             </span>
                                                         </div>
-                                                        <div class="main-rate">
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-regular fa-star"></i>
+                                                        <div className="main-rate">
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-regular fa-star"></i>
                                                         </div>
                                                     </Link>
                                                 </div>
@@ -222,19 +224,21 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div class="last-container">
+                        <div className="last-container">
                             {/* <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-                                <i class="fa-solid fa-chevron-left"></i>
+                                <i className="fa-solid fa-chevron-left"></i>
                             </button> */}
-                            <div class="container-page">
+                            <div className="container-page">
                                 <p className="right-page">
-                                    <i class="fa-solid fa-chevron-left"></i>
+                                    <i className="fa-solid fa-chevron-left"></i>
                                 </p>
                             </div>
                             {listPage.map((pageNumber) => (
-                                <div class="container-page" key={pageNumber}>
+                                <div className="container-page" key={pageNumber}>
                                     <p
-                                        class={currentIndexPage === pageNumber ? 'page-number active' : 'page-number'}
+                                        className={
+                                            currentIndexPage === pageNumber ? 'page-number active' : 'page-number'
+                                        }
                                         onClick={() => setCurrentIndexPage(pageNumber)}
                                     >
                                         {pageNumber}
@@ -242,25 +246,25 @@ export default function Home() {
                                 </div>
                             ))}
                             {/* <button onClick={handleNextPage} disabled={list.length === 0}>
-                                <i class="fa-solid fa-chevron-right"></i>
+                                <i className="fa-solid fa-chevron-right"></i>
                             </button> */}
-                            <div class="container-page">
+                            <div className="container-page">
                                 <p className="left-page">
-                                    <i class="fa-solid fa-chevron-right"></i>
+                                    <i className="fa-solid fa-chevron-right"></i>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
             ) : searchResult2 ? (
-                <div class="content row grid wide">
-                    <div class="container_content">
-                        <div class="header-container">
-                            <div class="header-container-icon">
-                                <i class="fa-solid fa-bars"></i>
-                                <i class="fa-solid fa-table-list"></i>
+                <div className="content row grid wide">
+                    <div className="container_content">
+                        <div className="header-container">
+                            <div className="header-container-icon">
+                                <i className="fa-solid fa-bars"></i>
+                                <i className="fa-solid fa-table-list"></i>
                             </div>
-                            <div class="header-container-select">
+                            <div className="header-container-select">
                                 <select id="cars" name="cars">
                                     <option>Mặc định</option>
                                     <option>A → Z</option>
@@ -272,17 +276,17 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div class="wrapper-content">
+                        <div className="wrapper-content">
                             <Filter />
 
-                            <div class="main-content">
-                                <div class="main-list row">
+                            <div className="main-content">
+                                <div className="main-list row">
                                     {searchResult2 &&
                                         searchResult2.map((item, index) => {
                                             return (
-                                                <div class="main-list-item">
+                                                <div className="main-list-item" key={item && item?.id_product}>
                                                     <Link to={`/book/detail?id=${item && item?.id_product}`}>
-                                                        <div class="main-discription mt-8 mb-8">
+                                                        <div className="main-discription mt-8 mb-8">
                                                             <div className="cover-img-product">
                                                                 <img
                                                                     src={`${config.PUBLIC_IMAGE_URL}${
@@ -297,9 +301,13 @@ export default function Home() {
                                                                     </span>
                                                                 </div>
                                                             </div>
-                                                            <p class="item-desp">{item && item?.name_product}</p>
+                                                            <p className="item-desp">
+                                                                {item && item?.name_product.length > 38
+                                                                    ? item.name_product.substring(0, 38) + '...'
+                                                                    : item.name_product}
+                                                            </p>
                                                         </div>
-                                                        <div class="main-price">
+                                                        <div className="main-price">
                                                             <p>
                                                                 {item &&
                                                                     item?.price_reducing.toLocaleString('vi', {
@@ -315,12 +323,12 @@ export default function Home() {
                                                                     })}
                                                             </span>
                                                         </div>
-                                                        <div class="main-rate">
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-regular fa-star"></i>
+                                                        <div className="main-rate">
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-regular fa-star"></i>
                                                         </div>
                                                     </Link>
                                                 </div>
@@ -330,19 +338,21 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div class="last-container">
+                        <div className="last-container">
                             {/* <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-                                <i class="fa-solid fa-chevron-left"></i>
+                                <i className="fa-solid fa-chevron-left"></i>
                             </button> */}
-                            <div class="container-page">
+                            <div className="container-page">
                                 <p className="right-page">
-                                    <i class="fa-solid fa-chevron-left"></i>
+                                    <i className="fa-solid fa-chevron-left"></i>
                                 </p>
                             </div>
                             {listPage.map((pageNumber) => (
-                                <div class="container-page" key={pageNumber}>
+                                <div className="container-page" key={pageNumber}>
                                     <p
-                                        class={currentIndexPage === pageNumber ? 'page-number active' : 'page-number'}
+                                        className={
+                                            currentIndexPage === pageNumber ? 'page-number active' : 'page-number'
+                                        }
                                         onClick={() => handleCurrentPage(pageNumber)}
                                     >
                                         {pageNumber}
@@ -350,25 +360,25 @@ export default function Home() {
                                 </div>
                             ))}
                             {/* <button onClick={handleNextPage} disabled={list.length === 0}>
-                                <i class="fa-solid fa-chevron-right"></i>
+                                <i className="fa-solid fa-chevron-right"></i>
                             </button> */}
-                            <div class="container-page">
+                            <div className="container-page">
                                 <p className="left-page">
-                                    <i class="fa-solid fa-chevron-right"></i>
+                                    <i className="fa-solid fa-chevron-right"></i>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
             ) : searchResult3 ? (
-                <div class="content row grid wide">
-                    <div class="container_content">
-                        <div class="header-container">
-                            <div class="header-container-icon">
-                                <i class="fa-solid fa-bars"></i>
-                                <i class="fa-solid fa-table-list"></i>
+                <div className="content row grid wide">
+                    <div className="container_content">
+                        <div className="header-container">
+                            <div className="header-container-icon">
+                                <i className="fa-solid fa-bars"></i>
+                                <i className="fa-solid fa-table-list"></i>
                             </div>
-                            <div class="header-container-select">
+                            <div className="header-container-select">
                                 <select id="cars" name="cars">
                                     <option>Mặc định</option>
                                     <option>A → Z</option>
@@ -380,17 +390,17 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div class="wrapper-content">
+                        <div className="wrapper-content">
                             <Filter />
 
-                            <div class="main-content">
-                                <div class="main-list row">
+                            <div className="main-content">
+                                <div className="main-list row">
                                     {searchResult3 &&
                                         searchResult3.map((item, index) => {
                                             return (
-                                                <div class="main-list-item">
+                                                <div className="main-list-item" key={item && item?.id_product}>
                                                     <Link to={`/book/detail?id=${item && item?.id_product}`}>
-                                                        <div class="main-discription mt-8 mb-8">
+                                                        <div className="main-discription mt-8 mb-8">
                                                             <div className="cover-img-product">
                                                                 <img
                                                                     src={`${config.PUBLIC_IMAGE_URL}${
@@ -405,9 +415,13 @@ export default function Home() {
                                                                     </span>
                                                                 </div>
                                                             </div>
-                                                            <p class="item-desp">{item && item?.name_product}</p>
+                                                            <p className="item-desp">
+                                                                {item && item?.name_product.length > 38
+                                                                    ? item.name_product.substring(0, 38) + '...'
+                                                                    : item.name_product}
+                                                            </p>
                                                         </div>
-                                                        <div class="main-price">
+                                                        <div className="main-price">
                                                             <p>
                                                                 {item && item.price_reducing
                                                                     ? item.price_reducing.toLocaleString('vi', {
@@ -426,12 +440,12 @@ export default function Home() {
                                                                     : ''}
                                                             </span>
                                                         </div>
-                                                        <div class="main-rate">
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-regular fa-star"></i>
+                                                        <div className="main-rate">
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-regular fa-star"></i>
                                                         </div>
                                                     </Link>
                                                 </div>
@@ -441,19 +455,21 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div class="last-container">
+                        <div className="last-container">
                             {/* <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-                                <i class="fa-solid fa-chevron-left"></i>
+                                <i className="fa-solid fa-chevron-left"></i>
                             </button> */}
-                            <div class="container-page">
+                            <div className="container-page">
                                 <p className="right-page">
-                                    <i class="fa-solid fa-chevron-left"></i>
+                                    <i className="fa-solid fa-chevron-left"></i>
                                 </p>
                             </div>
                             {listPage.map((pageNumber) => (
-                                <div class="container-page" key={pageNumber}>
+                                <div className="container-page" key={pageNumber}>
                                     <p
-                                        class={currentIndexPage === pageNumber ? 'page-number active' : 'page-number'}
+                                        className={
+                                            currentIndexPage === pageNumber ? 'page-number active' : 'page-number'
+                                        }
                                         onClick={() => setCurrentIndexPage(pageNumber)}
                                     >
                                         {pageNumber}
@@ -461,25 +477,25 @@ export default function Home() {
                                 </div>
                             ))}
                             {/* <button onClick={handleNextPage} disabled={list.length === 0}>
-                                <i class="fa-solid fa-chevron-right"></i>
+                                <i className="fa-solid fa-chevron-right"></i>
                             </button> */}
-                            <div class="container-page">
+                            <div className="container-page">
                                 <p className="left-page">
-                                    <i class="fa-solid fa-chevron-right"></i>
+                                    <i className="fa-solid fa-chevron-right"></i>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
             ) : (
-                <div class="content row grid wide">
-                    <div class="container_content">
-                        <div class="header-container">
-                            <div class="header-container-icon">
-                                <i class="fa-solid fa-bars"></i>
-                                <i class="fa-solid fa-table-list"></i>
+                <div className="content row grid wide">
+                    <div className="container_content">
+                        <div className="header-container">
+                            <div className="header-container-icon">
+                                <i className="fa-solid fa-bars"></i>
+                                <i className="fa-solid fa-table-list"></i>
                             </div>
-                            <div class="header-container-select">
+                            <div className="header-container-select">
                                 <select id="cars" name="cars" onChange={handleSortChange} value={sortBy}>
                                     <option value="default">Mặc định</option>
                                     <option value="a-to-z">A → Z</option>
@@ -491,17 +507,17 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div class="wrapper-content">
+                        <div className="wrapper-content">
                             <Filter />
 
-                            <div class="main-content">
-                                <div class="main-list row">
+                            <div className="main-content">
+                                <div className="main-list row">
                                     {list &&
                                         list.map((item, index) => {
                                             return (
-                                                <div class="main-list-item">
+                                                <div className="main-list-item" key={item && item?.id_product}>
                                                     <Link to={`/book/detail?id=${item.id_product}`}>
-                                                        <div class="main-discription mt-8 mb-8">
+                                                        <div className="main-discription mt-8 mb-8">
                                                             <div className="cover-img-product">
                                                                 <img
                                                                     src={`${config.PUBLIC_IMAGE_URL}${
@@ -516,9 +532,13 @@ export default function Home() {
                                                                     </span>
                                                                 </div>
                                                             </div>
-                                                            <p class="item-desp">{item.name_product}</p>
+                                                            <p className="item-desp">
+                                                                {item && item?.name_product.length > 38
+                                                                    ? item.name_product.substring(0, 38) + '...'
+                                                                    : item.name_product}
+                                                            </p>
                                                         </div>
-                                                        <div class="main-price">
+                                                        <div className="main-price">
                                                             <p>
                                                                 {item && item.price_reducing
                                                                     ? item.price_reducing.toLocaleString('vi', {
@@ -537,12 +557,12 @@ export default function Home() {
                                                                     : ''}
                                                             </span>
                                                         </div>
-                                                        <div class="main-rate">
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-regular fa-star"></i>
+                                                        <div className="main-rate">
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-solid fa-star"></i>
+                                                            <i className="fa-regular fa-star"></i>
                                                         </div>
                                                     </Link>
                                                 </div>
@@ -552,19 +572,21 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div class="last-container">
+                        <div className="last-container">
                             {/* <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-                                <i class="fa-solid fa-chevron-left"></i>
+                                <i className="fa-solid fa-chevron-left"></i>
                             </button> */}
-                            <div class="container-page" onClick={handlePreviousPage}>
+                            <div className="container-page" onClick={handlePreviousPage}>
                                 <p className="right-page">
-                                    <i class="fa-solid fa-chevron-left"></i>
+                                    <i className="fa-solid fa-chevron-left"></i>
                                 </p>
                             </div>
                             {listPage.map((pageNumber) => (
-                                <div class="container-page" key={pageNumber}>
+                                <div className="container-page" key={pageNumber}>
                                     <p
-                                        class={currentIndexPage === pageNumber ? 'page-number active' : 'page-number'}
+                                        className={
+                                            currentIndexPage === pageNumber ? 'page-number active' : 'page-number'
+                                        }
                                         onClick={() => {
                                             setCurrentIndexPage(pageNumber);
                                             handleCurrentPage(pageNumber);
@@ -575,11 +597,11 @@ export default function Home() {
                                 </div>
                             ))}
                             {/* <button onClick={handleNextPage} disabled={list.length === 0}>
-                                <i class="fa-solid fa-chevron-right"></i>
+                                <i className="fa-solid fa-chevron-right"></i>
                             </button> */}
-                            <div class="container-page" onClick={handleNextPage} disabled={list.length === 0}>
+                            <div className="container-page" onClick={handleNextPage} disabled={list.length === 0}>
                                 <p className="left-page">
-                                    <i class="fa-solid fa-chevron-right"></i>
+                                    <i className="fa-solid fa-chevron-right"></i>
                                 </p>
                             </div>
                         </div>

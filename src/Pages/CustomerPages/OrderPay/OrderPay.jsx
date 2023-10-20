@@ -16,7 +16,6 @@ import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModal
 export default function OrderPay() {
     const location = useLocation();
     const listProduct = location.state ? location.state.selectedItems : []; // Lấy danh sách sản phẩm đã chọn từ trang giỏ hàng
-    console.log(location.state.selectedItems);
     let totalOriginalPrice = 0;
     let totalReducedPrice = 0;
     let shipFee = 20000;
@@ -89,7 +88,6 @@ export default function OrderPay() {
         let result = await axios.get(axios.defaults.baseURL + '/api/v1/account/info');
         getUser(result.data.userInfo);
         setDeliveryAddress(result.data.userInfo.address);
-        console.log('Check token neeee:', result.data.userInfo);
     };
 
     async function getListVoucher() {
@@ -114,7 +112,6 @@ export default function OrderPay() {
                 phone_receiver: phoneReceiver,
             });
 
-            console.log(result.data);
             setChange(!change);
             setIsShowModalAddAddress(false);
         } catch (error) {
@@ -131,9 +128,7 @@ export default function OrderPay() {
                 name_receiver: nameReceiver,
                 phone_receiver: phoneReceiver,
             });
-            console.log(IdAddress, nameAddress, nameReceiver, phoneReceiver);
 
-            console.log(result.data);
             setChange(!change);
             setIsShowModalEditAddress(false);
         } catch (error) {}
@@ -147,7 +142,6 @@ export default function OrderPay() {
                 axios.defaults.baseURL + `/api/v1/delete-delivery-address/${item.id_address}`,
             );
 
-            console.log(result.data);
             setChange(!change);
         } catch (error) {}
     }
@@ -157,8 +151,6 @@ export default function OrderPay() {
             const response = await axios.get(
                 axios.defaults.baseURL + `/api/v1/get-discount-by-code?discount_code=${code}`,
             );
-
-            console.log(response);
 
             const check = response.data.data;
 
@@ -195,8 +187,6 @@ export default function OrderPay() {
             const response = await axios.get(
                 axios.defaults.baseURL + `/api/v1/get-discount-by-code?discount_code=${item.discount_code}`,
             );
-
-            console.log(response);
 
             const check = response.data.data;
 
@@ -237,8 +227,6 @@ export default function OrderPay() {
                 id_address: listAddress[0]?.id_address,
             });
 
-            console.log(order);
-
             // Đặt lại giá trị giỏ hàng và tiền cần thanh toán
             setCode('');
             setDiscount(null);
@@ -269,7 +257,6 @@ export default function OrderPay() {
         // Lưu trạng thái đã chọn và cập nhật danh sách địa chỉ
         setSelectedAddress(updatedAddresses[index]);
         setListAddress(updatedAddresses);
-        console.log('địa chỉ là : ', updatedAddresses);
     };
 
     useEffect(() => {
@@ -285,7 +272,6 @@ export default function OrderPay() {
     });
 
     // Tính số tiền giảm giá từ mã khuyến mãi
-    console.log(discount);
     const discountAmount = ((discount?.percentage || 0) / 100) * totalReducedPrice;
 
     // Tính tổng tiền sau khi giảm giá
@@ -296,7 +282,7 @@ export default function OrderPay() {
             <div className="containerPay">
                 <div className="delivery-address">
                     <h4 className="h4"> Địa chỉ nhận hàng</h4>
-                    <div class="line"></div>
+                    <div className="line"></div>
                     <div className="info-delivery">
                         <ul className="left-info">
                             <li>Họ và tên người nhận</li>
@@ -316,7 +302,7 @@ export default function OrderPay() {
                     </div>
                     <div className="wrapper-address-delivery">
                         <p>
-                            <i class="fa-solid fa-map-location-dot"></i> Địa chỉ nhận hàng :
+                            <i className="fa-solid fa-map-location-dot"></i> Địa chỉ nhận hàng :
                         </p>
 
                         <div className="cover-detail-address">
@@ -335,7 +321,7 @@ export default function OrderPay() {
                         {listAddress &&
                             listAddress.map((item, index) => {
                                 return (
-                                    <div className="cover-detail-address" key={index}>
+                                    <div className="cover-detail-address" key={item.id}>
                                         <input
                                             className="form-address"
                                             type="radio"
@@ -371,7 +357,7 @@ export default function OrderPay() {
                                 setIsNewAddress(true);
                             }}
                         >
-                            <i class="fa-solid fa-circle-plus" style={{ color: '#C92127', fontSize: '18px' }}></i>
+                            <i className="fa-solid fa-circle-plus" style={{ color: '#C92127', fontSize: '18px' }}></i>
                             <label
                                 style={{
                                     color: '#000',
@@ -388,7 +374,7 @@ export default function OrderPay() {
                 </div>
                 <div className="method-delivery">
                     <h4 className="h4">Phương thức vận chuyển</h4>
-                    <div class="line"></div>
+                    <div className="line"></div>
                     <p className="info-method">Qúy khách vui lòng điền tên và địa chỉ giao nhận trước</p>
 
                     <div className="wrapper-address-delivery">
@@ -408,19 +394,22 @@ export default function OrderPay() {
                 </div>
                 <div className="method-pay">
                     <h4 className="h4">Phương thức thanh toán</h4>
-                    <div class="line"></div>
+                    <div className="line"></div>
 
                     <p className="info-method-pay">
-                        <i class="fa-solid fa-money-bill-1-wave " style={{ marginRight: '8px', color: '#ed722f' }}></i>
+                        <i
+                            className="fa-solid fa-money-bill-1-wave "
+                            style={{ marginRight: '8px', color: '#ed722f' }}
+                        ></i>
                         Thanh toán bằng tiền mặt khi nhận hàng
                     </p>
                 </div>
                 <div className="discout">
                     <h4 className="h4">Mã khuyến mãi</h4>
-                    <div class="line"></div>
+                    <div className="line"></div>
                     <div className="info-discout">
                         <p>Mã khuyến mãi</p>
-                        <div class="apply">
+                        <div className="apply">
                             <input
                                 className="input"
                                 type="text"
@@ -439,12 +428,12 @@ export default function OrderPay() {
                 </div>
                 <div className="check">
                     <h4 className="h4">KIỂM TRA LẠI ĐƠN HÀNG</h4>
-                    <div class="line"></div>
+                    <div className="line"></div>
 
                     {listProduct &&
                         listProduct.map((item, index) => {
                             return (
-                                <div class="product-order">
+                                <div className="product-order" key={index}>
                                     <img
                                         src={`${config.PUBLIC_IMAGE_URL}${item && item?.images}`}
                                         alt=""
@@ -486,7 +475,7 @@ export default function OrderPay() {
                                 </div>
                             );
                         })}
-                    <div class="line"></div>
+                    <div className="line"></div>
                 </div>
             </div>
 
@@ -536,10 +525,10 @@ export default function OrderPay() {
                             </span>
                         </p>
                     </div>
-                    <div class="line1"></div>
+                    <div className="line1"></div>
                     <div className="done">
                         <Button className="back-btn" variant="light">
-                            <i class="fa-solid fa-arrow-left" style={{ color: 'black' }}></i>
+                            <i className="fa-solid fa-arrow-left" style={{ color: 'black' }}></i>
                             <Link to="/cart"> Quay về giỏ hàng</Link>
                         </Button>
 
@@ -560,7 +549,7 @@ export default function OrderPay() {
                     }}
                 >
                     <div className="close-modal-promotion" onClick={hideModalPromotion}>
-                        <i class="fa-solid fa-xmark"></i>
+                        <i className="fa-solid fa-xmark"></i>
                     </div>
                     <div className="modal-promotion-header">
                         <p className="title-promotion-header">
@@ -588,7 +577,7 @@ export default function OrderPay() {
                             {listVoucher &&
                                 listVoucher.map((item, index) => {
                                     return (
-                                        <div className="cover-promotion-ticket">
+                                        <div className="cover-promotion-ticket" key={item.discount_code}>
                                             <div className="inner-promotion-ticket">
                                                 <div className="left-promotion-ticket" style={{ color: '#000' }}>
                                                     <img src={VoucherImg} alt="voucher" className="voucher-img" />
@@ -746,7 +735,7 @@ export default function OrderPay() {
                     <div className="modal-container-success">
                         <div className="cover-icon-success">
                             <i
-                                class="fa-solid fa-check detail-icon-success"
+                                className="fa-solid fa-check detail-icon-success"
                                 style={{ color: '#fff', lineHeight: '60px' }}
                             ></i>
                         </div>

@@ -6,10 +6,13 @@ import Img from '../../../Assets/img/kgd.jpg';
 import { toast } from 'react-toastify';
 
 import { getToken } from '../../../Services/Token';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import config from '../../../api/base';
 import { NotifyModalSuccess } from '../../../Components/NotifyModalSuccess/NotifyModalSuccess';
 import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModalFail';
+import MyLoginModal from '../../Auths/Auths/Auths';
+import { useContext } from 'react';
+import { CountCartContext } from '../../../Components/CountCartProvider/CountCartProvider';
 
 export default function BookDetail() {
     const [list, setList] = useState([]);
@@ -18,6 +21,7 @@ export default function BookDetail() {
     const [isNotiSuccess, setIsNotiSuccess] = useState(false);
     const [detailNoti, setDetailNoti] = useState('');
     const [isNotiFail, setIsNotiFail] = useState(false);
+    const countCartContext = useContext(CountCartContext);
 
     useEffect(() => {
         window.scrollTo({
@@ -37,8 +41,6 @@ export default function BookDetail() {
     async function getDetailProduct() {
         const result = await axios.get(axios.defaults.baseURL + `/api/v1/detail-product?id=${id}`);
         setList(result?.data.listProduct);
-        console.log(result.data);
-        // console.log(list.price);
     }
 
     const handleIncrement = () => {
@@ -53,13 +55,9 @@ export default function BookDetail() {
 
     const handleAddToCart = async () => {
         let token = await getToken();
-        // console.log('Token là ', token);
         let id_product = id;
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        // console.log('Add Cart: ', token, id_product, quantity);
         let result = await axios.post(axios.defaults.baseURL + `/api/v1/add-to-cart/${id_product}`, { quantity });
-        console.log(result);
-        // return response.data;
 
         if (result.status === 200) {
             setIsNotiSuccess(true);
@@ -78,12 +76,50 @@ export default function BookDetail() {
         }
     };
 
-    const navigate = useNavigate();
-    const goToOrderPage = () => {
-        navigate('/order-pay', {
-            state: { selectedItems: [{ ...list, quantity: quantity }] },
-        });
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+
+    const handleLoginSuccess = () => {
+        // Gọi hàm này sau khi đăng nhập thành công để đóng modal.
+        handleClose();
     };
+
+    const handleCheckLogin = async () => {
+        if (localStorage.getItem('accessToken')) {
+            handleAddToCart();
+            try {
+                const token = await getToken();
+                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                const result = await axios.post(axios.defaults.baseURL + `/api/v1/account/cart`);
+                countCartContext.handleCountCart(result?.data.list.length);
+            } catch (error) {}
+        } else {
+            setShow(true);
+        }
+    };
+
+    const handelBuyNow = async () => {
+        if (localStorage.getItem('accessToken')) {
+            handleAddToCart();
+            try {
+                const token = await getToken();
+                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                const result = await axios.post(axios.defaults.baseURL + `/api/v1/account/cart`);
+                console.log('COunt: ', result?.data.list.length);
+                countCartContext.handleCountCart(result?.data.list.length);
+                navigate('/cart');
+            } catch (error) {}
+        } else {
+            setShow(true);
+        }
+    };
+
+    const navigate = useNavigate();
+    // const goToOrderPage = () => {
+    //     navigate('/order-pay', {
+    //         state: { selectedItems: [{ ...list, quantity: quantity }] },
+    //     });
+    // };
 
     useEffect(() => {
         getDetailProduct();
@@ -92,38 +128,45 @@ export default function BookDetail() {
 
     return (
         <div className="products-info">
-            <div class="product-info">
-                <div class="left-product">
-                    <div class="big-image-product">
+            <MyLoginModal
+                isLogin={false}
+                show={show}
+                handleClose={handleClose}
+                handleLoginSuccess={handleLoginSuccess}
+            />
+            ;
+            <div className="product-info">
+                <div className="left-product">
+                    <div className="big-image-product">
                         <img
                             src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
                             alt=""
                             className="avatar-image"
                         />
                     </div>
-                    <div class="images-product">
-                        <div class="small-image-product">
+                    <div className="images-product">
+                        <div className="small-image-product">
                             <img
                                 src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
                                 alt=""
                                 className="avatar-image"
                             />
                         </div>
-                        <div class="small-image-product">
+                        <div className="small-image-product">
                             <img
                                 src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
                                 alt=""
                                 className="avatar-image"
                             />
                         </div>
-                        <div class="small-image-product">
+                        <div className="small-image-product">
                             <img
                                 src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
                                 alt=""
                                 className="avatar-image"
                             />
                         </div>
-                        <div class="small-image-product">
+                        <div className="small-image-product">
                             <img
                                 src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
                                 alt=""
@@ -133,22 +176,22 @@ export default function BookDetail() {
                     </div>
                 </div>
 
-                <div class="right-product">
-                    <div class="product-name">{list && list[0]?.name_product}</div>
-                    <div class="book-info">
+                <div className="right-product">
+                    <div className="product-name">{list && list[0]?.name_product}</div>
+                    <div className="book-info">
                         <p className="product-nxb">Nhà xuất bản: {list && list[0]?.name_company}</p>
                         <p className="product-author"> Tác giả: {list && list[0]?.author}</p>
                     </div>
-                    <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
+                    <div className="rating">
+                        <i className="fas fa-star"></i>
+                        <i className="fas fa-star"></i>
+                        <i className="fas fa-star"></i>
+                        <i className="fas fa-star"></i>
+                        <i className="fas fa-star-half-alt"></i>
                     </div>
 
-                    <div class="main-price">
-                        <div class="price">
+                    <div className="main-price">
+                        <div className="price">
                             {list &&
                                 list[0]?.price_reducing.toLocaleString('vi', {
                                     style: 'currency',
@@ -175,10 +218,10 @@ export default function BookDetail() {
                         </div>
                     </div>
 
-                    <div class="quantity">
-                        <p class="quantityName">Số lượng :</p>
-                        <button class="counter">
-                            <button class="btn-giam" onClick={handleDecrement}>
+                    <div className="quantity">
+                        <p className="quantityName">Số lượng :</p>
+                        <div className="counter">
+                            <button className="btn-giam" onClick={handleDecrement}>
                                 -
                             </button>
                             <p
@@ -188,65 +231,56 @@ export default function BookDetail() {
                             >
                                 {number}
                             </p>
-                            <button class="btn-tang" onClick={handleIncrement}>
+                            <button className="btn-tang" onClick={handleIncrement}>
                                 +
                             </button>
-                        </button>
+                        </div>
                     </div>
 
-                    <div class="btn-box">
-                        <div class="cart-btn">
-                            <Button
-                                id="add-btn"
-                                variant="outline-danger"
-                                onClick={() => {
-                                    handleAddToCart();
-                                    setIsNotiSuccess(true);
-                                }}
-                            >
-                                <i class="fa-solid fa-shopping-cart add-btn-box"></i>
+                    <div className="btn-box">
+                        <div className="cart-btn">
+                            <Button id="add-btn" variant="outline-danger" onClick={handleCheckLogin}>
+                                <i className="fa-solid fa-shopping-cart add-btn-box"></i>
                                 Thêm vào giỏ hàng
                             </Button>
                         </div>
-                        <div class="buy-btn" onClick={goToOrderPage}>
+
+                        <div className="buy-btn" onClick={handelBuyNow}>
                             <Button id="order-btn" variant="danger">
-                                <i class="fa-solid order-btn-box"></i>
+                                <i className="fa-solid order-btn-box"></i>
                                 Mua ngay
                             </Button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="product-related">
-                <div class="product-related-title">
+            <div className="product-related">
+                <div className="product-related-title">
                     <p>Bạn có thể thích</p>
                 </div>
-                <div class=" product-related-content">
-                    <div class="product-related-item">
+                <div className=" product-related-content">
+                    <div className="product-related-item">
                         <img src={Img} alt=""></img>
                     </div>
-                    <div class="product-related-item">
+                    <div className="product-related-item">
                         <img src={Img} alt=""></img>
                     </div>
-                    <div class="product-related-item">
+                    <div className="product-related-item">
                         <img src={Img} alt=""></img>
                     </div>
-                    <div class="product-related-item">
+                    <div className="product-related-item">
                         <img src={Img} alt=""></img>
                     </div>
-                    <div class="product-related-item">
+                    <div className="product-related-item">
                         <img src={Img} alt=""></img>
                     </div>
-                    <div class="product-related-item">
+                    <div className="product-related-item">
                         <img src={Img} alt=""></img>
                     </div>
                 </div>
             </div>
-
-            <div class="line"></div>
-
-            <div class="info-describe">
+            <div className="line"></div>
+            <div className="info-describe">
                 <h4> Thông tin sản phẩm</h4>
 
                 <div className="info-info">
@@ -269,14 +303,13 @@ export default function BookDetail() {
                     </ul>
                 </div>
 
-                <div class="line"></div>
-                <p class="name-describe"> Không Gia Đình</p>
-                <div class="detail-describe">
+                <div className="line"></div>
+                <p className="name-describe"> Không Gia Đình</p>
+                <div className="detail-describe">
                     <p>{list && list[0]?.content}</p>
                     <div className=""></div>
                 </div>
             </div>
-
             {/* Start modal add cart success */}
             <div onClick={() => setIsNotiSuccess(false)}>
                 <NotifyModalSuccess isSuccess={isNotiSuccess} detailNoti={detailNoti} />

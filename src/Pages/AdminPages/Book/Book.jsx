@@ -310,6 +310,7 @@ export default function Book() {
                                         <Form.Label className="text-black text-size-fit">Chọn ảnh</Form.Label>
                                         <Form.Control type="file" onChange={(e) => handleOnChangeImage(e)} />
                                         {selectedImage && (
+                                            // eslint-disable-next-line jsx-a11y/img-redundant-alt
                                             <img
                                                 src={selectedImage}
                                                 alt="Selected Image"
@@ -488,6 +489,7 @@ export default function Book() {
                                         <Form.Label className="text-black text-size-fit">Chọn ảnh</Form.Label>
                                         <Form.Control type="file" onChange={(e) => handleOnChangeImage(e)} />
                                         {selectedImage && (
+                                            // eslint-disable-next-line jsx-a11y/img-redundant-alt
                                             <img
                                                 src={selectedImage}
                                                 alt="Selected Image"

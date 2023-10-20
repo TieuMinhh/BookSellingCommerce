@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 
 import { setToken } from '../../../Services/Token';
@@ -6,8 +6,10 @@ import axios from '../../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { NotifyModalSuccess } from '../../../Components/NotifyModalSuccess/NotifyModalSuccess';
 import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModalFail';
+import { AuthContext } from '../../../Components/AuthProvider/AuthProvider';
+import { useEffect } from 'react';
 
-function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
+function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }) {
     const [activeTab, setActiveTab] = useState('tab1');
     const [username, setUserName] = useState('');
     const [isValidUser, setIsValidUser] = useState(true);
@@ -20,7 +22,18 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
     const [detailNoti, setDetailNoti] = useState('');
     const [isNotiFail, setIsNotiFail] = useState(false);
 
+    useEffect(() => {
+        if (!active) {
+            setActiveTab('tab1');
+        } else {
+            setActiveTab(active);
+        }
+    }, [active]);
+
     const navigate = useNavigate();
+
+    //Use Context
+    const authContext = useContext(AuthContext);
 
     const handleLogin = () => {
         (async () => {
@@ -33,11 +46,13 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
 
             if (result.errCode === 0) {
                 // setToken(result.accessToken, result.refreshToken);
-                console.log(result);
                 setToken(result.accessToken);
                 setTimeout(() => {
-                    navigate('/');
-                }, 1500);
+                    authContext.handleChangeRole();
+                    if (result.role_id === 1) {
+                        navigate('/admin');
+                    }
+                }, 500);
                 setIsSuccess(true);
                 setTimeout(() => {
                     setIsSuccess(false);
@@ -57,8 +72,6 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
                     setIsNotiFail(false);
                 }, 3000);
             }
-
-            console.log(result);
         })().catch((error) => {
             console.log(error.response.data);
         });
@@ -137,7 +150,13 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
             <Modal show={show} onHide={handleClose} className="mt-5">
                 <Modal.Header>
                     <ul className="tabs">
-                        <li className={activeTab === 'tab1' ? 'active' : ''} onClick={() => handleTabClick('tab1')}>
+                        <li
+                            className={activeTab === 'tab1' ? 'active' : ''}
+                            onClick={() => {
+                                handleTabClick('tab1');
+                                authContext.handleChangeRole();
+                            }}
+                        >
                             <div className="title text-black">Đăng nhập</div>
                         </li>
                         <li className={activeTab === 'tab2' ? 'active' : ''} onClick={() => handleTabClick('tab2')}>
@@ -148,6 +167,19 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
                 <Modal.Body className="mt-2">
                     {activeTab === 'tab1' && (
                         <Form>
+                            {!isLogin && (
+                                <p
+                                    style={{
+                                        textAlign: ' center',
+                                        fontWeight: '700',
+                                        marginBottom: 0,
+                                        color: '#2489f4',
+                                    }}
+                                    className="title-need-login"
+                                >
+                                    Ngài cần phải đăng nhập trước khi mua hàng!
+                                </p>
+                            )}
                             <Form.Group className="mb-3" controlId="formName">
                                 <Form.Label className="text-black text-size-fit mx-3">Email</Form.Label>
                                 <Form.Control
@@ -181,6 +213,7 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter') {
                                             handleLogin();
+                                            authContext?.handleChangeRole();
                                         }
                                     }}
                                 />
@@ -464,7 +497,7 @@ function MyLoginModal({ show, handleClose, handleLoginSuccess }) {
                     <div className="modal-container-success">
                         <div className="cover-icon-success">
                             <i
-                                class="fa-solid fa-check detail-icon-success"
+                                className="fa-solid fa-check detail-icon-success"
                                 style={{ color: '#fff', lineHeight: '60px' }}
                             ></i>
                         </div>

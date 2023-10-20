@@ -26,8 +26,6 @@ export default function OrderHistory() {
 
     const showModalDetail = async (item) => {
         setIDOrder(item.id_order);
-        console.log('id order là :', item.id_order);
-        console.log('status là:', item.status);
         setIsModalOpen(true);
         getListOrderDetail(item.id_order);
     };
@@ -60,16 +58,19 @@ export default function OrderHistory() {
     };
 
     async function getListOrderDetail(id_order) {
-        const result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/detail-order/${id_order}`);
-        setListOrderDetail(result?.data.listOrderDetail);
-        console.log(result.data);
+        try {
+            const result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/detail-order/${id_order}`);
+            setListOrderDetail(result?.data.listOrderDetail);
+        } catch (error) {}
     }
 
     const handleCancel = async (id_order) => {
-        let result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/cancel-order/${id_order}`);
-        setChange(!change);
-        if (result.data.errCode === 0) toast.success(result.data.message);
-        setChange(!change);
+        try {
+            let result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/cancel-order/${id_order}`);
+            setChange(!change);
+            if (result.data.errCode === 0) toast.success(result.data.message);
+            setChange(!change);
+        } catch (error) {}
     };
 
     useEffect(() => {
@@ -85,6 +86,7 @@ export default function OrderHistory() {
     }, [change]);
 
     let shipFee = 20000;
+    // eslint-disable-next-line no-unused-vars
     let totalOriginalPrice = 0;
     let totalReducedPrice = 0;
 
@@ -190,7 +192,7 @@ export default function OrderHistory() {
                                 {listOrderByAccount &&
                                     listOrderByAccount?.map((item, index) => {
                                         return (
-                                            <div className="detail-title">
+                                            <div className="detail-title" key={item.id_order}>
                                                 <p>MH{item.id_order}</p>
                                                 <p>{moment(item.order_time).format('llll')}</p>
                                                 <p>{item.name}</p>
@@ -229,7 +231,7 @@ export default function OrderHistory() {
                                 {listOrderByAccount &&
                                     listOrderByAccount?.map((item, index) => {
                                         return (
-                                            <div className="detail-title">
+                                            <div className="detail-title" key={item.id_order}>
                                                 {item.status === 1 ? (
                                                     <>
                                                         <p>MH{item.id_order}</p>
@@ -267,7 +269,7 @@ export default function OrderHistory() {
                                 {listOrderByAccount &&
                                     listOrderByAccount?.map((item, index) => {
                                         return (
-                                            <div className="detail-title">
+                                            <div className="detail-title" key={item.id_order}>
                                                 {item.status === 2 ? (
                                                     <>
                                                         <p>MH{item.id_order}</p>
@@ -305,7 +307,7 @@ export default function OrderHistory() {
                                 {listOrderByAccount &&
                                     listOrderByAccount?.map((item, index) => {
                                         return (
-                                            <div className="detail-title">
+                                            <div className="detail-title" key={item.id_order}>
                                                 {item.status === 0 ? (
                                                     <>
                                                         <p>MH{item.id_order}</p>
@@ -343,7 +345,7 @@ export default function OrderHistory() {
                                 {listOrderByAccount &&
                                     listOrderByAccount?.map((item, index) => {
                                         return (
-                                            <div className="detail-title">
+                                            <div className="detail-title" key={item.id_order}>
                                                 {item.status === 3 ? (
                                                     <>
                                                         <p>MH{item.id_order}</p>
@@ -577,7 +579,7 @@ export default function OrderHistory() {
                                     {listOrderDetail &&
                                         listOrderDetail[0]?.products?.map((item, index) => {
                                             return (
-                                                <div className="table-order-row">
+                                                <div className="table-order-row" key={index}>
                                                     <p className="table-order-cell">
                                                         <img
                                                             src={`${config.PUBLIC_IMAGE_URL}${item && item?.images}`}

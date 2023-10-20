@@ -14,7 +14,6 @@ export default function Profile() {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         let result = await axios.get(axios.defaults.baseURL + '/api/v1/account/info');
         getUser(result.data.userInfo);
-        console.log('Check token neeee:', result.data.userInfo);
     };
 
     useEffect(() => {

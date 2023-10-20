@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './Components/Navbar/Navbar';
 import Sidebar from './Components/Sidebar/Sidebar';
@@ -37,17 +37,19 @@ import HomePage from './Pages/HomePage/HomePage';
 import PageUp from './Components/PageUp/PageUp';
 import Publishing from './Pages/AdminPages/Publishing/Publishing';
 import ProductPromotion from './Pages/AdminPages/ProductPromotion/ProductPromotion';
+import { AuthContext } from './Components/AuthProvider/AuthProvider';
 
 function App() {
     const [theme, colorMode] = useMode();
     const [isSidebar, setIsSidebar] = useState(true);
     const [isScrollTop, setIsScrollTop] = useState(false);
+    const [roleUser, setRoleUser] = useState();
 
-    let role = localStorage.getItem('accessToken') ? jwtDecode(localStorage.getItem('accessToken')).role_id : 0;
-
-    console.log(localStorage.getItem('userData'));
+    const authContext = useContext(AuthContext);
 
     useEffect(() => {
+        authContext.handleChangeRole();
+        setRoleUser(authContext.roleUser);
         window.addEventListener('scroll', () => {
             if (window.scrollY > 100) {
                 setIsScrollTop(true);
@@ -55,7 +57,7 @@ function App() {
                 setIsScrollTop(false);
             }
         });
-    }, []);
+    }, [authContext]);
 
     return (
         <AuthContextProvider>
@@ -64,27 +66,28 @@ function App() {
                     <CssBaseline />
                     <div className="app">
                         <BrowserRouter>
-                            {role === 1 ? (
+                            {roleUser === 1 && (
                                 <>
                                     <Sidebar isSidebar={isSidebar} />
                                     <main className="content">
                                         <Navbar setIsSidebar={setIsSidebar} />
                                         <Routes>
-                                            <Route path="/" element={<Dashboard />} />
-                                            <Route path="/category" element={<Category />} />
-                                            <Route path="/book" element={<Book />} />
-                                            <Route path="/order" element={<Order />} />
-                                            <Route path="/revenue" element={<Revenue />} />
-                                            <Route path="/customer" element={<Customer />} />
-                                            <Route path="/promotion" element={<Promotion />} />
-                                            <Route path="/promotion-product" element={<ProductPromotion />} />
-                                            <Route path="/publishing-company" element={<Publishing />} />
+                                            <Route path="/admin" element={<Dashboard />} />
+                                            <Route path="admin/category" element={<Category />} />
+                                            <Route path="admin/book" element={<Book />} />
+                                            <Route path="admin/order" element={<Order />} />
+                                            <Route path="admin/revenue" element={<Revenue />} />
+                                            <Route path="admin/customer" element={<Customer />} />
+                                            <Route path="admin/promotion" element={<Promotion />} />
+                                            <Route path="admin/promotion-product" element={<ProductPromotion />} />
+                                            <Route path="admin/publishing-company" element={<Publishing />} />
                                             <Route path="/login" element={<Login />} />
                                             <Route path="/signup" element={<SignUp />} />
                                         </Routes>
                                     </main>
                                 </>
-                            ) : (
+                            )}
+                            {roleUser === 0 && (
                                 <div className="user-layout">
                                     <Header />
                                     <Routes>

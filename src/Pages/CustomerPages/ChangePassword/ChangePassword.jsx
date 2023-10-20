@@ -52,7 +52,6 @@ export default function ChangePassword() {
                                 <input
                                     type="password"
                                     name=""
-                                    id=""
                                     className="form-control-input"
                                     placeholder="Mật khẩu hiện tại..."
                                     value={password}
@@ -64,7 +63,6 @@ export default function ChangePassword() {
                                 <input
                                     type="password"
                                     name=""
-                                    id=""
                                     className="form-control-input"
                                     placeholder="Mật khẩu mới..."
                                     value={newPassword}
@@ -76,7 +74,6 @@ export default function ChangePassword() {
                                 <input
                                     type="password"
                                     name=""
-                                    id=""
                                     className="form-control-input"
                                     placeholder="Nhập lại mật khẩu mới..."
                                     value={confirmPassword}

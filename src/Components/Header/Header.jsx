@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Header.scss';
 import LogoPage from '../../Assets/img/FahaShopBe.png';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,17 +9,26 @@ import IconMenu from '../../Assets/img/icon-menu.png';
 import axios from '../../api/axios';
 import { getToken } from '../../Services/Token';
 import useDebounce from '../../api/useDebounce';
+import { NotifyModalFail } from '../NotifyModalFail/NotifyModalFail';
+import { NotifyModalSuccess } from '../NotifyModalSuccess/NotifyModalSuccess';
+import { CountCartContext } from '../CountCartProvider/CountCartProvider';
 
 export default function Header() {
     const [listCart, setListCart] = useState([]);
-    const [change, setChange] = useState(false);
     const [listCategory, setListCategory] = useState([]);
     const [searchName, setSearchName] = useState('');
 
+    const [isNotiSuccess, setIsNotiSuccess] = useState(false);
+    const [isNotiFail, setIsNotiFail] = useState(false);
+    const [detailNoti, setDetailNoti] = useState('');
+    const [detailNotiSecond, setDetailNotiSecond] = useState('');
+    const [activeTab, setAcTiveTab] = useState('');
+
     const debouncedValue = useDebounce(searchName, 500);
 
-    const navigate = useNavigate();
+    const countCartContext = useContext(CountCartContext);
 
+    const navigate = useNavigate();
     const [shouldSearch, setShouldSearch] = useState(false);
 
     useEffect(() => {
@@ -50,12 +59,10 @@ export default function Header() {
     };
 
     const handleCategoryClick = async (item) => {
-        console.log('Id category là : ', item.id_category);
         try {
             const result = await axios.post(axios.defaults.baseURL + '/api/v1/search-product-by-id-category', {
                 id_category: item.id_category,
             });
-            console.log(result.data.message);
 
             // Chuyển hướng đến trang product cùng với kết quả tìm kiếm
             navigate(`/product?category=${item.id_category}`, { state: { searchResult3: result.data.message } });
@@ -65,9 +72,15 @@ export default function Header() {
     };
 
     const [show, setShow] = useState(false);
+
     const handleShow = (e) => {
         setShow(true);
     };
+    // useEffect(() => {
+    //     setShow(!location.state?.isLogin);
+    //     console.log('IsLogin: ', location.state?.isLogin);
+    // }, [location.state?.isLogin]);
+
     const handleClose = () => setShow(false);
 
     const handleLoginSuccess = () => {
@@ -76,43 +89,41 @@ export default function Header() {
     };
 
     async function getListProduct() {
-        let token = await getToken();
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const result = await axios.post(axios.defaults.baseURL + `/api/v1/account/cart`);
-        setListCart(result?.data.list);
-        // setChange(!change);
+        try {
+            let token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const result = await axios.post(axios.defaults.baseURL + `/api/v1/account/cart`);
+            setListCart(result?.data.list);
+        } catch (error) {}
     }
 
     async function getListCategory() {
-        let result = await axios.get(axios.defaults.baseURL + `/api/v1/category?id=ALL`);
-        setListCategory(result?.data.listCategory);
-        // console.log(result.data);
+        try {
+            let result = await axios.get(axios.defaults.baseURL + `/api/v1/category?id=ALL`);
+            setListCategory(result?.data.listCategory);
+        } catch (error) {}
     }
 
     useEffect(() => {
         getListCategory();
+        getListProduct();
     }, []);
 
-    useEffect(() => {
-        getListProduct();
-    }, [change]);
-
     return (
-        <div class="header">
-            <div class="topbar row">
-                <div class="topbar-left col">
+        <div className="header">
+            <div className="topbar row">
+                <div className="topbar-left col">
                     <p className="open"> Mở cửa: 7h30 đến 21h30, T7 và Chủ nhật 8h đến 22h</p>
                 </div>
-                <div class="topbar-right col">
-                    <div class="topbar-right-list">
-                        <div class="topbar-right-list-item">
-                            <i class="fa-solid fa-star"></i>
+                <div className="topbar-right col">
+                    <div className="topbar-right-list">
+                        <div className="topbar-right-list-item">
+                            <i className="fa-solid fa-star"></i>
                             <a href="https://www.thegioididong.com/mua-online-gia-re#game">Khuyến mãi hot</a>
                         </div>
-                        <div class="topbar-right-list-item">
-                            <i class="fa-solid fa-location-pin"></i>
+                        <div className="topbar-right-list-item">
+                            <i className="fa-solid fa-location-pin"></i>
                             <a href="https://www.thegioididong.com/sieu-thi-the-gioi-di-dong/ho-chi-minh">
-                                {' '}
                                 Hệ thống cửa hàng
                             </a>
                         </div>
@@ -120,31 +131,42 @@ export default function Header() {
                 </div>
             </div>
 
-            <div class="mid-header">
-                <div class="container-header row grid wide">
-                    <div class="container-header-1 col" style={{ display: 'flex' }}>
+            <div className="mid-header">
+                <div className="container-header row grid wide">
+                    <div className="container-header-1 col" style={{ display: 'flex' }}>
                         <Link to="/">
                             <img src={LogoPage} alt="" style={{ width: '200px' }}></img>
                         </Link>
-                        <div class="cover-img-menu">
-                            <Link to="/product">
-                                <img src={IconMenu} alt="" className="icon-menu-header" />
-                                <i class="down-menu-icon fa-solid fa-angle-down"></i>
-                            </Link>
-                            <div className="modal-wrapper-cate">
+                        <div
+                            className="cover-img-menu"
+                            onClick={() => {
+                                navigate('/product');
+                            }}
+                        >
+                            {/* <Link to="/product"> */}
+                            <img src={IconMenu} alt="" className="icon-menu-header" />
+                            <i className="down-menu-icon fa-solid fa-angle-down"></i>
+                            {/* </Link> */}
+                            <div className="modal-wrapper-cate" onClick={(e) => e.stopPropagation()}>
                                 <div className="modal-container-cate">
                                     <p className="modal-title-cate">
-                                        <i class="fa-regular fa-bookmark" style={{ marginRight: '16px' }}></i>Danh mục
-                                        sản phẩm
+                                        <i className="fa-regular fa-bookmark" style={{ marginRight: '16px' }}></i>Danh
+                                        mục sản phẩm
                                     </p>
 
                                     {listCategory &&
                                         listCategory.map((item, index) => {
                                             return (
-                                                <div key={index} onClick={() => handleCategoryClick(item)}>
+                                                <div
+                                                    key={index}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleCategoryClick(item);
+                                                    }}
+                                                >
                                                     <p className="modal-item-cate">
                                                         <i
-                                                            class="fa-solid fa-book-open"
+                                                            className="fa-solid fa-book-open"
                                                             style={{ marginRight: '16px' }}
                                                         ></i>{' '}
                                                         {item && item?.name_category}
@@ -157,43 +179,47 @@ export default function Header() {
                         </div>
                     </div>
 
-                    <div class="container-header-2 col">
-                        <div class="header-search">
+                    <div className="container-header-2 col">
+                        <div className="header-search">
                             <input
                                 type="text"
                                 placeholder="Nhập để tìm kiếm ..."
                                 value={searchName}
                                 onChange={handleInputChange}
                             ></input>
-                            <i class="icon fa fa-search"></i>
+                            <i className="icon fa fa-search"></i>
                         </div>
                     </div>
 
-                    <div class="container-header-3 col">
+                    <div className="container-header-3 col">
                         <Link to="/cart" className="first">
-                            <div class="header-list">
+                            <div className="header-list">
                                 <b>12</b>
-                                <i class="fa-regular fa-bell"></i>
+                                <i className="fa-regular fa-bell"></i>
                                 <p>Thông báo</p>
                             </div>
                         </Link>
 
                         <Link to="/cart" className="first">
-                            <div class="header-list">
-                                {listCart?.length > 0 && <b>{listCart && listCart?.length}</b>}
+                            <div className="header-list">
+                                {/* {listCart?.length > 0 && <b>{listCart && listCart?.length}</b>} */}
+                                {countCartContext.countCart && <b>{countCartContext.countCart}</b>}
 
-                                <i class="fa-solid fa-cart-shopping"></i>
+                                <i className="fa-solid fa-cart-shopping"></i>
                                 <p>Giỏ hàng</p>
                             </div>
                         </Link>
 
-                        <Link to="" className="second">
-                            <div class="header-list">
-                                <div class="menu-header">
+                        <div className="second">
+                            <div className="header-list">
+                                <div className="menu-header">
                                     {!localStorage.getItem('accessToken') ? (
                                         <div className="wrapper-content-menu">
                                             <button
-                                                onClick={handleShow}
+                                                onClick={() => {
+                                                    handleShow();
+                                                    setAcTiveTab('tab1');
+                                                }}
                                                 style={{
                                                     backgroundColor: '#C92127',
                                                     color: '#fff',
@@ -205,7 +231,10 @@ export default function Header() {
                                             </button>
 
                                             <button
-                                                onClick={handleShow}
+                                                onClick={() => {
+                                                    handleShow();
+                                                    setAcTiveTab('tab2');
+                                                }}
                                                 style={{
                                                     borderColor: '#C92127',
                                                     color: '#C92127',
@@ -235,7 +264,7 @@ export default function Header() {
                                                                 lineHeight: '48px',
                                                                 right: '18px',
                                                             }}
-                                                            class="fa-solid fa-chevron-left fa-rotate-180"
+                                                            className="fa-solid fa-chevron-left fa-rotate-180"
                                                         ></i>
                                                     </div>
                                                 </Link>
@@ -243,28 +272,28 @@ export default function Header() {
                                             <li>
                                                 <Link to="/order-history">
                                                     <span className="user-name">
-                                                        <i class="fa-regular fa-clipboard"></i> Đơn hàng của tôi
+                                                        <i className="fa-regular fa-clipboard"></i> Đơn hàng của tôi
                                                     </span>{' '}
                                                 </Link>
                                             </li>
                                             <li>
                                                 <Link to="/favourite">
                                                     <span className="user-name">
-                                                        <i class="fa-regular fa-heart"></i> Sản phẩm yêu thích
+                                                        <i className="fa-regular fa-heart"></i> Sản phẩm yêu thích
                                                     </span>{' '}
                                                 </Link>
                                             </li>
                                             <li>
                                                 <Link to="/my-voucher">
                                                     <span className="user-name">
-                                                        <i class="fa-solid fa-ticket"></i> Wallet Voucher
+                                                        <i className="fa-solid fa-ticket"></i> Wallet Voucher
                                                     </span>{' '}
                                                 </Link>
                                             </li>
                                             <li>
                                                 <Link to="/account-fpoint">
                                                     <span className="user-name">
-                                                        <i class="fa-solid fa-f"></i> Tài khoản F-point
+                                                        <i className="fa-solid fa-f"></i> Tài khoản F-point
                                                     </span>{' '}
                                                 </Link>
                                             </li>
@@ -273,36 +302,55 @@ export default function Header() {
                                                     to="/"
                                                     onClick={() => {
                                                         localStorage.removeItem('accessToken');
-                                                        // localStorage.removeItem("refreshToken");
+                                                        setDetailNoti(`Ngài đã đăng xuất thành công!`);
+                                                        setDetailNotiSecond('Hẹn gặp lại! ');
+                                                        setIsNotiSuccess(true);
                                                     }}
                                                 >
                                                     <span className="user-name">
-                                                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Thoát tài
-                                                        khoản
-                                                    </span>{' '}
+                                                        <i className="fa-solid fa-arrow-right-from-bracket"></i> Thoát
+                                                        tài khoản
+                                                    </span>
                                                 </Link>
                                             </li>
                                         </div>
                                     )}
                                 </div>
                                 <b>10</b>
-                                <i class="fa-regular fa-user"></i>
+                                <i className="fa-regular fa-user"></i>
                                 <p>Tài khoản</p>
                             </div>
-                        </Link>
+                        </div>
 
-                        <div class="header-list">
-                            <div class="cover-img-vietnam">
+                        <div className="header-list">
+                            <div className="cover-img-vietnam">
                                 <img src={VietNamFlag} alt="vietnam" />
-                                <span class="fa-solid fa-angle-down"></span>
+                                <span className="fa-solid fa-angle-down"></span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <hr class="hr" />
+            <hr className="hr" />
 
-            <MyLoginModal show={show} handleClose={handleClose} handleLoginSuccess={handleLoginSuccess} />
+            <MyLoginModal
+                isLogin={true}
+                show={show}
+                handleClose={handleClose}
+                handleLoginSuccess={handleLoginSuccess}
+                active={activeTab}
+            />
+
+            <div onClick={() => setIsNotiFail(false)}>
+                <NotifyModalFail isFail={isNotiFail} detailNoti={detailNoti} />
+            </div>
+            <div onClick={() => setIsNotiSuccess(false)}>
+                <NotifyModalSuccess
+                    isSuccess={isNotiSuccess}
+                    detailNoti={detailNoti}
+                    detailNotiSecond={detailNotiSecond}
+                />
+            </div>
         </div>
     );
 }

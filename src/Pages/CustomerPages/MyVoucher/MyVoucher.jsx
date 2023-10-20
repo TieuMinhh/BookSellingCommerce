@@ -13,7 +13,6 @@ export default function MyVoucher() {
     async function getListProduct() {
         const result = await axios.get(axios.defaults.baseURL + `/api/v1/discount?id=ALL`);
         setList(result?.data.listDiscount);
-        // console.log(result.data);
     }
     useEffect(() => {
         getListProduct();
@@ -43,7 +42,7 @@ export default function MyVoucher() {
                             {list &&
                                 list.map((item, index) => {
                                     return (
-                                        <div className="detail-content-voucher">
+                                        <div className="detail-content-voucher" key={item.discount_code}>
                                             <p className="title-code">Code : {item.discount_code}</p>
                                             <p className="title-voucher">{item.description}</p>
                                             <p className="voucher-time">

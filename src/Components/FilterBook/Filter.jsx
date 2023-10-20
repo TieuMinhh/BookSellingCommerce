@@ -50,25 +50,25 @@ export default function Filter() {
     }, []);
 
     return (
-        <div class="sidebar_content col l-3 c-0 m-0">
+        <div className="sidebar_content col l-3 c-0 m-0">
             <h1>DANH MỤC</h1>
-            <div class="brand-filter">
-                <div class="brand-search">
+            <div className="brand-filter">
+                <div className="brand-search">
                     <input
                         type="text"
                         placeholder="Lọc theo danh mục"
                         value={searchName}
                         onChange={(e) => setSearchName(e.target.value)}
                     ></input>
-                    <i class="icon-search fa fa-search"></i>
+                    <i className="icon-search fa fa-search"></i>
                 </div>
-                <div class="list-filter">
-                    <div class="filter-item">
+                <div className="list-filter">
+                    <div className="filter-item">
                         <ul>
                             {list &&
                                 list.map((item, index) => {
                                     return (
-                                        <li>
+                                        <li key={item.id_category}>
                                             <input
                                                 id={item.id_category}
                                                 type="radio"
@@ -76,7 +76,7 @@ export default function Filter() {
                                                 value={item.name_category}
                                                 onChange={filterBookCate}
                                             ></input>
-                                            <label for={item.id_category}>{item.name_category}</label>
+                                            <label htmlFor={item.id_category}>{item.name_category}</label>
                                         </li>
                                     );
                                 })}
@@ -85,7 +85,7 @@ export default function Filter() {
                 </div>
             </div>
             <h1>GIÁ SẢN PHẨM</h1>
-            <div class="price-filter">
+            <div className="price-filter">
                 <input
                     id="slider-money"
                     type="range"

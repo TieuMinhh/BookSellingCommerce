@@ -205,6 +205,7 @@ export default function Category() {
                                     onChange={(e) => handleOnChangeImage(e)}
                                 />
                                 {selectedImage && (
+                                    // eslint-disable-next-line jsx-a11y/img-redundant-alt
                                     <img
                                         src={selectedImage}
                                         alt="Selected Image"
@@ -254,6 +255,7 @@ export default function Category() {
                                     onChange={(e) => handleOnChangeImage(e)}
                                 />
                                 {selectedImage && (
+                                    // eslint-disable-next-line jsx-a11y/img-redundant-alt
                                     <img
                                         src={selectedImage}
                                         alt="Selected Image"

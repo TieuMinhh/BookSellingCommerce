@@ -72,8 +72,14 @@ h3 {
 
 .products {
     flex: 0.7;
-    max-height: 800px; /* Đặt chiều cao tối đa mà bạn muốn hiển thị trên màn hình */
-    overflow-y: auto; /* Tạo thanh cuộn dọc */
+    .line-cover-cart {
+        border: 1px solid #ccc;
+        .cover-all-product-cart {
+            overflow-y: auto; /* Tạo thanh cuộn dọc */
+            max-height: 800px; /* Đặt chiều cao tối đa mà bạn muốn hiển thị trên màn hình */
+            border: 16px solid #fff;
+        }
+    }
 }
 
 .product {
