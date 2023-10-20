@@ -85,6 +85,7 @@ export default function BookDetail() {
     };
 
     const handleCheckLogin = async () => {
+        countCartContext.handleCountCart();
         if (localStorage.getItem('accessToken')) {
             handleAddToCart();
             try {

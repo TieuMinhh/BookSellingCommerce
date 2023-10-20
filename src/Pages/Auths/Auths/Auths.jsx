@@ -22,6 +22,13 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
     const [detailNoti, setDetailNoti] = useState('');
     const [isNotiFail, setIsNotiFail] = useState(false);
 
+    const [OTP, setOTP] = useState();
+    const [idAccount, setIdAccount] = useState();
+    const [isSendOTP, setIsSendOTP] = useState();
+    const [isSuccessOTP, setIsSuccessOTP] = useState();
+    const [messageConfirmOTP, setMessageConfirmOTP] = useState();
+    const [messageSendOTP, setMessageSendOTP] = useState();
+
     useEffect(() => {
         if (!active) {
             setActiveTab('tab1');
@@ -126,8 +133,8 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
     function handleOnChangePassword(e) {
         const inputPassword = e.target.value;
         setPassWord(inputPassword);
-        // Kiểm tra password chứa ít nhất 8 ký tự và không chứa khoảng trắng
-        setIsValidPass(inputPassword.length >= 1);
+        // Kiểm tra password chứa ít nhất 4 ký tự
+        setIsValidPass(inputPassword.length >= 3);
     }
 
     function handleOnChangePhone(e) {
@@ -137,8 +144,46 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
         setIsValidPass(inputPhone.length === 10);
     }
 
-    const SendOTP = () => {
-        alert('Đã gửi mã OTP');
+    const SendOTP = async () => {
+        const result = await axios.post(axios.defaults.baseURL + '/api/v1/forgot-password', {
+            email: username,
+        });
+
+        if (result.data.errCode === 0) {
+            setIdAccount(result.data.id_account);
+            setIsSendOTP(true);
+            setMessageSendOTP(result.data.message);
+        } else {
+            setMessageSendOTP(result.data.message);
+        }
+    };
+
+    const confirmOTP = async () => {
+        const result = await axios.post(axios.defaults.baseURL + `/api/v1/confirm/${idAccount}`, {
+            code: OTP,
+        });
+
+        if (result.data.errCode === 0) {
+            setIsSuccessOTP(true);
+            setMessageConfirmOTP(result.data.message);
+        } else {
+            setMessageSendOTP(result.data.message);
+        }
+    };
+
+    const handleConfirmPasswordChange = async () => {
+        const result = await axios.post(axios.defaults.baseURL + `/api/v1/change-password-new/${idAccount}`, {
+            newPassword: password,
+            newPassword2: password,
+        });
+
+        if (result) {
+            setIsNotiSuccess(true);
+            setDetailNoti(result.data.message);
+        } else {
+            setIsNotiFail(true);
+            setDetailNoti(result.data.message);
+        }
     };
 
     const handleTabClick = (tabName) => {
@@ -303,6 +348,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                     name="name"
                                     value={username}
                                     onChange={handleOnChangeEmail}
+                                    required="true"
                                 />
                             </Form.Group>
 
@@ -396,7 +442,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                             <Modal.Title className="text-center text-black">KHÔI PHỤC MẬT KHẨU</Modal.Title>
 
                             <Form>
-                                <Form.Group className="mb-3" controlId="formName">
+                                <Form.Group className="mb-4" controlId="formName">
                                     <Form.Label className="text-black text-size-fit mx-3">Email</Form.Label>
                                     <Form.Control
                                         type="text"
@@ -407,13 +453,27 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                         value={username}
                                         onChange={handleOnChangeEmail}
                                     />
+                                    {isSendOTP && (
+                                        <p
+                                            className=""
+                                            style={{
+                                                marginLeft: '20px',
+                                                color: '#2489f4',
+                                                marginBottom: 0,
+                                                position: 'absolute',
+                                            }}
+                                        >
+                                            {messageSendOTP}
+                                        </p>
+                                    )}
+
                                     <div
                                         onClick={SendOTP}
                                         style={{
                                             display: 'block',
                                             position: 'absolute',
                                             right: '50px',
-                                            bottom: '306px',
+                                            bottom: '323px',
                                             color: '#2489F4',
                                             cursor: 'pointer',
                                             fontSize: '15px',
@@ -423,20 +483,44 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                     </div>
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formImg">
+                                <Form.Group className="mb-4" controlId="formImg">
                                     <Form.Label className="text-black text-size-fit mx-3">Nhập mã OTP</Form.Label>
                                     <Form.Control
-                                        className="mb-2 mx-3"
+                                        className=" mx-3"
                                         type="number"
                                         placeholder="Nhập mã OTP"
                                         style={{ width: '430px' }}
                                         name="password"
-                                        value={password}
-                                        onChange={handleOnChangePassword}
+                                        onChange={(e) => setOTP(e.target.value)}
                                     />
-                                    {/* <Form.Label className="text-right color-red mx-4">
-              Quên mật khẩu ?
-            </Form.Label> */}
+                                    {isSuccessOTP && (
+                                        <p
+                                            className=""
+                                            style={{
+                                                marginLeft: '20px',
+                                                position: 'absolute',
+                                                color: '#2489f4',
+                                                marginBottom: 0,
+                                            }}
+                                        >
+                                            {messageConfirmOTP}
+                                        </p>
+                                    )}
+
+                                    <div
+                                        onClick={confirmOTP}
+                                        style={{
+                                            display: 'block',
+                                            position: 'absolute',
+                                            right: '50px',
+                                            bottom: '229px',
+                                            color: '#2489F4',
+                                            cursor: 'pointer',
+                                            fontSize: '15px',
+                                        }}
+                                    >
+                                        Xác nhận OTP
+                                    </div>
                                 </Form.Group>
 
                                 <Form.Group className="mb-2" controlId="formImg">
@@ -447,12 +531,8 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                         placeholder="Nhập mật khẩu mới"
                                         style={{ width: '430px' }}
                                         name="phone"
-                                        value={phone}
-                                        onChange={handleOnChangePhone}
+                                        onChange={handleOnChangePassword}
                                     />
-                                    {/* <Form.Label className="text-right color-red mx-4">
-              Quên mật khẩu ?
-            </Form.Label> */}
                                 </Form.Group>
 
                                 <Form.Group className="mt-4 mb-3 d-flex justify-content-center align-items-center">
@@ -465,7 +545,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                             border: 'none',
                                         }}
                                         disabled={!isValidUser || !isValidPass}
-                                        onClick={handleSignup}
+                                        onClick={handleConfirmPasswordChange}
                                     >
                                         Xác nhận
                                     </Button>

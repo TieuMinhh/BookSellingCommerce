@@ -40,7 +40,6 @@ export default function Cart() {
     async function getListProduct() {
         try {
             let token = await getToken();
-            // console.log('accessToken là : ', token);
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const result = await axios.post(axios.defaults.baseURL + `/api/v1/account/cart`);
             setList(result?.data.list);
