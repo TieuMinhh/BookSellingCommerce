@@ -464,7 +464,7 @@ export default function OrderHistory() {
                                             Tên khách hàng : {listOrderDetail && listOrderDetail[0]?.name_receiver}
                                         </p>
                                         <p className="modal-info-address">
-                                            Địa chỉ :{listOrderDetail && listOrderDetail[0]?.delivery_address}
+                                            Địa chỉ :{listOrderDetail && listOrderDetail[0]?.name_address}
                                         </p>
                                         <p className="modal-info-tel">
                                             Số điện thoại :

@@ -178,9 +178,7 @@ export default function Order() {
                             </div>
                             <div className="ctm_address">
                                 Địa chỉ:{' '}
-                                <div className="pull-right">
-                                    {listOrderDetail && listOrderDetail[0]?.delivery_address}
-                                </div>
+                                <div className="pull-right">{listOrderDetail && listOrderDetail[0]?.name_address}</div>
                             </div>
                         </div>
                         <div className="detail_order overflow-auto w-100">
