@@ -14,8 +14,10 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
     const [username, setUserName] = useState('');
     const [isValidUser, setIsValidUser] = useState(true);
     const [password, setPassWord] = useState('');
+    const [newPassword, setNewPassword] = useState('');
     const [phone, setPhone] = useState('');
     const [isValidPass, setIsValidPass] = useState(false);
+    const [isValidNewPassword, setIsValidNewPassword] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
     const [isNotiSuccess, setIsNotiSuccess] = useState(false);
@@ -24,10 +26,21 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
 
     const [OTP, setOTP] = useState();
     const [idAccount, setIdAccount] = useState();
-    const [isSendOTP, setIsSendOTP] = useState();
-    const [isSuccessOTP, setIsSuccessOTP] = useState();
-    const [messageConfirmOTP, setMessageConfirmOTP] = useState();
+    const [isSendOTP, setIsSendOTP] = useState(false);
     const [messageSendOTP, setMessageSendOTP] = useState();
+    const [isSuccessOTP, setIsSuccessOTP] = useState(false);
+    const [messageConfirmOTP, setMessageConfirmOTP] = useState();
+    const [isMatchPassword, setIsMatchPassword] = useState(true);
+    const [isDisableInputPass, setIsDisableInputPass] = useState(true);
+
+    const handleResetModal = () => {
+        setIsSendOTP(false);
+        setMessageSendOTP('');
+        setIsSuccessOTP(false);
+        setMessageConfirmOTP('');
+        setIsMatchPassword(true);
+        setIsDisableInputPass(true);
+    };
 
     useEffect(() => {
         if (!active) {
@@ -137,6 +150,13 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
         setIsValidPass(inputPassword.length >= 3);
     }
 
+    const handleNewPassword = (e) => {
+        const inputPassword = e.target.value;
+        // Kiểm tra password chứa ít nhất 4 ký tự
+        setIsValidNewPassword(inputPassword.length >= 3);
+        setNewPassword(inputPassword);
+    };
+
     function handleOnChangePhone(e) {
         const inputPhone = e.target.value;
         setPhone(inputPhone);
@@ -145,44 +165,75 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
     }
 
     const SendOTP = async () => {
-        const result = await axios.post(axios.defaults.baseURL + '/api/v1/forgot-password', {
-            email: username,
-        });
-
-        if (result.data.errCode === 0) {
-            setIdAccount(result.data.id_account);
-            setIsSendOTP(true);
-            setMessageSendOTP(result.data.message);
+        if (!username) {
+            setIsSendOTP(false);
+            setMessageSendOTP('Vui lòng nhập email!');
         } else {
-            setMessageSendOTP(result.data.message);
+            try {
+                const result = await axios.post(axios.defaults.baseURL + '/api/v1/forgot-password', {
+                    email: username,
+                });
+
+                if (result.data.errCode === 0) {
+                    setIdAccount(result.data.id_account);
+                    setIsSendOTP(true);
+                    setMessageSendOTP(result.data.message);
+                } else {
+                    setIsSendOTP(false);
+                    setMessageSendOTP(result.data.message);
+                }
+            } catch (error) {}
         }
     };
 
-    const confirmOTP = async () => {
-        const result = await axios.post(axios.defaults.baseURL + `/api/v1/confirm/${idAccount}`, {
-            code: OTP,
-        });
-
-        if (result.data.errCode === 0) {
-            setIsSuccessOTP(true);
-            setMessageConfirmOTP(result.data.message);
+    const confirmOTP = async (res) => {
+        if (!OTP) {
+            setIsSuccessOTP(false);
+            setMessageConfirmOTP('Vui lòng nhập OTP');
         } else {
-            setMessageSendOTP(result.data.message);
+            try {
+                const result = await axios.post(axios.defaults.baseURL + `/api/v1/confirm/${idAccount}`, {
+                    code: OTP,
+                });
+                if (result.data.errCode === 0) {
+                    setIsSuccessOTP(true);
+                    setMessageConfirmOTP(result.data.message);
+                    setIsDisableInputPass(false);
+                } else {
+                    setIsSuccessOTP(false);
+                    setMessageConfirmOTP(result.data.message);
+                }
+            } catch (error) {
+                setIsSuccessOTP(false);
+                setMessageConfirmOTP('Mã xác thực không chính xác');
+            }
         }
     };
 
     const handleConfirmPasswordChange = async () => {
-        const result = await axios.post(axios.defaults.baseURL + `/api/v1/change-password-new/${idAccount}`, {
-            newPassword: password,
-            newPassword2: password,
-        });
+        if (password === newPassword) {
+            const result = await axios.post(axios.defaults.baseURL + `/api/v1/change-password-new/${idAccount}`, {
+                newPassword: password,
+                newPassword2: newPassword,
+            });
 
-        if (result) {
-            setIsNotiSuccess(true);
-            setDetailNoti(result.data.message);
+            if (result) {
+                setIsNotiSuccess(true);
+                setDetailNoti(result.data.message);
+                setActiveTab('tab1');
+
+                setIsSendOTP(false);
+                setMessageSendOTP('');
+                setIsSuccessOTP(false);
+                setMessageConfirmOTP('');
+                setIsMatchPassword(true);
+                setIsDisableInputPass(true);
+            } else {
+                setIsNotiFail(true);
+                setDetailNoti(result.data.message);
+            }
         } else {
-            setIsNotiFail(true);
-            setDetailNoti(result.data.message);
+            setIsMatchPassword(false);
         }
     };
 
@@ -192,7 +243,14 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
 
     return (
         <>
-            <Modal show={show} onHide={handleClose} className="mt-5">
+            <Modal
+                show={show}
+                onHide={() => {
+                    handleClose();
+                    handleResetModal();
+                }}
+                className="mt-5"
+            >
                 <Modal.Header>
                     <ul className="tabs">
                         <li
@@ -236,7 +294,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                     value={username}
                                     onChange={handleOnChangeEmail}
                                 />
-                                {username.length != 0 ? (
+                                {username.length !== 0 ? (
                                     isValidUser ? (
                                         <span style={{ color: 'green' }}></span>
                                     ) : (
@@ -262,7 +320,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                         }
                                     }}
                                 />
-                                {password.length != 0 ? (
+                                {password.length !== 0 ? (
                                     isValidPass ? null : (
                                         <span style={{ color: 'red' }}>Mật khẩu không hợp lệ</span>
                                     )
@@ -348,7 +406,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                     name="name"
                                     value={username}
                                     onChange={handleOnChangeEmail}
-                                    required="true"
+                                    required={true}
                                 />
                             </Form.Group>
 
@@ -363,9 +421,6 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                     value={password}
                                     onChange={handleOnChangePassword}
                                 />
-                                {/* <Form.Label className="text-right color-red mx-4">
-              Quên mật khẩu ?
-            </Form.Label> */}
                             </Form.Group>
 
                             <Form.Group className="mb-2" controlId="formImg">
@@ -384,9 +439,6 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                         }
                                     }}
                                 />
-                                {/* <Form.Label className="text-right color-red mx-4">
-              Quên mật khẩu ?
-            </Form.Label> */}
                             </Form.Group>
 
                             <Form.Group className="mt-4 mb-3 d-flex justify-content-center align-items-center">
@@ -429,7 +481,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                     <a href="!#" className="text-center text-13">
                                         Điều khoản dịch vụ &
                                     </a>
-                                    <a href="#" className="text-center text-13">
+                                    <a href="!#" className="text-center text-13">
                                         Chính sách bảo mật{' '}
                                     </a>
                                 </div>
@@ -452,6 +504,10 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                         name="name"
                                         value={username}
                                         onChange={handleOnChangeEmail}
+                                        onClick={() => {
+                                            setIsSendOTP(false);
+                                            setMessageSendOTP('');
+                                        }}
                                     />
                                     {isSendOTP && (
                                         <p
@@ -466,6 +522,19 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                             {messageSendOTP}
                                         </p>
                                     )}
+                                    {!isSendOTP && (
+                                        <p
+                                            className=""
+                                            style={{
+                                                marginLeft: '20px',
+                                                color: 'red',
+                                                marginBottom: 0,
+                                                position: 'absolute',
+                                            }}
+                                        >
+                                            {messageSendOTP}
+                                        </p>
+                                    )}
 
                                     <div
                                         onClick={SendOTP}
@@ -473,7 +542,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                             display: 'block',
                                             position: 'absolute',
                                             right: '50px',
-                                            bottom: '323px',
+                                            bottom: '418px',
                                             color: '#2489F4',
                                             cursor: 'pointer',
                                             fontSize: '15px',
@@ -492,6 +561,10 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                         style={{ width: '430px' }}
                                         name="password"
                                         onChange={(e) => setOTP(e.target.value)}
+                                        onClick={() => {
+                                            setIsSuccessOTP(false);
+                                            setMessageConfirmOTP('');
+                                        }}
                                     />
                                     {isSuccessOTP && (
                                         <p
@@ -506,6 +579,19 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                             {messageConfirmOTP}
                                         </p>
                                     )}
+                                    {!isSuccessOTP && (
+                                        <p
+                                            className=""
+                                            style={{
+                                                marginLeft: '20px',
+                                                position: 'absolute',
+                                                color: 'red',
+                                                marginBottom: 0,
+                                            }}
+                                        >
+                                            {messageConfirmOTP}
+                                        </p>
+                                    )}
 
                                     <div
                                         onClick={confirmOTP}
@@ -513,7 +599,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                             display: 'block',
                                             position: 'absolute',
                                             right: '50px',
-                                            bottom: '229px',
+                                            bottom: '324px',
                                             color: '#2489F4',
                                             cursor: 'pointer',
                                             fontSize: '15px',
@@ -523,16 +609,45 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                     </div>
                                 </Form.Group>
 
-                                <Form.Group className="mb-2" controlId="formImg">
+                                <Form.Group className="mb-4" controlId="formImg">
                                     <Form.Label className="text-black text-size-fit mx-3">Nhập mật khẩu mới</Form.Label>
                                     <Form.Control
-                                        className="mb-2 mx-3 "
+                                        className=" mx-3 "
                                         type="tel"
                                         placeholder="Nhập mật khẩu mới"
                                         style={{ width: '430px' }}
                                         name="phone"
                                         onChange={handleOnChangePassword}
+                                        disabled={isDisableInputPass}
+                                        onClick={() => setIsMatchPassword(true)}
                                     />
+                                </Form.Group>
+
+                                <Form.Group className="mb-2" controlId="formImg">
+                                    <Form.Label className="text-black text-size-fit mx-3">Xác nhận mật khẩu</Form.Label>
+                                    <Form.Control
+                                        className=" mx-3 "
+                                        type="tel"
+                                        placeholder="Xác nhận mật khẩu"
+                                        style={{ width: '430px' }}
+                                        name="phone"
+                                        onChange={handleNewPassword}
+                                        disabled={isDisableInputPass}
+                                        onClick={() => setIsMatchPassword(true)}
+                                    />
+                                    {!isMatchPassword && (
+                                        <p
+                                            className=""
+                                            style={{
+                                                marginLeft: '20px',
+                                                position: 'absolute',
+                                                color: 'red',
+                                                marginBottom: '4px',
+                                            }}
+                                        >
+                                            Mật khẩu không khớp vui lòng nhập lại!
+                                        </p>
+                                    )}
                                 </Form.Group>
 
                                 <Form.Group className="mt-4 mb-3 d-flex justify-content-center align-items-center">
@@ -544,7 +659,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                             color: '#fff',
                                             border: 'none',
                                         }}
-                                        disabled={!isValidUser || !isValidPass}
+                                        disabled={!isValidUser || !isValidPass || !isValidNewPassword}
                                         onClick={handleConfirmPasswordChange}
                                     >
                                         Xác nhận
@@ -561,7 +676,10 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                             borderColor: '#C92127',
                                             fontWeight: '600',
                                         }}
-                                        onClick={handleClose}
+                                        onClick={() => {
+                                            handleResetModal();
+                                            handleClose();
+                                        }}
                                     >
                                         Bỏ qua
                                     </Button>
