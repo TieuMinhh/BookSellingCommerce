@@ -21,9 +21,11 @@ export default function OrderPay() {
     let shipFee = 20000;
     const navigate = useNavigate();
 
+    console.log(listProduct);
+
     const [code, setCode] = useState('');
     const [discount, setDiscount] = useState(null);
-    const [listAddress, setListAddress] = useState(null);
+    const [listAddress, setListAddress] = useState([]);
     const [deliveryAddress, setDeliveryAddress] = useState(null);
     const [orderSuccess, setOrderSuccess] = useState(false);
 
@@ -224,7 +226,7 @@ export default function OrderPay() {
             const order = await axios.post(axios.defaults.baseURL + '/api/v1/order-pay', {
                 arr: listProduct,
                 discount_id: discount?.discount_id,
-                id_address: listAddress[0]?.id_address,
+                id_address: selectedAddress?.id_address,
             });
 
             // Đặt lại giá trị giỏ hàng và tiền cần thanh toán
@@ -247,16 +249,27 @@ export default function OrderPay() {
         }
     };
 
-    const [selectedAddress, setSelectedAddress] = useState(null);
-    const handleRadioChange = (index) => {
+    const [selectedAddress, setSelectedAddress] = useState({});
+
+    // const handleRadioChange = (index) => {
+    //     // Cập nhật trạng thái của địa chỉ được chọn
+    //     const updatedAddresses = listAddress.map((item, idx) => ({
+    //         ...item,
+    //         checked: idx === index,
+    //     }));
+    //     // Lưu trạng thái đã chọn và cập nhật danh sách địa chỉ
+    //     setSelectedAddress(updatedAddresses[index]);
+    //     console.log('Địa chỉ được chọn là :', selectedAddress);
+    // };
+
+    const handleRadioChange = (selectedItem) => {
         // Cập nhật trạng thái của địa chỉ được chọn
-        const updatedAddresses = listAddress.map((item, idx) => ({
-            ...item,
-            checked: idx === index,
-        }));
-        // Lưu trạng thái đã chọn và cập nhật danh sách địa chỉ
-        setSelectedAddress(updatedAddresses[index]);
-        setListAddress(updatedAddresses);
+        const updatedAddresses = listAddress.map((item) =>
+            item.id === selectedItem.id ? { ...item, checked: true } : { ...item, checked: false },
+        );
+        // Lưu trạng thái đã chọn
+        setSelectedAddress(selectedItem);
+        console.log('Địa chỉ được chọn là:', selectedItem);
     };
 
     useEffect(() => {
@@ -322,12 +335,19 @@ export default function OrderPay() {
                             listAddress.map((item, index) => {
                                 return (
                                     <div className="cover-detail-address" key={item.id}>
-                                        <input
+                                        {/* <input
                                             className="form-address"
                                             type="radio"
                                             id={`address${item.id}`}
                                             checked={selectedAddress === item.id} // So sánh theo id
                                             onChange={() => handleRadioChange(item)}
+                                        /> */}
+                                        <input
+                                            className="form-address"
+                                            type="radio"
+                                            id={`address${item.id}`}
+                                            checked={selectedAddress === item} // So sánh theo đối tượng địa chỉ
+                                            onClick={() => handleRadioChange(item)}
                                         />
                                         <label htmlFor={`address${item.id}`} className="detail-address-delivery">
                                             {item && item?.name_address}

@@ -66,6 +66,7 @@ export default function ProductPromotion() {
         setEndDay(null);
 
         if (result.data.errCode === 0) toast.success(result.data.message);
+        if (result.data.errCode === 1) toast.error(result.data.message);
         if (result.data.errCode === 2) toast.warning(result.data.message);
         setShowAdd(false);
     };
@@ -88,7 +89,8 @@ export default function ProductPromotion() {
         setEndDay(null);
 
         if (result.data.errCode === 0) toast.success(result.data.message);
-        if (result.data.errCode === 1) toast.warning(result.data.message);
+        if (result.data.errCode === 1) toast.error(result.data.message);
+        if (result.data.errCode === 2) toast.warning(result.data.message);
         setShowEdit(false);
     };
 
