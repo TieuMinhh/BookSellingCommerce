@@ -39,11 +39,12 @@ export default function OrderHistory() {
         let token = await getToken();
 
         let data = await checkToken(token);
-
-        let orderByAccount = await axios.get(
-            axios.defaults.baseURL + `/api/v1/account/order-history-by-account/${data.userInfo.id_account}`,
-        );
-        setListOrderByAccount(orderByAccount?.data.listOrder);
+        try {
+            let orderByAccount = await axios.get(
+                axios.defaults.baseURL + `/api/v1/account/order-history-by-account/${data.userInfo.id_account}`,
+            );
+            setListOrderByAccount(orderByAccount?.data.listOrder);
+        } catch (error) {}
     }
 
     const getOrderByStatus = async (status) => {
@@ -51,10 +52,13 @@ export default function OrderHistory() {
 
         let data = await checkToken(token);
 
-        let orderByStatus = await axios.get(
-            axios.defaults.baseURL + `/api/v1/account/order-history-by-status/${data.userInfo.id_account}/${status}`,
-        );
-        setDetailOrderByStatus(orderByStatus?.data.listOrder);
+        try {
+            let orderByStatus = await axios.get(
+                axios.defaults.baseURL +
+                    `/api/v1/account/order-history-by-status/${data.userInfo.id_account}/${status}`,
+            );
+            setDetailOrderByStatus(orderByStatus?.data.listOrder);
+        } catch (error) {}
     };
 
     async function getListOrderDetail(id_order) {
