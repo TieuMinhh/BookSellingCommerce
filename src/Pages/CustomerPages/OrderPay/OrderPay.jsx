@@ -226,7 +226,7 @@ export default function OrderPay() {
             const order = await axios.post(axios.defaults.baseURL + '/api/v1/order-pay', {
                 arr: listProduct,
                 discount_id: discount?.discount_id,
-                id_address: selectedAddress?.id_address,
+                id_address: listAddress[0]?.id_address,
             });
 
             // Đặt lại giá trị giỏ hàng và tiền cần thanh toán

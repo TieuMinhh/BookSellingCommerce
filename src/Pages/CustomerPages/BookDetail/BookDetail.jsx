@@ -3,16 +3,15 @@ import Button from 'react-bootstrap/Button';
 import './BookDetail.scss';
 import axios from '../../../api/axios';
 import Img from '../../../Assets/img/kgd.jpg';
-import { toast } from 'react-toastify';
 
 import { getToken } from '../../../Services/Token';
-import { Link, useNavigate } from 'react-router-dom';
 import config from '../../../api/base';
 import { NotifyModalSuccess } from '../../../Components/NotifyModalSuccess/NotifyModalSuccess';
 import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModalFail';
 import MyLoginModal from '../../Auths/Auths/Auths';
 import { useContext } from 'react';
 import { CountCartContext } from '../../../Components/CountCartProvider/CountCartProvider';
+import { useNavigate } from 'react-router-dom';
 
 export default function BookDetail() {
     const [list, setList] = useState([]);

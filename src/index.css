@@ -15,6 +15,7 @@ body,
 .app {
     display: flex;
     position: relative;
+    overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
