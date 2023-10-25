@@ -32,18 +32,18 @@ export default function HomePage() {
     const [listMostReducingProduct, setListMostReducingProduct] = useState([]);
 
     async function getListCategory() {
-        let result = await axios.get(axios.defaults.baseURL + `/api/v1/category?id=ALL`);
+        let result = await axios.get(axios.defaults.baseURL + `/category?id=ALL`);
         setListCategory(result?.data.listCategory);
         // console.log(result.data);
     }
 
     async function getListMostByProduct() {
-        let result = await axios.get(axios.defaults.baseURL + `/api/v1/most-by-product`);
+        let result = await axios.get(axios.defaults.baseURL + `/most-by-product`);
         setListMostBuyProduct(result?.data.listMostBuyProduct);
     }
 
     async function getListMostReducingProduct() {
-        let result = await axios.get(axios.defaults.baseURL + `/api/v1/most-reducing-product`);
+        let result = await axios.get(axios.defaults.baseURL + `/most-reducing-product`);
         setListMostReducingProduct(result?.data.listMostReducingProduct);
     }
 
@@ -55,7 +55,7 @@ export default function HomePage() {
 
     const handleCategoryClick = async (item) => {
         try {
-            const result = await axios.post(axios.defaults.baseURL + '/api/v1/search-product-by-id-category', {
+            const result = await axios.post(axios.defaults.baseURL + '/search-product-by-id-category', {
                 id_category: item.id_category,
             });
 

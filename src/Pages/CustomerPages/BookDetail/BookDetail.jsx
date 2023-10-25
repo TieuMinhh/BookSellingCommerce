@@ -38,7 +38,7 @@ export default function BookDetail() {
     const id = urlParams.get('id');
 
     async function getDetailProduct() {
-        const result = await axios.get(axios.defaults.baseURL + `/api/v1/detail-product?id=${id}`);
+        const result = await axios.get(axios.defaults.baseURL + `/detail-product?id=${id}`);
         setList(result?.data.listProduct);
     }
 
@@ -56,7 +56,7 @@ export default function BookDetail() {
         let token = await getToken();
         let id_product = id;
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        let result = await axios.post(axios.defaults.baseURL + `/api/v1/add-to-cart/${id_product}`, { quantity });
+        let result = await axios.post(axios.defaults.baseURL + `/add-to-cart/${id_product}`, { quantity });
 
         if (result.status === 200) {
             setIsNotiSuccess(true);
@@ -90,7 +90,7 @@ export default function BookDetail() {
             try {
                 const token = await getToken();
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                const result = await axios.post(axios.defaults.baseURL + `/api/v1/account/cart`);
+                const result = await axios.post(axios.defaults.baseURL + `/account/cart`);
                 countCartContext.handleCountCart(result?.data.list.length);
             } catch (error) {}
         } else {
@@ -104,7 +104,7 @@ export default function BookDetail() {
             try {
                 const token = await getToken();
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                const result = await axios.post(axios.defaults.baseURL + `/api/v1/account/cart`);
+                const result = await axios.post(axios.defaults.baseURL + `/account/cart`);
                 console.log('COunt: ', result?.data.list.length);
                 countCartContext.handleCountCart(result?.data.list.length);
                 navigate('/cart');

@@ -13,7 +13,7 @@ export function CountCartProvider({ children }) {
             try {
                 const token = await getToken();
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                const result = await axios.post(axios.defaults.baseURL + `/api/v1/account/cart`);
+                const result = await axios.post(axios.defaults.baseURL + `/account/cart`);
                 setCountCart(result?.data.list.length);
             } catch (error) {}
         };

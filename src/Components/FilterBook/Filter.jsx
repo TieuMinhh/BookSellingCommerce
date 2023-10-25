@@ -10,7 +10,7 @@ export default function Filter() {
     const [list, setList] = useState([]);
 
     async function getListCategory() {
-        let result = await axios.get(axios.defaults.baseURL + `/api/v1/category?id=ALL`);
+        let result = await axios.get(axios.defaults.baseURL + `/category?id=ALL`);
         setList(result?.data.listCategory);
         // console.log(result.data);
     }
@@ -32,7 +32,7 @@ export default function Filter() {
     useEffect(() => {
         const searchProductByCategory = async () => {
             try {
-                const result = await axios.post(axios.defaults.baseURL + '/api/v1/search-product-by-category', {
+                const result = await axios.post(axios.defaults.baseURL + '/search-product-by-category', {
                     name: debouncedValue,
                 });
 

@@ -11,7 +11,7 @@ export default function MyVoucher() {
     const [list, setList] = useState([]);
 
     async function getListProduct() {
-        const result = await axios.get(axios.defaults.baseURL + `/api/v1/discount?id=ALL`);
+        const result = await axios.get(axios.defaults.baseURL + `/discount?id=ALL`);
         setList(result?.data.listDiscount);
     }
     useEffect(() => {

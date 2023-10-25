@@ -34,7 +34,7 @@ export default function Header() {
     useEffect(() => {
         const searchProduct = async () => {
             try {
-                const result = await axios.post(axios.defaults.baseURL + '/api/v1/search-product', {
+                const result = await axios.post(axios.defaults.baseURL + '/search-product', {
                     name: debouncedValue,
                 });
 
@@ -60,7 +60,7 @@ export default function Header() {
 
     const handleCategoryClick = async (item) => {
         try {
-            const result = await axios.post(axios.defaults.baseURL + '/api/v1/search-product-by-id-category', {
+            const result = await axios.post(axios.defaults.baseURL + '/search-product-by-id-category', {
                 id_category: item.id_category,
             });
 
@@ -92,14 +92,14 @@ export default function Header() {
         try {
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const result = await axios.post(axios.defaults.baseURL + `/api/v1/account/cart`);
+            const result = await axios.post(axios.defaults.baseURL + `/account/cart`);
             setListCart(result?.data.list);
         } catch (error) {}
     }
 
     async function getListCategory() {
         try {
-            let result = await axios.get(axios.defaults.baseURL + `/api/v1/category?id=ALL`);
+            let result = await axios.get(axios.defaults.baseURL + `/category?id=ALL`);
             setListCategory(result?.data.listCategory);
         } catch (error) {}
     }

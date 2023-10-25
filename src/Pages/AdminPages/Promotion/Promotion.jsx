@@ -21,7 +21,7 @@ export default function Promotion() {
     const [ID_discount, setIDDiscount] = useState();
 
     async function getListDiscount() {
-        let result = await axios.get(axios.defaults.baseURL + `/api/v1/discount?id=ALL`);
+        let result = await axios.get(axios.defaults.baseURL + `/discount?id=ALL`);
         setList(result?.data.listDiscount);
         // console.log(result.data);
     }
@@ -57,7 +57,7 @@ export default function Promotion() {
     const handleCloseDel = () => setShowDel(false);
 
     const handleSubmitAdd = async () => {
-        const result = await axios.post(axios.defaults.baseURL + '/api/v1/admin/create-discount', {
+        const result = await axios.post(axios.defaults.baseURL + '/admin/create-discount', {
             discount_code: code,
             percentage: percentage,
             start_date: startDay,
@@ -83,7 +83,7 @@ export default function Promotion() {
     };
 
     const handleSubmitEdit = async () => {
-        const result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/update-discount/${ID_discount}`, {
+        const result = await axios.post(axios.defaults.baseURL + `/admin/update-discount/${ID_discount}`, {
             discount_code: code,
             percentage: percentage,
             start_date: startDay,
@@ -107,7 +107,7 @@ export default function Promotion() {
     };
 
     const handleSubmitDel = async () => {
-        const result = await axios.delete(axios.defaults.baseURL + `/api/v1/admin/delete-discount/${ID_discount}`);
+        const result = await axios.delete(axios.defaults.baseURL + `/admin/delete-discount/${ID_discount}`);
 
         console.log(result);
 

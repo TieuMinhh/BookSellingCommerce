@@ -13,7 +13,7 @@ export default function Home() {
 
     useEffect(() => {
         async function getAllProduct() {
-            const result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/product?id=ALL`);
+            const result = await axios.get(axios.defaults.baseURL + `/admin/product?id=ALL`);
             let countPage = result?.data.listProduct.length / 8;
             if (countPage % 8 !== 0) {
                 countPage += 1;
@@ -33,7 +33,7 @@ export default function Home() {
     const [currentPage, setCurrentPage] = useState(1);
 
     async function getListProduct(page) {
-        const result = await axios.get(axios.defaults.baseURL + `/api/v1/product-by-pages?page=${page}`);
+        const result = await axios.get(axios.defaults.baseURL + `/product-by-pages?page=${page}`);
         setList(result?.data.listProduct);
     }
 

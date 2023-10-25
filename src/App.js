@@ -11,8 +11,6 @@ import Revenue from './Pages/AdminPages/Revenue/Revenue';
 import Customer from './Pages/AdminPages/Customer/Customer';
 import Order from './Pages/AdminPages/Order/Order';
 import Promotion from './Pages/AdminPages/Promotion/Promotion';
-import Login from './Pages/Auths/Login/Login';
-import SignUp from './Pages/Auths/Signin/Signin';
 import Profile from './Pages/CustomerPages/Profile/Profife';
 import ChangeInfo from './Pages/CustomerPages/ChangeInfo/ChangeInfo';
 import OrderHistory from './Pages/CustomerPages/OrderHistory/OrderHistory';
@@ -81,8 +79,6 @@ function App() {
                                             <Route path="admin/promotion" element={<Promotion />} />
                                             <Route path="admin/promotion-product" element={<ProductPromotion />} />
                                             <Route path="admin/publishing-company" element={<Publishing />} />
-                                            <Route path="/login" element={<Login />} />
-                                            <Route path="/signup" element={<SignUp />} />
                                         </Routes>
                                     </main>
                                 </>
@@ -93,8 +89,6 @@ function App() {
                                     <Routes>
                                         <Route path="/" exact element={<HomePage />} />
                                         <Route path="/product" exact element={<Product />} />
-                                        <Route path="/login" element={<Login />} />
-                                        <Route path="/signup" element={<SignUp />} />
                                         <Route path="/cart" element={<Cart />} />
                                         <Route path="/book/detail" element={<BookDetail />} />
                                         <Route path="/profile" element={<Profile />} />

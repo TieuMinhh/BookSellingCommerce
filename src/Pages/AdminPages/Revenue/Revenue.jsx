@@ -11,7 +11,7 @@ export default function Revenue() {
     const [month, setMonth] = useState('1');
 
     async function getListRevenueByMonth(year) {
-        const result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/revenue-year?year=${year}`);
+        const result = await axios.get(axios.defaults.baseURL + `/admin/revenue-year?year=${year}`);
 
         const doanhSoByMonth = new Array(12).fill(0);
 
@@ -34,7 +34,7 @@ export default function Revenue() {
 
     async function getListRevenueByDate(month) {
         console.log('năm:', year, 'tháng :', month);
-        const result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/revenue-month/${month}/${year}`);
+        const result = await axios.get(axios.defaults.baseURL + `/admin/revenue-month/${month}/${year}`);
         const doanhSoByDate = new Array(31).fill(0);
 
         result?.data.listDoanhSoThang.forEach((item) => {

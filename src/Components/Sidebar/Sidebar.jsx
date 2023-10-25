@@ -56,7 +56,7 @@ const Sidebar = () => {
     const getInfoUser = async () => {
         let token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        let result = await axios.get(axios.defaults.baseURL + '/api/v1/account/info');
+        let result = await axios.get(axios.defaults.baseURL + '/account/info');
         getUser(result.data.userInfo);
         console.log('Check token neeee:', result.data.userInfo);
     };

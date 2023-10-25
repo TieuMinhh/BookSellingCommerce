@@ -41,7 +41,7 @@ export default function Cart() {
         try {
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const result = await axios.post(axios.defaults.baseURL + `/api/v1/account/cart`);
+            const result = await axios.post(axios.defaults.baseURL + `/account/cart`);
             setList(result?.data.list);
         } catch (error) {}
     }
@@ -52,11 +52,11 @@ export default function Cart() {
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-            const result = await axios.delete(axios.defaults.baseURL + `/api/v1/remove-from-cart/${item.id_product}`);
+            const result = await axios.delete(axios.defaults.baseURL + `/remove-from-cart/${item.id_product}`);
             setChange(!change);
 
             try {
-                const resultCountCart = await axios.post(axios.defaults.baseURL + `/api/v1/account/cart`);
+                const resultCountCart = await axios.post(axios.defaults.baseURL + `/account/cart`);
                 countCartContext.handleCountCart(resultCountCart?.data.list.length);
             } catch (error) {}
 
@@ -83,7 +83,7 @@ export default function Cart() {
         try {
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            await axios.put(axios.defaults.baseURL + `/api/v1/account/increment-product-from-cart/${item.id_product}`, {
+            await axios.put(axios.defaults.baseURL + `/account/increment-product-from-cart/${item.id_product}`, {
                 quantity: item.quantity,
             });
             setChange(!change);
@@ -97,7 +97,7 @@ export default function Cart() {
         try {
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            await axios.put(axios.defaults.baseURL + `/api/v1/account/decrement-product-from-cart/${item.id_product}`, {
+            await axios.put(axios.defaults.baseURL + `/account/decrement-product-from-cart/${item.id_product}`, {
                 quantity: item.quantity,
             });
 

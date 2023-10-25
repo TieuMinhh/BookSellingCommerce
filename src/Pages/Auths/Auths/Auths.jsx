@@ -58,7 +58,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
     const handleLogin = () => {
         (async () => {
             let result = (
-                await axios.post(axios.defaults.baseURL + `/api/v1/login`, {
+                await axios.post(axios.defaults.baseURL + `/login`, {
                     email: username,
                     password,
                 })
@@ -100,7 +100,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
     const handleSignup = () => {
         (async () => {
             const data = (
-                await axios.post(axios.defaults.baseURL + '/api/v1/account/signup', {
+                await axios.post(axios.defaults.baseURL + '/account/signup', {
                     email: username,
                     password,
                     phone,
@@ -170,7 +170,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
             setMessageSendOTP('Vui lòng nhập email!');
         } else {
             try {
-                const result = await axios.post(axios.defaults.baseURL + '/api/v1/forgot-password', {
+                const result = await axios.post(axios.defaults.baseURL + '/forgot-password', {
                     email: username,
                 });
 
@@ -192,7 +192,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
             setMessageConfirmOTP('Vui lòng nhập OTP');
         } else {
             try {
-                const result = await axios.post(axios.defaults.baseURL + `/api/v1/confirm/${idAccount}`, {
+                const result = await axios.post(axios.defaults.baseURL + `/confirm/${idAccount}`, {
                     code: OTP,
                 });
                 if (result.data.errCode === 0) {
@@ -212,7 +212,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
 
     const handleConfirmPasswordChange = async () => {
         if (password === newPassword) {
-            const result = await axios.post(axios.defaults.baseURL + `/api/v1/change-password-new/${idAccount}`, {
+            const result = await axios.post(axios.defaults.baseURL + `/change-password-new/${idAccount}`, {
                 newPassword: password,
                 newPassword2: newPassword,
             });

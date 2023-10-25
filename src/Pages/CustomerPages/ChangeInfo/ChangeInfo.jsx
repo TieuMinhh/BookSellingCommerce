@@ -19,7 +19,7 @@ export default function ChangeInfo() {
     const getInfoUser = async () => {
         let token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        let result = await axios.get(axios.defaults.baseURL + '/api/v1/account/info');
+        let result = await axios.get(axios.defaults.baseURL + '/account/info');
         setUser(result.data.userInfo);
         // console.log('Check token neeee:', result.data.userInfo);
 
@@ -35,7 +35,7 @@ export default function ChangeInfo() {
 
     async function ChangeInfo() {
         try {
-            const result = await axios.put(axios.defaults.baseURL + `/api/v1/update_info/${idAccount}`, {
+            const result = await axios.put(axios.defaults.baseURL + `/update_info/${idAccount}`, {
                 name,
                 phone,
                 address,

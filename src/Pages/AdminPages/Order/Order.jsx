@@ -28,33 +28,33 @@ export default function Order() {
     const handleCloseDetailOrder = () => setShowDetailOrder(false);
 
     async function getListOrder() {
-        const result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/get-orders`);
+        const result = await axios.get(axios.defaults.baseURL + `/admin/get-orders`);
         setList(result?.data.listOrder);
         // console.log(result.data);
     }
 
     async function getListOrderDetail(id_order) {
-        const result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/detail-order/${id_order}`);
+        const result = await axios.get(axios.defaults.baseURL + `/admin/detail-order/${id_order}`);
         setListOrderDetail(result?.data.listOrderDetail);
         console.log(result.data);
     }
 
     const handleConfirm = async (item) => {
-        let result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/confirm-order/${item.id_order}`);
+        let result = await axios.post(axios.defaults.baseURL + `/admin/confirm-order/${item.id_order}`);
         console.log(result);
         setChange(!change);
         if (result.data.errCode === 0) toast.success(result.data.message);
     };
 
     const handleComplete = async (item) => {
-        let result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/complete-order/${item.id_order}`);
+        let result = await axios.post(axios.defaults.baseURL + `/admin/complete-order/${item.id_order}`);
         console.log(result);
         setChange(!change);
         if (result.data.errCode === 0) toast.success(result.data.message);
     };
 
     const handleCancel = async (item) => {
-        let result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/cancel-order/${item.id_order}`);
+        let result = await axios.post(axios.defaults.baseURL + `/admin/cancel-order/${item.id_order}`);
         console.log(result);
         setChange(!change);
         if (result.data.errCode === 0) toast.success(result.data.message);

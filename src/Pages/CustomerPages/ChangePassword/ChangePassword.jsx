@@ -16,7 +16,7 @@ export default function ChangePassword() {
     async function ChangePassword() {
         let token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const result = await axios.post(axios.defaults.baseURL + `/api/v1/change-password`, {
+        const result = await axios.post(axios.defaults.baseURL + `/change-password`, {
             oldPassword: password,
             newPassword: newPassword,
             confirmPassword: confirmPassword,
