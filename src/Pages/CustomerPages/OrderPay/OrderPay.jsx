@@ -87,20 +87,20 @@ export default function OrderPay() {
     const getInfoUser = async () => {
         let token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        let result = await axios.get(axios.defaults.baseURL + '/api/v1/account/info');
+        let result = await axios.get(axios.defaults.baseURL + '/account/info');
         getUser(result.data.userInfo);
         setDeliveryAddress(result.data.userInfo.address);
     };
 
     async function getListVoucher() {
-        const result = await axios.get(axios.defaults.baseURL + `/api/v1/discount?id=ALL`);
+        const result = await axios.get(axios.defaults.baseURL + `/discount?id=ALL`);
         setListVoucher(result?.data.listDiscount);
     }
 
     async function getListDeliveryAddress() {
         let token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const result = await axios.get(axios.defaults.baseURL + `/api/v1/delivery-address`);
+        const result = await axios.get(axios.defaults.baseURL + `/delivery-address`);
         setListAddress(result?.data.listAddress);
     }
 
@@ -108,7 +108,7 @@ export default function OrderPay() {
         try {
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const result = await axios.post(axios.defaults.baseURL + `/api/v1/create-delivery-address`, {
+            const result = await axios.post(axios.defaults.baseURL + `/create-delivery-address`, {
                 name_address: nameAddress,
                 name_receiver: nameReceiver,
                 phone_receiver: phoneReceiver,
@@ -125,7 +125,7 @@ export default function OrderPay() {
         try {
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const result = await axios.post(axios.defaults.baseURL + `/api/v1/update-delivery-address/${IdAddress}`, {
+            const result = await axios.post(axios.defaults.baseURL + `/update-delivery-address/${IdAddress}`, {
                 name_address: nameAddress,
                 name_receiver: nameReceiver,
                 phone_receiver: phoneReceiver,
@@ -140,9 +140,7 @@ export default function OrderPay() {
         try {
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const result = await axios.delete(
-                axios.defaults.baseURL + `/api/v1/delete-delivery-address/${item.id_address}`,
-            );
+            const result = await axios.delete(axios.defaults.baseURL + `/delete-delivery-address/${item.id_address}`);
 
             setChange(!change);
         } catch (error) {}
@@ -150,9 +148,7 @@ export default function OrderPay() {
 
     async function AddVoucher() {
         try {
-            const response = await axios.get(
-                axios.defaults.baseURL + `/api/v1/get-discount-by-code?discount_code=${code}`,
-            );
+            const response = await axios.get(axios.defaults.baseURL + `/get-discount-by-code?discount_code=${code}`);
 
             const check = response.data.data;
 
@@ -187,7 +183,7 @@ export default function OrderPay() {
     async function ChooseVoucher(item) {
         try {
             const response = await axios.get(
-                axios.defaults.baseURL + `/api/v1/get-discount-by-code?discount_code=${item.discount_code}`,
+                axios.defaults.baseURL + `/get-discount-by-code?discount_code=${item.discount_code}`,
             );
 
             const check = response.data.data;
@@ -223,7 +219,7 @@ export default function OrderPay() {
 
     const handleOrder = async () => {
         try {
-            const order = await axios.post(axios.defaults.baseURL + '/api/v1/order-pay', {
+            const order = await axios.post(axios.defaults.baseURL + '/order-pay', {
                 arr: listProduct,
                 discount_id: discount?.discount_id,
                 id_address: listAddress[0]?.id_address,

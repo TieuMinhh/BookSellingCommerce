@@ -15,7 +15,7 @@ export default function Customer() {
     const [id, setID] = useState();
 
     async function getListCustomer() {
-        const result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/account`);
+        const result = await axios.get(axios.defaults.baseURL + `/admin/account`);
         setList(result?.data.listAccount);
         // console.log(result.data);
     }
@@ -44,7 +44,7 @@ export default function Customer() {
         console.log('id_account là :', id);
         try {
             const reason = document.getElementById('exampleForm.ControlInput1').value;
-            const result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/block-user/${id}`, {
+            const result = await axios.post(axios.defaults.baseURL + `/admin/block-user/${id}`, {
                 reason: reason,
             });
             setChange(!change);
@@ -61,7 +61,7 @@ export default function Customer() {
         console.log('id_account là :', id);
         try {
             const reason = document.getElementById('exampleForm.ControlInput2').value;
-            const result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/unblock-user/${id}`, {
+            const result = await axios.post(axios.defaults.baseURL + `/admin/unblock-user/${id}`, {
                 reason: reason,
             });
             setChange(!change);

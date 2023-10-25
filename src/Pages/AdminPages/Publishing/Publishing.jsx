@@ -18,7 +18,7 @@ export default function Publishing() {
     const [IDCompany, setIDCompany] = useState();
 
     async function getListNXB() {
-        let result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/publishing-company?id=ALL`);
+        let result = await axios.get(axios.defaults.baseURL + `/admin/publishing-company?id=ALL`);
         setList(result?.data.listNXB);
         // console.log(result.data);
     }
@@ -52,7 +52,7 @@ export default function Publishing() {
     const handleCloseDel = () => setShowDel(false);
 
     const handleSubmitAdd = async () => {
-        const result = await axios.post(axios.defaults.baseURL + '/api/v1/admin/create-nxb', {
+        const result = await axios.post(axios.defaults.baseURL + '/admin/create-nxb', {
             name_company: name,
             email_company: email,
             phone_company: phone,
@@ -76,7 +76,7 @@ export default function Publishing() {
     };
 
     const handleSubmitEdit = async () => {
-        const result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/update-nxb/${IDCompany}`, {
+        const result = await axios.post(axios.defaults.baseURL + `/admin/update-nxb/${IDCompany}`, {
             name_company: name,
             email_company: email,
             phone_company: phone,
@@ -98,7 +98,7 @@ export default function Publishing() {
     };
 
     const handleSubmitDel = async () => {
-        const result = await axios.delete(axios.defaults.baseURL + `/api/v1/admin/delete-nxb/${IDCompany}`);
+        const result = await axios.delete(axios.defaults.baseURL + `/admin/delete-nxb/${IDCompany}`);
 
         console.log(result);
 

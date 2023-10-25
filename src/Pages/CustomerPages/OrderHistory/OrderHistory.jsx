@@ -37,14 +37,16 @@ export default function OrderHistory() {
 
     async function getOrderList() {
         let token = await getToken();
-
         let data = await checkToken(token);
+        console.log(data.userInfo.id_account);
         try {
             let orderByAccount = await axios.get(
-                axios.defaults.baseURL + `/api/v1/account/order-history-by-account/${data.userInfo.id_account}`,
+                axios.defaults.baseURL + `/account/order-history-by-account/${data.userInfo.id_account}`,
             );
             setListOrderByAccount(orderByAccount?.data.listOrder);
-        } catch (error) {}
+        } catch (error) {
+            console.log('lỗi:', error);
+        }
     }
 
     const getOrderByStatus = async (status) => {
@@ -54,8 +56,7 @@ export default function OrderHistory() {
 
         try {
             let orderByStatus = await axios.get(
-                axios.defaults.baseURL +
-                    `/api/v1/account/order-history-by-status/${data.userInfo.id_account}/${status}`,
+                axios.defaults.baseURL + `/account/order-history-by-status/${data.userInfo.id_account}/${status}`,
             );
             setDetailOrderByStatus(orderByStatus?.data.listOrder);
         } catch (error) {}
@@ -63,14 +64,14 @@ export default function OrderHistory() {
 
     async function getListOrderDetail(id_order) {
         try {
-            const result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/detail-order/${id_order}`);
+            const result = await axios.get(axios.defaults.baseURL + `/admin/detail-order/${id_order}`);
             setListOrderDetail(result?.data.listOrderDetail);
         } catch (error) {}
     }
 
     const handleCancel = async (id_order) => {
         try {
-            let result = await axios.post(axios.defaults.baseURL + `/api/v1/admin/cancel-order/${id_order}`);
+            let result = await axios.post(axios.defaults.baseURL + `/admin/cancel-order/${id_order}`);
             setChange(!change);
             if (result.data.errCode === 0) toast.success(result.data.message);
             setChange(!change);

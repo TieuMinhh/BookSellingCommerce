@@ -18,7 +18,7 @@ export default function ProductPromotion() {
     const [ID_discount, setIDDiscount] = useState();
 
     async function getListDiscount() {
-        let result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/promotion-product?id=ALL`);
+        let result = await axios.get(axios.defaults.baseURL + `/admin/promotion-product?id=ALL`);
         setList(result?.data.listPromotionProduct);
         console.log(result.data);
     }
@@ -50,7 +50,7 @@ export default function ProductPromotion() {
     const handleCloseDel = () => setShowDel(false);
 
     const handleSubmitAdd = async () => {
-        const result = await axios.post(axios.defaults.baseURL + '/api/v1/admin/create-promotion-product', {
+        const result = await axios.post(axios.defaults.baseURL + '/admin/create-promotion-product', {
             percentage: percentage,
             start_date: startDay,
             end_date: endDay,
@@ -72,14 +72,11 @@ export default function ProductPromotion() {
     };
 
     const handleSubmitEdit = async () => {
-        const result = await axios.post(
-            axios.defaults.baseURL + `/api/v1/admin/update-promotion-product/${ID_discount}`,
-            {
-                percentage: percentage,
-                start_date: startDay,
-                end_date: endDay,
-            },
-        );
+        const result = await axios.post(axios.defaults.baseURL + `/admin/update-promotion-product/${ID_discount}`, {
+            percentage: percentage,
+            start_date: startDay,
+            end_date: endDay,
+        });
 
         console.log(result);
 
@@ -95,9 +92,7 @@ export default function ProductPromotion() {
     };
 
     const handleSubmitDel = async () => {
-        const result = await axios.delete(
-            axios.defaults.baseURL + `/api/v1/admin/delete-promotion-product/${ID_discount}`,
-        );
+        const result = await axios.delete(axios.defaults.baseURL + `/admin/delete-promotion-product/${ID_discount}`);
 
         console.log(result);
 

@@ -63,25 +63,25 @@ export default function Book() {
     const handleCloseDel = () => setShowDel(false);
 
     async function getListProduct() {
-        const result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/product?id=ALL`);
+        const result = await axios.get(axios.defaults.baseURL + `/admin/product?id=ALL`);
         setList(result?.data.listProduct);
         // console.log(result.data);
     }
 
     async function getListCategory() {
-        let result = await axios.get(axios.defaults.baseURL + `/api/v1/category?id=ALL`);
+        let result = await axios.get(axios.defaults.baseURL + `/category?id=ALL`);
         setListCategory(result?.data.listCategory);
         // console.log(result.data);
     }
 
     async function getListNXB() {
-        let result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/publishing-company?id=ALL`);
+        let result = await axios.get(axios.defaults.baseURL + `/admin/publishing-company?id=ALL`);
         setListNXB(result?.data.listNXB);
         // console.log(result.data);
     }
 
     async function getListDiscount() {
-        let result = await axios.get(axios.defaults.baseURL + `/api/v1/admin/promotion-product?id=ALL`);
+        let result = await axios.get(axios.defaults.baseURL + `/admin/promotion-product?id=ALL`);
         setListDiscount(result?.data.listPromotionProduct);
         console.log(result.data);
     }
@@ -112,7 +112,7 @@ export default function Book() {
 
         console.log(name, image, detail, price, id_category, content, author, yearPublish, id_company, id_promotion);
 
-        const result = await axios.post(axios.defaults.baseURL + '/api/v1/admin/createNewProduct', formData, {
+        const result = await axios.post(axios.defaults.baseURL + '/admin/createNewProduct', formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
         });
 
@@ -154,13 +154,9 @@ export default function Book() {
 
         console.log(name, image, detail, price, content, author, yearPublish, id_category, id_company, id_promotion);
 
-        const result = await axios.post(
-            axios.defaults.baseURL + `/api/v1/admin/updateProduct/${id_product}`,
-            formData,
-            {
-                headers: { 'Content-Type': 'multipart/form-data' },
-            },
-        );
+        const result = await axios.post(axios.defaults.baseURL + `/admin/updateProduct/${id_product}`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
 
         // console.log(result);
 
@@ -184,7 +180,7 @@ export default function Book() {
     };
 
     const handleSubmitDel = async () => {
-        const result = await axios.delete(axios.defaults.baseURL + `/api/v1/admin/deleteProduct/${id_product}`, {
+        const result = await axios.delete(axios.defaults.baseURL + `/admin/deleteProduct/${id_product}`, {
             headers: { 'Content-Type': 'multipart/form-data' },
         });
 
