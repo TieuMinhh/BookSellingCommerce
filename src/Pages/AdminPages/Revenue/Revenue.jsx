@@ -11,17 +11,17 @@ export default function Revenue() {
     const [month, setMonth] = useState('1');
 
     async function getListRevenueByMonth(year) {
-        const result = await axios.get(axios.defaults.baseURL + `/admin/revenue-year?year=${year}`);
+        const result = await axios.get(axios.defaults.baseURL + `/admin/revenue-year/${year}`);
 
-        const doanhSoByMonth = new Array(12).fill(0);
+        const revenueByMonth = new Array(12).fill(0);
 
-        result?.data.listDoanhSo.forEach((item) => {
-            const thang = item.thang - 1; // Trừ 1 để chuyển tháng từ 1-based sang 0-based
-            const doanhSo = parseFloat(item.total_doanhso);
-            doanhSoByMonth[thang] = doanhSo;
+        result?.data.listRevenue.forEach((item) => {
+            const month = item.months - 1; // Trừ 1 để chuyển tháng từ 1-based sang 0-based
+            const revenue = parseFloat(item.total_revenue);
+            revenueByMonth[month] = revenue;
         });
         setList([
-            ...doanhSoByMonth.map((item, index) => {
+            ...revenueByMonth.map((item, index) => {
                 return {
                     id: index + 1,
                     name: `Tháng ${index + 1}`,
@@ -35,16 +35,16 @@ export default function Revenue() {
     async function getListRevenueByDate(month) {
         console.log('năm:', year, 'tháng :', month);
         const result = await axios.get(axios.defaults.baseURL + `/admin/revenue-month/${month}/${year}`);
-        const doanhSoByDate = new Array(31).fill(0);
+        const revenueByDate = new Array(31).fill(0);
 
-        result?.data.listDoanhSoThang.forEach((item) => {
-            const ngay = item.ngay - 1; // Trừ 1 để chuyển ngày từ 1-based sang 0-based
-            const doanhSo = parseFloat(item.total_doanhso);
-            doanhSoByDate[ngay] = doanhSo;
+        result?.data.listRevenueByMonths.forEach((item) => {
+            const day = item.day - 1; // Trừ 1 để chuyển ngày từ 1-based sang 0-based
+            const revenue = parseFloat(item.total_revenue);
+            revenueByDate[day] = revenue;
         });
-        console.log('manh: ', doanhSoByDate);
+        console.log('manh: ', revenueByDate);
         setListMonth([
-            ...doanhSoByDate.map((item, index) => {
+            ...revenueByDate.map((item, index) => {
                 return {
                     id: index + 1,
                     name: ` ${index + 1}`,
