@@ -116,8 +116,8 @@ const Sidebar = () => {
                                         alt="profile-user"
                                         src={`${config.PUBLIC_IMAGE_URL}${user && user?.avatar}`}
                                         style={{
-                                            width: '120px',
-                                            height: '120px',
+                                            width: '90px',
+                                            height: '90px',
                                             cursor: 'pointer',
                                             borderRadius: '50%',
                                             objectFit: 'cover',
@@ -126,7 +126,7 @@ const Sidebar = () => {
                                 </Box>
                                 <Box textAlign="center">
                                     <Typography
-                                        variant="h3"
+                                        variant="h4"
                                         color={colors.grey[100]}
                                         fontWeight="bold"
                                         sx={{ m: '10px 0 0 0' }}
