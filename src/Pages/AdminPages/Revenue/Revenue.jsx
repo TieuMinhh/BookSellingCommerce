@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './Revenue.scss';
 import axios from '../../../api/axios';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS } from 'chart.js/auto';
 
 export default function Revenue() {
     const [list, setList] = useState([]);
