@@ -70,13 +70,14 @@ export default function Category() {
         });
         console.log(result);
 
-        // console.log(name, image);
-        setChange(!change);
-        setShowAdd(false);
-        setName(null);
-        setImage(null);
-        setSelectedImage(null);
-        if (result.data.errCode === 0) toast.success(result.data.message);
+        if (result.data.errCode === 0) {
+            setChange(!change);
+            toast.success(result.data.message);
+            setShowAdd(false);
+            setName(null);
+            setImage(null);
+            setSelectedImage(null);
+        }
         if (result.data.errCode === 1) toast.error(result.data.message);
         if (result.data.errCode === 2) toast.warning(result.data.message);
     };
@@ -92,13 +93,15 @@ export default function Category() {
         });
 
         console.log(result);
-        // console.log(name, image);
-        setChange(!change);
-        setShowEdit(false);
-        setImage(null);
-        setSelectedImage(null);
-
-        if (result.status === 200) toast.success(result.data.message);
+        if (result.data.errCode === 0) {
+            setChange(!change);
+            toast.success(result.data.message);
+            setShowEdit(false);
+            setImage(null);
+            setSelectedImage(null);
+        }
+        if (result.data.errCode === 1) toast.warning(result.data.message);
+        if (result.data.errCode === 2) toast.error(result.data.message);
     };
 
     const handleSubmitDel = async () => {
@@ -108,12 +111,14 @@ export default function Category() {
 
         // console.log(name, image);
         console.log(result);
-        setChange(!change);
-        setImage(null);
-        setSelectedImage(null);
-        setShowDel(false);
-        if (result.status === 200) toast.success(result.data.message);
-        if (result.status === 201) toast.error(result.data.message);
+        if (result.data.errCode === 0) {
+            setChange(!change);
+            toast.success(result.data.message);
+            setShowDel(false);
+            setImage(null);
+            setSelectedImage(null);
+        }
+        if (result.data.errCode === 1) toast.warning(result.data.message);
     };
 
     useEffect(() => {

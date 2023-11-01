@@ -69,17 +69,19 @@ export default function Promotion() {
 
         console.log(result);
 
-        setChange(!change);
-        setCode(null);
-        setPercentage(null);
-        setStartDay(null);
-        setEndDay(null);
-        setDescription(null);
+        if (result.data.errCode === 0) {
+            setChange(!change);
+            setCode(null);
+            setPercentage(null);
+            setStartDay(null);
+            setEndDay(null);
+            setDescription(null);
+            toast.success(result.data.message);
+            setShowAdd(false);
+        }
 
-        if (result.data.errCode === 0) toast.success(result.data.message);
-        if (result.data.errCode === 1) toast.error(result.data.message);
-        if (result.data.errCode === 2) toast.warning(result.data.message);
-        setShowAdd(false);
+        if (result.data.errCode === 1) toast.warning(result.data.message);
+        if (result.data.errCode === 2) toast.error(result.data.message);
     };
 
     const handleSubmitEdit = async () => {
@@ -93,17 +95,18 @@ export default function Promotion() {
 
         console.log(result);
 
-        setChange(!change);
-        setCode(null);
-        setPercentage(null);
-        setStartDay(null);
-        setEndDay(null);
-        setDescription(null);
-
-        if (result.data.errCode === 0) toast.success(result.data.message);
-        if (result.data.errCode === 1) toast.error(result.data.message);
-        if (result.data.errCode === 2) toast.warning(result.data.message);
-        setShowEdit(false);
+        if (result.data.errCode === 0) {
+            setChange(!change);
+            setCode(null);
+            setPercentage(null);
+            setStartDay(null);
+            setEndDay(null);
+            setDescription(null);
+            toast.success(result.data.message);
+            setShowEdit(false);
+        }
+        if (result.data.errCode === 1) toast.warning(result.data.message);
+        if (result.data.errCode === 2) toast.error(result.data.message);
     };
 
     const handleSubmitDel = async () => {
@@ -111,11 +114,12 @@ export default function Promotion() {
 
         console.log(result);
 
-        setChange(!change);
-
-        if (result.data.errCode === 0) toast.success(result.data.message);
+        if (result.data.errCode === 0) {
+            setShowDel(false);
+            setChange(!change);
+            toast.success(result.data.message);
+        }
         if (result.data.errCode === 1) toast.error(result.data.message);
-        setShowDel(false);
     };
 
     useEffect(() => {

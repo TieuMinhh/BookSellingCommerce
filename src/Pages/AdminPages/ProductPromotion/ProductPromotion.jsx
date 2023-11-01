@@ -60,15 +60,16 @@ export default function ProductPromotion() {
 
         console.log(result);
 
-        setChange(!change);
-        setPercentage(null);
-        setStartDay(null);
-        setEndDay(null);
-
-        if (result.data.errCode === 0) toast.success(result.data.message);
-        if (result.data.errCode === 1) toast.error(result.data.message);
-        if (result.data.errCode === 2) toast.warning(result.data.message);
-        setShowAdd(false);
+        if (result.data.errCode === 0) {
+            setChange(!change);
+            setPercentage(null);
+            setStartDay(null);
+            setEndDay(null);
+            setShowAdd(false);
+            toast.success(result.data.message);
+        }
+        if (result.data.errCode === 1) toast.warning(result.data.message);
+        if (result.data.errCode === 2) toast.error(result.data.message);
     };
 
     const handleSubmitEdit = async () => {
@@ -80,15 +81,16 @@ export default function ProductPromotion() {
 
         console.log(result);
 
-        setChange(!change);
-        setPercentage(null);
-        setStartDay(null);
-        setEndDay(null);
-
-        if (result.data.errCode === 0) toast.success(result.data.message);
-        if (result.data.errCode === 1) toast.error(result.data.message);
-        if (result.data.errCode === 2) toast.warning(result.data.message);
-        setShowEdit(false);
+        if (result.data.errCode === 0) {
+            setChange(!change);
+            setPercentage(null);
+            setStartDay(null);
+            setEndDay(null);
+            setShowEdit(false);
+            toast.success(result.data.message);
+        }
+        if (result.data.errCode === 1) toast.warning(result.data.message);
+        if (result.data.errCode === 2) toast.error(result.data.message);
     };
 
     const handleSubmitDel = async () => {
@@ -96,11 +98,12 @@ export default function ProductPromotion() {
 
         console.log(result);
 
-        setChange(!change);
-
-        if (result.data.errCode === 0) toast.success(result.data.message);
+        if (result.data.errCode === 0) {
+            setChange(!change);
+            setShowDel(false);
+            toast.success(result.data.message);
+        }
         if (result.data.errCode === 1) toast.error(result.data.message);
-        setShowDel(false);
     };
 
     useEffect(() => {
