@@ -56,7 +56,8 @@ export default function Book() {
 
     const handleShowDelete = (item) => {
         setIDProduct(item.id_product);
-        // console.log("Id product: ", item);
+        setName(item.name_product);
+        setImage(item.images);
         setShowDel(true);
     };
 
@@ -118,25 +119,24 @@ export default function Book() {
 
         console.log(result);
 
-        setChange(!change);
-
-        setImage(null);
-        setSelectedImage(null);
-        setName(null);
-        setDetail(null);
-        setPrice(null);
-        setAuthor(null);
-        setContent(null);
-        setyearPublish(null);
-        setIDCategory(null);
-        setIDCompany(null);
-        setIDPromotion(null);
-
-        setShowAdd(false);
-
-        if (result.data.errCode === 0) toast.success(result.data.message);
-        if (result.data.errCode === 1) toast.error(result.data.message);
-        if (result.data.errCode === 2) toast.warning(result.data.message);
+        if (result.data.errCode === 0) {
+            setChange(!change);
+            setImage(null);
+            setSelectedImage(null);
+            setName(null);
+            setDetail(null);
+            setPrice(null);
+            setAuthor(null);
+            setContent(null);
+            setyearPublish(null);
+            setIDCategory(null);
+            setIDCompany(null);
+            setIDPromotion(null);
+            setShowAdd(false);
+            toast.success(result.data.message);
+        }
+        if (result.data.errCode === 1) toast.warning(result.data.message);
+        if (result.data.errCode === 2) toast.error(result.data.message);
     };
 
     const handleSubmitEdit = async () => {
@@ -158,25 +158,24 @@ export default function Book() {
             headers: { 'Content-Type': 'multipart/form-data' },
         });
 
-        // console.log(result);
-
-        setChange(!change);
-        setImage(null);
-        setSelectedImage(null);
-        setName(null);
-        setDetail(null);
-        setPrice(null);
-        setAuthor(null);
-        setContent(null);
-        setyearPublish(null);
-        setIDCategory(null);
-        setIDCompany(null);
-        setIDPromotion(null);
-
-        setShowEdit(false);
-
-        if (result.data.errCode === 0) toast.success(result.data.message);
+        if (result.data.errCode === 0) {
+            setChange(!change);
+            setImage(null);
+            setSelectedImage(null);
+            setName(null);
+            setDetail(null);
+            setPrice(null);
+            setAuthor(null);
+            setContent(null);
+            setyearPublish(null);
+            setIDCategory(null);
+            setIDCompany(null);
+            setIDPromotion(null);
+            setShowEdit(false);
+            toast.success(result.data.message);
+        }
         if (result.data.errCode === 1) toast.warning(result.data.message);
+        if (result.data.errCode === 2) toast.error(result.data.message);
     };
 
     const handleSubmitDel = async () => {
@@ -185,21 +184,12 @@ export default function Book() {
         });
 
         // console.log(name, image);
-        setChange(!change);
-        setImage(null);
-        setSelectedImage(null);
-        setName(null);
-        setDetail(null);
-        setPrice(null);
-        setAuthor(null);
-        setContent(null);
-        setyearPublish(null);
-        setIDCategory(null);
-        setIDCompany(null);
-        setIDPromotion(null);
-        setShowDel(false);
 
-        if (result.data.errCode === 0) toast.success(result.data.message);
+        if (result.data.errCode === 0) {
+            setChange(!change);
+            setShowDel(false);
+            toast.success(result.data.message);
+        }
         if (result.data.errCode === 1) toast.error(result.data.message);
     };
 

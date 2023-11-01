@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './ChangeInfo.scss';
 import { toast } from 'react-toastify';
 import { getToken } from '../../../Services/Token';
-import { Link } from 'react-router-dom';
 import SidebarProfile from '../SidebarProfile/SidebarProfile';
 import axios from '../../../api/axios';
 
 export default function ChangeInfo() {
-    const [isUpdatePass, setIsUpdatePass] = useState(false);
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
@@ -49,8 +47,6 @@ export default function ChangeInfo() {
                     setIsSuccess(false);
                 }, 3000);
             }
-            if (result.status === 400) toast.warning(result.data.message);
-            if (result.status === 200) toast.success(result.data.message);
         } catch (error) {
             toast.error(error.response.data.message);
         }

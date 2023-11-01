@@ -91,7 +91,6 @@ export default function Customer() {
                             <th>Tên khách hàng</th>
                             <th>Email</th>
                             <th>Số điện thoại</th>
-
                             <th>Địa chỉ</th>
                             <th>Ngày tạo</th>
                             <th>Thao tác</th>

@@ -63,16 +63,17 @@ export default function Publishing() {
 
         console.log(result);
 
-        setChange(!change);
-        setName(null);
-        setEmail(null);
-        setPhone(null);
-        setAddress(null);
-
-        if (result.data.errCode === 0) toast.success(result.data.message);
-        if (result.data.errCode === 1) toast.error(result.data.message);
-        if (result.data.errCode === 2) toast.warning(result.data.message);
-        setShowAdd(false);
+        if (result.data.errCode === 0) {
+            setChange(!change);
+            setName(null);
+            setEmail(null);
+            setPhone(null);
+            setAddress(null);
+            toast.success(result.data.message);
+            setShowAdd(false);
+        }
+        if (result.data.errCode === 1) toast.warning(result.data.message);
+        if (result.data.errCode === 2) toast.error(result.data.message);
     };
 
     const handleSubmitEdit = async () => {
@@ -85,16 +86,17 @@ export default function Publishing() {
 
         console.log(result);
 
-        setChange(!change);
-        setName(null);
-        setEmail(null);
-        setPhone(null);
-        setAddress(null);
-
-        if (result.data.errCode === 0) toast.success(result.data.message);
-        if (result.data.errCode === 1) toast.error(result.data.message);
-        if (result.data.errCode === 2) toast.warning(result.data.message);
-        setShowEdit(false);
+        if (result.data.errCode === 0) {
+            setChange(!change);
+            setName(null);
+            setEmail(null);
+            setPhone(null);
+            setAddress(null);
+            toast.success(result.data.message);
+            setShowEdit(false);
+        }
+        if (result.data.errCode === 1) toast.warning(result.data.message);
+        if (result.data.errCode === 2) toast.error(result.data.message);
     };
 
     const handleSubmitDel = async () => {
@@ -102,11 +104,12 @@ export default function Publishing() {
 
         console.log(result);
 
-        setChange(!change);
-
-        if (result.data.errCode === 0) toast.success(result.data.message);
+        if (result.data.errCode === 0) {
+            setChange(!change);
+            toast.success(result.data.message);
+            setShowDel(false);
+        }
         if (result.data.errCode === 1) toast.error(result.data.message);
-        setShowDel(false);
     };
 
     useEffect(() => {
@@ -299,7 +302,7 @@ export default function Publishing() {
                         <div className="modal-category-body text-center">
                             <div className="delete-container">
                                 <label className="ban-co-muon-xoa text-black text-size-fit">
-                                    Ngài có chắc chắn muốn xóa mã khuyến mãi :
+                                    Ngài có chắc chắn muốn xóa nhà xuất bản : {name}
                                 </label>
                             </div>
                         </div>
