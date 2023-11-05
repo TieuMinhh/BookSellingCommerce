@@ -114,8 +114,26 @@ export default function OrderPay() {
                 phone_receiver: phoneReceiver,
             });
 
-            setChange(!change);
-            setIsShowModalAddAddress(false);
+            console.log(result);
+
+            if (result.data.errCode === 0) {
+                setIsNotiSuccess(true);
+                setDetailNoti(result.data.message);
+                setTimeout(() => {
+                    setIsNotiSuccess(false);
+                }, 5000);
+                setCode('');
+                setDiscount(null);
+                setIsShowModalAddAddress(false);
+                setChange(!change);
+            }
+            if (result.data.errCode === 1) {
+                setIsNotiFail(true);
+                setDetailNoti(result.data.message);
+                setTimeout(() => {
+                    setIsNotiFail(false);
+                }, 5000);
+            }
         } catch (error) {
             console.log(error);
         }
@@ -131,8 +149,24 @@ export default function OrderPay() {
                 phone_receiver: phoneReceiver,
             });
 
-            setChange(!change);
-            setIsShowModalEditAddress(false);
+            if (result.data.errCode === 0) {
+                setIsNotiSuccess(true);
+                setDetailNoti(result.data.message);
+                setTimeout(() => {
+                    setIsNotiSuccess(false);
+                }, 5000);
+                setCode('');
+                setDiscount(null);
+                setIsShowModalEditAddress(false);
+                setChange(!change);
+            }
+            if (result.data.errCode === 1) {
+                setIsNotiFail(true);
+                setDetailNoti(result.data.message);
+                setTimeout(() => {
+                    setIsNotiFail(false);
+                }, 5000);
+            }
         } catch (error) {}
     }
 
@@ -142,7 +176,23 @@ export default function OrderPay() {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const result = await axios.delete(axios.defaults.baseURL + `/delete-delivery-address/${item.id_address}`);
 
-            setChange(!change);
+            if (result.data.errCode === 0) {
+                setIsNotiSuccess(true);
+                setDetailNoti(result.data.message);
+                setTimeout(() => {
+                    setIsNotiSuccess(false);
+                }, 5000);
+                setCode('');
+                setDiscount(null);
+                setChange(!change);
+            }
+            if (result.data.errCode === 1) {
+                setIsNotiFail(true);
+                setDetailNoti(result.data.message);
+                setTimeout(() => {
+                    setIsNotiFail(false);
+                }, 5000);
+            }
         } catch (error) {}
     }
 
@@ -150,14 +200,8 @@ export default function OrderPay() {
         try {
             const response = await axios.get(axios.defaults.baseURL + `/get-discount-by-code?discount_code=${code}`);
 
-            const check = response.data.data;
-
-            const today = new Date();
-            const startDay = new Date(check.start_date);
-            const endDay = new Date(check.end_date);
-
-            if (startDay < today && endDay >= today) {
-                setDiscount({ ...check });
+            if (response.status === 200) {
+                setDiscount(response.data.discount);
                 hideModalPromotion();
                 setIsNotiSuccess(true);
                 setDetailNoti('Đã áp dụng mã giảm giá');
@@ -186,16 +230,9 @@ export default function OrderPay() {
                 axios.defaults.baseURL + `/get-discount-by-code?discount_code=${item.discount_code}`,
             );
 
-            const check = response.data.data;
-
-            const today = new Date();
-            const startDay = new Date(check.start_date);
-            const endDay = new Date(check.end_date);
-
-            if (startDay < today && endDay >= today) {
-                setDiscount({ ...check });
+            if (response.status === 200) {
+                setDiscount(response.data.discount);
                 hideModalPromotion();
-
                 setIsNotiSuccess(true);
                 setDetailNoti('Đã áp dụng mã giảm giá');
                 setTimeout(() => {
@@ -203,7 +240,7 @@ export default function OrderPay() {
                 }, 3000);
             } else {
                 setIsNotiFail(true);
-                setDetailNoti('Mã giảm giá không hợp lệ');
+                setDetailNoti(response.data.message);
                 setTimeout(() => {
                     setIsNotiFail(false);
                 }, 3000);
@@ -225,23 +262,30 @@ export default function OrderPay() {
                 id_address: listAddress[0]?.id_address,
             });
 
-            // Đặt lại giá trị giỏ hàng và tiền cần thanh toán
-            setCode('');
-            setDiscount(null);
+            if (order.data.errCode === 0) {
+                setOrderSuccess(true);
+                setTimeout(() => {
+                    setOrderSuccess(false);
+                }, 5000);
 
-            setOrderSuccess(true);
-            setTimeout(() => {
-                setOrderSuccess(false);
-            }, 5000);
-            // toast.success('Đặt hàng thành công');
+                setTimeout(() => {
+                    navigate('/');
+                }, 1500);
 
-            // Thực hiện điều hướng hoặc cập nhật giao diện sau khi đặt hàng thành công
-            setTimeout(() => {
-                navigate('/');
-            }, 1500);
+                setCode('');
+                setDiscount(null);
+            }
+            if (order.data.errCode === 2) {
+                console.log('order:', order);
+                setIsNotiFail(true);
+                setDetailNoti(order.data.message);
+                setTimeout(() => {
+                    setIsNotiFail(false);
+                }, 5000);
+            }
         } catch (error) {
             console.error(error);
-            toast.error('Đã xảy ra lỗi khi đặt hàng');
+            toast.error('Lỗi');
         }
     };
 
@@ -267,6 +311,8 @@ export default function OrderPay() {
         setSelectedAddress(selectedItem);
         console.log('Địa chỉ được chọn là:', selectedItem);
     };
+
+    const chooseDeliveryAddress = () => {};
 
     useEffect(() => {
         getInfoUser();
@@ -315,7 +361,13 @@ export default function OrderPay() {
                         </p>
 
                         <div className="cover-detail-address">
-                            <input className="form-address" type="radio" name="option" id="address1" />
+                            <input
+                                onlick={chooseDeliveryAddress}
+                                className="form-address"
+                                type="radio"
+                                name="option"
+                                id="address1"
+                            />
                             <label htmlFor="address1" className="detail-address-delivery">
                                 {user && user?.address}
                             </label>
