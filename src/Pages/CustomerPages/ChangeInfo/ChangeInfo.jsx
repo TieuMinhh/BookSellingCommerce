@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import { getToken } from '../../../Services/Token';
 import SidebarProfile from '../SidebarProfile/SidebarProfile';
 import axios from '../../../api/axios';
+import { NotifyModalSuccess } from '../../../Components/NotifyModalSuccess/NotifyModalSuccess';
+import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModalFail';
 
 export default function ChangeInfo() {
     const [name, setName] = useState('');
@@ -12,7 +14,10 @@ export default function ChangeInfo() {
     const [user, setUser] = useState([]);
     const [change, setChange] = useState([]);
     const [idAccount, setIdAccount] = useState('');
-    const [isSuccess, setIsSuccess] = useState('');
+
+    const [isNotiSuccess, setIsNotiSuccess] = useState(false);
+    const [detailNoti, setDetailNoti] = useState('');
+    const [isNotiFail, setIsNotiFail] = useState(false);
 
     const getInfoUser = async () => {
         let token = await getToken();
@@ -38,14 +43,22 @@ export default function ChangeInfo() {
                 phone,
                 address,
             });
-            setChange(!change);
             console.log(result);
 
-            if (result.status === 200) {
-                setIsSuccess(true);
+            if (result.data.errCode === 0) {
+                setIsNotiSuccess(true);
+                setDetailNoti(result.data.message);
                 setTimeout(() => {
-                    setIsSuccess(false);
-                }, 3000);
+                    setIsNotiSuccess(false);
+                }, 5000);
+                setChange(!change);
+            }
+            if (result.data.errCode === 1) {
+                setIsNotiFail(true);
+                setDetailNoti(result.data.message);
+                setTimeout(() => {
+                    setIsNotiFail(false);
+                }, 5000);
             }
         } catch (error) {
             toast.error(error.response.data.message);
@@ -114,23 +127,13 @@ export default function ChangeInfo() {
                     </div>
                 </div>
             </div>
-
             {/* Start modal add cart success */}
-            {isSuccess && (
-                <div className="modal-add-success" onClick={() => setIsSuccess(false)}>
-                    <div className="modal-container-success">
-                        <div className="cover-icon-success">
-                            <i
-                                class="fa-solid fa-check detail-icon-success"
-                                style={{ color: '#fff', lineHeight: '60px' }}
-                            ></i>
-                        </div>
-                        <p className="sub-a-success" style={{ color: '#fff' }}>
-                            Ngài đã thay đổi thông tin thành công
-                        </p>
-                    </div>
-                </div>
-            )}
+            <div onClick={() => setIsNotiSuccess(false)}>
+                <NotifyModalSuccess isSuccess={isNotiSuccess} detailNoti={detailNoti} />
+            </div>
+            <div onClick={() => setIsNotiFail(false)}>
+                <NotifyModalFail isFail={isNotiFail} detailNoti={detailNoti} />
+            </div>
         </div>
     );
 }
