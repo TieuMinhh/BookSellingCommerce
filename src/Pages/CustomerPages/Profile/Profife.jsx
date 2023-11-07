@@ -6,18 +6,27 @@ import { getToken } from '../../../Services/Token';
 import SidebarProfile from '../SidebarProfile/SidebarProfile';
 
 export default function Profile() {
-    const [user, getUser] = useState([]);
+    const [user, setUser] = useState([]);
+    const [successfulOrders, setSuccessfulOrder] = useState([]);
     const [change, setChange] = useState([]);
 
     const getInfoUser = async () => {
         let token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         let result = await axios.get(axios.defaults.baseURL + '/account/info');
-        getUser(result.data.userInfo);
+        setUser(result.data.userInfo);
+    };
+
+    const getSuccessfulOrder = async () => {
+        let token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        let result = await axios.get(axios.defaults.baseURL + '/user/successful-orders');
+        setSuccessfulOrder(result.data.successfulOrders);
     };
 
     useEffect(() => {
         getInfoUser();
+        getSuccessfulOrder();
     }, [change]);
 
     return (
@@ -46,7 +55,8 @@ export default function Profile() {
                                 <h6>Thông tin tài khoản</h6>
 
                                 <p>
-                                    Số đơn hàng thành công năm 2023 <span>9</span>
+                                    Số đơn hàng thành công năm 2023{' '}
+                                    <span>{successfulOrders && successfulOrders[0]?.successful_orders}</span>
                                 </p>
                                 <p>
                                     Số tiền đã thanh toán năm 2023 <span>9</span>

@@ -5,13 +5,17 @@ import { getToken } from '../../../Services/Token';
 import { toast } from 'react-toastify';
 import SidebarProfile from '../SidebarProfile/SidebarProfile';
 import axios from '../../../api/axios';
+import { NotifyModalSuccess } from '../../../Components/NotifyModalSuccess/NotifyModalSuccess';
+import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModalFail';
 
 export default function ChangePassword() {
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [change, setChange] = useState('');
-    const [isSuccess, setIsSuccess] = useState('');
+    const [isNotiSuccess, setIsNotiSuccess] = useState(false);
+    const [detailNoti, setDetailNoti] = useState('');
+    const [isNotiFail, setIsNotiFail] = useState(false);
 
     async function ChangePassword() {
         let token = await getToken();
@@ -21,18 +25,28 @@ export default function ChangePassword() {
             newPassword: newPassword,
             confirmPassword: confirmPassword,
         });
-        setChange(!change);
-        // console.log(result);
-
-        if (result.status === 200) {
-            setIsSuccess(true);
+        if (result.data.errCode === 0) {
+            setIsNotiSuccess(true);
+            setDetailNoti(result.data.message);
             setTimeout(() => {
-                setIsSuccess(false);
-            }, 3000);
+                setIsNotiSuccess(false);
+            }, 5000);
+            setChange(!change);
         }
-        if (result.status === 201) toast.error(result.data.message);
-        if (result.status === 202) toast.error(result.data.message);
-        if (result.status === 500) toast.warning(result.data.message);
+        if (result.data.errCode === 1) {
+            setIsNotiFail(true);
+            setDetailNoti(result.data.message);
+            setTimeout(() => {
+                setIsNotiFail(false);
+            }, 5000);
+        }
+        if (result.data.errCode === 2) {
+            setIsNotiFail(true);
+            setDetailNoti(result.data.message);
+            setTimeout(() => {
+                setIsNotiFail(false);
+            }, 5000);
+        }
     }
 
     return (
@@ -88,21 +102,12 @@ export default function ChangePassword() {
                 </div>
             </div>
             {/* Start modal add cart success */}
-            {isSuccess && (
-                <div className="modal-add-success" onClick={() => setIsSuccess(false)}>
-                    <div className="modal-container-success">
-                        <div className="cover-icon-success">
-                            <i
-                                class="fa-solid fa-check detail-icon-success"
-                                style={{ color: '#fff', lineHeight: '60px' }}
-                            ></i>
-                        </div>
-                        <p className="sub-a-success" style={{ color: '#fff' }}>
-                            Ngài đã thay đổi mật khẩu thành công
-                        </p>
-                    </div>
-                </div>
-            )}
+            <div onClick={() => setIsNotiSuccess(false)}>
+                <NotifyModalSuccess isSuccess={isNotiSuccess} detailNoti={detailNoti} />
+            </div>
+            <div onClick={() => setIsNotiFail(false)}>
+                <NotifyModalFail isFail={isNotiFail} detailNoti={detailNoti} />
+            </div>
         </div>
     );
 }
