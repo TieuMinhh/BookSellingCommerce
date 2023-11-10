@@ -91,12 +91,14 @@ export default function OrderPay() {
         let token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         let result = await axios.get(axios.defaults.baseURL + '/account/info');
+        setLoading(true);
         getUser(result.data.userInfo);
         setDeliveryAddress(result.data.userInfo.address);
     };
 
     async function getListVoucher() {
         const result = await axios.get(axios.defaults.baseURL + `/discount?id=ALL`);
+        setLoading(true);
         setListVoucher(result?.data.listDiscount);
     }
 
@@ -104,6 +106,7 @@ export default function OrderPay() {
         let token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         const result = await axios.get(axios.defaults.baseURL + `/delivery-address`);
+        setLoading(true);
         setListAddress(result?.data.listAddress);
     }
 
@@ -111,6 +114,7 @@ export default function OrderPay() {
         try {
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            setLoading(true);
             const result = await axios.post(axios.defaults.baseURL + `/create-delivery-address`, {
                 name_address: nameAddress,
                 name_receiver: nameReceiver,
@@ -129,6 +133,7 @@ export default function OrderPay() {
                 setDiscount(null);
                 setIsShowModalAddAddress(false);
                 setChange(!change);
+                setLoading(false);
             }
             if (result.data.errCode === 1) {
                 setIsNotiFail(true);
@@ -136,6 +141,7 @@ export default function OrderPay() {
                 setTimeout(() => {
                     setIsNotiFail(false);
                 }, 5000);
+                setLoading(false);
             }
         } catch (error) {
             console.log(error);
@@ -144,6 +150,7 @@ export default function OrderPay() {
 
     async function UpdateDeliveryAddress(item) {
         try {
+            setLoading(true);
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const result = await axios.post(axios.defaults.baseURL + `/update-delivery-address/${IdAddress}`, {
@@ -151,6 +158,7 @@ export default function OrderPay() {
                 name_receiver: nameReceiver,
                 phone_receiver: phoneReceiver,
             });
+            setLoading(false);
 
             if (result.data.errCode === 0) {
                 setIsNotiSuccess(true);
@@ -175,10 +183,11 @@ export default function OrderPay() {
 
     async function DeleteDeliveryAddress(item) {
         try {
+            setLoading(true);
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const result = await axios.delete(axios.defaults.baseURL + `/delete-delivery-address/${item.id_address}`);
-
+            setLoading(false);
             if (result.data.errCode === 0) {
                 setIsNotiSuccess(true);
                 setDetailNoti(result.data.message);
@@ -202,7 +211,6 @@ export default function OrderPay() {
     async function AddVoucher() {
         try {
             const response = await axios.get(axios.defaults.baseURL + `/get-discount-by-code?discount_code=${code}`);
-
             if (response.status === 200) {
                 setDiscount(response.data.discount);
                 hideModalPromotion();
@@ -341,27 +349,32 @@ export default function OrderPay() {
     return (
         <>
             <div className="containerPay">
-                {loading && <Loading pacman />}
+                {/* {loading && <Loading pacman />} */}
                 <div className="delivery-address">
                     <h4 className="h4"> Địa chỉ nhận hàng</h4>
                     <div className="line"></div>
-                    <div className="info-delivery">
-                        <ul className="left-info">
-                            <li>Họ và tên người nhận</li>
-                            <li>Email </li>
-                            <li>Số điện thoại</li>
-                            <li>Địa chỉ nhận hàng</li>
-                        </ul>
-                        <ul className="right-info">
-                            <li>{user && user?.name}</li>
-                            <li>{user && user?.email}</li>
-                            <li>{user && user?.phone}</li>
-                            <li>{user && user?.address}</li>
-                        </ul>
-                        <div className="img-delivery">
-                            <img src={Img2} alt=""></img>
+                    {loading ? (
+                        <div className="info-delivery">
+                            <ul className="left-info">
+                                <li>Họ và tên người nhận</li>
+                                <li>Email </li>
+                                <li>Số điện thoại</li>
+                                <li>Địa chỉ nhận hàng</li>
+                            </ul>
+                            <ul className="right-info">
+                                <li>{user && user?.name}</li>
+                                <li>{user && user?.email}</li>
+                                <li>{user && user?.phone}</li>
+                                <li>{listAddress && listAddress[0]?.name_address}</li>
+                            </ul>
+                            <div className="img-delivery">
+                                <img src={Img2} alt=""></img>
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <Loading hash />
+                    )}
+
                     <div className="wrapper-address-delivery">
                         <p>
                             <i className="fa-solid fa-map-location-dot"></i> Địa chỉ nhận hàng :
@@ -369,7 +382,7 @@ export default function OrderPay() {
 
                         <div className="cover-detail-address">
                             <input
-                                onlick={chooseDeliveryAddress}
+                                onclick={chooseDeliveryAddress}
                                 className="form-address"
                                 type="radio"
                                 name="option"
@@ -644,39 +657,43 @@ export default function OrderPay() {
                             </button>
                         </div>
                     </div>
-                    <div className="modal-promotion-inner">
-                        <div className="modal-promotion-content">
-                            <p className="title-content">Mã giảm giá</p>
+                    {loading ? (
+                        <div className="modal-promotion-inner">
+                            <div className="modal-promotion-content">
+                                <p className="title-content">Mã giảm giá</p>
 
-                            {/* a Ticket */}
-                            {listVoucher &&
-                                listVoucher.map((item, index) => {
-                                    return (
-                                        <div className="cover-promotion-ticket" key={item.discount_code}>
-                                            <div className="inner-promotion-ticket">
-                                                <div className="left-promotion-ticket" style={{ color: '#000' }}>
-                                                    <img src={VoucherImg} alt="voucher" className="voucher-img" />
-                                                </div>
-                                                <div className="right-promotion-ticket">
-                                                    <p className="title-right-promotion">{item.discount_code}</p>
-                                                    <p className="sub-title-promotion">{item.description}</p>
-                                                    <p className="voucher-time">
-                                                        ÁP DỤNG TỪ {moment(item.start_date).format('L')} ĐẾN{' '}
-                                                        {moment(item.end_date).format('L')}
-                                                    </p>
-                                                    <button
-                                                        className="apply-promotion-btn-bottom"
-                                                        onClick={() => ChooseVoucher(item)}
-                                                    >
-                                                        Áp dụng
-                                                    </button>
+                                {/* a Ticket */}
+                                {listVoucher &&
+                                    listVoucher.map((item, index) => {
+                                        return (
+                                            <div className="cover-promotion-ticket" key={item.discount_code}>
+                                                <div className="inner-promotion-ticket">
+                                                    <div className="left-promotion-ticket" style={{ color: '#000' }}>
+                                                        <img src={VoucherImg} alt="voucher" className="voucher-img" />
+                                                    </div>
+                                                    <div className="right-promotion-ticket">
+                                                        <p className="title-right-promotion">{item.discount_code}</p>
+                                                        <p className="sub-title-promotion">{item.description}</p>
+                                                        <p className="voucher-time">
+                                                            ÁP DỤNG TỪ {moment(item.start_date).format('L')} ĐẾN{' '}
+                                                            {moment(item.end_date).format('L')}
+                                                        </p>
+                                                        <button
+                                                            className="apply-promotion-btn-bottom"
+                                                            onClick={() => ChooseVoucher(item)}
+                                                        >
+                                                            Áp dụng
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    })}
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <Loading hash />
+                    )}
                 </div>
             </div>
 

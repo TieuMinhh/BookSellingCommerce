@@ -45,6 +45,7 @@ export default function Cart() {
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const result = await axios.post(axios.defaults.baseURL + `/account/cart`);
+            setLoading(true);
             setList(result?.data.list);
         } catch (error) {}
     }
@@ -64,8 +65,6 @@ export default function Cart() {
                 countCartContext.handleCountCart(resultCountCart?.data.list.length);
             } catch (error) {}
 
-            setLoading(false);
-
             if (result.status === 200) {
                 setIsNotiSuccess(true);
                 setDetailNoti(result.data.message);
@@ -79,6 +78,7 @@ export default function Cart() {
                     setIsNotiFail(false);
                 }, 3000);
             }
+            setLoading(false);
         } catch (error) {
             setIsNotiFail(true);
             setDetailNoti(error);
@@ -176,136 +176,140 @@ export default function Cart() {
 
     return (
         <div className="container">
-            {loading && <Loading puff size={80} />}
             <div className="cart-title">
                 <h2 className="">GIỎ HÀNG</h2>
                 <span className="font-16">({list?.length} sản phẩm)</span>
             </div>
-            <div className="cart">
-                <div className="products">
-                    <div className="product-header">
-                        <input
-                            className="carts-check"
-                            type="checkbox"
-                            onChange={(e) => handleSelectAllCheckBox(e, list)}
-                            id="check-all"
-                        />
-                        <label style={{ cursor: 'pointer', width: '100%' }} htmlFor="check-all">
-                            Chọn tất cả {`(${(list && list?.length) || 0} sản phẩm)`}
-                        </label>
-                    </div>
+            {loading ? (
+                <div className="cart">
+                    <div className="products">
+                        <div className="product-header">
+                            <input
+                                className="carts-check"
+                                type="checkbox"
+                                onChange={(e) => handleSelectAllCheckBox(e, list)}
+                                id="check-all"
+                            />
+                            <label style={{ cursor: 'pointer', width: '100%' }} htmlFor="check-all">
+                                Chọn tất cả {`(${(list && list?.length) || 0} sản phẩm)`}
+                            </label>
+                        </div>
 
-                    <div className="line-cover-cart">
-                        <div className="cover-all-product-cart">
-                            {list &&
-                                list.map((item, index) => {
-                                    return (
-                                        <div className="product" key={item.id_product}>
-                                            <input
-                                                type="checkbox"
-                                                value={item.id_product}
-                                                checked={selectedItem.includes(item.id_product)}
-                                                onChange={handleSingleCheckBox}
-                                            />
-                                            <Link to="/cart">
-                                                <img
-                                                    src={`${config.PUBLIC_IMAGE_URL}${item && item?.images}`}
-                                                    alt=""
-                                                    className="avatar-image"
+                        <div className="line-cover-cart">
+                            <div className="cover-all-product-cart">
+                                {list &&
+                                    list.map((item, index) => {
+                                        return (
+                                            <div className="product" key={item.id_product}>
+                                                <input
+                                                    type="checkbox"
+                                                    value={item.id_product}
+                                                    checked={selectedItem.includes(item.id_product)}
+                                                    onChange={handleSingleCheckBox}
                                                 />
-                                            </Link>
-                                            <div className="product-info">
-                                                <h3 className="product-name">{item && item?.name_product}</h3>
-                                                <h4 className="product-sub-name">{item && item?.detail}</h4>
-                                                <div className="main-price">
-                                                    <div className="price">
-                                                        {item &&
-                                                            item?.price_reducing.toLocaleString('vi', {
-                                                                style: 'currency',
-                                                                currency: 'VND',
-                                                            })}{' '}
+                                                <Link to="/cart">
+                                                    <img
+                                                        src={`${config.PUBLIC_IMAGE_URL}${item && item?.images}`}
+                                                        alt=""
+                                                        className="avatar-image"
+                                                    />
+                                                </Link>
+                                                <div className="product-info">
+                                                    <h3 className="product-name">{item && item?.name_product}</h3>
+                                                    <h4 className="product-sub-name">{item && item?.detail}</h4>
+                                                    <div className="main-price">
+                                                        <div className="price">
+                                                            {item &&
+                                                                item?.price_reducing.toLocaleString('vi', {
+                                                                    style: 'currency',
+                                                                    currency: 'VND',
+                                                                })}{' '}
+                                                        </div>
+                                                        <span>
+                                                            {item &&
+                                                                item?.price.toLocaleString('vi', {
+                                                                    style: 'currency',
+                                                                    currency: 'VND',
+                                                                })}{' '}
+                                                        </span>
                                                     </div>
-                                                    <span>
-                                                        {item &&
-                                                            item?.price.toLocaleString('vi', {
-                                                                style: 'currency',
-                                                                currency: 'VND',
-                                                            })}{' '}
-                                                    </span>
-                                                </div>
 
-                                                <div className="quantity">
-                                                    <p className="quantityName">Số lượng :</p>
-                                                    <div className="counter">
-                                                        <button
-                                                            className="btn-giam"
-                                                            onClick={() => DecrementProductFromCart(item)}
-                                                        >
-                                                            -
-                                                        </button>
-                                                        <p
-                                                            style={{
-                                                                fontSize: '18px',
-                                                            }}
-                                                        >
-                                                            {item && item?.quantity}
-                                                        </p>
-                                                        <button
-                                                            className="btn-tang"
-                                                            onClick={() => IncrementProductFromCart(item)}
-                                                        >
-                                                            +
-                                                        </button>
+                                                    <div className="quantity">
+                                                        <p className="quantityName">Số lượng :</p>
+                                                        <div className="counter">
+                                                            <button
+                                                                className="btn-giam"
+                                                                onClick={() => DecrementProductFromCart(item)}
+                                                            >
+                                                                -
+                                                            </button>
+                                                            <p
+                                                                style={{
+                                                                    fontSize: '18px',
+                                                                }}
+                                                            >
+                                                                {item && item?.quantity}
+                                                            </p>
+                                                            <button
+                                                                className="btn-tang"
+                                                                onClick={() => IncrementProductFromCart(item)}
+                                                            >
+                                                                +
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div
-                                                    id="remove-product"
-                                                    className="product-remove"
-                                                    onClick={() => RemoveProductFromCart(item)}
-                                                >
-                                                    <i className="fa fa-trash fa-color" aria-hidden="true"></i>
-                                                    <span className="remove">Xoá</span>
+                                                    <div
+                                                        id="remove-product"
+                                                        className="product-remove"
+                                                        onClick={() => RemoveProductFromCart(item)}
+                                                    >
+                                                        <i className="fa fa-trash fa-color" aria-hidden="true"></i>
+                                                        <span className="remove">Xoá</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    );
-                                })}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="cart-total">
-                    <div className="price-content">
-                        <div className="cover-total-money">
-                            <span className="total-price-title">
-                                <i className="fa-regular fa-credit-card"></i> Tổng tiền
-                            </span>
-                            <span className="price-cart">{formatMoney(total && total)}</span>
-                        </div>
-                        <div
-                            className="cover-total-money"
-                            style={{ borderBottom: '1px solid #ccc', paddingBottom: '18px' }}
-                        >
-                            <span className="total-price-title">
-                                <i className="fa-solid fa-truck-fast"></i> Phí vận chuyển
-                            </span>
-                            <span className="price-cart">{formatMoney(shipFee)}</span>
-                        </div>
-                        <div className="cover-total-money">
-                            <span className="total-price-title">
-                                <i className="fa-regular fa-money-bill-1"></i> Thành tiền
-                            </span>
-                            <span className="price-cart">{formatMoney(total + shipFee)}</span>
+                                        );
+                                    })}
+                            </div>
                         </div>
                     </div>
 
-                    <div id="order" className="order" onClick={goToOrderPage}>
-                        <Link>
-                            <i className="fa-solid fa-shopping-cart fa-shopping"></i>Thanh toán
-                        </Link>
+                    <div className="cart-total">
+                        <div className="price-content">
+                            <div className="cover-total-money">
+                                <span className="total-price-title">
+                                    <i className="fa-regular fa-credit-card"></i> Tổng tiền
+                                </span>
+                                <span className="price-cart">{formatMoney(total && total)}</span>
+                            </div>
+                            <div
+                                className="cover-total-money"
+                                style={{ borderBottom: '1px solid #ccc', paddingBottom: '18px' }}
+                            >
+                                <span className="total-price-title">
+                                    <i className="fa-solid fa-truck-fast"></i> Phí vận chuyển
+                                </span>
+                                <span className="price-cart">{formatMoney(shipFee)}</span>
+                            </div>
+                            <div className="cover-total-money">
+                                <span className="total-price-title">
+                                    <i className="fa-regular fa-money-bill-1"></i> Thành tiền
+                                </span>
+                                <span className="price-cart">{formatMoney(total + shipFee)}</span>
+                            </div>
+                        </div>
+
+                        <div id="order" className="order" onClick={goToOrderPage}>
+                            <Link>
+                                <i className="fa-solid fa-shopping-cart fa-shopping"></i>Thanh toán
+                            </Link>
+                        </div>
                     </div>
                 </div>
-            </div>
+            ) : (
+                <Loading pacman />
+            )}
+
             <div onClick={() => setIsNotiFail(false)}>
                 <NotifyModalFail isFail={isNotiFail} detailNoti={detailNoti} />
             </div>

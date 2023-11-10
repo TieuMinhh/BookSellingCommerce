@@ -5,13 +5,16 @@ import { Link } from 'react-router-dom';
 import axios from '../../../api/axios';
 import moment from 'moment';
 import SidebarProfile from '../SidebarProfile/SidebarProfile';
+import Loading from '../../../Components/Loading';
 
 export default function MyVoucher() {
     const [change, setChange] = useState(false);
     const [list, setList] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     async function getListProduct() {
         const result = await axios.get(axios.defaults.baseURL + `/discount?id=ALL`);
+        setLoading(true);
         setList(result?.data.listDiscount);
     }
     useEffect(() => {
@@ -32,35 +35,32 @@ export default function MyVoucher() {
                         <p>Voucher của tôi</p>
                         <div className="line-under"></div>
                     </div>
-                    <div className="wrapper-content-voucher">
-                        <div className="container-content-voucher">
-                            <div className="header-content-voucher">
-                                <img src={CuponIcon} alt="" />
-                                <h6>KHUYẾN MÃI</h6>
+                    {loading ? (
+                        <div className="wrapper-content-voucher">
+                            <div className="container-content-voucher">
+                                <div className="header-content-voucher">
+                                    <img src={CuponIcon} alt="" />
+                                    <h6>KHUYẾN MÃI</h6>
+                                </div>
+                                {list &&
+                                    list.map((item, index) => {
+                                        return (
+                                            <div className="detail-content-voucher" key={item.discount_code}>
+                                                <p className="title-code">Code : {item.discount_code}</p>
+                                                <p className="title-voucher">{item.description}</p>
+                                                <p className="voucher-time">
+                                                    ÁP DỤNG TỪ {moment(item.start_date).format('L')} ĐẾN{' '}
+                                                    {moment(item.end_date).format('L')}
+                                                </p>
+                                                <p className="detail-voucher">Chi tiết</p>
+                                            </div>
+                                        );
+                                    })}
                             </div>
-
-                            {list &&
-                                list.map((item, index) => {
-                                    return (
-                                        <div className="detail-content-voucher" key={item.discount_code}>
-                                            <p className="title-code">Code : {item.discount_code}</p>
-                                            <p className="title-voucher">{item.description}</p>
-                                            <p className="voucher-time">
-                                                ÁP DỤNG TỪ {moment(item.start_date).format('L')} ĐẾN{' '}
-                                                {moment(item.end_date).format('L')}
-                                            </p>
-                                            <p className="detail-voucher">Chi tiết</p>
-                                        </div>
-                                    );
-                                })}
-
-                            {/* <div className="detail-content-voucher">
-                                <p className="title-voucher">MÃ GIẢM 30K - ĐƠN HÀNG TỪ 270K</p>
-                                <p className="voucher-time">ÁP DỤNG TỪ THỨ 2 ĐẾN THỨ 4 HÀNG TUẦN</p>
-                                <p className="detail-voucher">Chi tiết</p>
-                            </div> */}
                         </div>
-                    </div>
+                    ) : (
+                        <Loading pacman />
+                    )}
                 </div>
             </div>
         </div>
