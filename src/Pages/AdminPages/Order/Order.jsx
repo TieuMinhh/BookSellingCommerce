@@ -47,10 +47,14 @@ export default function Order() {
     };
 
     const handleComplete = async (item) => {
-        let result = await axios.post(axios.defaults.baseURL + `/admin/complete-order/${item.id_order}`);
-        console.log(result);
-        setChange(!change);
-        if (result.data.errCode === 0) toast.success(result.data.message);
+        try {
+            let result = await axios.post(axios.defaults.baseURL + `/admin/complete-order/${item.id_order}`);
+            console.log(result);
+            setChange(!change);
+            if (result.data.errCode === 0) toast.success(result.data.message);
+        } catch (error) {
+            toast.error(error);
+        }
     };
 
     const handleCancel = async (item) => {
