@@ -24,6 +24,7 @@ import { useState } from 'react';
 import axios from '../../api/axios';
 import { useEffect } from 'react';
 import config from '../../api/base';
+import Loading from '../../Components/Loading/Loading';
 
 export default function HomePage() {
     const [numberCate, setNumberCate] = useState(1);
@@ -31,15 +32,24 @@ export default function HomePage() {
     const [listMostBuyProduct, setListMostBuyProduct] = useState([]);
     const [listMostReducingProduct, setListMostReducingProduct] = useState([]);
 
+    const [loading, setLoading] = useState(false);
+
     async function getListCategory() {
         let result = await axios.get(axios.defaults.baseURL + `/category?id=ALL`);
         setListCategory(result?.data.listCategory);
-        // console.log(result.data);
     }
 
     async function getListMostByProduct() {
-        let result = await axios.get(axios.defaults.baseURL + `/most-by-product`);
-        setListMostBuyProduct(result?.data.listMostBuyProduct);
+        try {
+            setLoading(true);
+            let result = await axios.get(axios.defaults.baseURL + `/most-by-product`);
+            setListMostBuyProduct(result?.data.listMostBuyProduct);
+            setTimeout(() => {
+                setLoading(false);
+            }, 1000);
+        } catch (error) {
+            setLoading(false);
+        }
     }
 
     async function getListMostReducingProduct() {
@@ -74,6 +84,7 @@ export default function HomePage() {
 
     return (
         <div className="wrapper-content-homepage">
+            {loading && <Loading hash size={60} />}
             <div className="container-content-homepage">
                 <div className="content-banner-homepage">
                     <div className="content-top-banner">
@@ -201,7 +212,7 @@ export default function HomePage() {
                                 className={numberCate === 3 ? 'item-cate-trend active' : 'item-cate-trend '}
                                 onClick={() => handleTabClick(3)}
                             >
-                                Bestseller Florentino
+                                Bestseller
                             </p>
                         </NavLink>
                     </div>

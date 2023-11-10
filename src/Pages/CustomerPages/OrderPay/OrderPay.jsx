@@ -12,6 +12,7 @@ import VoucherImg from '../../../Assets/img/voucher-icon.jpg';
 import config from '../../../api/base';
 import { NotifyModalSuccess } from '../../../Components/NotifyModalSuccess/NotifyModalSuccess';
 import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModalFail';
+import Loading from '../../../Components/Loading';
 
 export default function OrderPay() {
     const location = useLocation();
@@ -79,6 +80,8 @@ export default function OrderPay() {
     const [isNotiSuccess, setIsNotiSuccess] = useState(false);
     const [detailNoti, setDetailNoti] = useState('');
     const [isNotiFail, setIsNotiFail] = useState(false);
+
+    const [loading, setLoading] = useState(false);
 
     const goToChangeInfo = () => {
         navigate('/change-info');
@@ -256,11 +259,13 @@ export default function OrderPay() {
 
     const handleOrder = async () => {
         try {
+            setLoading(true);
             const order = await axios.post(axios.defaults.baseURL + '/order-pay', {
                 arr: listProduct,
                 discount_id: discount?.discount_id,
                 id_address: listAddress[0]?.id_address,
             });
+            setLoading(false);
 
             if (order.data.errCode === 0) {
                 setOrderSuccess(true);
@@ -286,6 +291,7 @@ export default function OrderPay() {
         } catch (error) {
             console.error(error);
             toast.error('Lỗi');
+            setLoading(false);
         }
     };
 
@@ -335,6 +341,7 @@ export default function OrderPay() {
     return (
         <>
             <div className="containerPay">
+                {loading && <Loading pacman />}
                 <div className="delivery-address">
                     <h4 className="h4"> Địa chỉ nhận hàng</h4>
                     <div className="line"></div>

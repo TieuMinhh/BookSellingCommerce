@@ -12,6 +12,7 @@ import useDebounce from '../../api/useDebounce';
 import { NotifyModalFail } from '../NotifyModalFail/NotifyModalFail';
 import { NotifyModalSuccess } from '../NotifyModalSuccess/NotifyModalSuccess';
 import { CountCartContext } from '../CountCartProvider/CountCartProvider';
+import Loading from '../Loading';
 
 export default function Header() {
     const [listCart, setListCart] = useState([]);
@@ -24,6 +25,9 @@ export default function Header() {
     const [detailNotiSecond, setDetailNotiSecond] = useState('');
     const [activeTab, setAcTiveTab] = useState('');
 
+    const [loading, setLoading] = useState(false);
+    const [logout, setLogout] = useState(false);
+
     const debouncedValue = useDebounce(searchName, 500);
 
     const countCartContext = useContext(CountCartContext);
@@ -34,9 +38,11 @@ export default function Header() {
     useEffect(() => {
         const searchProduct = async () => {
             try {
+                setLoading(true);
                 const result = await axios.post(axios.defaults.baseURL + '/search-product', {
                     name: debouncedValue,
                 });
+                setLoading(false);
 
                 // Chuyển hướng đến trang product cùng với kết quả tìm kiếm
                 if (shouldSearch) {
@@ -47,9 +53,12 @@ export default function Header() {
                 setShouldSearch(false);
             } catch (error) {
                 console.error('Error fetching data: ', error);
+                setLoading(false);
             }
         };
-        searchProduct();
+        if (debouncedValue) {
+            searchProduct();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debouncedValue, navigate]);
 
@@ -60,14 +69,18 @@ export default function Header() {
 
     const handleCategoryClick = async (item) => {
         try {
+            setLoading(true);
+
             const result = await axios.post(axios.defaults.baseURL + '/search-product-by-id-category', {
                 id_category: item.id_category,
             });
+            setLoading(false);
 
             // Chuyển hướng đến trang product cùng với kết quả tìm kiếm
             navigate(`/product?category=${item.id_category}`, { state: { searchResult3: result.data.message } });
         } catch (error) {
             console.error('Error fetching data: ', error);
+            setLoading(false);
         }
     };
 
@@ -109,8 +122,20 @@ export default function Header() {
         getListProduct();
     }, []);
 
+    const handleLogout = () => {
+        setLogout(true);
+        setTimeout(() => {
+            localStorage.removeItem('accessToken');
+            setDetailNoti(`Ngài đã đăng xuất thành công!`);
+            setDetailNotiSecond('Hẹn gặp lại! ');
+            setIsNotiSuccess(true);
+            setLogout(false);
+        }, [2000]);
+    };
     return (
         <div className="header">
+            {loading && <Loading rotate size={24} />}
+            {logout && <Loading ring size={80} />}
             <div className="topbar row">
                 <div className="topbar-left col">
                     <p className="open"> Mở cửa: 7h30 đến 21h30, T7 và Chủ nhật 8h đến 22h</p>
@@ -143,7 +168,6 @@ export default function Header() {
                                 navigate('/product');
                             }}
                         >
-                            {/* <Link to="/product"> */}
                             <img src={IconMenu} alt="" className="icon-menu-header" />
                             <i className="down-menu-icon fa-solid fa-angle-down"></i>
                             {/* </Link> */}
@@ -202,7 +226,6 @@ export default function Header() {
 
                         <Link to="/cart" className="first">
                             <div className="header-list">
-                                {/* {listCart?.length > 0 && <b>{listCart && listCart?.length}</b>} */}
                                 {countCartContext.countCart && <b>{countCartContext.countCart}</b>}
 
                                 <i className="fa-solid fa-cart-shopping"></i>
@@ -298,15 +321,7 @@ export default function Header() {
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link
-                                                    to="/"
-                                                    onClick={() => {
-                                                        localStorage.removeItem('accessToken');
-                                                        setDetailNoti(`Ngài đã đăng xuất thành công!`);
-                                                        setDetailNotiSecond('Hẹn gặp lại! ');
-                                                        setIsNotiSuccess(true);
-                                                    }}
-                                                >
+                                                <Link to="/" onClick={handleLogout}>
                                                     <span className="user-name">
                                                         <i className="fa-solid fa-arrow-right-from-bracket"></i> Thoát
                                                         tài khoản
