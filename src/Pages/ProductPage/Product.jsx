@@ -4,6 +4,7 @@ import './Product.scss';
 import Filter from '../../Components/FilterBook/Filter';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import config from '../../api/base';
+import Loading from '../../Components/Loading';
 
 export default function Home() {
     const [list, setList] = useState([]);
@@ -11,16 +12,25 @@ export default function Home() {
     const [currentIndexPage, setCurrentIndexPage] = useState(1);
     const [listPage, setListPage] = useState([1]);
 
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         async function getAllProduct() {
-            const result = await axios.get(axios.defaults.baseURL + `/admin/product?id=ALL`);
-            let countPage = result?.data.listProduct.length / 8;
-            if (countPage % 8 !== 0) {
-                countPage += 1;
-            }
-            setListPage([]); // Xóa hết giá trị cũ trong listPage
-            for (let i = 1; i <= Math.floor(countPage); i++) {
-                setListPage((prevListPage) => [...prevListPage, i]);
+            setLoading(true);
+            try {
+                const result = await axios.get(axios.defaults.baseURL + `/admin/product?id=ALL`);
+                setLoading(false);
+
+                let countPage = result?.data.listProduct.length / 8;
+                if (countPage % 8 !== 0) {
+                    countPage += 1;
+                }
+                setListPage([]); // Xóa hết giá trị cũ trong listPage
+                for (let i = 1; i <= Math.floor(countPage); i++) {
+                    setListPage((prevListPage) => [...prevListPage, i]);
+                }
+            } catch (error) {
+                setLoading(false);
             }
         }
         getAllProduct();
@@ -33,8 +43,14 @@ export default function Home() {
     const [currentPage, setCurrentPage] = useState(1);
 
     async function getListProduct(page) {
-        const result = await axios.get(axios.defaults.baseURL + `/product-by-pages?page=${page}`);
-        setList(result?.data.listProduct);
+        try {
+            setLoading(true);
+            const result = await axios.get(axios.defaults.baseURL + `/product-by-pages?page=${page}`);
+            setList(result?.data.listProduct);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+        }
     }
 
     const handlePreviousPage = () => {
@@ -109,23 +125,13 @@ export default function Home() {
         setChange(!change);
     };
 
-    // useEffect(() => {
-    //     const searchParams = new URLSearchParams(location.search);
-    //     const page = parseInt(searchParams.get('page'));
-    //     if (!page) {
-    //         navigate('?page=1');
-    //     } else {
-    //         setCurrentPage(page);
-    //         getListProduct(page);
-    //     }
-    // }, [location.search]);
-
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const page = parseInt(searchParams.get('page'));
 
         setCurrentPage(page);
         getListProduct(page);
+        setLoading(false);
     }, [location.search]);
 
     // Trích xuất thông tin tìm kiếm từ đối tượng location.state
@@ -139,6 +145,7 @@ export default function Home() {
 
     return (
         <>
+            {loading && <Loading rise size={20} />}
             {searchResult ? (
                 <div className="content row grid wide">
                     <div className="container_content">

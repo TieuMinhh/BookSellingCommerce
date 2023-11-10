@@ -9,6 +9,7 @@ import { NotifyModalSuccess } from '../../../Components/NotifyModalSuccess/Notif
 import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModalFail';
 import { useContext } from 'react';
 import { CountCartContext } from '../../../Components/CountCartProvider/CountCartProvider';
+import Loading from '../../../Components/Loading/Loading';
 
 function formatMoney(price) {
     return price
@@ -35,6 +36,8 @@ export default function Cart() {
     const [detailNoti, setDetailNoti] = useState('');
     const countCartContext = useContext(CountCartContext);
 
+    const [loading, setLoading] = useState(false);
+
     let shipFee = 20000;
 
     async function getListProduct() {
@@ -48,6 +51,7 @@ export default function Cart() {
 
     async function RemoveProductFromCart(item) {
         countCartContext.handleCountCart();
+        setLoading(true);
         try {
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -59,6 +63,8 @@ export default function Cart() {
                 const resultCountCart = await axios.post(axios.defaults.baseURL + `/account/cart`);
                 countCartContext.handleCountCart(resultCountCart?.data.list.length);
             } catch (error) {}
+
+            setLoading(false);
 
             if (result.status === 200) {
                 setIsNotiSuccess(true);
@@ -76,6 +82,7 @@ export default function Cart() {
         } catch (error) {
             setIsNotiFail(true);
             setDetailNoti(error);
+            setLoading(false);
         }
     }
 
@@ -130,16 +137,6 @@ export default function Cart() {
             });
         }
     };
-    // Hàm tính tổng tiền dựa trên danh sách sản phẩm được chọn
-
-    // const navigate = useNavigate();
-    // const goToOrderPage = () => {
-    //     navigate('/order-pay', {
-    //         state: {
-    //             selectedItems: list.filter((item) => selectedItem.includes(item.id_product)),
-    //         },
-    //     });
-    // };
 
     const navigate = useNavigate();
 
@@ -179,6 +176,7 @@ export default function Cart() {
 
     return (
         <div className="container">
+            {loading && <Loading puff size={80} />}
             <div className="cart-title">
                 <h2 className="">GIỎ HÀNG</h2>
                 <span className="font-16">({list?.length} sản phẩm)</span>

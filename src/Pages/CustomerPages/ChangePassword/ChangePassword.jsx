@@ -7,6 +7,7 @@ import SidebarProfile from '../SidebarProfile/SidebarProfile';
 import axios from '../../../api/axios';
 import { NotifyModalSuccess } from '../../../Components/NotifyModalSuccess/NotifyModalSuccess';
 import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModalFail';
+import Loading from '../../../Components/Loading';
 
 export default function ChangePassword() {
     const [password, setPassword] = useState('');
@@ -17,35 +18,43 @@ export default function ChangePassword() {
     const [detailNoti, setDetailNoti] = useState('');
     const [isNotiFail, setIsNotiFail] = useState(false);
 
+    const [loading, setLoading] = useState(false);
+
     async function ChangePassword() {
-        let token = await getToken();
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const result = await axios.post(axios.defaults.baseURL + `/change-password`, {
-            oldPassword: password,
-            newPassword: newPassword,
-            confirmPassword: confirmPassword,
-        });
-        if (result.data.errCode === 0) {
-            setIsNotiSuccess(true);
-            setDetailNoti(result.data.message);
-            setTimeout(() => {
-                setIsNotiSuccess(false);
-            }, 5000);
-            setChange(!change);
-        }
-        if (result.data.errCode === 1) {
-            setIsNotiFail(true);
-            setDetailNoti(result.data.message);
-            setTimeout(() => {
-                setIsNotiFail(false);
-            }, 5000);
-        }
-        if (result.data.errCode === 2) {
-            setIsNotiFail(true);
-            setDetailNoti(result.data.message);
-            setTimeout(() => {
-                setIsNotiFail(false);
-            }, 5000);
+        try {
+            setLoading(true);
+            let token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const result = await axios.post(axios.defaults.baseURL + `/change-password`, {
+                oldPassword: password,
+                newPassword: newPassword,
+                confirmPassword: confirmPassword,
+            });
+            setLoading(false);
+            if (result.data.errCode === 0) {
+                setIsNotiSuccess(true);
+                setDetailNoti(result.data.message);
+                setTimeout(() => {
+                    setIsNotiSuccess(false);
+                }, 5000);
+                setChange(!change);
+            }
+            if (result.data.errCode === 1) {
+                setIsNotiFail(true);
+                setDetailNoti(result.data.message);
+                setTimeout(() => {
+                    setIsNotiFail(false);
+                }, 5000);
+            }
+            if (result.data.errCode === 2) {
+                setIsNotiFail(true);
+                setDetailNoti(result.data.message);
+                setTimeout(() => {
+                    setIsNotiFail(false);
+                }, 5000);
+            }
+        } catch (error) {
+            setLoading(false);
         }
     }
 
@@ -58,6 +67,7 @@ export default function ChangePassword() {
                     </div>
                 </div>
                 <div className="sidebar-item-info">
+                    {loading && <Loading dot />}
                     <div className="wrapper-change-profile">
                         <h5>ĐỔI MẬT KHẨU</h5>
                         <div className="wrapper-change-info">

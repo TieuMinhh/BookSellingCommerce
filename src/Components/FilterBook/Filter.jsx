@@ -4,15 +4,23 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
 import useDebounce from '../../api/useDebounce';
+import Loading from '../Loading';
 
 export default function Filter() {
     const [valueMoney, setValueMoney] = useState(0);
     const [list, setList] = useState([]);
 
+    const [loading, setLoading] = useState(false);
+
     async function getListCategory() {
-        let result = await axios.get(axios.defaults.baseURL + `/category?id=ALL`);
-        setList(result?.data.listCategory);
-        // console.log(result.data);
+        try {
+            setLoading(true);
+            let result = await axios.get(axios.defaults.baseURL + `/category?id=ALL`);
+            setList(result?.data.listCategory);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+        }
     }
 
     const [searchName, setSearchName] = useState('');
@@ -32,17 +40,20 @@ export default function Filter() {
     useEffect(() => {
         const searchProductByCategory = async () => {
             try {
+                setLoading(true);
                 const result = await axios.post(axios.defaults.baseURL + '/search-product-by-category', {
                     name: debouncedValue,
                 });
-
+                setLoading(false);
                 // Chuyển hướng đến trang product cùng với kết quả tìm kiếm
                 navigate('/product', { state: { searchResult2: result.data.message } });
             } catch (error) {
                 console.error('Error fetching data: ', error);
+                setLoading(false);
             }
         };
         searchProductByCategory();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debouncedValue]);
 
     useEffect(() => {
@@ -52,6 +63,7 @@ export default function Filter() {
     return (
         <div className="sidebar_content col l-3 c-0 m-0">
             <h1>DANH MỤC</h1>
+            {loading && <Loading rotate size={24} />}
             <div className="brand-filter">
                 <div className="brand-search">
                     <input
