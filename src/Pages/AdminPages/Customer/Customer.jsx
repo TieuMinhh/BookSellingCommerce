@@ -104,7 +104,7 @@ export default function Customer() {
                                         <td>
                                             <img
                                                 src={`${config.PUBLIC_IMAGE_URL}${item.avatar}`}
-                                                alt="user-avatar"
+                                                alt="avatar"
                                                 className="avatar-image"
                                             />
                                         </td>

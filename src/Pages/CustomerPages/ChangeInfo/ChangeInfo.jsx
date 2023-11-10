@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { getToken } from '../../../Services/Token';
 import SidebarProfile from '../SidebarProfile/SidebarProfile';
 import axios from '../../../api/axios';
+import Loading from '../../../Components/Loading';
 import { NotifyModalSuccess } from '../../../Components/NotifyModalSuccess/NotifyModalSuccess';
 import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModalFail';
 
@@ -18,11 +19,13 @@ export default function ChangeInfo() {
     const [isNotiSuccess, setIsNotiSuccess] = useState(false);
     const [detailNoti, setDetailNoti] = useState('');
     const [isNotiFail, setIsNotiFail] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const getInfoUser = async () => {
         let token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         let result = await axios.get(axios.defaults.baseURL + '/account/info');
+        setLoading(true);
         setUser(result.data.userInfo);
         // console.log('Check token neeee:', result.data.userInfo);
 
@@ -38,11 +41,13 @@ export default function ChangeInfo() {
 
     async function ChangeInfo() {
         try {
+            setLoading(true);
             const result = await axios.put(axios.defaults.baseURL + `/update_info/${idAccount}`, {
                 name,
                 phone,
                 address,
             });
+            setLoading(false);
             console.log(result);
 
             if (result.data.errCode === 0) {
@@ -62,6 +67,7 @@ export default function ChangeInfo() {
             }
         } catch (error) {
             toast.error(error.response.data.message);
+            setLoading(false);
         }
     }
 
@@ -80,50 +86,54 @@ export default function ChangeInfo() {
                 <div className="sidebar-item-info">
                     <div className="wrapper-change-profile">
                         <h5>THÔNG TIN TÀI KHOẢN</h5>
-                        <div className="wrapper-change-info">
-                            <div className="cover-input">
-                                <label htmlFor="">Họ Tên</label>
-                                <input
-                                    type="text"
-                                    name=""
-                                    id=""
-                                    className="form-control-input"
-                                    placeholder="Họ tên..."
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                />
-                            </div>
+                        {loading ? (
+                            <div className="wrapper-change-info">
+                                <div className="cover-input">
+                                    <label htmlFor="">Họ Tên</label>
+                                    <input
+                                        type="text"
+                                        name=""
+                                        id=""
+                                        className="form-control-input"
+                                        placeholder="Họ tên..."
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />
+                                </div>
 
-                            <div className="cover-input">
-                                <label htmlFor="">Số điện thoại</label>
-                                <input
-                                    type="number"
-                                    name=""
-                                    id=""
-                                    className="form-control-input"
-                                    placeholder="SĐT..."
-                                    value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
-                                />
-                            </div>
+                                <div className="cover-input">
+                                    <label htmlFor="">Số điện thoại</label>
+                                    <input
+                                        type="number"
+                                        name=""
+                                        id=""
+                                        className="form-control-input"
+                                        placeholder="SĐT..."
+                                        value={phone}
+                                        onChange={(e) => setPhone(e.target.value)}
+                                    />
+                                </div>
 
-                            <div className="cover-input">
-                                <label htmlFor="">Địa chỉ</label>
-                                <input
-                                    type="text"
-                                    name=""
-                                    id=""
-                                    className="form-control-input"
-                                    placeholder="Địa chỉ..."
-                                    value={address}
-                                    onChange={(e) => setAddress(e.target.value)}
-                                />
-                            </div>
+                                <div className="cover-input">
+                                    <label htmlFor="">Địa chỉ</label>
+                                    <input
+                                        type="text"
+                                        name=""
+                                        id=""
+                                        className="form-control-input"
+                                        placeholder="Địa chỉ..."
+                                        value={address}
+                                        onChange={(e) => setAddress(e.target.value)}
+                                    />
+                                </div>
 
-                            <div className="cover-btn" onClick={ChangeInfo}>
-                                <button className="update-btn">Lưu thay đổi</button>
+                                <div className="cover-btn" onClick={ChangeInfo}>
+                                    <button className="update-btn">Lưu thay đổi</button>
+                                </div>
                             </div>
-                        </div>
+                        ) : (
+                            <Loading pacman />
+                        )}
                     </div>
                 </div>
             </div>

@@ -18,6 +18,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
     const [newPassword, setNewPassword] = useState('');
     const [phone, setPhone] = useState('');
     const [isValidPass, setIsValidPass] = useState(false);
+    const [isValidPhone, setIsValidPhone] = useState(false);
     const [isValidNewPassword, setIsValidNewPassword] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
@@ -154,7 +155,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
     function handleOnChangePassword(e) {
         const inputPassword = e.target.value;
         setPassWord(inputPassword);
-        // Kiểm tra password chứa ít nhất 4 ký tự
+        // Kiểm tra password chứa ít nhất 3 ký tự
         setIsValidPass(inputPassword.length >= 3);
     }
 
@@ -167,9 +168,9 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
 
     function handleOnChangePhone(e) {
         const inputPhone = e.target.value;
+        const isValidPhone = /^0\d{9}$/.test(inputPhone);
         setPhone(inputPhone);
-        // Kiểm tra Phone chứa 10 ký tự và không chứa khoảng trắng
-        setIsValidPass(inputPhone.length === 10);
+        setIsValidPhone(isValidPhone);
     }
 
     const SendOTP = async () => {
@@ -336,7 +337,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                 />
                                 {password.length !== 0 ? (
                                     isValidPass ? null : (
-                                        <span style={{ color: 'red' }}>Mật khẩu không hợp lệ</span>
+                                        <span style={{ color: 'red', marginLeft: '20px' }}>Mật khẩu không hợp lệ</span>
                                     )
                                 ) : null}
                                 <Form.Label
@@ -415,13 +416,20 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                 <Form.Control
                                     type="text"
                                     placeholder="Nhập email"
-                                    className="mx-3"
+                                    className="mb-2 mx-3"
                                     style={{ width: '430px' }}
                                     name="name"
                                     value={username}
                                     onChange={handleOnChangeEmail}
                                     required={true}
                                 />
+                                {username.length !== 0 ? (
+                                    isValidUser ? (
+                                        <span style={{ color: 'green' }}></span>
+                                    ) : (
+                                        <span style={{ color: 'red', marginLeft: '20px' }}>Email không hợp lệ</span>
+                                    )
+                                ) : null}
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formImg">
@@ -435,6 +443,11 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                     value={password}
                                     onChange={handleOnChangePassword}
                                 />
+                                {password.length !== 0 ? (
+                                    isValidPass ? null : (
+                                        <span style={{ color: 'red', marginLeft: '20px' }}>Mật khẩu không hợp lệ</span>
+                                    )
+                                ) : null}
                             </Form.Group>
 
                             <Form.Group className="mb-2" controlId="formImg">
@@ -453,6 +466,13 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                         }
                                     }}
                                 />
+                                {phone.length !== 0 ? (
+                                    isValidPhone ? null : (
+                                        <span style={{ color: 'red', marginLeft: '20px' }}>
+                                            Số điện thoại không hợp lệ
+                                        </span>
+                                    )
+                                ) : null}
                             </Form.Group>
 
                             <Form.Group className="mt-4 mb-3 d-flex justify-content-center align-items-center">
@@ -513,7 +533,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                     <Form.Control
                                         type="text"
                                         placeholder="Nhập email"
-                                        className="mx-3"
+                                        className="mb-2 mx-3"
                                         style={{ width: '430px' }}
                                         name="name"
                                         value={username}
@@ -523,6 +543,13 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                             setMessageSendOTP('');
                                         }}
                                     />
+                                    {username.length !== 0 ? (
+                                        isValidUser ? (
+                                            <span style={{ color: 'green' }}></span>
+                                        ) : (
+                                            <span style={{ color: 'red', marginLeft: '20px' }}>Email không hợp lệ</span>
+                                        )
+                                    ) : null}
                                     {isSendOTP && (
                                         <p
                                             className=""
@@ -569,7 +596,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                 <Form.Group className="mb-4" controlId="formImg">
                                     <Form.Label className="text-black text-size-fit mx-3">Nhập mã OTP</Form.Label>
                                     <Form.Control
-                                        className=" mx-3"
+                                        className="mb-2 mx-3"
                                         type="number"
                                         placeholder="Nhập mã OTP"
                                         style={{ width: '430px' }}
@@ -626,7 +653,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                 <Form.Group className="mb-4" controlId="formImg">
                                     <Form.Label className="text-black text-size-fit mx-3">Nhập mật khẩu mới</Form.Label>
                                     <Form.Control
-                                        className=" mx-3 "
+                                        className="mb-2 mx-3 "
                                         type="tel"
                                         placeholder="Nhập mật khẩu mới"
                                         style={{ width: '430px' }}
@@ -640,7 +667,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                 <Form.Group className="mb-2" controlId="formImg">
                                     <Form.Label className="text-black text-size-fit mx-3">Xác nhận mật khẩu</Form.Label>
                                     <Form.Control
-                                        className=" mx-3 "
+                                        className="mb-2 mx-3 "
                                         type="tel"
                                         placeholder="Xác nhận mật khẩu"
                                         style={{ width: '430px' }}

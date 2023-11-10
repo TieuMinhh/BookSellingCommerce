@@ -269,6 +269,7 @@ export default function HomePage() {
 
                     {numberCate === 2 && (
                         <div className="book-trend-content">
+                            {loading && <Loading hash size={60} />}
                             {listMostReducingProduct &&
                                 listMostReducingProduct?.map((item, index) => {
                                     return (
