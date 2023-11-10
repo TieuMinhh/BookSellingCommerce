@@ -8,9 +8,10 @@ import { NotifyModalSuccess } from '../../../Components/NotifyModalSuccess/Notif
 import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModalFail';
 import { AuthContext } from '../../../Components/AuthProvider/AuthProvider';
 import { useEffect } from 'react';
+import Loading from '../../../Components/Loading';
 
 function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }) {
-    const [activeTab, setActiveTab] = useState('tab1');
+    const [activeTab, setActiveTab] = useState('tab3');
     const [username, setUserName] = useState('');
     const [isValidUser, setIsValidUser] = useState(true);
     const [password, setPassWord] = useState('');
@@ -32,6 +33,8 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
     const [messageConfirmOTP, setMessageConfirmOTP] = useState();
     const [isMatchPassword, setIsMatchPassword] = useState(true);
     const [isDisableInputPass, setIsDisableInputPass] = useState(true);
+
+    const [loading, setLoading] = useState(false);
 
     const handleResetModal = () => {
         setIsSendOTP(false);
@@ -57,13 +60,14 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
 
     const handleLogin = () => {
         (async () => {
+            setLoading(true);
             let result = (
                 await axios.post(axios.defaults.baseURL + `/login`, {
                     email: username,
                     password,
                 })
             ).data;
-
+            setLoading(false);
             if (result.errCode === 0) {
                 // setToken(result.accessToken, result.refreshToken);
                 setToken(result.accessToken);
@@ -94,11 +98,13 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
             }
         })().catch((error) => {
             console.log(error.response.data);
+            setLoading(false);
         });
     };
 
     const handleSignup = () => {
         (async () => {
+            setLoading(true);
             const data = (
                 await axios.post(axios.defaults.baseURL + '/account/signup', {
                     email: username,
@@ -106,6 +112,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                     phone,
                 })
             ).data;
+            setLoading(false);
             if (data.errCode === 1) {
                 setIsNotiFail(true);
                 setDetailNoti(data.message);
@@ -129,6 +136,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
         })().catch((err) => {
             setIsNotiFail(true);
             setDetailNoti('Có lỗi xảy ra: ', err);
+            setLoading(false);
             setTimeout(() => {
                 setIsNotiFail(false);
             }, 3000);
@@ -182,7 +190,9 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                     setIsSendOTP(false);
                     setMessageSendOTP(result.data.message);
                 }
-            } catch (error) {}
+            } catch (error) {
+                setLoading(false);
+            }
         }
     };
 
@@ -212,11 +222,12 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
 
     const handleConfirmPasswordChange = async () => {
         if (password === newPassword) {
+            setLoading(true);
             const result = await axios.post(axios.defaults.baseURL + `/change-password-new/${idAccount}`, {
                 newPassword: password,
                 newPassword2: newPassword,
             });
-
+            setLoading(false);
             if (result) {
                 setIsNotiSuccess(true);
                 setDetailNoti(result.data.message);
@@ -251,6 +262,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                 }}
                 className="mt-5"
             >
+                {loading && <Loading moon size={60} />}
                 <Modal.Header>
                     <ul className="tabs">
                         <li
@@ -262,6 +274,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                         >
                             <div className="title text-black">Đăng nhập</div>
                         </li>
+
                         <li className={activeTab === 'tab2' ? 'active' : ''} onClick={() => handleTabClick('tab2')}>
                             <div className="title text-black">Đăng ký</div>
                         </li>
@@ -283,6 +296,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                     Ngài cần phải đăng nhập trước khi mua hàng!
                                 </p>
                             )}
+
                             <Form.Group className="mb-3" controlId="formName">
                                 <Form.Label className="text-black text-size-fit mx-3">Email</Form.Label>
                                 <Form.Control

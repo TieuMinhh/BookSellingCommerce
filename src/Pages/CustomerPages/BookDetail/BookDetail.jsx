@@ -12,6 +12,7 @@ import MyLoginModal from '../../Auths/Auths/Auths';
 import { useContext } from 'react';
 import { CountCartContext } from '../../../Components/CountCartProvider/CountCartProvider';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../../../Components/Loading';
 
 export default function BookDetail() {
     const [list, setList] = useState([]);
@@ -21,6 +22,8 @@ export default function BookDetail() {
     const [detailNoti, setDetailNoti] = useState('');
     const [isNotiFail, setIsNotiFail] = useState(false);
     const countCartContext = useContext(CountCartContext);
+
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         window.scrollTo({
@@ -38,8 +41,14 @@ export default function BookDetail() {
     const id = urlParams.get('id');
 
     async function getDetailProduct() {
-        const result = await axios.get(axios.defaults.baseURL + `/detail-product?id=${id}`);
-        setList(result?.data.listProduct);
+        try {
+            setLoading(true);
+            const result = await axios.get(axios.defaults.baseURL + `/detail-product?id=${id}`);
+            setList(result?.data.listProduct);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+        }
     }
 
     const handleIncrement = () => {
@@ -53,10 +62,12 @@ export default function BookDetail() {
     };
 
     const handleAddToCart = async () => {
+        setLoading(true);
         let token = await getToken();
         let id_product = id;
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         let result = await axios.post(axios.defaults.baseURL + `/add-to-cart/${id_product}`, { quantity });
+        setLoading(false);
 
         if (result.status === 200) {
             setIsNotiSuccess(true);
@@ -72,6 +83,7 @@ export default function BookDetail() {
             setTimeout(() => {
                 setIsNotiFail(false);
             }, 3000);
+            setLoading(false);
         }
     };
 
@@ -136,6 +148,7 @@ export default function BookDetail() {
             />
             ;
             <div className="product-info">
+                {loading && <Loading pacman size={42} />}
                 <div className="left-product">
                     <div className="big-image-product">
                         <img
