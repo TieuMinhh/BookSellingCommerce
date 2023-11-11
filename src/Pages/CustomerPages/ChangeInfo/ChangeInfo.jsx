@@ -15,11 +15,13 @@ export default function ChangeInfo() {
     const [user, setUser] = useState([]);
     const [change, setChange] = useState([]);
     const [idAccount, setIdAccount] = useState('');
+    const [isValidPhone, setIsValidPhone] = useState(false);
 
     const [isNotiSuccess, setIsNotiSuccess] = useState(false);
     const [detailNoti, setDetailNoti] = useState('');
     const [isNotiFail, setIsNotiFail] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [loadingAction, setLoadingAction] = useState(false);
 
     const getInfoUser = async () => {
         let token = await getToken();
@@ -39,15 +41,30 @@ export default function ChangeInfo() {
         }
     };
 
+    const [initialPhone, setInitialPhone] = useState('');
+    function handleOnChangePhone(e) {
+        const inputPhone = e.target.value;
+        const isValidPhone = /^0\d{9}$/.test(inputPhone);
+        setPhone(inputPhone);
+        setIsValidPhone(isValidPhone);
+        if (initialPhone === '') {
+            setInitialPhone(inputPhone); // Lưu số điện thoại ban đầu
+        }
+    }
+
+    function handleBlurPhone() {
+        setIsValidPhone(phone === '' || /^0\d{9}$/.test(phone));
+    }
+
     async function ChangeInfo() {
         try {
-            setLoading(true);
+            setLoadingAction(true);
             const result = await axios.put(axios.defaults.baseURL + `/update_info/${idAccount}`, {
                 name,
                 phone,
                 address,
             });
-            setLoading(false);
+            setLoadingAction(false);
             console.log(result);
 
             if (result.data.errCode === 0) {
@@ -67,7 +84,6 @@ export default function ChangeInfo() {
             }
         } catch (error) {
             toast.error(error.response.data.message);
-            setLoading(false);
         }
     }
 
@@ -110,9 +126,15 @@ export default function ChangeInfo() {
                                         className="form-control-input"
                                         placeholder="SĐT..."
                                         value={phone}
-                                        onChange={(e) => setPhone(e.target.value)}
+                                        onChange={handleOnChangePhone}
+                                        onBlur={handleBlurPhone}
                                     />
                                 </div>
+                                {initialPhone !== '' && initialPhone !== phone && phone && !isValidPhone && (
+                                    <span style={{ color: 'red', marginLeft: '180px' }}>
+                                        Số điện thoại không hợp lệ
+                                    </span>
+                                )}
 
                                 <div className="cover-input">
                                     <label htmlFor="">Địa chỉ</label>
@@ -132,7 +154,7 @@ export default function ChangeInfo() {
                                 </div>
                             </div>
                         ) : (
-                            <Loading pacman />
+                            <Loading pacman size={30} />
                         )}
                     </div>
                 </div>
@@ -144,6 +166,7 @@ export default function ChangeInfo() {
             <div onClick={() => setIsNotiFail(false)}>
                 <NotifyModalFail isFail={isNotiFail} detailNoti={detailNoti} />
             </div>
+            {loadingAction && <Loading fade size={30} />}
         </div>
     );
 }

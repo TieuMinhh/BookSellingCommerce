@@ -135,7 +135,7 @@ export default function Header() {
     return (
         <div className="header">
             {loading && <Loading rotate size={24} />}
-            {logout && <Loading ring size={80} />}
+            {logout && <Loading bounce size={80} />}
             <div className="topbar row">
                 <div className="topbar-left col">
                     <p className="open"> Mở cửa: 7h30 đến 21h30, T7 và Chủ nhật 8h đến 22h</p>

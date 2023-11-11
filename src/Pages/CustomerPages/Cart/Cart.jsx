@@ -37,6 +37,7 @@ export default function Cart() {
     const countCartContext = useContext(CountCartContext);
 
     const [loading, setLoading] = useState(false);
+    const [loadingAction, setLoadingAction] = useState(false);
 
     let shipFee = 20000;
 
@@ -51,13 +52,14 @@ export default function Cart() {
     }
 
     async function RemoveProductFromCart(item) {
-        countCartContext.handleCountCart();
-        setLoading(true);
         try {
+            countCartContext.handleCountCart();
+            setLoadingAction(true);
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
             const result = await axios.delete(axios.defaults.baseURL + `/remove-from-cart/${item.id_product}`);
+            setLoadingAction(false);
             setChange(!change);
 
             try {
@@ -78,21 +80,22 @@ export default function Cart() {
                     setIsNotiFail(false);
                 }, 3000);
             }
-            setLoading(false);
         } catch (error) {
             setIsNotiFail(true);
             setDetailNoti(error);
-            setLoading(false);
+            setLoadingAction(false);
         }
     }
 
     async function IncrementProductFromCart(item) {
         try {
+            setLoadingAction(true);
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             await axios.put(axios.defaults.baseURL + `/account/increment-product-from-cart/${item.id_product}`, {
                 quantity: item.quantity,
             });
+            setLoadingAction(false);
             setChange(!change);
         } catch (error) {
             setIsNotiFail(true);
@@ -102,12 +105,13 @@ export default function Cart() {
 
     async function DecrementProductFromCart(item) {
         try {
+            setLoadingAction(true);
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             await axios.put(axios.defaults.baseURL + `/account/decrement-product-from-cart/${item.id_product}`, {
                 quantity: item.quantity,
             });
-
+            setLoadingAction(false);
             setChange(!change);
         } catch (error) {
             setIsNotiFail(true);
@@ -126,7 +130,6 @@ export default function Cart() {
 
     const handleSingleCheckBox = (e) => {
         const value = parseInt(e.target.value);
-
         if (e.target.checked) {
             setSelectedItem([...selectedItem, value]);
         } else {
@@ -143,7 +146,7 @@ export default function Cart() {
     const goToOrderPage = () => {
         if (selectedItem.length === 0) {
             setIsNotiFail(true);
-            setDetailNoti('Ngài chưa chọn sản phẩm để thanh toán');
+            setDetailNoti('Bạn chưa chọn sản phẩm để thanh toán');
             setTimeout(() => {
                 setIsNotiFail(false);
             }, 3000);
@@ -307,7 +310,7 @@ export default function Cart() {
                     </div>
                 </div>
             ) : (
-                <Loading pacman />
+                <Loading pacman size={40} />
             )}
 
             <div onClick={() => setIsNotiFail(false)}>
@@ -316,6 +319,7 @@ export default function Cart() {
             <div onClick={() => setIsNotiSuccess(false)}>
                 <NotifyModalSuccess isSuccess={isNotiSuccess} detailNoti={detailNoti} />
             </div>
+            {loadingAction && <Loading fade size={30} />}
         </div>
     );
 }

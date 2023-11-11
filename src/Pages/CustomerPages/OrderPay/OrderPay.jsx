@@ -82,6 +82,7 @@ export default function OrderPay() {
     const [isNotiFail, setIsNotiFail] = useState(false);
 
     const [loading, setLoading] = useState(false);
+    const [loadingAction, setLoadingAction] = useState(false);
 
     const goToChangeInfo = () => {
         navigate('/change-info');
@@ -112,14 +113,15 @@ export default function OrderPay() {
 
     async function AddNewDeliveryAddress() {
         try {
+            setLoadingAction(true);
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            setLoading(true);
             const result = await axios.post(axios.defaults.baseURL + `/create-delivery-address`, {
                 name_address: nameAddress,
                 name_receiver: nameReceiver,
                 phone_receiver: phoneReceiver,
             });
+            setLoadingAction(false);
 
             console.log(result);
 
@@ -133,7 +135,6 @@ export default function OrderPay() {
                 setDiscount(null);
                 setIsShowModalAddAddress(false);
                 setChange(!change);
-                setLoading(false);
             }
             if (result.data.errCode === 1) {
                 setIsNotiFail(true);
@@ -141,7 +142,6 @@ export default function OrderPay() {
                 setTimeout(() => {
                     setIsNotiFail(false);
                 }, 5000);
-                setLoading(false);
             }
         } catch (error) {
             console.log(error);
@@ -150,7 +150,7 @@ export default function OrderPay() {
 
     async function UpdateDeliveryAddress(item) {
         try {
-            setLoading(true);
+            setLoadingAction(true);
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const result = await axios.post(axios.defaults.baseURL + `/update-delivery-address/${IdAddress}`, {
@@ -158,7 +158,7 @@ export default function OrderPay() {
                 name_receiver: nameReceiver,
                 phone_receiver: phoneReceiver,
             });
-            setLoading(false);
+            setLoadingAction(false);
 
             if (result.data.errCode === 0) {
                 setIsNotiSuccess(true);
@@ -183,11 +183,11 @@ export default function OrderPay() {
 
     async function DeleteDeliveryAddress(item) {
         try {
-            setLoading(true);
+            setLoadingAction(true);
             let token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const result = await axios.delete(axios.defaults.baseURL + `/delete-delivery-address/${item.id_address}`);
-            setLoading(false);
+            setLoadingAction(false);
             if (result.data.errCode === 0) {
                 setIsNotiSuccess(true);
                 setDetailNoti(result.data.message);
@@ -210,7 +210,9 @@ export default function OrderPay() {
 
     async function AddVoucher() {
         try {
+            setLoadingAction(true);
             const response = await axios.get(axios.defaults.baseURL + `/get-discount-by-code?discount_code=${code}`);
+            setLoadingAction(false);
             if (response.status === 200) {
                 setDiscount(response.data.discount);
                 hideModalPromotion();
@@ -237,9 +239,11 @@ export default function OrderPay() {
 
     async function ChooseVoucher(item) {
         try {
+            setLoadingAction(true);
             const response = await axios.get(
                 axios.defaults.baseURL + `/get-discount-by-code?discount_code=${item.discount_code}`,
             );
+            setLoadingAction(false);
 
             if (response.status === 200) {
                 setDiscount(response.data.discount);
@@ -267,13 +271,13 @@ export default function OrderPay() {
 
     const handleOrder = async () => {
         try {
-            setLoading(true);
+            setLoadingAction(true);
             const order = await axios.post(axios.defaults.baseURL + '/order-pay', {
                 arr: listProduct,
                 discount_id: discount?.discount_id,
                 id_address: listAddress[0]?.id_address,
             });
-            setLoading(false);
+            setLoadingAction(false);
 
             if (order.data.errCode === 0) {
                 setOrderSuccess(true);
@@ -349,7 +353,7 @@ export default function OrderPay() {
     return (
         <>
             <div className="containerPay">
-                {/* {loading && <Loading pacman />} */}
+                {loadingAction && <Loading fade size={30} />}
                 <div className="delivery-address">
                     <h4 className="h4"> Địa chỉ nhận hàng</h4>
                     <div className="line"></div>

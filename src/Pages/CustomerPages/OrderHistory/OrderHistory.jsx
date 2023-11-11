@@ -269,7 +269,7 @@ export default function OrderHistory() {
                                         </div>
                                     </div>
                                 ) : (
-                                    <Loading pacman />
+                                    <Loading pacman size={30} />
                                 )}
                             </>
                         )}
@@ -389,7 +389,7 @@ export default function OrderHistory() {
                         )}
                     </div>
                 ) : (
-                    <Loading pacman />
+                    <Loading pacman size={30} />
                 )}
             </div>
             {/* Start: Modal */}
@@ -672,7 +672,7 @@ export default function OrderHistory() {
                                 </div>
                             </div>
                         ) : (
-                            <Loading pacman />
+                            <Loading pacman size={30} />
                         )}
                     </div>
                 </div>

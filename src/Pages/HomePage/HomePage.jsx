@@ -33,6 +33,7 @@ export default function HomePage() {
     const [listMostReducingProduct, setListMostReducingProduct] = useState([]);
 
     const [loading, setLoading] = useState(false);
+    const [loadingAction, setLoadingAction] = useState(false);
 
     async function getListCategory() {
         let result = await axios.get(axios.defaults.baseURL + `/category?id=ALL`);
@@ -41,14 +42,14 @@ export default function HomePage() {
 
     async function getListMostByProduct() {
         try {
-            setLoading(true);
+            setLoadingAction(true);
             let result = await axios.get(axios.defaults.baseURL + `/most-by-product`);
             setListMostBuyProduct(result?.data.listMostBuyProduct);
             setTimeout(() => {
-                setLoading(false);
+                setLoadingAction(false);
             }, 1000);
         } catch (error) {
-            setLoading(false);
+            setLoadingAction(false);
         }
     }
 
@@ -85,6 +86,8 @@ export default function HomePage() {
     return (
         <div className="wrapper-content-homepage">
             {loading && <Loading hash size={60} />}
+            {loadingAction && <Loading fade size={30} />}
+
             <div className="container-content-homepage">
                 <div className="content-banner-homepage">
                     <div className="content-top-banner">
