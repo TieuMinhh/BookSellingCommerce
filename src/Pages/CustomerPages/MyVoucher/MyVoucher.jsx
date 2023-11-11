@@ -59,7 +59,7 @@ export default function MyVoucher() {
                             </div>
                         </div>
                     ) : (
-                        <Loading pacman />
+                        <Loading pacman size={30} />
                     )}
                 </div>
             </div>

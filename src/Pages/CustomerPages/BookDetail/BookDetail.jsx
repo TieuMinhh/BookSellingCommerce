@@ -24,6 +24,7 @@ export default function BookDetail() {
     const countCartContext = useContext(CountCartContext);
 
     const [loading, setLoading] = useState(false);
+    const [loadingAction, setLoadingAction] = useState(false);
 
     useEffect(() => {
         window.scrollTo({
@@ -41,14 +42,9 @@ export default function BookDetail() {
     const id = urlParams.get('id');
 
     async function getDetailProduct() {
-        try {
-            setLoading(true);
-            const result = await axios.get(axios.defaults.baseURL + `/detail-product?id=${id}`);
-            setList(result?.data.listProduct);
-            setLoading(false);
-        } catch (error) {
-            setLoading(false);
-        }
+        const result = await axios.get(axios.defaults.baseURL + `/detail-product?id=${id}`);
+        setLoading(true);
+        setList(result?.data.listProduct);
     }
 
     const handleIncrement = () => {
@@ -62,12 +58,12 @@ export default function BookDetail() {
     };
 
     const handleAddToCart = async () => {
-        setLoading(true);
+        setLoadingAction(true);
         let token = await getToken();
         let id_product = id;
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         let result = await axios.post(axios.defaults.baseURL + `/add-to-cart/${id_product}`, { quantity });
-        setLoading(false);
+        setLoadingAction(false);
 
         if (result.status === 200) {
             setIsNotiSuccess(true);
@@ -139,197 +135,204 @@ export default function BookDetail() {
     }, []);
 
     return (
-        <div className="products-info">
-            <MyLoginModal
-                isLogin={false}
-                show={show}
-                handleClose={handleClose}
-                handleLoginSuccess={handleLoginSuccess}
-            />
-            ;
-            <div className="product-info">
-                {loading && <Loading pacman size={42} />}
-                <div className="left-product">
-                    <div className="big-image-product">
-                        <img
-                            src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
-                            alt=""
-                            className="avatar-image"
-                        />
+        <>
+            {' '}
+            {loading ? (
+                <div className="products-info">
+                    <MyLoginModal
+                        isLogin={false}
+                        show={show}
+                        handleClose={handleClose}
+                        handleLoginSuccess={handleLoginSuccess}
+                    />
+                    ;
+                    <div className="product-info">
+                        <div className="left-product">
+                            <div className="big-image-product">
+                                <img
+                                    src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
+                                    alt=""
+                                    className="avatar-image"
+                                />
+                            </div>
+                            <div className="images-product">
+                                <div className="small-image-product">
+                                    <img
+                                        src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
+                                        alt=""
+                                        className="avatar-image"
+                                    />
+                                </div>
+                                <div className="small-image-product">
+                                    <img
+                                        src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
+                                        alt=""
+                                        className="avatar-image"
+                                    />
+                                </div>
+                                <div className="small-image-product">
+                                    <img
+                                        src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
+                                        alt=""
+                                        className="avatar-image"
+                                    />
+                                </div>
+                                <div className="small-image-product">
+                                    <img
+                                        src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
+                                        alt=""
+                                        className="avatar-image"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="right-product">
+                            <div className="product-name">{list && list[0]?.name_product}</div>
+                            <div className="book-info">
+                                <p className="product-nxb">Nhà xuất bản: {list && list[0]?.name_company}</p>
+                                <p className="product-author"> Tác giả: {list && list[0]?.author}</p>
+                            </div>
+                            <div className="rating">
+                                <i className="fas fa-star"></i>
+                                <i className="fas fa-star"></i>
+                                <i className="fas fa-star"></i>
+                                <i className="fas fa-star"></i>
+                                <i className="fas fa-star-half-alt"></i>
+                            </div>
+
+                            <div className="main-price">
+                                <div className="price">
+                                    {list &&
+                                        list[0]?.price_reducing.toLocaleString('vi', {
+                                            style: 'currency',
+                                            currency: 'VND',
+                                        })}{' '}
+                                </div>
+                                <span>
+                                    {list &&
+                                        list[0]?.price.toLocaleString('vi', {
+                                            style: 'currency',
+                                            currency: 'VND',
+                                        })}{' '}
+                                </span>
+                            </div>
+
+                            <div className="time-delivery">
+                                <div className="info-delivery">
+                                    <p>Thời gian giao hàng</p>
+                                    <p>Chính sách đổi trả</p>
+                                </div>
+                                <div>
+                                    <p>Dự kiến từ 1-3 ngày</p>
+                                    <p>Khui sách = miễn đổi trả</p>
+                                </div>
+                            </div>
+
+                            <div className="quantity">
+                                <p className="quantityName">Số lượng :</p>
+                                <div className="counter">
+                                    <button className="btn-giam" onClick={handleDecrement}>
+                                        -
+                                    </button>
+                                    <p
+                                        style={{
+                                            fontSize: '18px',
+                                        }}
+                                    >
+                                        {number}
+                                    </p>
+                                    <button className="btn-tang" onClick={handleIncrement}>
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="btn-box">
+                                <div className="cart-btn">
+                                    <Button id="add-btn" variant="outline-danger" onClick={handleCheckLogin}>
+                                        <i className="fa-solid fa-shopping-cart add-btn-box"></i>
+                                        Thêm vào giỏ hàng
+                                    </Button>
+                                </div>
+
+                                <div className="buy-btn" onClick={handelBuyNow}>
+                                    <Button id="order-btn" variant="danger">
+                                        <i className="fa-solid order-btn-box"></i>
+                                        Mua ngay
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="images-product">
-                        <div className="small-image-product">
-                            <img
-                                src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
-                                alt=""
-                                className="avatar-image"
-                            />
+                    <div className="product-related">
+                        <div className="product-related-title">
+                            <p>Bạn có thể thích</p>
                         </div>
-                        <div className="small-image-product">
-                            <img
-                                src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
-                                alt=""
-                                className="avatar-image"
-                            />
+                        <div className=" product-related-content">
+                            <div className="product-related-item">
+                                <img src={Img} alt=""></img>
+                            </div>
+                            <div className="product-related-item">
+                                <img src={Img} alt=""></img>
+                            </div>
+                            <div className="product-related-item">
+                                <img src={Img} alt=""></img>
+                            </div>
+                            <div className="product-related-item">
+                                <img src={Img} alt=""></img>
+                            </div>
+                            <div className="product-related-item">
+                                <img src={Img} alt=""></img>
+                            </div>
+                            <div className="product-related-item">
+                                <img src={Img} alt=""></img>
+                            </div>
                         </div>
-                        <div className="small-image-product">
-                            <img
-                                src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
-                                alt=""
-                                className="avatar-image"
-                            />
+                    </div>
+                    <div className="line"></div>
+                    <div className="info-describe">
+                        <h4> Thông tin sản phẩm</h4>
+
+                        <div className="info-info">
+                            <ul className="left-info">
+                                <li>Mã hàng</li>
+                                <li>Tên Nhà Cung Cấp </li>
+                                <li>Tác giả</li>
+                                <li>Người dịch</li>
+                                <li>Nhà xuất bản</li>
+                                <li>Năm xuất bản</li>
+                            </ul>
+
+                            <ul className="right-info">
+                                <li>8935230009887</li>
+                                <li>Cty Văn Hóa & Truyền Thông Trí Việt.</li>
+                                <li>{list && list[0]?.author}</li>
+                                <li>Xiao Ming</li>
+                                <li>{list && list[0]?.name_company}</li>
+                                <li>{list && list[0]?.year_publish}</li>
+                            </ul>
                         </div>
-                        <div className="small-image-product">
-                            <img
-                                src={`${config.PUBLIC_IMAGE_URL}${list && list[0]?.images}`}
-                                alt=""
-                                className="avatar-image"
-                            />
+
+                        <div className="line"></div>
+                        <p className="name-describe"> Không Gia Đình</p>
+                        <div className="detail-describe">
+                            <p>{list && list[0]?.content}</p>
+                            <div className=""></div>
                         </div>
+                    </div>
+                    {/* Start modal add cart success */}
+                    <div onClick={() => setIsNotiSuccess(false)}>
+                        <NotifyModalSuccess isSuccess={isNotiSuccess} detailNoti={detailNoti} />
+                    </div>
+                    <div onClick={() => setIsNotiFail(false)}>
+                        <NotifyModalFail isFail={isNotiFail} detailNoti={detailNoti} />
                     </div>
                 </div>
-
-                <div className="right-product">
-                    <div className="product-name">{list && list[0]?.name_product}</div>
-                    <div className="book-info">
-                        <p className="product-nxb">Nhà xuất bản: {list && list[0]?.name_company}</p>
-                        <p className="product-author"> Tác giả: {list && list[0]?.author}</p>
-                    </div>
-                    <div className="rating">
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star-half-alt"></i>
-                    </div>
-
-                    <div className="main-price">
-                        <div className="price">
-                            {list &&
-                                list[0]?.price_reducing.toLocaleString('vi', {
-                                    style: 'currency',
-                                    currency: 'VND',
-                                })}{' '}
-                        </div>
-                        <span>
-                            {list &&
-                                list[0]?.price.toLocaleString('vi', {
-                                    style: 'currency',
-                                    currency: 'VND',
-                                })}{' '}
-                        </span>
-                    </div>
-
-                    <div className="time-delivery">
-                        <div className="info-delivery">
-                            <p>Thời gian giao hàng</p>
-                            <p>Chính sách đổi trả</p>
-                        </div>
-                        <div>
-                            <p>Dự kiến từ 1-3 ngày</p>
-                            <p>Khui sách = miễn đổi trả</p>
-                        </div>
-                    </div>
-
-                    <div className="quantity">
-                        <p className="quantityName">Số lượng :</p>
-                        <div className="counter">
-                            <button className="btn-giam" onClick={handleDecrement}>
-                                -
-                            </button>
-                            <p
-                                style={{
-                                    fontSize: '18px',
-                                }}
-                            >
-                                {number}
-                            </p>
-                            <button className="btn-tang" onClick={handleIncrement}>
-                                +
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="btn-box">
-                        <div className="cart-btn">
-                            <Button id="add-btn" variant="outline-danger" onClick={handleCheckLogin}>
-                                <i className="fa-solid fa-shopping-cart add-btn-box"></i>
-                                Thêm vào giỏ hàng
-                            </Button>
-                        </div>
-
-                        <div className="buy-btn" onClick={handelBuyNow}>
-                            <Button id="order-btn" variant="danger">
-                                <i className="fa-solid order-btn-box"></i>
-                                Mua ngay
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="product-related">
-                <div className="product-related-title">
-                    <p>Bạn có thể thích</p>
-                </div>
-                <div className=" product-related-content">
-                    <div className="product-related-item">
-                        <img src={Img} alt=""></img>
-                    </div>
-                    <div className="product-related-item">
-                        <img src={Img} alt=""></img>
-                    </div>
-                    <div className="product-related-item">
-                        <img src={Img} alt=""></img>
-                    </div>
-                    <div className="product-related-item">
-                        <img src={Img} alt=""></img>
-                    </div>
-                    <div className="product-related-item">
-                        <img src={Img} alt=""></img>
-                    </div>
-                    <div className="product-related-item">
-                        <img src={Img} alt=""></img>
-                    </div>
-                </div>
-            </div>
-            <div className="line"></div>
-            <div className="info-describe">
-                <h4> Thông tin sản phẩm</h4>
-
-                <div className="info-info">
-                    <ul className="left-info">
-                        <li>Mã hàng</li>
-                        <li>Tên Nhà Cung Cấp </li>
-                        <li>Tác giả</li>
-                        <li>Người dịch</li>
-                        <li>Nhà xuất bản</li>
-                        <li>Năm xuất bản</li>
-                    </ul>
-
-                    <ul className="right-info">
-                        <li>8935230009887</li>
-                        <li>Cty Văn Hóa & Truyền Thông Trí Việt.</li>
-                        <li>{list && list[0]?.author}</li>
-                        <li>Xiao Ming</li>
-                        <li>{list && list[0]?.name_company}</li>
-                        <li>{list && list[0]?.year_publish}</li>
-                    </ul>
-                </div>
-
-                <div className="line"></div>
-                <p className="name-describe"> Không Gia Đình</p>
-                <div className="detail-describe">
-                    <p>{list && list[0]?.content}</p>
-                    <div className=""></div>
-                </div>
-            </div>
-            {/* Start modal add cart success */}
-            <div onClick={() => setIsNotiSuccess(false)}>
-                <NotifyModalSuccess isSuccess={isNotiSuccess} detailNoti={detailNoti} />
-            </div>
-            <div onClick={() => setIsNotiFail(false)}>
-                <NotifyModalFail isFail={isNotiFail} detailNoti={detailNoti} />
-            </div>
-        </div>
+            ) : (
+                <Loading fade size={30} />
+            )}
+            {loadingAction && <Loading fade size={30} />}
+        </>
     );
 }

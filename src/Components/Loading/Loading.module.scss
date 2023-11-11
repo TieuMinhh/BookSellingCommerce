@@ -4,10 +4,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 2;
+    z-index: 9999 !important;
     background-color: rgba(0, 0, 0, 0.1);
 }
 
 .container {
-    transform: translateY(-80px);
+    transform: translateY(-50%);
 }

@@ -77,7 +77,7 @@ export default function Profile() {
                                 </div>
                             </>
                         ) : (
-                            <Loading dot />
+                            <Loading pacman size={30} />
                         )}
                     </div>
                 </div>

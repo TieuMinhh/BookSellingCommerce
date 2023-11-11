@@ -6,6 +6,7 @@ import axios from '../../../api/axios';
 import moment from 'moment';
 import config from '../../../api/base';
 import { toast } from 'react-toastify';
+import Loading from '../../../Components/Loading';
 
 export default function Customer() {
     const [list, setList] = useState([]);
@@ -13,9 +14,12 @@ export default function Customer() {
     const [showBlock, setShowBlock] = useState(false);
     const [showUnBlock, setShowUnBlock] = useState(false);
     const [id, setID] = useState();
+    const [loading, setLoading] = useState(false);
+    const [loadingAction, setLoadingAction] = useState(false);
 
     async function getListCustomer() {
         const result = await axios.get(axios.defaults.baseURL + `/admin/account`);
+        setLoading(true);
         setList(result?.data.listAccount);
         // console.log(result.data);
     }
@@ -43,10 +47,12 @@ export default function Customer() {
     async function BlockUser() {
         console.log('id_account là :', id);
         try {
+            setLoadingAction(true);
             const reason = document.getElementById('exampleForm.ControlInput1').value;
             const result = await axios.post(axios.defaults.baseURL + `/admin/block-user/${id}`, {
                 reason: reason,
             });
+            setLoadingAction(false);
             setChange(!change);
             console.log(result);
             if (result.status === 400) toast.warning(result.data.message);
@@ -60,10 +66,12 @@ export default function Customer() {
     async function UnBlockUser() {
         console.log('id_account là :', id);
         try {
+            setLoadingAction(true);
             const reason = document.getElementById('exampleForm.ControlInput2').value;
             const result = await axios.post(axios.defaults.baseURL + `/admin/unblock-user/${id}`, {
                 reason: reason,
             });
+            setLoadingAction(false);
             setChange(!change);
             console.log(result);
             if (result.status === 400) toast.warning(result.data.message);
@@ -80,114 +88,129 @@ export default function Customer() {
     }, [change]);
 
     return (
-        <div className="account-main-container">
-            <div className="d-flex justify-content-center title-account">Danh sách khách hàng</div>
-            <div className="table-user-account">
-                <table id="customers-account">
-                    <tbody>
-                        <tr>
-                            <th>STT</th>
-                            <th>Ảnh đại diện</th>
-                            <th>Tên khách hàng</th>
-                            <th>Email</th>
-                            <th>Số điện thoại</th>
-                            <th>Địa chỉ</th>
-                            <th>Ngày tạo</th>
-                            <th>Thao tác</th>
-                        </tr>
+        <>
+            {loading ? (
+                <div className="account-main-container">
+                    <div className="d-flex justify-content-center title-account">Danh sách khách hàng</div>
+                    <div className="table-user-account">
+                        <table id="customers-account">
+                            <tbody>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Ảnh đại diện</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Email</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Thao tác</th>
+                                </tr>
 
-                        {list &&
-                            list.map((item, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td>
-                                            <img
-                                                src={`${config.PUBLIC_IMAGE_URL}${item.avatar}`}
-                                                alt="avatar"
-                                                className="avatar-image"
-                                            />
-                                        </td>
-                                        <td>{item.name}</td>
-                                        <td>{item.email}</td>
+                                {list &&
+                                    list.map((item, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <td>{index + 1}</td>
+                                                <td>
+                                                    <img
+                                                        src={`${config.PUBLIC_IMAGE_URL}${item.avatar}`}
+                                                        alt="avatar"
+                                                        className="avatar-image"
+                                                    />
+                                                </td>
+                                                <td>{item.name}</td>
+                                                <td>{item.email}</td>
 
-                                        <td>{item.phone}</td>
-                                        <td>{item.address}</td>
-                                        <td>{moment(item.created_time).format('llll')}</td>
-                                        <td>
-                                            {item.status === 0 ? (
-                                                <button
-                                                    className="btn btn-success lock-btn"
-                                                    onClick={() => handleShowBlock(item)}
-                                                >
-                                                    <i>
-                                                        <FaLock />
-                                                    </i>
-                                                </button>
-                                            ) : (
-                                                <button
-                                                    className="btn btn-danger lock-btn"
-                                                    onClick={() => handleShowUnBlock(item)}
-                                                >
-                                                    <i>
-                                                        <FaUnlock />
-                                                    </i>
-                                                </button>
-                                            )}
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                    </tbody>
-                </table>
-            </div>
-            {
-                <Modal show={showBlock} onHide={handleCloseBlock}>
-                    <Modal.Header closeButton>
-                        <Modal.Title className="color-title text-center text-size-title">Khoá tài khoản</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                <Form.Label className="text-black text-size-fit">Lí do khoá tài khoản</Form.Label>
-                                <Form.Control as="textarea" rows={2} />
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="danger" onClick={BlockUser}>
-                            Khoá
-                        </Button>
-                        <Button variant="primary" onClick={handleCloseBlock}>
-                            Huỷ
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            }
-            {
-                <Modal show={showUnBlock} onHide={handleCloseUnBlock}>
-                    <Modal.Header closeButton>
-                        <Modal.Title className="color-title text-center text-size-title">Mở khoá tài khoản</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body className="text-black text-size-fit">
-                        <Form>
-                            <Form.Label>Ngài có chắc chắn muốn mở khoá tài khoản này ?</Form.Label>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-                                <Form.Label className="text-black text-size-fit">Lí do mở khoá tài khoản</Form.Label>
-                                <Form.Control as="textarea" rows={2} />
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="success" onClick={UnBlockUser}>
-                            Mở khoá
-                        </Button>
-                        <Button variant="secondary" onClick={handleCloseUnBlock}>
-                            Huỷ
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            }
-        </div>
+                                                <td>{item.phone}</td>
+                                                <td>{item.address}</td>
+                                                <td>{moment(item.created_time).format('llll')}</td>
+                                                <td>
+                                                    {item.status === 0 ? (
+                                                        <button
+                                                            className="btn btn-success lock-btn"
+                                                            onClick={() => handleShowBlock(item)}
+                                                        >
+                                                            <i>
+                                                                <FaLock />
+                                                            </i>
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            className="btn btn-danger lock-btn"
+                                                            onClick={() => handleShowUnBlock(item)}
+                                                        >
+                                                            <i>
+                                                                <FaUnlock />
+                                                            </i>
+                                                        </button>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                            </tbody>
+                        </table>
+                    </div>
+                    {
+                        <Modal show={showBlock} onHide={handleCloseBlock}>
+                            <Modal.Header closeButton>
+                                <Modal.Title className="color-title text-center text-size-title">
+                                    Khoá tài khoản
+                                </Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <Form>
+                                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                        <Form.Label className="text-black text-size-fit">
+                                            Lí do khoá tài khoản
+                                        </Form.Label>
+                                        <Form.Control as="textarea" rows={2} />
+                                    </Form.Group>
+                                </Form>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="danger" onClick={BlockUser}>
+                                    Khoá
+                                </Button>
+                                <Button variant="primary" onClick={handleCloseBlock}>
+                                    Huỷ
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
+                    }
+                    {
+                        <Modal show={showUnBlock} onHide={handleCloseUnBlock}>
+                            <Modal.Header closeButton>
+                                <Modal.Title className="color-title text-center text-size-title">
+                                    Mở khoá tài khoản
+                                </Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body className="text-black text-size-fit">
+                                <Form>
+                                    <Form.Label>Ngài có chắc chắn muốn mở khoá tài khoản này ?</Form.Label>
+                                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+                                        <Form.Label className="text-black text-size-fit">
+                                            Lí do mở khoá tài khoản
+                                        </Form.Label>
+                                        <Form.Control as="textarea" rows={2} />
+                                    </Form.Group>
+                                </Form>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="success" onClick={UnBlockUser}>
+                                    Mở khoá
+                                </Button>
+                                <Button variant="secondary" onClick={handleCloseUnBlock}>
+                                    Huỷ
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
+                    }
+                </div>
+            ) : (
+                <Loading beat size={20} />
+            )}
+            {loadingAction && <Loading rise size={20} />}
+        </>
     );
 }

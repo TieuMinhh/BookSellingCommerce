@@ -263,7 +263,8 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                 }}
                 className="mt-5"
             >
-                {loading && <Loading moon size={60} />}
+                {loading && <Loading fade size={30} />}
+
                 <Modal.Header>
                     <ul className="tabs">
                         <li
