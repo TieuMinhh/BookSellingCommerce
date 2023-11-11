@@ -58,28 +58,32 @@ export default function BookDetail() {
     };
 
     const handleAddToCart = async () => {
-        setLoadingAction(true);
-        let token = await getToken();
-        let id_product = id;
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        let result = await axios.post(axios.defaults.baseURL + `/add-to-cart/${id_product}`, { quantity });
-        setLoadingAction(false);
+        try {
+            setLoadingAction(true);
+            let token = await getToken();
+            let id_product = id;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            let result = await axios.post(axios.defaults.baseURL + `/add-to-cart/${id_product}`, { quantity });
+            setLoadingAction(false);
 
-        if (result.status === 200) {
-            setIsNotiSuccess(true);
-            setDetailNoti(result.data.message);
-            setTimeout(() => {
-                setIsNotiSuccess(false);
-            }, 3000);
-        }
+            if (result.status === 200) {
+                setIsNotiSuccess(true);
+                setDetailNoti(result.data.message);
+                setTimeout(() => {
+                    setIsNotiSuccess(false);
+                }, 3000);
+            }
 
-        if (result.status === 500) {
-            setIsNotiFail(true);
-            setDetailNoti(result.data.message);
-            setTimeout(() => {
-                setIsNotiFail(false);
-            }, 3000);
-            setLoading(false);
+            if (result.status === 500) {
+                setIsNotiFail(true);
+                setDetailNoti(result.data.message);
+                setTimeout(() => {
+                    setIsNotiFail(false);
+                }, 3000);
+            }
+        } catch (error) {
+            setLoadingAction(false);
+            console.log(error);
         }
     };
 

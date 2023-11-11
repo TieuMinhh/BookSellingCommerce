@@ -41,7 +41,7 @@ export default function Revenue() {
             const revenue = parseFloat(item.total_revenue);
             revenueByDate[day] = revenue;
         });
-        console.log('manh: ', revenueByDate);
+        console.log('minh: ', revenueByDate);
         setListMonth([
             ...revenueByDate.map((item, index) => {
                 return {
@@ -96,7 +96,7 @@ export default function Revenue() {
 
             <div className="line">
                 <div className="data-line">
-                    <Line
+                    {/* <Line
                         data={{
                             labels: list && list.map((data) => data.name),
                             datasets: [
@@ -112,29 +112,30 @@ export default function Revenue() {
                         options={{
                             scales: {
                                 y: {
-                                    min: 0,
+                                    type: 'linear', // Đặt kiểu scale là 'linear' cho trục y
                                     ticks: {
                                         font: {
-                                            size: 10, // Kích cỡ chữ nhỏ
+                                            size: 10,
                                         },
+                                        min: 0,
                                     },
                                 },
                                 x: {
-                                    min: 0,
+                                    type: 'category', // Đặt kiểu scale là 'category' cho trục x
                                     ticks: {
                                         font: {
-                                            size: 10, // Kích cỡ chữ nhỏ
+                                            size: 10,
                                         },
                                     },
                                 },
                             },
                         }}
-                    />
+                    /> */}
                     ;
                 </div>
 
                 <div className="data-line">
-                    <Line
+                    {/* <Line
                         data={{
                             labels: listMonth && listMonth.map((data) => data.name),
                             datasets: [
@@ -150,24 +151,24 @@ export default function Revenue() {
                         options={{
                             scales: {
                                 y: {
-                                    min: 0,
+                                    type: 'linear', // Đặt kiểu scale là 'linear' cho trục y
                                     ticks: {
                                         font: {
-                                            size: 10, // Kích cỡ chữ nhỏ
+                                            size: 10,
                                         },
                                     },
                                 },
                                 x: {
-                                    min: 0,
+                                    type: 'category', // Đặt kiểu scale là 'category' cho trục x
                                     ticks: {
                                         font: {
-                                            size: 10, // Kích cỡ chữ nhỏ
+                                            size: 10,
                                         },
                                     },
                                 },
                             },
                         }}
-                    />
+                    /> */}
                     ;
                 </div>
             </div>

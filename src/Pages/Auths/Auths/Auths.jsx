@@ -36,6 +36,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
     const [isDisableInputPass, setIsDisableInputPass] = useState(true);
 
     const [loading, setLoading] = useState(false);
+    const [loadingAction, setLoadingAction] = useState(false);
 
     const handleResetModal = () => {
         setIsSendOTP(false);
@@ -179,9 +180,11 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
             setMessageSendOTP('Vui lòng nhập email!');
         } else {
             try {
+                setLoadingAction(true);
                 const result = await axios.post(axios.defaults.baseURL + '/forgot-password', {
                     email: username,
                 });
+                setLoadingAction(false);
 
                 if (result.data.errCode === 0) {
                     setIdAccount(result.data.id_account);
@@ -192,7 +195,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                     setMessageSendOTP(result.data.message);
                 }
             } catch (error) {
-                setLoading(false);
+                setLoadingAction(false);
             }
         }
     };
@@ -203,9 +206,11 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
             setMessageConfirmOTP('Vui lòng nhập OTP');
         } else {
             try {
+                setLoadingAction(true);
                 const result = await axios.post(axios.defaults.baseURL + `/confirm/${idAccount}`, {
                     code: OTP,
                 });
+                setLoadingAction(false);
                 if (result.data.errCode === 0) {
                     setIsSuccessOTP(true);
                     setMessageConfirmOTP(result.data.message);
@@ -217,18 +222,19 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
             } catch (error) {
                 setIsSuccessOTP(false);
                 setMessageConfirmOTP('Mã xác thực không chính xác');
+                setLoadingAction(false);
             }
         }
     };
 
     const handleConfirmPasswordChange = async () => {
         if (password === newPassword) {
-            setLoading(true);
+            setLoadingAction(true);
             const result = await axios.post(axios.defaults.baseURL + `/change-password-new/${idAccount}`, {
                 newPassword: password,
                 newPassword2: newPassword,
             });
-            setLoading(false);
+            setLoadingAction(false);
             if (result) {
                 setIsNotiSuccess(true);
                 setDetailNoti(result.data.message);
@@ -655,7 +661,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                     <Form.Label className="text-black text-size-fit mx-3">Nhập mật khẩu mới</Form.Label>
                                     <Form.Control
                                         className="mb-2 mx-3 "
-                                        type="tel"
+                                        type="password"
                                         placeholder="Nhập mật khẩu mới"
                                         style={{ width: '430px' }}
                                         name="phone"
@@ -669,7 +675,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
                                     <Form.Label className="text-black text-size-fit mx-3">Xác nhận mật khẩu</Form.Label>
                                     <Form.Control
                                         className="mb-2 mx-3 "
-                                        type="tel"
+                                        type="password"
                                         placeholder="Xác nhận mật khẩu"
                                         style={{ width: '430px' }}
                                         name="phone"
@@ -754,6 +760,7 @@ function MyLoginModal({ active, isLogin, show, handleClose, handleLoginSuccess }
             <div onClick={() => setIsNotiFail(false)}>
                 <NotifyModalFail isFail={isNotiFail} detailNoti={detailNoti} />
             </div>
+            {loadingAction && <Loading fade size={30} />}
         </>
     );
 }
