@@ -36,6 +36,12 @@
 }
 
 .wrapper-info-profile {
+    // .wrapper-detail-info {
+    //     display: flex;
+    //     justify-content: space-between;
+
+    // }
+
     h5 {
         color: #000;
         letter-spacing: 2px;
@@ -50,6 +56,19 @@
 }
 
 .detail-info-profile {
+    position: relative;
+    .avatar-container {
+        position: absolute;
+        top: 0;
+        right: 0px;
+        .img-avatar {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+    }
     p {
         font-size: 1rem;
 
