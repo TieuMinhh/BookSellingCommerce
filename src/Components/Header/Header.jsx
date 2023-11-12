@@ -13,9 +13,11 @@ import { NotifyModalFail } from '../NotifyModalFail/NotifyModalFail';
 import { NotifyModalSuccess } from '../NotifyModalSuccess/NotifyModalSuccess';
 import { CountCartContext } from '../CountCartProvider/CountCartProvider';
 import Loading from '../Loading';
+import config from '../../api/base';
 
 export default function Header() {
     const [listCart, setListCart] = useState([]);
+    const [user, setUser] = useState([]);
     const [listCategory, setListCategory] = useState([]);
     const [searchName, setSearchName] = useState('');
 
@@ -35,6 +37,15 @@ export default function Header() {
     const navigate = useNavigate();
     const [shouldSearch, setShouldSearch] = useState(false);
 
+    const getInfoUser = async () => {
+        try {
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const result = await axios.get(axios.defaults.baseURL + '/account/info');
+            setUser(result?.data.userInfo);
+            console.log('Check token neeee:', result.data.userInfo);
+        } catch (error) {}
+    };
     useEffect(() => {
         const searchProduct = async () => {
             try {
@@ -120,6 +131,7 @@ export default function Header() {
     useEffect(() => {
         getListCategory();
         getListProduct();
+        getInfoUser();
     }, []);
 
     const handleLogout = () => {
@@ -272,7 +284,17 @@ export default function Header() {
                                         <div className="wrapper-menu-logged">
                                             <li>
                                                 <Link to="/profile">
-                                                    <img src={PLatinum} alt="" />
+                                                    <img
+                                                        alt="avatar"
+                                                        src={`${config.PUBLIC_IMAGE_URL}${user && user?.avatar}`}
+                                                        style={{
+                                                            width: '40px',
+                                                            height: '40px',
+                                                            cursor: 'pointer',
+                                                            borderRadius: '50%',
+                                                            objectFit: 'cover',
+                                                        }}
+                                                    />
                                                     <div style={{ display: 'inline-block' }}>
                                                         <span className="user-name">
                                                             Ming Xiao<br></br>

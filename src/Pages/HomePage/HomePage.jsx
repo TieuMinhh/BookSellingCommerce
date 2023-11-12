@@ -86,7 +86,7 @@ export default function HomePage() {
     return (
         <div className="wrapper-content-homepage">
             {loading && <Loading hash size={60} />}
-            {loadingAction && <Loading pacman size={50} />}
+            {loadingAction && <Loading pacman size={40} />}
 
             <div className="container-content-homepage">
                 <div className="content-banner-homepage">
