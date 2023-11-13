@@ -19,6 +19,7 @@ export default function Publishing() {
     const [IDCompany, setIDCompany] = useState();
     const [loading, setLoading] = useState(false);
     const [loadingAction, setLoadingAction] = useState(false);
+    const [isValidPhone, setIsValidPhone] = useState(false);
 
     async function getListNXB() {
         let result = await axios.get(axios.defaults.baseURL + `/admin/publishing-company?id=ALL`);
@@ -54,6 +55,21 @@ export default function Publishing() {
     const handleCloseAdd = () => setShowAdd(false);
     const handleCloseEdit = () => setShowEdit(false);
     const handleCloseDel = () => setShowDel(false);
+
+    const [initialPhone, setInitialPhone] = useState('');
+    function handleOnChangePhone(e) {
+        const inputPhone = e.target.value;
+        const isValidPhone = /^0\d{9}$/.test(inputPhone);
+        setPhone(inputPhone);
+        setIsValidPhone(isValidPhone);
+        if (initialPhone === '') {
+            setInitialPhone(inputPhone); // Lưu số điện thoại ban đầu
+        }
+    }
+
+    function handleBlurPhone() {
+        setIsValidPhone(phone === '' || /^0\d{9}$/.test(phone));
+    }
 
     const handleSubmitAdd = async () => {
         try {
@@ -218,11 +234,17 @@ export default function Publishing() {
                                             Nhập số điện thoại nhà xuất bản
                                         </Form.Label>
                                         <Form.Control
+                                            className="mb-2"
                                             type="number"
                                             placeholder="0123456789"
+                                            name="phone"
                                             value={phone}
-                                            onChange={(e) => setPhone(e.target.value)}
+                                            onChange={handleOnChangePhone}
+                                            onBlur={handleBlurPhone}
                                         />
+                                        {initialPhone !== '' && initialPhone !== phone && phone && !isValidPhone && (
+                                            <span style={{ color: 'red' }}>Số điện thoại không hợp lệ</span>
+                                        )}
                                     </Form.Group>
 
                                     <Form.Group className="mb-3" controlId="formDayStart">

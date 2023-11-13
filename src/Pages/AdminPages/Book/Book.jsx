@@ -340,7 +340,15 @@ export default function Book() {
                                                     type="number"
                                                     placeholder="150.000 đ"
                                                     value={price}
-                                                    onChange={(e) => setPrice(e.target.value)}
+                                                    onChange={(e) => {
+                                                        const inputPrice = e.target.value;
+                                                        if (inputPrice > 0) {
+                                                            setPrice(inputPrice);
+                                                        } else {
+                                                            toast.warning('Vui lòng nhập giá trị dương');
+                                                            setPrice('');
+                                                        }
+                                                    }}
                                                 />
                                             </Form.Group>
                                         </Col>
@@ -368,10 +376,18 @@ export default function Book() {
                                                     Nhập năm xuất bản
                                                 </Form.Label>
                                                 <Form.Control
-                                                    type="text"
+                                                    type="number"
                                                     placeholder="2023"
                                                     value={yearPublish}
-                                                    onChange={(e) => setyearPublish(e.target.value)}
+                                                    onChange={(e) => {
+                                                        const inputPrice = e.target.value;
+                                                        if (inputPrice > 0) {
+                                                            setyearPublish(inputPrice);
+                                                        } else {
+                                                            toast.warning('Vui lòng nhập giá trị năm dương');
+                                                            setyearPublish('');
+                                                        }
+                                                    }}
                                                 />
                                             </Form.Group>
                                         </Col>
@@ -531,7 +547,15 @@ export default function Book() {
                                                     type="number"
                                                     placeholder="150.000 đ"
                                                     value={price}
-                                                    onChange={(e) => setPrice(e.target.value)}
+                                                    onChange={(e) => {
+                                                        const inputPrice = e.target.value;
+                                                        if (inputPrice > 0) {
+                                                            setPrice(inputPrice);
+                                                        } else {
+                                                            toast.warning('Vui lòng nhập giá trị dương');
+                                                            setPrice('');
+                                                        }
+                                                    }}
                                                 />
                                             </Form.Group>
                                         </Col>

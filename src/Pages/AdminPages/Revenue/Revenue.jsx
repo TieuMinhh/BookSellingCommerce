@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './Revenue.scss';
 import axios from '../../../api/axios';
+import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
 
 export default function Revenue() {
     const [list, setList] = useState([]);
     const [listMonth, setListMonth] = useState([]);
+    const [revenueDateToDate, setRevenueDateToDate] = useState([]);
     const [year, setYear] = useState('2023');
     const [month, setMonth] = useState('1');
+    const [startDay, setStartDay] = useState('');
+    const [endDay, setEndDay] = useState('');
 
     async function getListRevenueByMonth(year) {
         const result = await axios.get(axios.defaults.baseURL + `/admin/revenue-year/${year}`);
@@ -23,7 +28,7 @@ export default function Revenue() {
             ...revenueByMonth.map((item, index) => {
                 return {
                     id: index + 1,
-                    name: `Tháng ${index + 1}`,
+                    name: `${index + 1}`,
                     total: item,
                 };
             }),
@@ -53,9 +58,16 @@ export default function Revenue() {
         ]);
     }
 
+    async function getListRevenueByDateToDate(startDay, endDay) {
+        const result = await axios.get(axios.defaults.baseURL + `/admin/revenue-date-to-date/${startDay}/${endDay}`);
+        setRevenueDateToDate(result?.data.totalRevenue);
+        console.log(revenueDateToDate);
+    }
+
     useEffect(() => {
         getListRevenueByMonth(year);
         getListRevenueByDate(month, year);
+        getListRevenueByDateToDate(startDay, endDay);
     }, []);
 
     return (
@@ -94,16 +106,50 @@ export default function Revenue() {
                 </div>
             </div>
 
+            <div className="select-view">
+                <div className="select-years">
+                    <div className="years">Từ ngày</div>
+                    <input
+                        className="selected-years"
+                        type="date"
+                        value={startDay}
+                        onChange={(e) => {
+                            const newStartDay = e.target.value;
+                            setStartDay(newStartDay);
+                            if (endDay) {
+                                getListRevenueByDateToDate(newStartDay, endDay);
+                            }
+                        }}
+                    ></input>
+                </div>
+
+                <div className="select-months">
+                    <div className="months">Đến ngày</div>
+                    <input
+                        className="selected-months"
+                        type="date"
+                        value={endDay}
+                        onChange={(e) => {
+                            const newEndDay = e.target.value;
+                            setEndDay(newEndDay);
+                            if (startDay) {
+                                getListRevenueByDateToDate(startDay, newEndDay);
+                            }
+                        }}
+                    ></input>
+                </div>
+            </div>
+
             <div className="line">
                 <div className="data-line">
-                    {/* <Line
+                    <Line
                         data={{
                             labels: list && list.map((data) => data.name),
                             datasets: [
                                 {
                                     label: 'Doanh thu theo tháng đ',
                                     data: list && list.map((data) => data.total),
-                                    backgroundColor: ['rgba(75,192,192,1)', '#ecf0f1', '#50AF95', '#f3ba2f', '#2a71d0'],
+                                    backgroundColor: 'rgba(75,192,192,1)',
                                     borderColor: '#000',
                                     borderWidth: 2,
                                 },
@@ -130,19 +176,18 @@ export default function Revenue() {
                                 },
                             },
                         }}
-                    /> */}
-                    ;
+                    />
                 </div>
 
                 <div className="data-line">
-                    {/* <Line
+                    <Line
                         data={{
                             labels: listMonth && listMonth.map((data) => data.name),
                             datasets: [
                                 {
                                     label: 'Doanh thu theo ngày đ',
                                     data: listMonth && listMonth.map((data) => data.total),
-                                    backgroundColor: ['rgba(75,192,192,1)', '#ecf0f1', '#50AF95', '#f3ba2f', '#2a71d0'],
+                                    backgroundColor: 'rgba(75,192,192,1)',
                                     borderColor: '#000',
                                     borderWidth: 2,
                                 },
@@ -156,6 +201,7 @@ export default function Revenue() {
                                         font: {
                                             size: 10,
                                         },
+                                        min: 0,
                                     },
                                 },
                                 x: {
@@ -164,13 +210,25 @@ export default function Revenue() {
                                         font: {
                                             size: 10,
                                         },
+                                        min: 0,
                                     },
                                 },
                             },
                         }}
-                    /> */}
-                    ;
+                    />
                 </div>
+            </div>
+
+            <div className="total-date-to-date">
+                {startDay && endDay && (
+                    <p className="total">
+                        Tổng doanh thu từ ngày {startDay} đến ngày {endDay} là:{' '}
+                        {revenueDateToDate?.toLocaleString('vi', {
+                            style: 'currency',
+                            currency: 'VND',
+                        })}
+                    </p>
+                )}
             </div>
         </div>
     );
