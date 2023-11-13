@@ -202,7 +202,15 @@ export default function ProductPromotion() {
                                             type="number"
                                             placeholder="10%"
                                             value={percentage}
-                                            onChange={(e) => setPercentage(e.target.value)}
+                                            onChange={(e) => {
+                                                const inputPrice = e.target.value;
+                                                if (inputPrice > 0) {
+                                                    setPercentage(inputPrice);
+                                                } else {
+                                                    toast.warning('Vui lòng nhập giá trị dương');
+                                                    setPercentage('');
+                                                }
+                                            }}
                                         />
                                     </Form.Group>
 
@@ -212,7 +220,18 @@ export default function ProductPromotion() {
                                             type="date"
                                             placeholder="01/07/2023"
                                             value={startDay}
-                                            onChange={(e) => setStartDay(e.target.value)}
+                                            onChange={(e) => {
+                                                const selectedDate = new Date(e.target.value);
+                                                const today = new Date();
+                                                today.setHours(0, 0, 0, 0); // Đặt giờ, phút, giây và mili giây của ngày hiện tại về 0 để so sánh chính xác
+
+                                                if (selectedDate < today) {
+                                                    toast.warning('Vui lòng chọn ngày lớn hơn ngày hiện tại');
+                                                    // hoặc setStartDay(today.toISOString().split('T')[0]); // Cài đặt ngày hiện tại nếu không hợp lệ
+                                                } else {
+                                                    setStartDay(selectedDate.toISOString().split('T')[0]);
+                                                }
+                                            }}
                                         />
                                     </Form.Group>
 
@@ -253,7 +272,15 @@ export default function ProductPromotion() {
                                             type="number"
                                             placeholder="10%"
                                             value={percentage}
-                                            onChange={(e) => setPercentage(e.target.value)}
+                                            onChange={(e) => {
+                                                const inputPrice = e.target.value;
+                                                if (inputPrice > 0) {
+                                                    setPercentage(inputPrice);
+                                                } else {
+                                                    toast.warning('Vui lòng nhập giá trị dương');
+                                                    setPercentage('');
+                                                }
+                                            }}
                                         />
                                     </Form.Group>
 
@@ -263,7 +290,18 @@ export default function ProductPromotion() {
                                             type="date"
                                             placeholder="01/07/2023"
                                             value={startDay}
-                                            onChange={(e) => setStartDay(e.target.value)}
+                                            onChange={(e) => {
+                                                const selectedDate = new Date(e.target.value);
+                                                const today = new Date();
+                                                today.setHours(0, 0, 0, 0); // Đặt giờ, phút, giây và mili giây của ngày hiện tại về 0 để so sánh chính xác
+
+                                                if (selectedDate < today) {
+                                                    toast.warning('Vui lòng chọn ngày lớn hơn ngày hiện tại');
+                                                    // hoặc setStartDay(today.toISOString().split('T')[0]); // Cài đặt ngày hiện tại nếu không hợp lệ
+                                                } else {
+                                                    setStartDay(selectedDate.toISOString().split('T')[0]);
+                                                }
+                                            }}
                                         />
                                     </Form.Group>
 
