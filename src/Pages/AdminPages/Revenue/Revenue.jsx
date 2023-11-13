@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Revenue.scss';
 import axios from '../../../api/axios';
+import Loading from '../../../Components/Loading';
 import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
@@ -9,6 +10,9 @@ export default function Revenue() {
     const [list, setList] = useState([]);
     const [listMonth, setListMonth] = useState([]);
     const [revenueDateToDate, setRevenueDateToDate] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [loadingAction, setLoadingAction] = useState(false);
+
     const [year, setYear] = useState('2023');
     const [month, setMonth] = useState('1');
     const [startDay, setStartDay] = useState('');
@@ -16,6 +20,7 @@ export default function Revenue() {
 
     async function getListRevenueByMonth(year) {
         const result = await axios.get(axios.defaults.baseURL + `/admin/revenue-year/${year}`);
+        setLoading(true);
 
         const revenueByMonth = new Array(12).fill(0);
 
@@ -39,6 +44,8 @@ export default function Revenue() {
     async function getListRevenueByDate(month) {
         console.log('năm:', year, 'tháng :', month);
         const result = await axios.get(axios.defaults.baseURL + `/admin/revenue-month/${month}/${year}`);
+        setLoading(true);
+
         const revenueByDate = new Array(31).fill(0);
 
         result?.data.listRevenueByMonths.forEach((item) => {
@@ -60,6 +67,7 @@ export default function Revenue() {
 
     async function getListRevenueByDateToDate(startDay, endDay) {
         const result = await axios.get(axios.defaults.baseURL + `/admin/revenue-date-to-date/${startDay}/${endDay}`);
+        setLoading(true);
         setRevenueDateToDate(result?.data.totalRevenue);
         console.log(revenueDateToDate);
     }
@@ -71,165 +79,174 @@ export default function Revenue() {
     }, []);
 
     return (
-        <div className="revenue-main-container">
-            <div className="d-flex justify-content-center revenue-title">Thống kê doanh thu</div>
+        <>
+            {loading ? (
+                <div className="revenue-main-container">
+                    <div className="d-flex justify-content-center revenue-title">Thống kê doanh thu</div>
 
-            <div className="select-view">
-                <div className="select-years">
-                    <div className="years">Năm</div>
-                    <input
-                        className="selected-years"
-                        type="number"
-                        min={2021}
-                        max={2023}
-                        value={year}
-                        onChange={(e) => {
-                            getListRevenueByMonth(e.target.value);
-                            setYear(e.target.value);
-                        }}
-                    ></input>
-                </div>
+                    <div className="select-view">
+                        <div className="select-years">
+                            <div className="years">Năm</div>
+                            <input
+                                className="selected-years"
+                                type="number"
+                                min={2021}
+                                max={2023}
+                                value={year}
+                                onChange={(e) => {
+                                    setLoadingAction(true);
+                                    getListRevenueByMonth(e.target.value);
+                                    setYear(e.target.value);
+                                    setLoadingAction(false);
+                                }}
+                            ></input>
+                        </div>
 
-                <div className="select-months">
-                    <div className="months">Tháng</div>
-                    <input
-                        className="selected-months"
-                        type="number"
-                        min={1}
-                        max={12}
-                        value={month}
-                        onChange={(e) => {
-                            getListRevenueByDate(e.target.value);
-                            setMonth(e.target.value);
-                        }}
-                    ></input>
-                </div>
-            </div>
+                        <div className="select-months">
+                            <div className="months">Tháng</div>
+                            <input
+                                className="selected-months"
+                                type="number"
+                                min={1}
+                                max={12}
+                                value={month}
+                                onChange={(e) => {
+                                    getListRevenueByDate(e.target.value);
+                                    setMonth(e.target.value);
+                                }}
+                            ></input>
+                        </div>
+                    </div>
 
-            <div className="select-view">
-                <div className="select-years">
-                    <div className="years">Từ ngày</div>
-                    <input
-                        className="selected-years"
-                        type="date"
-                        value={startDay}
-                        onChange={(e) => {
-                            const newStartDay = e.target.value;
-                            setStartDay(newStartDay);
-                            if (endDay) {
-                                getListRevenueByDateToDate(newStartDay, endDay);
-                            }
-                        }}
-                    ></input>
-                </div>
+                    <div className="select-view">
+                        <div className="select-years">
+                            <div className="years">Từ ngày</div>
+                            <input
+                                className="selected-years"
+                                type="date"
+                                value={startDay}
+                                onChange={(e) => {
+                                    const newStartDay = e.target.value;
+                                    setStartDay(newStartDay);
+                                    if (endDay) {
+                                        getListRevenueByDateToDate(newStartDay, endDay);
+                                    }
+                                }}
+                            ></input>
+                        </div>
 
-                <div className="select-months">
-                    <div className="months">Đến ngày</div>
-                    <input
-                        className="selected-months"
-                        type="date"
-                        value={endDay}
-                        onChange={(e) => {
-                            const newEndDay = e.target.value;
-                            setEndDay(newEndDay);
-                            if (startDay) {
-                                getListRevenueByDateToDate(startDay, newEndDay);
-                            }
-                        }}
-                    ></input>
-                </div>
-            </div>
+                        <div className="select-months">
+                            <div className="months">Đến ngày</div>
+                            <input
+                                className="selected-months"
+                                type="date"
+                                value={endDay}
+                                onChange={(e) => {
+                                    const newEndDay = e.target.value;
+                                    setEndDay(newEndDay);
+                                    if (startDay) {
+                                        getListRevenueByDateToDate(startDay, newEndDay);
+                                    }
+                                }}
+                            ></input>
+                        </div>
+                    </div>
 
-            <div className="line">
-                <div className="data-line">
-                    <Line
-                        data={{
-                            labels: list && list.map((data) => data.name),
-                            datasets: [
-                                {
-                                    label: 'Doanh thu theo tháng đ',
-                                    data: list && list.map((data) => data.total),
-                                    backgroundColor: 'rgba(75,192,192,1)',
-                                    borderColor: '#000',
-                                    borderWidth: 2,
-                                },
-                            ],
-                        }}
-                        options={{
-                            scales: {
-                                y: {
-                                    type: 'linear', // Đặt kiểu scale là 'linear' cho trục y
-                                    ticks: {
-                                        font: {
-                                            size: 10,
+                    <div className="line">
+                        <div className="data-line">
+                            <Line
+                                data={{
+                                    labels: list && list.map((data) => data.name),
+                                    datasets: [
+                                        {
+                                            label: 'Doanh thu theo tháng đ',
+                                            data: list && list.map((data) => data.total),
+                                            backgroundColor: 'rgba(75,192,192,1)',
+                                            borderColor: '#000',
+                                            borderWidth: 2,
                                         },
-                                        min: 0,
-                                    },
-                                },
-                                x: {
-                                    type: 'category', // Đặt kiểu scale là 'category' cho trục x
-                                    ticks: {
-                                        font: {
-                                            size: 10,
+                                    ],
+                                }}
+                                options={{
+                                    scales: {
+                                        y: {
+                                            type: 'linear', // Đặt kiểu scale là 'linear' cho trục y
+                                            ticks: {
+                                                font: {
+                                                    size: 10,
+                                                },
+                                                min: 0,
+                                            },
+                                        },
+                                        x: {
+                                            type: 'category', // Đặt kiểu scale là 'category' cho trục x
+                                            ticks: {
+                                                font: {
+                                                    size: 10,
+                                                },
+                                            },
                                         },
                                     },
-                                },
-                            },
-                        }}
-                    />
-                </div>
+                                }}
+                            />
+                        </div>
 
-                <div className="data-line">
-                    <Line
-                        data={{
-                            labels: listMonth && listMonth.map((data) => data.name),
-                            datasets: [
-                                {
-                                    label: 'Doanh thu theo ngày đ',
-                                    data: listMonth && listMonth.map((data) => data.total),
-                                    backgroundColor: 'rgba(75,192,192,1)',
-                                    borderColor: '#000',
-                                    borderWidth: 2,
-                                },
-                            ],
-                        }}
-                        options={{
-                            scales: {
-                                y: {
-                                    type: 'linear', // Đặt kiểu scale là 'linear' cho trục y
-                                    ticks: {
-                                        font: {
-                                            size: 10,
+                        <div className="data-line">
+                            <Line
+                                data={{
+                                    labels: listMonth && listMonth.map((data) => data.name),
+                                    datasets: [
+                                        {
+                                            label: 'Doanh thu theo ngày đ',
+                                            data: listMonth && listMonth.map((data) => data.total),
+                                            backgroundColor: 'rgba(75,192,192,1)',
+                                            borderColor: '#000',
+                                            borderWidth: 2,
                                         },
-                                        min: 0,
-                                    },
-                                },
-                                x: {
-                                    type: 'category', // Đặt kiểu scale là 'category' cho trục x
-                                    ticks: {
-                                        font: {
-                                            size: 10,
+                                    ],
+                                }}
+                                options={{
+                                    scales: {
+                                        y: {
+                                            type: 'linear', // Đặt kiểu scale là 'linear' cho trục y
+                                            ticks: {
+                                                font: {
+                                                    size: 10,
+                                                },
+                                                min: 0,
+                                            },
                                         },
-                                        min: 0,
+                                        x: {
+                                            type: 'category', // Đặt kiểu scale là 'category' cho trục x
+                                            ticks: {
+                                                font: {
+                                                    size: 10,
+                                                },
+                                                min: 0,
+                                            },
+                                        },
                                     },
-                                },
-                            },
-                        }}
-                    />
-                </div>
-            </div>
+                                }}
+                            />
+                        </div>
+                    </div>
 
-            <div className="total-date-to-date">
-                {startDay && endDay && (
-                    <p className="total">
-                        Tổng doanh thu từ ngày {startDay} đến ngày {endDay} là:{' '}
-                        {revenueDateToDate?.toLocaleString('vi', {
-                            style: 'currency',
-                            currency: 'VND',
-                        })}
-                    </p>
-                )}
-            </div>
-        </div>
+                    <div className="total-date-to-date">
+                        {startDay && endDay && (
+                            <p className="total">
+                                Tổng doanh thu từ ngày {startDay} đến ngày {endDay} là:{' '}
+                                {revenueDateToDate?.toLocaleString('vi', {
+                                    style: 'currency',
+                                    currency: 'VND',
+                                })}
+                            </p>
+                        )}
+                    </div>
+                </div>
+            ) : (
+                <Loading beat size={20} />
+            )}
+            {loadingAction && <Loading fade size={30} />}
+        </>
     );
 }

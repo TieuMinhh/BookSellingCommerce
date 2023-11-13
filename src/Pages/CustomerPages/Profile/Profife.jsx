@@ -143,7 +143,7 @@ export default function Profile() {
                                                 className="img-avatar"
                                             />
                                         </div>
-                                        <div className="camera" style={{ color: '#000', cursor: 'pointer' }}>
+                                        <div className="camera">
                                             <TiCameraOutline
                                                 type="file"
                                                 accept="image/*"
