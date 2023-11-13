@@ -20,6 +20,7 @@ export default function Publishing() {
     const [loading, setLoading] = useState(false);
     const [loadingAction, setLoadingAction] = useState(false);
     const [isValidPhone, setIsValidPhone] = useState(false);
+    const [isValidEmail, setIsValidEmail] = useState(false);
 
     async function getListNXB() {
         let result = await axios.get(axios.defaults.baseURL + `/admin/publishing-company?id=ALL`);
@@ -69,6 +70,27 @@ export default function Publishing() {
 
     function handleBlurPhone() {
         setIsValidPhone(phone === '' || /^0\d{9}$/.test(phone));
+    }
+
+    // function handleOnChangeEmail(e) {
+    //     const inputEmail = e.target.value;
+    //     setEmail(inputEmail);
+    //     const emailPattern = /\S+@\S+\.\S+/; // Pattern kiểm tra email hợp lệ
+    //     setIsValidEmail(emailPattern.test(inputEmail)); // Sử dụng test method để kiểm tra
+    // }
+    const [initialEmail, setInitialEmail] = useState('');
+    function handleOnChangeEmail(e) {
+        const inputEmail = e.target.value;
+        const isValidEmail = /\S+@\S+\.\S+/.test(inputEmail);
+        setEmail(inputEmail);
+        setIsValidEmail(isValidEmail);
+        if (initialEmail === '') {
+            setInitialEmail(inputEmail); // Lưu email ban đầu
+        }
+    }
+
+    function handleBlurEmail() {
+        setIsValidEmail(email === '' || /\S+@\S+\.\S+/.test(email));
     }
 
     const handleSubmitAdd = async () => {
@@ -255,8 +277,12 @@ export default function Publishing() {
                                             type="text"
                                             placeholder="tandenthui@gmail.com"
                                             value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
+                                            onChange={handleOnChangeEmail}
+                                            onBlur={handleBlurEmail}
                                         />
+                                        {initialEmail !== '' && initialEmail !== email && email && !isValidEmail && (
+                                            <span style={{ color: 'red' }}>Địa chỉ email không hợp lệ</span>
+                                        )}
                                     </Form.Group>
 
                                     <Form.Group className="mb-3" controlId="formDayEnd">

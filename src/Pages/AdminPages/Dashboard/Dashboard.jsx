@@ -8,11 +8,12 @@ import Header from '../../../Components/DashboardComponents/Header';
 import StatBox from '../../../Components/DashboardComponents/StatBox';
 import { useState, useEffect } from 'react';
 import axios from '../../../api/axios';
+import Loading from '../../../Components/Loading';
 
 const Dashboard = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [loading, setLoading] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [soldProduct, setSoldProduct] = useState('');
     const [newOrders, setNewOrders] = useState('');
     const [newCustomer, setNewCustomer] = useState('');
@@ -52,81 +53,85 @@ const Dashboard = () => {
 
     return (
         <>
-            <Box m="20px">
-                {/* HEADER */}
-                <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Header title="TRANG CHỦ" subtitle="Chào mừng ngài đến với trang quản lý !" />
-                </Box>
+            {loading ? (
+                <Box m="20px">
+                    {/* HEADER */}
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Header title="TRANG CHỦ" subtitle="Chào mừng ngài đến với trang quản lý !" />
+                    </Box>
 
-                {/* GRID & CHARTS */}
-                <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px">
-                    {/* ROW 1 */}
-                    <Box
-                        gridColumn="span 3"
-                        backgroundColor={colors.primary[400]}
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                    >
-                        <StatBox
-                            title={soldProduct.toString()}
-                            subtitle="Sản phẩm đã bán"
-                            progress="0.75"
-                            increase="+10%"
-                            icon={
-                                <ProductionQuantityLimitsIcon
-                                    sx={{ color: colors.greenAccent[600], fontSize: '26px' }}
-                                />
-                            }
-                        />
-                    </Box>
-                    <Box
-                        gridColumn="span 3"
-                        backgroundColor={colors.primary[400]}
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                    >
-                        <StatBox
-                            title={newOrders.toString()}
-                            subtitle="Đơn hàng mới"
-                            progress="0.50"
-                            increase="+20%"
-                            icon={<PointOfSaleIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
-                        />
-                    </Box>
-                    <Box
-                        gridColumn="span 3"
-                        backgroundColor={colors.primary[400]}
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                    >
-                        <StatBox
-                            title={newCustomer.toString()}
-                            subtitle="Khách hàng mới"
-                            progress="0.30"
-                            increase="+5%"
-                            icon={<PersonAddIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
-                        />
-                    </Box>
-                    <Box
-                        gridColumn="span 3"
-                        backgroundColor={colors.primary[400]}
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                    >
-                        <StatBox
-                            title="50.000.000 đ"
-                            subtitle="Tổng danh thu"
-                            progress="0.80"
-                            increase="+30%"
-                            icon={<TrafficIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
-                        />
+                    {/* GRID & CHARTS */}
+                    <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gridAutoRows="140px" gap="20px">
+                        {/* ROW 1 */}
+                        <Box
+                            gridColumn="span 3"
+                            backgroundColor={colors.primary[400]}
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                        >
+                            <StatBox
+                                title={soldProduct.toString()}
+                                subtitle="Sản phẩm đã bán"
+                                progress="0.75"
+                                increase="+10%"
+                                icon={
+                                    <ProductionQuantityLimitsIcon
+                                        sx={{ color: colors.greenAccent[600], fontSize: '26px' }}
+                                    />
+                                }
+                            />
+                        </Box>
+                        <Box
+                            gridColumn="span 3"
+                            backgroundColor={colors.primary[400]}
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                        >
+                            <StatBox
+                                title={newOrders.toString()}
+                                subtitle="Đơn hàng mới"
+                                progress="0.50"
+                                increase="+20%"
+                                icon={<PointOfSaleIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
+                            />
+                        </Box>
+                        <Box
+                            gridColumn="span 3"
+                            backgroundColor={colors.primary[400]}
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                        >
+                            <StatBox
+                                title={newCustomer.toString()}
+                                subtitle="Khách hàng mới"
+                                progress="0.30"
+                                increase="+5%"
+                                icon={<PersonAddIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
+                            />
+                        </Box>
+                        <Box
+                            gridColumn="span 3"
+                            backgroundColor={colors.primary[400]}
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                        >
+                            <StatBox
+                                title="50.000.000 đ"
+                                subtitle="Tổng danh thu"
+                                progress="0.80"
+                                increase="+30%"
+                                icon={<TrafficIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
+                            />
+                        </Box>
                     </Box>
                 </Box>
-            </Box>
+            ) : (
+                <Loading beat size={20} />
+            )}
         </>
     );
 };
