@@ -225,7 +225,7 @@ export default function HomePage() {
                             {listMostBuyProduct &&
                                 listMostBuyProduct?.map((item, index) => {
                                     return (
-                                        <Link to={`/book/detail?id=${item.id_product}`} key={item.id_product}>
+                                        <Link to={`/product/detail/${item.id_product}`} key={item.id_product}>
                                             <div className="item-book-trend">
                                                 <div className="cover-img-trend">
                                                     <img
@@ -276,7 +276,7 @@ export default function HomePage() {
                             {listMostReducingProduct &&
                                 listMostReducingProduct?.map((item, index) => {
                                     return (
-                                        <Link to={`/book/detail?id=${item.id_product}`} key={item.id_product}>
+                                        <Link to={`/product/detail/${item.id_product}`} key={item.id_product}>
                                             <div className="item-book-trend">
                                                 <div className="cover-img-trend">
                                                     <img
