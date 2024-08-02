@@ -11,7 +11,7 @@ import { NotifyModalFail } from '../../../Components/NotifyModalFail/NotifyModal
 import MyLoginModal from '../../Auths/Auths/Auths';
 import { useContext } from 'react';
 import { CountCartContext } from '../../../Components/CountCartProvider/CountCartProvider';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Loading from '../../../Components/Loading';
 
 export default function BookDetail() {
@@ -37,9 +37,11 @@ export default function BookDetail() {
         setNumber((prevState) => prevState + value);
     };
 
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const id = urlParams.get('id');
+    // const queryString = window.location.search;
+    // const urlParams = new URLSearchParams(queryString);
+    // const id = urlParams.get('id');
+
+    const { id } = useParams();
 
     async function getDetailProduct() {
         const result = await axios.get(axios.defaults.baseURL + `/detail-product?id=${id}`);

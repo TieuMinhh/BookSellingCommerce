@@ -175,7 +175,7 @@ export default function Home() {
                                         searchResult.map((item, index) => {
                                             return (
                                                 <div className="main-list-item" key={item && item?.id_product}>
-                                                    <Link to={`/book/detail?id=${item && item?.id_product}`}>
+                                                    <Link to={`/book/detail/${item && item?.id_product}`}>
                                                         <div className="main-discription mt-8 mb-8">
                                                             <div className="cover-img-product">
                                                                 <img
@@ -292,7 +292,7 @@ export default function Home() {
                                         searchResult2.map((item, index) => {
                                             return (
                                                 <div className="main-list-item" key={item && item?.id_product}>
-                                                    <Link to={`/book/detail?id=${item && item?.id_product}`}>
+                                                    <Link to={`/product/detail/${item && item?.id_product}`}>
                                                         <div className="main-discription mt-8 mb-8">
                                                             <div className="cover-img-product">
                                                                 <img
@@ -406,7 +406,7 @@ export default function Home() {
                                         searchResult3.map((item, index) => {
                                             return (
                                                 <div className="main-list-item" key={item && item?.id_product}>
-                                                    <Link to={`/book/detail?id=${item && item?.id_product}`}>
+                                                    <Link to={`/product/detail/${item && item?.id_product}`}>
                                                         <div className="main-discription mt-8 mb-8">
                                                             <div className="cover-img-product">
                                                                 <img
@@ -523,7 +523,7 @@ export default function Home() {
                                         list.map((item, index) => {
                                             return (
                                                 <div className="main-list-item" key={item && item?.id_product}>
-                                                    <Link to={`/book/detail?id=${item.id_product}`}>
+                                                    <Link to={`/product/detail/${item.id_product}`}>
                                                         <div className="main-discription mt-8 mb-8">
                                                             <div className="cover-img-product">
                                                                 <img

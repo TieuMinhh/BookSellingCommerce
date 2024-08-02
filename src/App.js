@@ -90,7 +90,7 @@ function App() {
                                         <Route path="/" exact element={<HomePage />} />
                                         <Route path="/product" exact element={<Product />} />
                                         <Route path="/cart" element={<Cart />} />
-                                        <Route path="/book/detail" element={<BookDetail />} />
+                                        <Route path="/product/detail/:id" element={<BookDetail />} />
                                         <Route path="/profile" element={<Profile />} />
                                         <Route path="/order-pay" element={<OrderPay />} />
                                         <Route path="/change-info" element={<ChangeInfo />} />
