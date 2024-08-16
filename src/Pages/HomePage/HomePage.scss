@@ -167,66 +167,6 @@
     grid-template-columns: repeat(5, 1fr);
     background-color: #fff;
     padding: 24px;
-
-    .item-trend-name {
-        font-family: Arial, Helvetica, sans-serif;
-        padding-top: 10px;
-    }
-
-    .item-trend-price {
-        color: #c92127;
-        font-weight: bold;
-        font-size: 1.2rem;
-        margin-bottom: 0;
-        text-align: left;
-    }
-
-    .item-price-old {
-        text-decoration: line-through;
-        margin-bottom: 8px;
-        text-align: left;
-    }
-
-    .item-book-trend {
-        cursor: pointer;
-        padding: 8px;
-        &:hover {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-
-        .cover-img-trend {
-            width: 100%;
-            text-align: center;
-            position: relative;
-            img {
-                max-width: 190px;
-                min-height: 190px;
-            }
-
-            .promotion-corner-trend {
-                width: 44px;
-                height: 44px;
-                background-color: #f7941e;
-                position: absolute;
-                right: 0;
-                top: 0;
-                border-radius: 50%;
-                text-align: center;
-                .detail-promotion-trend {
-                    color: #fff;
-                    font-weight: bold;
-                    font-size: 1rem;
-                    line-height: 44px;
-                }
-            }
-        }
-
-        .main-rate {
-            text-align: left;
-            color: #f2c522;
-        }
-    }
 }
 
 .cover-top-trend {

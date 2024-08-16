@@ -1,30 +1,34 @@
 import './HomePage.scss';
-import Banner1 from '../../Assets/img/banner1.png';
-import Banner2 from '../../Assets/img/banner2.jpg';
-import Banner3 from '../../Assets/img/banner3.jpg';
-import Banner4 from '../../Assets/img/banner4.jpg';
-import Banner5 from '../../Assets/img/banner5.jpg';
-import Banner6 from '../../Assets/img/banner6.jpg';
-import Banner7 from '../../Assets/img/banner7.jpg';
+import {
+    TrendImg,
+    IconMenu,
+    Item1,
+    Item2,
+    Item3,
+    Item4,
+    Item5,
+    Item6,
+    Item7,
+    Item8,
+    Item9,
+    Item10,
+    Banner1,
+    Banner2,
+    Banner3,
+    Banner4,
+    Banner5,
+    Banner6,
+    Banner7,
+} from '../../Assets/img/index.js';
 
-import Item1 from '../../Assets/img/item1.png';
-import Item2 from '../../Assets/img/item2.png';
-import Item3 from '../../Assets/img/item3.png';
-import Item4 from '../../Assets/img/item4.png';
-import Item5 from '../../Assets/img/item5.png';
-import Item6 from '../../Assets/img/item6.png';
-import Item7 from '../../Assets/img/item7.png';
-import Item8 from '../../Assets/img/item8.png';
-import Item9 from '../../Assets/img/item9.png';
-import Item10 from '../../Assets/img/item10.png';
-import TrendImg from '../../Assets/img/trend-buy.png';
-import IconMenu from '../../Assets/img/icon-menu.png';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from '../../api/axios';
 import { useEffect } from 'react';
 import config from '../../api/base';
 import Loading from '../../Components/Loading/Loading';
+
+import MostCard from '../../Components/MostCard/MostCard';
 
 export default function HomePage() {
     const [numberCate, setNumberCate] = useState(1);
@@ -77,6 +81,49 @@ export default function HomePage() {
         }
     };
 
+    const items = [
+        {
+            img: <img loading="lazy" src={Item1} alt="" />,
+            text: <p>Sale Thứ 3</p>,
+        },
+        {
+            img: <img loading="lazy" src={Item2} alt="" />,
+            text: <p>Phái đẹp</p>,
+        },
+        {
+            img: <img loading="lazy" src={Item3} alt="" />,
+            text: <p>Flash Sale</p>,
+        },
+        {
+            img: <img loading="lazy" src={Item4} alt="" />,
+            text: <p>Mã Giảm Giá</p>,
+        },
+        {
+            img: <img loading="lazy" src={Item5} alt="" />,
+            text: <p>Đồ Chơi</p>,
+        },
+        {
+            img: <img loading="lazy" src={Item6} alt="" />,
+            text: <p>Máy Tính</p>,
+        },
+        {
+            img: <img loading="lazy" src={Item7} alt="" />,
+            text: <p>Thiếu Nhi</p>,
+        },
+        {
+            img: <img loading="lazy" src={Item8} alt="" />,
+            text: <p>Sản Phẩm Mới</p>,
+        },
+        {
+            img: <img loading="lazy" src={Item9} alt="" />,
+            text: <p>Manga</p>,
+        },
+        {
+            img: <img loading="lazy" src={Item10} alt="" />,
+            text: <p>Phiên Chợ Sách cũ</p>,
+        },
+    ];
+
     useEffect(() => {
         getListCategory();
         getListMostByProduct();
@@ -118,48 +165,16 @@ export default function HomePage() {
                         </div>
                     </div>
                 </div>
+
                 <div className="content-item-homepage">
-                    <div className="cover-content-item">
-                        <img loading="lazy" src={Item1} alt="" />
-                        <p>Sale Thứ 3</p>
-                    </div>
-                    <div className="cover-content-item">
-                        <img loading="lazy" src={Item2} alt="" />
-                        <p>Phái đẹp</p>
-                    </div>
-                    <div className="cover-content-item">
-                        <img loading="lazy" src={Item3} alt="" />
-                        <p>Flash Sale</p>
-                    </div>
-                    <div className="cover-content-item">
-                        <img loading="lazy" src={Item4} alt="" />
-                        <p>Mã Giảm Giá</p>
-                    </div>
-                    <div className="cover-content-item">
-                        <img loading="lazy" src={Item5} alt="" />
-                        <p>Đồ Chơi</p>
-                    </div>
-                    <div className="cover-content-item">
-                        <img loading="lazy" src={Item6} alt="" />
-                        <p>Máy Tính</p>
-                    </div>
-                    <div className="cover-content-item">
-                        <img loading="lazy" src={Item7} alt="" />
-                        <p>Thiếu Nhi</p>
-                    </div>
-                    <div className="cover-content-item">
-                        <img loading="lazy" src={Item8} alt="" />
-                        <p>Sản Phẩm Mới</p>
-                    </div>
-                    <div className="cover-content-item">
-                        <img loading="lazy" src={Item9} alt="" />
-                        <p>Manga</p>
-                    </div>
-                    <div className="cover-content-item">
-                        <img loading="lazy" src={Item10} alt="" />
-                        <p>Phiên Chợ Sách cũ</p>
-                    </div>
+                    {items.map((item, index) => (
+                        <div key={index} className="cover-content-item">
+                            {item.img}
+                            {item.text}
+                        </div>
+                    ))}
                 </div>
+
                 <div className="content-cate-homepage">
                     <div className="cover-title">
                         <img loading="lazy" src={IconMenu} alt="" />
@@ -225,46 +240,15 @@ export default function HomePage() {
                             {listMostBuyProduct &&
                                 listMostBuyProduct?.map((item, index) => {
                                     return (
-                                        <Link to={`/product/detail/${item.id_product}`} key={item.id_product}>
-                                            <div className="item-book-trend">
-                                                <div className="cover-img-trend">
-                                                    <img
-                                                        loading="lazy"
-                                                        src={`${config.PUBLIC_IMAGE_URL}${item.images}`}
-                                                        alt=""
-                                                        className="avatar-image"
-                                                        style={{ height: '100px' }}
-                                                    />
-                                                    <div className="promotion-corner-trend">
-                                                        <span className="detail-promotion-trend">
-                                                            -{item && item?.percentage}%
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <p className="item-trend-name">{item && item?.name_product}</p>
-                                                <p className="item-trend-price">
-                                                    {item &&
-                                                        item?.price_reducing.toLocaleString('vi', {
-                                                            style: 'currency',
-                                                            currency: 'VND',
-                                                        })}
-                                                </p>
-                                                <p className="item-price-old">
-                                                    {item &&
-                                                        item?.price.toLocaleString('vi', {
-                                                            style: 'currency',
-                                                            currency: 'VND',
-                                                        })}
-                                                </p>
-                                                <div className="main-rate">
-                                                    <i className="fa-solid fa-star"></i>
-                                                    <i className="fa-solid fa-star"></i>
-                                                    <i className="fa-solid fa-star"></i>
-                                                    <i className="fa-solid fa-star"></i>
-                                                    <i className="fa-regular fa-star"></i>
-                                                </div>
-                                            </div>
-                                        </Link>
+                                        <MostCard
+                                            key={item.id_product}
+                                            link={item && item.id_product}
+                                            images={item && item?.images}
+                                            percentage={item && item?.percentage}
+                                            name_product={item && item?.name_product}
+                                            price_reducing={item && item?.price_reducing}
+                                            price={item && item?.price}
+                                        ></MostCard>
                                     );
                                 })}
                         </div>
@@ -276,46 +260,35 @@ export default function HomePage() {
                             {listMostReducingProduct &&
                                 listMostReducingProduct?.map((item, index) => {
                                     return (
-                                        <Link to={`/product/detail/${item.id_product}`} key={item.id_product}>
-                                            <div className="item-book-trend">
-                                                <div className="cover-img-trend">
-                                                    <img
-                                                        loading="lazy"
-                                                        src={`${config.PUBLIC_IMAGE_URL}${item && item?.images}`}
-                                                        alt=""
-                                                        className="avatar-image"
-                                                        style={{ height: '100px' }}
-                                                    />
-                                                    <div className="promotion-corner-trend">
-                                                        <span className="detail-promotion-trend">
-                                                            -{item && item?.percentage}%
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <p className="item-trend-name">{item && item?.name_product}</p>
-                                                <p className="item-trend-price">
-                                                    {item &&
-                                                        item?.price_reducing.toLocaleString('vi', {
-                                                            style: 'currency',
-                                                            currency: 'VND',
-                                                        })}
-                                                </p>
-                                                <p className="item-price-old">
-                                                    {item &&
-                                                        item?.price.toLocaleString('vi', {
-                                                            style: 'currency',
-                                                            currency: 'VND',
-                                                        })}
-                                                </p>
-                                                <div className="main-rate">
-                                                    <i className="fa-solid fa-star"></i>
-                                                    <i className="fa-solid fa-star"></i>
-                                                    <i className="fa-solid fa-star"></i>
-                                                    <i className="fa-solid fa-star"></i>
-                                                    <i className="fa-regular fa-star"></i>
-                                                </div>
-                                            </div>
-                                        </Link>
+                                        <MostCard
+                                            key={item.id_product}
+                                            link={item && item.id_product}
+                                            images={item && item?.images}
+                                            percentage={item && item?.percentage}
+                                            name_product={item && item?.name_product}
+                                            price_reducing={item && item?.price_reducing}
+                                            price={item && item?.price}
+                                        ></MostCard>
+                                    );
+                                })}
+                        </div>
+                    )}
+
+                    {numberCate === 3 && (
+                        <div className="book-trend-content">
+                            {loading && <Loading hash size={60} />}
+                            {listMostReducingProduct &&
+                                listMostReducingProduct?.map((item, index) => {
+                                    return (
+                                        <MostCard
+                                            key={item.id_product}
+                                            link={item && item.id_product}
+                                            images={item && item?.images}
+                                            percentage={item && item?.percentage}
+                                            name_product={item && item?.name_product}
+                                            price_reducing={item && item?.price_reducing}
+                                            price={item && item?.price}
+                                        ></MostCard>
                                     );
                                 })}
                         </div>
