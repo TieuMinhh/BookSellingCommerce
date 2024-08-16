@@ -5,6 +5,7 @@ import Filter from '../../Components/FilterBook/Filter';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import config from '../../api/base';
 import Loading from '../../Components/Loading';
+import BookCard from '../../Components/BookCard/BookCard';
 
 export default function Home() {
     const [list, setList] = useState([]);
@@ -174,57 +175,15 @@ export default function Home() {
                                     {searchResult &&
                                         searchResult.map((item, index) => {
                                             return (
-                                                <div className="main-list-item" key={item && item?.id_product}>
-                                                    <Link to={`/book/detail/${item && item?.id_product}`}>
-                                                        <div className="main-discription mt-8 mb-8">
-                                                            <div className="cover-img-product">
-                                                                <img
-                                                                    src={`${config.PUBLIC_IMAGE_URL}${
-                                                                        item && item?.images
-                                                                    }`}
-                                                                    alt=""
-                                                                    className="avatar-image-product"
-                                                                />
-                                                                <div className="promotion-percentent-circle">
-                                                                    <span className="detail-number-percent">
-                                                                        -{item && item.percentage}%
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <p className="item-desp">
-                                                                {item && item?.name_product.length > 38
-                                                                    ? item.name_product.substring(0, 38) + '...'
-                                                                    : item.name_product}
-                                                            </p>
-                                                        </div>
-                                                        <div className="main-price">
-                                                            <p>
-                                                                {item && item.price_reducing
-                                                                    ? item.price_reducing.toLocaleString('vi', {
-                                                                          style: 'currency',
-                                                                          currency: 'VND',
-                                                                      })
-                                                                    : ''}
-                                                            </p>
-
-                                                            <span>
-                                                                {item && item.price
-                                                                    ? item.price.toLocaleString('vi', {
-                                                                          style: 'currency',
-                                                                          currency: 'VND',
-                                                                      })
-                                                                    : ''}
-                                                            </span>
-                                                        </div>
-                                                        <div className="main-rate">
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-regular fa-star"></i>
-                                                        </div>
-                                                    </Link>
-                                                </div>
+                                                <BookCard
+                                                    key={item.id_product}
+                                                    link={item && item.id_product}
+                                                    images={item && item?.images}
+                                                    percentage={item && item?.percentage}
+                                                    name_product={item && item?.name_product}
+                                                    price_reducing={item && item?.price_reducing}
+                                                    price={item && item?.price}
+                                                ></BookCard>
                                             );
                                         })}
                                 </div>
@@ -291,54 +250,15 @@ export default function Home() {
                                     {searchResult2 &&
                                         searchResult2.map((item, index) => {
                                             return (
-                                                <div className="main-list-item" key={item && item?.id_product}>
-                                                    <Link to={`/product/detail/${item && item?.id_product}`}>
-                                                        <div className="main-discription mt-8 mb-8">
-                                                            <div className="cover-img-product">
-                                                                <img
-                                                                    src={`${config.PUBLIC_IMAGE_URL}${
-                                                                        item && item?.images
-                                                                    }`}
-                                                                    alt=""
-                                                                    className="avatar-image-product"
-                                                                />
-                                                                <div className="promotion-percentent-circle">
-                                                                    <span className="detail-number-percent">
-                                                                        -{item && item.percentage}%
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <p className="item-desp">
-                                                                {item && item?.name_product.length > 38
-                                                                    ? item.name_product.substring(0, 38) + '...'
-                                                                    : item.name_product}
-                                                            </p>
-                                                        </div>
-                                                        <div className="main-price">
-                                                            <p>
-                                                                {item &&
-                                                                    item?.price_reducing.toLocaleString('vi', {
-                                                                        style: 'currency',
-                                                                        currency: 'VND',
-                                                                    })}{' '}
-                                                            </p>
-                                                            <span>
-                                                                {item &&
-                                                                    item?.price.toLocaleString('vi', {
-                                                                        style: 'currency',
-                                                                        currency: 'VND',
-                                                                    })}
-                                                            </span>
-                                                        </div>
-                                                        <div className="main-rate">
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-regular fa-star"></i>
-                                                        </div>
-                                                    </Link>
-                                                </div>
+                                                <BookCard
+                                                    key={item.id_product}
+                                                    link={item && item.id_product}
+                                                    images={item && item?.images}
+                                                    percentage={item && item?.percentage}
+                                                    name_product={item && item?.name_product}
+                                                    price_reducing={item && item?.price_reducing}
+                                                    price={item && item?.price}
+                                                ></BookCard>
                                             );
                                         })}
                                 </div>
@@ -405,57 +325,15 @@ export default function Home() {
                                     {searchResult3 &&
                                         searchResult3.map((item, index) => {
                                             return (
-                                                <div className="main-list-item" key={item && item?.id_product}>
-                                                    <Link to={`/product/detail/${item && item?.id_product}`}>
-                                                        <div className="main-discription mt-8 mb-8">
-                                                            <div className="cover-img-product">
-                                                                <img
-                                                                    src={`${config.PUBLIC_IMAGE_URL}${
-                                                                        item && item?.images
-                                                                    }`}
-                                                                    alt=""
-                                                                    className="avatar-image-product"
-                                                                />
-                                                                <div className="promotion-percentent-circle">
-                                                                    <span className="detail-number-percent">
-                                                                        -{item && item.percentage}%
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <p className="item-desp">
-                                                                {item && item?.name_product.length > 38
-                                                                    ? item.name_product.substring(0, 38) + '...'
-                                                                    : item.name_product}
-                                                            </p>
-                                                        </div>
-                                                        <div className="main-price">
-                                                            <p>
-                                                                {item && item.price_reducing
-                                                                    ? item.price_reducing.toLocaleString('vi', {
-                                                                          style: 'currency',
-                                                                          currency: 'VND',
-                                                                      })
-                                                                    : ''}
-                                                            </p>
-
-                                                            <span>
-                                                                {item && item.price
-                                                                    ? item.price.toLocaleString('vi', {
-                                                                          style: 'currency',
-                                                                          currency: 'VND',
-                                                                      })
-                                                                    : ''}
-                                                            </span>
-                                                        </div>
-                                                        <div className="main-rate">
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-regular fa-star"></i>
-                                                        </div>
-                                                    </Link>
-                                                </div>
+                                                <BookCard
+                                                    key={item.id_product}
+                                                    link={item && item.id_product}
+                                                    images={item && item?.images}
+                                                    percentage={item && item?.percentage}
+                                                    name_product={item && item?.name_product}
+                                                    price_reducing={item && item?.price_reducing}
+                                                    price={item && item?.price}
+                                                ></BookCard>
                                             );
                                         })}
                                 </div>
@@ -522,57 +400,15 @@ export default function Home() {
                                     {list &&
                                         list.map((item, index) => {
                                             return (
-                                                <div className="main-list-item" key={item && item?.id_product}>
-                                                    <Link to={`/product/detail/${item.id_product}`}>
-                                                        <div className="main-discription mt-8 mb-8">
-                                                            <div className="cover-img-product">
-                                                                <img
-                                                                    src={`${config.PUBLIC_IMAGE_URL}${
-                                                                        item && item?.images
-                                                                    }`}
-                                                                    alt=""
-                                                                    className="avatar-image-product"
-                                                                />
-                                                                <div className="promotion-percentent-circle">
-                                                                    <span className="detail-number-percent">
-                                                                        -{item && item.percentage}%
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <p className="item-desp">
-                                                                {item && item?.name_product.length > 38
-                                                                    ? item.name_product.substring(0, 38) + '...'
-                                                                    : item.name_product}
-                                                            </p>
-                                                        </div>
-                                                        <div className="main-price">
-                                                            <p>
-                                                                {item && item.price_reducing
-                                                                    ? item.price_reducing.toLocaleString('vi', {
-                                                                          style: 'currency',
-                                                                          currency: 'VND',
-                                                                      })
-                                                                    : ''}
-                                                            </p>
-
-                                                            <span>
-                                                                {item && item.price
-                                                                    ? item.price.toLocaleString('vi', {
-                                                                          style: 'currency',
-                                                                          currency: 'VND',
-                                                                      })
-                                                                    : ''}
-                                                            </span>
-                                                        </div>
-                                                        <div className="main-rate">
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-solid fa-star"></i>
-                                                            <i className="fa-regular fa-star"></i>
-                                                        </div>
-                                                    </Link>
-                                                </div>
+                                                <BookCard
+                                                    key={item.id_product}
+                                                    link={item && item.id_product}
+                                                    images={item && item?.images}
+                                                    percentage={item && item?.percentage}
+                                                    name_product={item && item?.name_product}
+                                                    price_reducing={item && item?.price_reducing}
+                                                    price={item && item?.price}
+                                                ></BookCard>
                                             );
                                         })}
                                 </div>
